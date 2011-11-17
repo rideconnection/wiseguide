@@ -11,7 +11,7 @@ require 'bundler/capistrano'
 
 #-----Basic Recipe-----
 set :application, "WiseGuide"
-set :repository,  "http://github.com/openplans/wiseguide.git"
+set :repository,  "http://github.com/rideconnection/wiseguide.git"
 set :deploy_to, "/home/deployer/rails/wiseguide"
 
 set :scm, :git
