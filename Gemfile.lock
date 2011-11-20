@@ -55,8 +55,7 @@ GEM
     columnize (0.3.4)
     date_validator (0.6.2)
       activemodel (>= 3.0.0, < 3.2.0)
-    devise (1.4.5)
->>>>>>> 661eeb839d9fb14309f01835563ddf756016ebcb
+    devise (1.5.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.1)
@@ -90,7 +89,7 @@ GEM
       mime-types
     pg (0.11.0)
     polyglot (0.3.2)
-    rack (1.2.3)
+    rack (1.2.4)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
