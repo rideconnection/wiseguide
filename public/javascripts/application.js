@@ -1,6 +1,6 @@
 $(function(){
   
-  $("tr:odd").addClass("odd");
+  $("tr.auto-zebra:odd").addClass("odd");
   
   $('#flash a.closer').click(function() {
     $('#flash').animate({ height: 0, opacity: 0, marginTop: "-10px", marginBottom: "-10px" }, 'slow');

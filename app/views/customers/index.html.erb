@@ -28,7 +28,7 @@
   </tr>
 
 <% for customer in @customers %>
-  <tr>
+  <tr class="auto-zebra">
     <td><%= link_to customer.name_reversed, customer %></td>
     <td><%= customer.birth_date %></td>
     <td><%= customer.phone_number_1 %></td>

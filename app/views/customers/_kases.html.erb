@@ -4,7 +4,7 @@
 <% end %>
 <table>
 <% for kase in @customer.kases %>
-<tr>
+<tr class="auto-zebra">
 <td><%= kase.open_date %> -</td>
 <td><%= kase.disposition.name %></td>
 <td><%= link_to "Details", kase %></td>
