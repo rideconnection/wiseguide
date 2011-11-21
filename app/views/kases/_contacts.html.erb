@@ -4,19 +4,20 @@
 <% end %>
 
 <table>
-<% for contact in @kase.contacts %>
-<tr>
-  <td><%= contact.date_time.to_date %></td>
-  <td><%= contact.method %></td>
-  <td><%= contact.description %></td>
-  <td><%= link_to "Details", edit_contact_path(contact) %></td>
-</tr>
-<% if contact.show_full_notes? %>
-  <tr>
-    <td></td>
-    <td colspan="2"><%= contact.notes %></td>
-    <td></td>
-  </tr>
-<% end %>
-<% end %> 
+  <% for contact in @kase.contacts %>
+    <% cycle = cycle("even","odd") %>
+    <tr class=<%= cycle %>>
+      <td><%= contact.date_time.to_date %></td>
+      <td><%= contact.method %></td>
+      <td><%= contact.description %></td>
+      <td><%= link_to "Details", edit_contact_path(contact) %></td>
+    </tr>
+    <% if contact.show_full_notes? %>
+      <tr class=<%= cycle %>>
+        <td></td>
+        <td colspan="2"><%= contact.notes %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  <% end %> 
 </table>
