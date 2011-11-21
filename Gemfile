@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rake', '~> 0.8.7'
+gem 'rake'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.11'
 
 gem 'pg'
 
@@ -23,11 +23,11 @@ gem 'jquery-rails', '>= 0.2.6'
 
 gem 'userstamp'
 
-gem 'formtastic'
+gem 'formtastic', '1.2.4'
 
 gem 'surveyor', :git => 'git://github.com/openplans/surveyor.git', :branch => 'rails3'
 
-gem 'haml'
+gem 'haml', '3.1.3'
 
 gem 'exception_notification',
     :git => "git://github.com/rails/exception_notification.git",
