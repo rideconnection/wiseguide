@@ -1016,8 +1016,8 @@ ol.section li h1 {
 }
 
 ol.section li a.add {
-  float: right;
-  margin : -26px 10px 0 0;
+  float: left;
+  margin : -26px 10px 0 200px;
 }
 
 /*
