@@ -770,7 +770,8 @@ table tr.sum-totals td:last-child {
  *
  */
  input.datepicker,
- input.birthdatepicker {
+ input.birthdatepicker,
+ input.timepicker {
     width: 6em;
 }
 #ui-datepicker-div table {

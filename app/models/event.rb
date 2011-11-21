@@ -7,7 +7,10 @@ class Event < ActiveRecord::Base
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
+  attr_protected :user_id
+
   validates_presence_of :kase_id
+  validates_presence_of :user_id
   validates :date, :date => { :before_or_equal_to => Proc.new { Date.today } }
   validates_presence_of :event_type_id
   validates_presence_of :funding_source_id

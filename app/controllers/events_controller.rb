@@ -17,6 +17,7 @@ class EventsController < ApplicationController
     @kase = Kase.find(params[:event][:kase_id])
     authorize! :edit, @kase
     @event = Event.new(params[:event])
+    @event.user = current_user
 
     if @event.save
       redirect_to(@kase, :notice => 'Event was successfully created.') 

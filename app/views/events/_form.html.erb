@@ -1,7 +1,6 @@
 <%= form_for @event do |f| %>
   <%= render "shared/error_messages", :target => @event %> 
 <fieldset>
-  <%= f.hidden_field :user_id %>
   <%= f.hidden_field :kase_id %>
   
   <ol class="section fourth">
@@ -37,7 +36,7 @@
     
     <li>
       <%= f.label :duration_in_hours, "Hours" %>
-      <%= f.text_field :duration_in_hours %>
+      <%= f.text_field :duration_in_hours, :size => 4 %>
     </li>
 
     <li>
