@@ -1,4 +1,5 @@
 <%= form_for @event do |f| %>
+  <%= render "shared/error_messages", :target => @event %> 
 <fieldset>
   <%= f.hidden_field :user_id %>
   <%= f.hidden_field :kase_id %>
@@ -6,7 +7,7 @@
   <ol class="section fourth">
     <li>
       <%= f.label :user_id, "By" %>
-      <%= f.collection_select :user_id, @users, :id, :email %>
+      <%= @event.user.email %>
     </li>
     
     <li>
@@ -26,12 +27,12 @@
 
     <li>
       <%= f.label :event_type_id, "Type" %>
-      <%= f.collection_select :event_type_id, @event_types, :id, :name %>
+      <%= f.collection_select :event_type_id, @event_types, :id, :name, :prompt => "<Select Event Type>" %>
     </li>
     
     <li>
       <%= f.label :funding_source_id, "Funding Source" %>
-      <%= f.collection_select :funding_source_id, @funding_sources, :id, :name %>
+      <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => "<Select Funding Source>" %>
     </li>
     
     <li>

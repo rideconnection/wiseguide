@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104223700) do
+ActiveRecord::Schema.define(:version => 20111121080100) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20111104223700) do
     t.integer  "lock_version",  :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.boolean  "require_notes", :default => false
   end
 
   create_table "events", :force => true do |t|

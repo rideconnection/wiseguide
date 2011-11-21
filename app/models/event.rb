@@ -8,10 +8,13 @@ class Event < ActiveRecord::Base
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
   validates_presence_of :kase_id
+  validates :date, :date => { :before_or_equal_to => Proc.new { Date.today } }
   validates_presence_of :event_type_id
   validates_presence_of :funding_source_id
-  validates_presence_of :date
-  validates_presence_of :duration_in_hours
+  validates_numericality_of :duration_in_hours
+  validates_presence_of :start_time
+  validates_presence_of :end_time
+  validates_presence_of :notes, :if => Proc.new {|e| e.event_type.try(:require_notes) }
 
   default_scope order(:date)
   scope :in_range, lambda {|date_range| where(:date => date_range)}
