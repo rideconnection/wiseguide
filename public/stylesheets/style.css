@@ -995,18 +995,9 @@ body.kases h2 a {
   line-height: 24px;
 }
 
-body.kases #page-header {
-	position: relative;
-}
-
-body.kases .delete.kase {
-	position: absolute;
-	top: 8px;
-	right: 10px;
-}
-
 body.events a.delete,
-body.contacts a.delete {
+body.contacts a.delete,
+body.kases a.delete.kase {
   float  : right;
   margin : -43px 10px 0 0;
 }
@@ -1017,7 +1008,7 @@ ol.section li h1 {
 
 ol.section li a.add {
   float: left;
-  margin : -26px 10px 0 200px;
+  margin : -26px 10px 0 280px;
 }
 
 /*

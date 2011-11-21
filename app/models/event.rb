@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :kase
+  has_one    :customer, :through => :kase
   belongs_to :user
   belongs_to :event_type
   belongs_to :funding_source

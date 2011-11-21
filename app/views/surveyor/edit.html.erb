@@ -1,7 +1,5 @@
 <div id="surveyor">
-  <div class="survey_title">
-    <%= @survey.title %>
-  </div>
+<%= render 'shared/breadcrumbs', :target => @response_set, :name => @response_set.survey.title %>
 <%= semantic_form_for(@response_set, :as => :r, :url => update_my_survey_path, :html => {:method => :put, :id => "survey_form", :class => @survey.custom_class}) do |f| %>
    <%= render 'partials/section_menu' %>
    <div class="previous_section"><%= previous_section %></div>

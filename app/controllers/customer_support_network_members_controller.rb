@@ -17,7 +17,7 @@ class CustomerSupportNetworkMembersController < ApplicationController
     @customer_support_network_member = CustomerSupportNetworkMember.new(params[:customer_support_network_member])
 
     if @customer_support_network_member.save
-      redirect_to(@customer, :notice => 'CustomerSupportNetworkMember was successfully created.') 
+      redirect_to(@customer, :notice => 'Customer Support Network Member was successfully created.') 
     else
       render :action => "new"
     end
@@ -27,7 +27,7 @@ class CustomerSupportNetworkMembersController < ApplicationController
     @customer = Customer.find(params[:customer_support_network_member][:customer_id])
     authorize! :edit, @customer
     if @customer_support_network_member.update_attributes(params[:customer_support_network_member])
-      redirect_to(@customer, :notice => 'CustomerSupportNetworkMember was successfully updated.') 
+      redirect_to(@customer, :notice => 'Customer Support Network Member was successfully updated.') 
     else
       render :action => "edit"
     end
