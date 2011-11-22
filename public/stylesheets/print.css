@@ -126,3 +126,12 @@ div.fieldset {
 div.page-header {
   border : 0;
 }
+
+body.reports.trainee div.customer {
+  float: left;
+}
+
+body.reports.trainee div.disposition {
+  float: right;
+}
+

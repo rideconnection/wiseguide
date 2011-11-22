@@ -1138,6 +1138,14 @@ p input[type="checkbox"] {
     padding-left: 25px;
 }
 
+body.reports.trainee div.customer {
+  float: left;
+}
+
+body.reports.trainee div.disposition {
+  float: right;
+}
+
 
 /* Predefined Reports */
 .report-header {

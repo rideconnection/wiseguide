@@ -10,24 +10,32 @@
   </th>
 
   <% for customer in @customers %>
-    <tr>
-      <td  colspan="5" class="definition"><%= link_to customer.name, @events_by_customer[customer].first.kase %></td>
+    <tr class="odd">
+      <td  colspan="5" class="definition">
+        <div class="customer">
+          <%= link_to customer.name, customer %>
+        </div>
+        <div class="disposition">
+          <%= link_to @events_by_customer[customer].first.kase.disposition.name, @events_by_customer[customer].first.kase %>
+        </div>
+      </td>
     </tr>
       <% for event in @events_by_customer[customer] %>
-        <tr>
+        <tr class=<%= cycle("even","odd", :name => "events") %>>
           <% if event == @events_by_customer[customer].first %>
             <td rowspan="<%= @events_by_customer[customer].size + 1 %>"></td>
           <% end %>
           <td><%= link_to event.event_type.name, [:edit, event] %></td>
-          <td><%= event.date %></td>
+          <td><%= event.date.strftime("%v") %></td>
           <td><%= event.user.email %></td>
           <td class="number"><%= number_with_precision event.duration_in_hours, :precision => 2 %></td>
         </tr>
       <% end %>
     <tr>
-      <td colspan="3">&nbsp;</td>
+      <td colspan="3" class="total">&nbsp;</td>
       <td class="total"><%= number_with_precision @hours_by_customer[customer], :precision => 2 %></td>
     </tr>
+    <% reset_cycle "events" %>
   <% end %>
   <tr>
     <td colspan = "4" class="definition">Grand Total</td>
@@ -39,13 +47,13 @@
 <h2>Dispositions:</h2>
 <table class="small">
   <% @dispositions.keys.sort_by{|d| d.name}.each do |disposition| %>
-    <tr>
+    <tr class="auto-zebra">
       <td class="definition"><%= disposition.name %>:</td>
       <td class="number"><%= @dispositions[disposition].size %></td>
     </tr>
   <% end %>
-  <tr>
-    <td class="definition">Total:</td>
+  <tr class="auto-zebra">
+    <td class="definition total">Total:</td>
     <td class="total"><%= @dispositions.values.sum{|s| s.size} %></td>
   </tr>
 </table>
@@ -53,13 +61,13 @@
 <h2>Events:</h2>
 <table class="small">
   <% @events_by_type.keys.sort_by{|e| e.name}.each do |event_type| %>
-    <tr>
+    <tr class="auto-zebra">
       <td class="definition"><%= event_type.name %>:</td>
       <td class="number"><%= @events_by_type[event_type] %></td>
     </tr>
   <% end %>
-  <tr>
-    <td class="definition">Total:</td>
+  <tr class="auto-zebra">
+    <td class="definition total">Total:</td>
     <td class="total"><%= @events_by_type.values.sum %></td>
   </tr>
 </table>
