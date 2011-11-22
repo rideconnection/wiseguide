@@ -696,6 +696,14 @@ tr.odd {
     background: #f7f7f7;
 }
 
+table.auto-zebra tr:nth-child(odd) {
+    background: #f7f7f7;
+}
+
+body.reports table tfoot td {
+  border-top: 1px solid black;
+}
+
 table td {
     padding: 5px 10px 10px;
 }

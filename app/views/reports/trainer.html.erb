@@ -1,13 +1,15 @@
-<h1>Trainer Report<h1>
-<%= content_tag :h2, describe_date_range(@start_date,@end_date) %>
-<hr>
+<div id="page-header">
+  <h1>Trainer Report<h1>
+  <%= content_tag :h2, describe_date_range(@start_date,@end_date) %>
+</div>
+
 <% for trainer in @trainers %>
   <% @events_by_trainer[trainer].sort_by!{|e| e.customer.name_reversed} %>
   <%= content_tag :h2, trainer.email %>
   Trained: <%= @customers_by_trainer[trainer].size %><br/>
   <b><%= @hours_by_trainer[trainer] %> hours</b><br/>
 
-  <table>
+  <table class="auto-zebra">
     <tr>
       <th>Name</th>
       <th>Action</th>
@@ -27,7 +29,7 @@
   <hr>
 <% end %>
 
-<table>
+<table class="auto-zebra">
   <tr>
     <td class="definition">Total Individuals Trained:</td> 
     <td class="number"><%= @customers_by_trainer['{total}'].size %></td>
