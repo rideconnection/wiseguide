@@ -1,5 +1,8 @@
-<h1>Trainee Report</h1>
-<%= content_tag :h2, describe_date_range(@start_date,@end_date) %>
+<div id="page-header">
+  <h1>Trainee Report<h1>
+  <%= content_tag :h2, describe_date_range(@start_date,@end_date) %>
+</div>
+
 <table>
   <tr>
     <th>Name</th>
@@ -37,7 +40,7 @@
     </tr>
     <% reset_cycle "events" %>
   <% end %>
-  <tr>
+  <tr class="odd">
     <td colspan = "4" class="definition">Grand Total</td>
     <td class = "total"><%= number_with_precision @events.sum(&:duration_in_hours), :precision => 2 %></td> 
   </tr>
