@@ -12,7 +12,7 @@
     <%= response_set.survey.title %>
   </td>
   <td>
-    <%= link_to "View", view_my_survey_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code) %>
+    <%= link_to "View", view_my_survey_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class=>"details" %>
   </td>
   <td>
     <%= link_to "Edit", edit_my_survey_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => :edit %>

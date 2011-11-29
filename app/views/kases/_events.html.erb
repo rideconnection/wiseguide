@@ -12,7 +12,7 @@
       <td><%= event.end_time %></td>
       <td><%= event.event_type.name %></td>
       <td><%= event.user.email %></td>
-      <td><%= link_to "Details", edit_event_path(event) %></td>
+      <td><%= link_to "Details", edit_event_path(event), :class=>"details" %></td>
     </tr>
     <% if event.show_full_notes? %>
       <tr class=<%= cycle %>>

@@ -3,12 +3,12 @@
   <%= link_to "Add", new_kase_path(:customer_id=>@customer.id), :class => :add %>
 <% end %>
 <table>
-<% for kase in @customer.kases %>
-<tr class="auto-zebra">
-<td><%= kase.open_date %> -</td>
-<td><%= kase.disposition.name %></td>
-<td><%= link_to "Details", kase %></td>
-</tr>
-<% end %>
+  <% for kase in @customer.kases %>
+    <tr class="auto-zebra">
+      <td><%= kase.open_date %> -</td>
+      <td><%= kase.disposition.name %></td>
+      <td><%= link_to "Details", kase, :class=>"details" %></td>
+    </tr>
+  <% end %>
 </table>
 
