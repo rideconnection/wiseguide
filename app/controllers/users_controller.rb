@@ -78,9 +78,11 @@ class UsersController < Devise::SessionsController
   end
   
   def sign_out
-    scope = Devise::Mapping.find_scope!(current_user)
-    current_user = nil
-    warden.logout(scope)
+    if current_user
+      scope = Devise::Mapping.find_scope!(current_user)
+      current_user = nil
+      warden.logout(scope)
+    end
 
     return redirect_to "/"
   end
