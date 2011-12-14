@@ -1,4 +1,5 @@
 <%= render 'shared/breadcrumbs', :target => @outcome, :name => 'Outcome' %>
+<%= link_to "Delete", outcome_path(@outcome), :method => "delete", :confirm => "Are you sure you want to delete this contact?", :class => "delete" if can?(:delete, @outcome) %>
 <%= render "form" %>
 
 <%= last_updated @outcome %><br/>

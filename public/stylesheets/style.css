@@ -1007,6 +1007,7 @@ body.kases h2 a {
   line-height: 24px;
 }
 
+body.outcomes a.delete,
 body.events a.delete,
 body.contacts a.delete,
 body.kases a.delete.kase {

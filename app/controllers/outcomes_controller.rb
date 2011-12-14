@@ -39,7 +39,7 @@ class OutcomesController < ApplicationController
 
   def destroy
     @outcome.destroy
-    redirect_to(outcomes_url)
+    redirect_to(@outcome.kase, :notice => 'Outcome was successfully deleted.')
   end
 
   private
