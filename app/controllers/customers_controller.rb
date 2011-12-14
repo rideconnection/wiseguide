@@ -10,11 +10,11 @@ class CustomersController < ApplicationController
   end
   
   def download_small_portrait
-    send_file @customer.portrait.path(:small), :type => @customer.portrait_content_type, :disposition => 'inline'
+    send_file(@customer.portrait.path(:small), :type => @customer.portrait_content_type, :disposition => 'inline') if @customer.portrait.path(:small)
   end
 
   def download_original_portrait
-    send_file @customer.portrait.path(:original), :type => @customer.portrait_content_type
+    send_file(@customer.portrait.path(:original), :type => @customer.portrait_content_type) if @customer.portrait.path(:small)
   end
 
   def new
