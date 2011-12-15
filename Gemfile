@@ -45,6 +45,17 @@ gem 'date_validator'
 # gem 'ruby-debug'
 gem 'ruby-debug19'
 
+# Cucumber and testing utilities
+gem 'cucumber'
+gem 'cucumber-rails'
+gem 'database_cleaner'
+gem 'rspec-rails'
+gem 'spork'
+gem 'launchy'
+gem 'machinist', '>= 2.0.0.beta1'
+gem 'faker'
+gem 'factory_girl_rails'
+
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'
