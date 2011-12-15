@@ -8,6 +8,54 @@ by OpenPlans.
 
 -----------------------
 
+Development Environment
+=======================
+
+Install RVM
+-----------
+
+RVM is a ruby package manager that keeps all the ruby packages for a
+given project isolated in a single environment.  It's extremely useful
+for locking down the environment for your project.  To learn more, check
+out: http://beginrescueend.com/rvm/
+
+To install rvm, run these two commands:
+
+  $ bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+  $ echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' >> ~/.bash_profile
+
+Open a fresh terminal (or re-source your .bash_profile), cd to the wiseguide
+project directory, and answer 'yes' to the RVM prompt.
+
+Install dependencies
+--------------------
+
+Now that you're in a fresh RVM environment, you can:
+
+  $ bundle install
+
+Copy config/database.yml.example to database.yml and tweak to suit your
+needs.  (It works out of the box, if you're working with SQLite.  Fuzzy
+matching is not present in SQLite, however.)
+
+Copy config/app_config_template.yml to app_config.yml and tweak to suit
+your needs. (You will want to put your email address in there at least.)
+
+Bootstrap environment
+---------------------
+
+Populate the database:
+
+  $ rake db:setup
+ 
+That's it!  You can now run a test server with "rails s" or run the tests:
+
+  $ rake test
+  $ rake cucumber
+
+Postgres Notes
+==============
+
 To set up postgres for use with WiseGuide, you will need the
 fuzzystrmatch library (included in postgresql-contrib-8.4 in Ubuntu).
 This adds support for dmetaphone, which is how we
