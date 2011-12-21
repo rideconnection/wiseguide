@@ -11,6 +11,10 @@ by OpenPlans.
 Development Environment
 =======================
 
+If you already have RVM installed, CD in to the wiseguide project directory and accept the RVM prompt. You may be prompted to install the required Ruby
+version, too. Once that is all set, install the bundler gem then skip to the
+"Install dependencies" step.
+
 Install RVM
 -----------
 
