@@ -2,6 +2,7 @@ require 'factory_girl'
 require "#{Rails.root}/config/environment.rb"
 
 def load_sandbox_data
+  raise 'Sandboxing not permitted in production.' if Rails.env == 'production' 
   create_users
   create_customers
 end
