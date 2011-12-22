@@ -1049,6 +1049,12 @@ body.customers th {
   padding: 5px 10px;
 }
 
+body.customers img.portrait {
+    border: 1px solid #CCCCCC;
+    box-shadow: 5px 5px 5px #BBBBBB;
+}
+
+
 /*
  *
  * Outcomes
