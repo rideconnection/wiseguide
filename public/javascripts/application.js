@@ -3,8 +3,7 @@ $(function(){
   $("tr.auto-zebra:odd").addClass("odd");
   
   $('#flash a.closer').click(function() {
-    $('#flash').animate({ height: 0, opacity: 0, marginTop: "-10px", marginBottom: "-10px" }, 'slow');
-    $('#flash a.closer').hide();
+    $('#flash').animate({ height: 0, opacity: 0, marginTop: "-10px", marginBottom: "-10px" }, 'slow').hide();
     return false;
   });
   
