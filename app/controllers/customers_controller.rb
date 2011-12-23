@@ -43,7 +43,7 @@ class CustomersController < ApplicationController
 
   def destroy
     @customer.destroy
-    redirect_to(customers_url)
+    redirect_to(customers_url, :notice => 'Customer was successfully deleted.')
   end
   
   def search

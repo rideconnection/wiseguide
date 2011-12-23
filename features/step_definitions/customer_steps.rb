@@ -1,5 +1,4 @@
-When /^I should be able to create a new customer$/ do
-  click_link 'New Customer'
+Then /^I should be able to create a new customer$/ do
   fill_in 'customer[first_name]', :with => 'Alex'
   fill_in 'customer[last_name]', :with => 'Trebek'
   fill_in 'customer[birth_date]', :with => '1962-04-01'
@@ -12,28 +11,38 @@ When /^I should be able to create a new customer$/ do
   fill_in 'customer[zip]', :with => '90210'
   select 'Multnomah', :from => 'customer[county]'
   click_button 'Save'
-  page.should have_text('Customer was successfully created.')
+  # Get the newly generated customer ID so we can find the record later
+  @customer = Customer.find_by_id(find("form.edit_customer")["action"].match(/^\/customers\/(?<id>\d+)$/i)[:id].to_i)
+  @confirmation_message = 'Customer was successfully created.'
+  Then %Q(I should see a confirmation message)
 end
 
-When /^I should be able to edit the customer profile for "(\w+) (\w+)"$/ do |first_name, last_name|
-  click_link "#{last_name}, #{first_name}"
+Then /^I should be able to modify the customer(?:'s)? profile$/ do 
   fill_in 'customer[address]', :with => '123 Hopefully The Factory Isn\'t Using This Address Too Blvd'
   click_button 'Save'
-  page.should have_text('Customer was successfully updated.')
-  page.has_field?('customer[address]', :with => '123 Hopefully The Factory Isn\'t Using This Address Too Blvd')
+  @confirmation_message = 'Customer was successfully updated.'
+  Then %Q(I should see a confirmation message)
+  page.should have_field('customer[address]', :with => '123 Hopefully The Factory Isn\'t Using This Address Too Blvd')
 end
 
-# We need to be able to specify the email address so that we can 
-# lookup the customer record by a unique value in order to get the 
-# customer ID in order to find the correct form within the customer
-# list table. Complicated, I know, but better than hacking up the 
-# table HTML with superfluous identifiers just for this test.
-When /^I should not be able to delete the customer profile for "(\w+) (\w+)" with email "(.*)"$/ do |first_name, last_name, email|
-  customer = Customer.find_by_email(email)
-  find("a[href='/customers/#{customer.id}']").should have_content("#{last_name}, #{first_name}")
-  page.should have_no_selector("form[action='/customers/#{customer.id}'] input[type=submit][value=Delete]")
+Then /^I should( not)? see a button to delete the customer(?:'s)? profile$/ do |negation|
+  assertion = negation ? :should_not : :should
+  find("a[href='/customers/#{@customer.id}']").should have_content("#{@customer.last_name}, #{@customer.first_name}")
+  page.send(assertion, have_selector("form[action='/customers/#{@customer.id}'] input[type=submit][value=Delete]"))
 end
 
-When /^I should be able to delete the customer profile for "(\w+) (\w+)" with email "(.*)"$/ do |first_name, last_name, email|
-  pending
+Then /^I should be prompted to confirm the deletion when I click the customer(?:'s)? delete button$/ do
+  button = find("form[action='/customers/#{@customer.id}'] input[type=submit][value=Delete]")
+  button['data-confirm'].should eql("Are you sure you want to delete this user?")
+  button.click
+  page.driver.browser.switch_to.alert.accept
+  @confirmation_message = 'Customer was successfully deleted.'
+  Then %Q(I should see a confirmation message)
+end
+
+Then /^I should( not)? see a link to the customer(?:'s)? profile when I return to the customers list$/ do |negation|
+  assertion = negation ? :should_not : :should
+  visit '/customers'
+  page.send(assertion, have_selector("a[href='/customers/#{@customer.id}']"))
+  page.send(assertion, have_content("#{@customer.last_name}, #{@customer.first_name}"))
 end
