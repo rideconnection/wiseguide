@@ -1,20 +1,3 @@
-Given /^I am logged in as a (.*)$/ do |user_type|
-  @user = User.find_by_email("#{user_type}@rideconnection.org")
-  visit '/users/sign_in'
-  fill_in 'user_email', :with => @user.email
-  fill_in 'user_password', :with => 'password'
-  click_button 'Sign in'
-  page.should have_content('Signed in successfully.')
-end
-
-When /^I go to the homepage$/ do
-  visit('/')
-end
-
-When /^I go to the Customers page$/ do
-  click_link 'Customers'
-end
-
 When /^I should be able to create a new customer$/ do
   click_link 'New Customer'
   fill_in 'customer[first_name]', :with => 'Alex'
@@ -53,8 +36,4 @@ end
 
 When /^I should be able to delete the customer profile for "(\w+) (\w+)" with email "(.*)"$/ do |first_name, last_name, email|
   pending
-end
-
-Then /^show me the page$/ do
-  save_and_open_page
 end
