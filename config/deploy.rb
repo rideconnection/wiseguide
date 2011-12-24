@@ -1,7 +1,6 @@
 #-----Get Capistrano working with RVM-----
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
 require "rvm/capistrano"  # Load RVM's capistrano plugin.    
-set :rvm_ruby_string, '1.9.2'
 set :rvm_type, :user  # Don't use system-wide RVM
 #---------------------------------------------
 
@@ -21,9 +20,24 @@ set :deploy_via, :remote_cache
 set :user, "deployer"  # The server's user for deployments
 set :use_sudo, false
 
-role :web, "184.154.79.122"
-role :app, "184.154.79.122"
-role :db,  "184.154.79.122", :primary => true # This is where Rails migrations will run
+set(:place) do
+  Capistrano::CLI.ui.ask 'What to deploy? [Production, Staging]: '
+end
+
+case place
+  when 'Production'
+    set :rvm_ruby_string, '1.9.2' # TODO: Use the same string as staging
+    role :web, "184.154.79.122"
+    role :app, "184.154.79.122"
+    role :db,  "184.154.79.122", :primary => true # This is where Rails migrations will run
+  when 'Staging'
+    set :rvm_ruby_string, '1.9.2-p290@wiseguide'
+    role :web, "184.154.158.74"
+    role :app, "184.154.158.74"
+    role :db,  "184.154.158.74", :primary => true # This is where Rails migrations will run
+  else
+    puts 'Not a valid deployment target.'
+end
 
 namespace :deploy do
   task :start do ; end
