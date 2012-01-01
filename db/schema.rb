@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111121190352) do
+ActiveRecord::Schema.define(:version => 20111231221058) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -218,6 +218,20 @@ ActiveRecord::Schema.define(:version => 20111121190352) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "county",            :limit => 1
+  end
+
+  create_table "organization_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "organizations", :force => true do |t|
+    t.string   "name"
+    t.integer  "organization_type_id"
+    t.integer  "parent_id",            :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "outcomes", :force => true do |t|

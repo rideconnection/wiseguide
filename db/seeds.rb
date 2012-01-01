@@ -42,3 +42,15 @@ end
 CSV.foreach(File.join(Rails.root,'db','seeds','referral_types.csv'),headers: true) do |r|
   ReferralType.find_or_create_by_name(r['name'])
 end
+
+['Ride Connection Staff',
+ 'Government Body',
+ 'Case Management Organization'
+].each do |name|
+  OrganizationType.find_or_create_by_name(name)
+end
+
+Organization.find_or_create_by_name(
+  :name => 'Ride Connection',
+  :organization_type => OrganizationType.find_by_name('Ride Connection Staff'),
+)

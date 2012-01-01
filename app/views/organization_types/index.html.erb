@@ -1,0 +1,23 @@
+<h1>Listing organization_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @organization_types.each do |organization_type| %>
+  <tr>
+    <td><%= organization_type.name %></td>
+    <td><%= link_to 'Show', organization_type %></td>
+    <td><%= link_to 'Edit', edit_organization_type_path(organization_type) %></td>
+    <td><%= link_to 'Destroy', organization_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Organization type', new_organization_type_path %>

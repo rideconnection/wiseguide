@@ -1,4 +1,8 @@
 Wiseguide::Application.routes.draw do
+  resources :organizations
+
+  resources :organization_types
+
   resources :counties
 
   resources :trip_reasons

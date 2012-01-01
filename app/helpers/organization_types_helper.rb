@@ -1,0 +1,2 @@
+module OrganizationTypesHelper
+end
