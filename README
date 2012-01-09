@@ -64,6 +64,16 @@ That's it!  You can now run a test server with "rails s" or run the tests:
   $ rake test
   $ rake cucumber
 
+Deployment
+==========
+
+There are two different deployment environments: staging and production.
+Staging runs the master branch, to test the latest features that have been
+developed.  Production runs the stable branch, which should contain commits
+that have been tested on staging successfully.
+
+To deploy, run: cap [staging|production] deploy
+
 Postgres Notes
 ==============
 
