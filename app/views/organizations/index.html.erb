@@ -14,7 +14,7 @@
   <tr>
     <td><%= organization.name %></td>
     <td><%= organization.organization_type.name %></td>
-    <td><%= organization.parent_id.nil? ? "None" : organization.parent.name %></td>
+    <td><%= organization.parent_name %></td>
     <td><%= link_to 'Show', organization %></td>
     <td>
       <% if can? :update, @organization %>

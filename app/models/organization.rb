@@ -11,4 +11,8 @@ class Organization < ActiveRecord::Base
   def is_cmo?
     organization_type.name == 'Case Management Organization'
   end
+
+  def parent_name
+    parent.nil? ? "None" : parent.name
+  end
 end
