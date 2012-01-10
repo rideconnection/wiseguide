@@ -1,4 +1,18 @@
 <%= form_for(@organization) do |f| %>
+  <script type="text/JavaScript">
+    function updateParentVisible() {
+      var element = $("#organization_organization_type_id")[0];
+      var option = element.options[element.selectedIndex];
+      if (option.value == 3) {
+        $("#organization-parent").show();
+      } else {
+        $("#organization-parent").hide();
+      }
+    }
+    $(document).ready(function() {
+      updateParentVisible();
+    });
+  </script>
   <% if @organization.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
@@ -17,11 +31,15 @@
   </div>
   <div class="field">
     <%= f.label :organization_type_id %><br />
-    <%= f.text_field :organization_type_id %>
+    <%= collection_select(:organization, :organization_type_id,
+                          OrganizationType.all, :id, :name, {:prompt => true},
+                          {:onchange => "updateParentVisible();"}) %>
   </div>
-  <div class="field">
-    <%= f.label :parent_id %><br />
-    <%= f.text_field :parent_id %>
+  <div class="field" id="organization-parent">
+    <%= f.label :parent_id, "Parent Organization (Government Body)"  %><br />
+    <%= collection_select(:organization, :parent_id,
+                          Organization.find_all_by_organization_type_id(2),
+                          :id, :name, {:include_blank => true}) %>
   </div>
   <div class="actions">
     <%= f.submit %>

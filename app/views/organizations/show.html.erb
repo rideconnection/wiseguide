@@ -7,12 +7,12 @@
 
 <p>
   <b>Organization type:</b>
-  <%= @organization.organization_type_id %>
+  <%= @organization.organization_type.name %>
 </p>
 
 <p>
   <b>Parent:</b>
-  <%= @organization.parent_id %>
+  <%= @organization.parent_id.nil? ? "None" : @organization.parent.name %>
 </p>
 
 
