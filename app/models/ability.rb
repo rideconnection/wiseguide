@@ -13,6 +13,7 @@ class Ability
     can :read, EventType
     can :read, FundingSource
     can :read, Impairment
+    can :read, Organization
     can :read, ReferralType
     can :read, Route
     can :read, TripReason

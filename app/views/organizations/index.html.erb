@@ -16,12 +16,22 @@
     <td><%= organization.organization_type_id %></td>
     <td><%= organization.parent_id %></td>
     <td><%= link_to 'Show', organization %></td>
-    <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-    <td><%= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>
+      <% if can? :update, @organization %>
+        <%= link_to 'Edit', edit_organization_path(organization) %>
+      <% end %>
+    </td>
+    <td>
+      <% if can? :destroy, @organization %>
+        <%= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Organization', new_organization_path %>
+<% if can? :create, Organization %>
+  <%= link_to 'New Organization', new_organization_path %>
+<% end %>

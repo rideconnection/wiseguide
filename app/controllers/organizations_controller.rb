@@ -24,6 +24,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/new
   # GET /organizations/new.xml
   def new
+    authorize! :edit, Organization
     @organization = Organization.new
 
     respond_to do |format|
@@ -35,11 +36,13 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1/edit
   def edit
     @organization = Organization.find(params[:id])
+    authorize! :edit, @organization
   end
 
   # POST /organizations
   # POST /organizations.xml
   def create
+    authorize! :edit, Organization
     @organization = Organization.new(params[:organization])
 
     respond_to do |format|
