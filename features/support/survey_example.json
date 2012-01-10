@@ -1,0 +1,103 @@
+{"title" : "Travel Training Initial Interview (v9/11)",
+ "sections" : [
+    {
+      "title" : "Background & Motivators",
+      "questions" : [
+        {"title" : "Responses Given By",
+         "pick" : "any", 
+         "answers" : [
+            { "text" : "Individual", "response_class" : "answer" },
+            { "text" : "Parent", "response_class" : "answer" },
+            { "text" : "Primary Care Provider", "response_class" : "answer" },
+            { "text" : "Other", "response_class" : "string" }
+          ]
+        },
+        {"type" : "group",
+         "text" : "Emergency Contacts",
+         "display_type" : "repeater", 
+         "questions" : [
+            { "title" : "Emergency Contact",
+              "pick" : "none", 
+              "answers" : [
+                { "text" : "Name", "response_class" : "string" },
+                { "text" : "Relationship", "response_class" : "string" },
+                { "text" : "Phone", "response_class" : "string" }
+              ]
+            }
+          ]
+        },
+        {"title" : "Do you keep a piece of identification listing your address and phone number with you at all times?",
+         "pick" : "one", 
+         "answers" : [
+           { "text" : "Yes", "response_class" : "answer" },
+           { "text" : "No", "response_class" : "answer" }
+          ]
+        },
+        {"type" : "group",
+         "text" : "Background Information",
+         "display_type" : "inline", 
+         "questions" : [
+            { "title" : "Have you ridden the bus or MAX before?",
+              "pick" : "one", 
+              "answers" : [
+                { "text" : "Yes", "response_class" : "answer" },
+                { "text" : "No", "response_class" : "answer" }
+              ]
+            },
+            { "title" : "Where did you go?  Who did you go with?",
+              "pick" : "none", 
+              "answers" : [
+                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+              ]
+            },
+            { "title" : "What other types of transportation have you used?",
+              "pick" : "none", 
+              "answers" : [
+                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+              ]
+            },
+            { "title" : "How do you get to places now?", 
+              "pick" : "none", 
+              "answers" : [
+                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+              ]
+            },
+            { "title" : "What are your reasons for not using the bus before?",
+              "pick" : "none", 
+              "answers" : [
+                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+              ]
+            }
+          ]
+        },
+        {"type" : "group",
+         "text" : "Do you have the following:",
+         "display_type" : "grid", 
+         "questions" : [
+            { "title" : "Honored Citizen Card",
+              "pick" : "one", 
+              "answers" : [
+                { "text" : "Yes", "response_class" : "answer" },
+                { "text" : "No", "response_class" : "answer" }
+              ]
+            },
+            { "title" : "Honored Citizen Bus Pass",
+              "pick" : "one", 
+              "answers" : [
+                { "text" : "Yes", "response_class" : "answer" },
+                { "text" : "No", "response_class" : "answer" }
+              ]
+            },
+            { "title" : "Trainer has seen them",
+              "pick" : "one", 
+              "answers" : [
+                { "text" : "Yes", "response_class" : "answer" },
+                { "text" : "No", "response_class" : "answer" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
