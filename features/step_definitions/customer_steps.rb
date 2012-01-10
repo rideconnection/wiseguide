@@ -14,14 +14,14 @@ Then /^I should be able to create a new customer$/ do
   # Get the newly generated customer ID so we can find the record later
   @customer = Customer.find_by_id(find("form.edit_customer")["action"].match(/^\/customers\/(?<id>\d+)$/i)[:id].to_i)
   @confirmation_message = 'Customer was successfully created.'
-  Then %Q(I should see a confirmation message)
+  step %Q(I should see a confirmation message)
 end
 
 Then /^I should be able to modify the customer(?:'s)? profile$/ do 
   fill_in 'customer[address]', :with => '123 Hopefully The Factory Isn\'t Using This Address Too Blvd'
   click_button 'Save'
   @confirmation_message = 'Customer was successfully updated.'
-  Then %Q(I should see a confirmation message)
+  step %Q(I should see a confirmation message)
   page.should have_field('customer[address]', :with => '123 Hopefully The Factory Isn\'t Using This Address Too Blvd')
 end
 
@@ -37,7 +37,7 @@ Then /^I should be prompted to confirm the deletion when I click the customer(?:
   button.click
   page.driver.browser.switch_to.alert.accept
   @confirmation_message = 'Customer was successfully deleted.'
-  Then %Q(I should see a confirmation message)
+  step %Q(I should see a confirmation message)
 end
 
 Then /^I should( not)? see a link to the customer(?:'s)? profile when I return to the customers list$/ do |negation|

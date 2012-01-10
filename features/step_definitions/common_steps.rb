@@ -1,5 +1,5 @@
 Given /^I am logged in as an? (trainer|admin)$/ do |user_type|
-  @current_user = User.find_by_email!("#{user_type}@rideconnection.org")
+  @current_user = Factory(user_type)
   visit '/users/sign_in'
   fill_in 'user_email', :with => @current_user.email
   fill_in 'user_password', :with => 'password'
