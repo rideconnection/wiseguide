@@ -88,7 +88,7 @@ module SurveyorControllerCustomMethods
           savee.save!
         end
     end
-    redirect_to surveys_path
+    redirect_to(surveys_path, :notice => 'Survey was successfully created.')
   rescue JSON::ParserError => e
     flash[:alert] = "Malformed JSON %s" % e.message
     render :action => :new_survey
