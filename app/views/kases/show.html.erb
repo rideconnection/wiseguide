@@ -6,13 +6,13 @@
     <%= render "form" %>
 
     <%#= last_updated @kase %>
-    <ol class="section">
+    <ol class="section" id="contacts">
       <li>
       <%= render "contacts" %>
       </li>
     </ol>
     
-    <ol class="section">
+    <ol class="section" id="events">
       <li>
       <%= render "events" %>
       </li>
@@ -20,19 +20,19 @@
   </div>
 
   <div class="second">
-    <ol class="section">
+    <ol class="section" id="surveys">
       <li>
       <%= render "surveys" %>
       </li>
     </ol>
     
-    <ol class="section">
+    <ol class="section" id="routes">
       <li>
       <%= render "routes", :locals=>{:edit => false} %>
       </li>
     </ol>
 
-    <ol class="section">
+    <ol class="section" id="outcomes">
       <li>
       <%= render "outcomes" %>
       </li>

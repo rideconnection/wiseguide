@@ -28,11 +28,11 @@ Given /^a simple survey exists$/ do
 end
 
 When /^I click on the link to the existing case$/ do
-  find("a[href='/cases/#{@kase.id}']").click
+  find("#kases a[href='/cases/#{@kase.id}']").click
 end
 
 When /^I click the link to add an assessment$/ do
-  find("a[href='/surveys/new?kase_id=#{@kase.id}']").click
+  find("#surveys").click_link("Add")
 end
 
 Then /^I click the button for the open survey$/ do
