@@ -49,6 +49,7 @@ gem 'ruby-debug19'
 # Cucumber and testing utilities
 gem 'cucumber'
 gem 'cucumber-rails'
+gem 'capybara-firebug'
 gem 'database_cleaner'
 gem 'rspec-rails'
 gem 'spork'

@@ -13,3 +13,10 @@ After do |scenario|
   # This seems to cause more problems then it solves
   # DatabaseCleaner.clean
 end
+
+After('@pause_on_fail') do |scenario|
+  if scenario.respond_to?(:status) && scenario.status == :failed
+    print "Step Failed. Press Return to close browser"
+    STDIN.getc
+  end
+end

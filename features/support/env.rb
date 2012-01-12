@@ -10,6 +10,7 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= "test"
   require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
   require 'cucumber/rails'
+  require 'capybara/firebug'
 
   # We're going to use our custom factory_girl step definition file instead
   # require 'factory_girl/step_definitions'

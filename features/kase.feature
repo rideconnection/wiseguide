@@ -1,6 +1,6 @@
 Feature: Manage kases aka cases
   As a user of the system
-  viewers, trainers and admins
+  trainers and admins
   want to be able to manage cases
   
   Scenario: Trainers can create new cases
