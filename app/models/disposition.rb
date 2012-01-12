@@ -6,5 +6,4 @@ class Disposition < ActiveRecord::Base
   def self.successful
     self.where(:name => 'Successful').first
   end
-
 end

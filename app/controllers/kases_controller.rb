@@ -47,7 +47,7 @@ class KasesController < ApplicationController
 
   def destroy
     @kase.destroy
-    redirect_to(kases_url)
+    redirect_to(kases_url, :notice => "Case was successfully deleted.")
   end
 
   def add_route

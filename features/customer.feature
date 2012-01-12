@@ -3,7 +3,7 @@ Feature: Manage customers
   trainers and admins
   want to be able to manage customers
  
-  Scenario: Trainer can create customers
+  Scenario: Trainers can create customers
     Given I am logged in as a trainer
       And I am on the homepage
     When I click on the "Customers" link
