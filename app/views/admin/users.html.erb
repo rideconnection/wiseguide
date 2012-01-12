@@ -5,6 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
+      <th>Phone</th>
       <th>Role</th>
       <th>Last login</th>
       <% if can? :edit, User %>
@@ -28,6 +29,7 @@
           <span class="separator">|</span> <%= link_to "Change Password", show_change_password_path, :class=>'change-password' %>
         <% end %>
       </td>
+      <td><%= user.phone_number %></td>
       <td><%= user.role_name %></td>
       <td><%= user.last_sign_in_at %></td>
       <% if can? :edit, user %>
