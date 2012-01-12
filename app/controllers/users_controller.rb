@@ -1,6 +1,6 @@
 class UsersController < Devise::SessionsController
   require 'new_user_mailer'
-  
+
   def new
     #hooked up to sign_in
     if User.count == 0
@@ -31,6 +31,24 @@ class UsersController < Devise::SessionsController
     else
       render :action=>:new_user
     end
+  end
+
+  # GET /edit_user?id=x
+  def edit
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+  end
+
+  # PUT /update_user_details
+  def update_details
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+    @user.first_name = params[:user][:first_name]
+    @user.last_name = params[:user][:last_name]
+    @user.email = params[:user][:email]
+    @user.phone_number = params[:user][:phone_number]
+    @user.save
+    redirect_to "/users"
   end
 
   def update

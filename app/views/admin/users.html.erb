@@ -3,7 +3,9 @@
 <% else %>
   <table>
     <tr>
+      <th>Name</th>
       <th>Email</th>
+      <th>Phone</th>
       <th>Role</th>
       <th>Last login</th>
       <% if can? :edit, User %>
@@ -14,12 +16,20 @@
 
     <% for user in @users %>
     <tr>
+      <td>
+        <% if can? :update, @user %>
+          <%= link_to user.display_name, edit_user_path(:id=>user.id)  %>
+        <% else %>
+          <%= user.display_name %>
+        <% end %>
+      </td>
       <td class="<%= user.role_name.downcase %>">
         <%= user.email %>
         <% if user == current_user %>
           <span class="separator">|</span> <%= link_to "Change Password", show_change_password_path, :class=>'change-password' %>
         <% end %>
       </td>
+      <td><%= user.phone_number %></td>
       <td><%= user.role_name %></td>
       <td><%= user.last_sign_in_at %></td>
       <% if can? :edit, user %>
