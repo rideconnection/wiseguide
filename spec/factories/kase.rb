@@ -6,6 +6,7 @@ Factory.define :kase do |f|
   f.association :referral_type
   f.association :funding_source
   f.association :disposition
+  f.association :assigned_to, :factory => :user
   f.county { Kase::VALID_COUNTIES.values.first }
 end
 
