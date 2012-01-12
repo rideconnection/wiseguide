@@ -16,7 +16,11 @@
     <% for user in @users %>
     <tr>
       <td>
-        <%= link_to user.display_name, edit_user_path(:id=>user.id)  %>
+        <% if can? :update, @user %>
+          <%= link_to user.display_name, edit_user_path(:id=>user.id)  %>
+        <% else %>
+          <%= user.display_name %>
+        <% end %>
       </td>
       <td class="<%= user.role_name.downcase %>">
         <%= user.email %>
