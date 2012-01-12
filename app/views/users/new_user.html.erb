@@ -17,8 +17,23 @@
 
     <ol class="section first">
       <li>
+        <%= f.label :first_name, "First name:" %>
+        <%= f.text_field :first_name %>
+      </li>
+
+      <li>
+        <%= f.label :last_name, "Last name:" %>
+        <%= f.text_field :last_name %>
+      </li>
+
+      <li>
         <%= f.label :email, "Email:" %>
         <%= f.text_field :email %>
+      </li>
+
+      <li>
+        <%= f.label :phone_number, "Phone (optional):" %>
+        <%= f.text_field :phone_number %>
       </li>
 
       <li>

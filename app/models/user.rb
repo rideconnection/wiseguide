@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :contacts
   has_many :events
 
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+
   validates_confirmation_of :password
   validates_uniqueness_of :email
   # Include default devise modules. Others available are:
@@ -17,11 +20,24 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
+  attr_accessible :first_name, :last_name, :phone_number
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   default_scope order(:email)
   scope :active, where("users.level >= 0")
   scope :active_or_selected, lambda{|user_id| where("users.level >= 0 OR users.id = ?",user_id)}
+
+  def display_name
+    if first_name.blank? then
+      if last_name.blank? then
+        return 'Unnamed User'
+      else
+        return last_name
+      end
+    else
+      return first_name + (last_name.blank? ? '' : ' ' + last_name)
+    end
+  end
 
   def role_name
     case level

@@ -57,11 +57,13 @@ Wiseguide::Application.routes.draw do
 
   devise_for :users, :controllers=>{:sessions=>"users"} do
     get "new_user" => "users#new_user"
+    get "edit_user" => "users#edit"
     post "create_user" => "users#create_user"
     put "create_user" => "users#create_user"
     get "init" => "users#show_init"
     post "logout" => "users#sign_out"
     post "init" => "users#init"
+    put "update_user_details" => "users#update_details"
     post "update_user" => "users#update"
     delete "user" => "users#delete"
     get "show_change_password" => "users#show_change_password"

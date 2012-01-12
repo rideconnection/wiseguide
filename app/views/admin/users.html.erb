@@ -3,6 +3,7 @@
 <% else %>
   <table>
     <tr>
+      <th>Name</th>
       <th>Email</th>
       <th>Role</th>
       <th>Last login</th>
@@ -14,6 +15,9 @@
 
     <% for user in @users %>
     <tr>
+      <td>
+        <%= link_to user.display_name, edit_user_path(:id=>user.id)  %>
+      </td>
       <td class="<%= user.role_name.downcase %>">
         <%= user.email %>
         <% if user == current_user %>
