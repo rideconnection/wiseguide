@@ -27,6 +27,11 @@
     <%= f.label :phone_number %><br />
     <%= f.text_field :phone_number %>
   </div>
+  <div class="field">
+    <%= f.label :organization_id %><br/>
+    <%= collection_select(:user, :organization_id, Organization.all, :id,
+                          :name, :prompt => true) %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

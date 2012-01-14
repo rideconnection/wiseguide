@@ -24,11 +24,14 @@ class UsersController < Devise::SessionsController
     @user = User.new(user_params)
     @user.level = user_params[:level] #this should be unnecesary
 
-    if @user.save
+    begin
+      @user.save!
       NewUserMailer.new_user_email(@user, @user.password).deliver
-      flash[:notice] = "%s has been added and a password has been emailed" % @user.email
+      flash[:notice] =
+          "#{@user.email} has been added and a password has been emailed"
       redirect_to users_path
-    else
+    rescue Exception => e
+      flash[:notice] = "Could not create user: #{e.message}"
       render :action=>:new_user
     end
   end
@@ -43,11 +46,7 @@ class UsersController < Devise::SessionsController
   def update_details
     @user = User.find(params[:id])
     authorize! :edit, @user
-    @user.first_name = params[:user][:first_name]
-    @user.last_name = params[:user][:last_name]
-    @user.email = params[:user][:email]
-    @user.phone_number = params[:user][:phone_number]
-    @user.save
+    @user.update_attributes!(params[:user])
     redirect_to "/users"
   end
 

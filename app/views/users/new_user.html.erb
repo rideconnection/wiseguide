@@ -36,6 +36,11 @@
         <%= f.text_field :phone_number %>
       </li>
 
+      <li class="field">
+        <%= f.label :organization_id %>
+        <%= collection_select(:user, :organization_id, Organization.all, :id,
+                              :name, :prompt => true) %>
+      </li>
       <li>
         <%= f.label :permissions, "Permissions:" %>
         <%= f.select :level, [["Admin", 100], ["Editor", 50], ["Viewer", 0]] %>

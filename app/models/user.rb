@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name
   validates_presence_of :last_name
+  validates_presence_of :organization_id
 
   validates_confirmation_of :password
   validates_uniqueness_of :email
@@ -24,6 +25,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name, :last_name, :phone_number
   attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :organization_id
 
   default_scope order(:email)
   scope :active, where("users.level >= 0")

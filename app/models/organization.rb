@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
   validates_presence_of :organization_type
   validates_presence_of :parent, :if => :is_cmo?
 
+  has_many :users
   has_many :children, :class_name => "Organization",
            :foreign_key => "parent_id", :dependent => :nullify
 
