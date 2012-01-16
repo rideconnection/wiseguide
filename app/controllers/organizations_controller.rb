@@ -60,6 +60,7 @@ class OrganizationsController < ApplicationController
   # PUT /organizations/1.xml
   def update
     @organization = Organization.find(params[:id])
+    authorize! :edit, @organization
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
@@ -76,6 +77,7 @@ class OrganizationsController < ApplicationController
   # DELETE /organizations/1.xml
   def destroy
     @organization = Organization.find(params[:id])
+    authorize! :destroy, @organization
     @organization.destroy
 
     respond_to do |format|

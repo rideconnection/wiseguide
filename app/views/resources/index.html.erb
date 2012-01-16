@@ -12,4 +12,6 @@
 
 <br />
 
-<%= link_to 'New Resource', new_resource_path %>
+<% if can? :edit, Resource %>
+  <%= link_to 'New Resource', new_resource_path %>
+<% end %>

@@ -26,6 +26,7 @@ class ResourcesController < ApplicationController
   # GET /resources/new
   # GET /resources/new.xml
   def new
+    authorize! :edit, Resource
     @resource = Resource.new(:active => true)
 
     respond_to do |format|
@@ -37,11 +38,13 @@ class ResourcesController < ApplicationController
   # GET /resources/1/edit
   def edit
     @resource = Resource.find(params[:id])
+    authorize! :edit, @resource
   end
 
   # POST /resources
   # POST /resources.xml
   def create
+    authorize! :edit, Resource
     @resource = Resource.new(params[:resource])
 
     respond_to do |format|
@@ -62,6 +65,7 @@ class ResourcesController < ApplicationController
   # PUT /resources/1.xml
   def update
     @resource = Resource.find(params[:id])
+    authorize! :edit, @resource
 
     respond_to do |format|
       if @resource.update_attributes(params[:resource])
@@ -79,6 +83,7 @@ class ResourcesController < ApplicationController
   # DELETE /resources/1.xml
   def destroy
     @resource = Resource.find(params[:id])
+    authorize! :destroy, @resource
     @resource.destroy
 
     respond_to do |format|
@@ -89,6 +94,7 @@ class ResourcesController < ApplicationController
 
   def toggle_active
     @resource = Resource.find(params[:id])
+    authorize! :edit, @resource
     @resource.active = (not @resource.active)
     @resource.save!
     redirect_to resources_path

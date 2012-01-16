@@ -5,8 +5,10 @@
     <th>Email</th>
     <th>URL</th>
     <th></th>
+    <% if can? :edit, Resource %>
     <th></th>
     <th></th>
+    <% end %>
   </tr>
 <% resources.each do |resource| %>
   <tr>
@@ -15,12 +17,13 @@
     <td><%= resource.email %></td>
     <td><%= link_to resource.url, resource.url, { :target=>"_blank" } %></td>
     <td><%= link_to 'Show', resource %></td>
+    <% if can? :edit, Resource %>
     <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
     <td><%= link_to resource.active ? "Deactivate" : "Activate",
                     :controller => "resources",
                     :action => "toggle_active",
-                   :id => resource %>
-    </td>
+                    :id => resource %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

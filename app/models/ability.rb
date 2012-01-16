@@ -32,6 +32,7 @@ class Ability
     can ability, Customer
     can ability, Event
     can ability, Outcome
+    can ability, Resource
     can ability, ResponseSet
     can ability, Survey
 
@@ -40,6 +41,7 @@ class Ability
       cannot :destroy, Customer
       cannot :destroy, Event
       cannot :destroy, Outcome
+      cannot :destroy, Resource
       cannot :destroy, ResponseSet
       cannot :destroy, Survey
     end
