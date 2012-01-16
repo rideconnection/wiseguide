@@ -80,6 +80,8 @@ Wiseguide::Application.routes.draw do
   match 'reports(/:action)', :controller=>:reports
 
   match "test_exception_notification" => "application#test_exception_notification"
+  match "resources/(:id)/toggle_active",
+        :controller=>:resources, :action=>:toggle_active
 
   root :to => "home#index"
 end

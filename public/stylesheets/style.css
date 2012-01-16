@@ -474,6 +474,9 @@ ol.section li {
 form label {
     font-weight: bold;
 }
+div.field {
+    margin: 10px 0;
+}
 fieldset,
 div.fieldset {
     clear: both;

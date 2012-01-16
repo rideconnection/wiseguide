@@ -1,28 +1,14 @@
-<h1>Listing resources</h1>
+<h1>Referral Resources<?h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Phone number</th>
-    <th>Email</th>
-    <th>URL</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @resources.each do |resource| %>
-  <tr>
-    <td><%= resource.name %></td>
-    <td><%= resource.phone_number %></td>
-    <td><%= resource.email %></td>
-    <td><%= link_to resource.url, resource.url %></td>
-    <td><%= link_to 'Show', resource %></td>
-    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
-    <td><%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% unless @active_resources.empty? %>
+  <h2>Active Referral Resources</h2>
+  <%= render :partial => 'list', :locals => { :resources => @active_resources } %>
 <% end %>
-</table>
+
+<% unless @inactive_resources.empty? %>
+  <h2>Inactive Referral Resources</h2>
+  <%= render :partial => 'list', :locals => { :resources => @inactive_resources } %>
+<% end %>
 
 <br />
 

@@ -3,6 +3,8 @@ class ResourcesController < ApplicationController
   # GET /resources.xml
   def index
     @resources = Resource.all
+    @active_resources = Resource.where(:active => true)
+    @inactive_resources = Resource.where(:active => false)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +26,7 @@ class ResourcesController < ApplicationController
   # GET /resources/new
   # GET /resources/new.xml
   def new
-    @resource = Resource.new
+    @resource = Resource.new(:active => true)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,11 +46,14 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to(@resource, :notice => 'Resource was successfully created.') }
-        format.xml  { render :xml => @resource, :status => :created, :location => @resource }
+        format.html { redirect_to(resources_path,
+                      :notice => "#{@resource.name} successfully created.") }
+        format.xml  { render :xml => @resource,
+                      :status => :created, :location => @resource }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @resource.errors,
+                      :status => :unprocessable_entity }
       end
     end
   end
@@ -60,7 +65,8 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.update_attributes(params[:resource])
-        format.html { redirect_to(@resource, :notice => 'Resource was successfully updated.') }
+        format.html { redirect_to(resources_path,
+                      :notice => "#{@resource.name} successfully updated.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -79,5 +85,12 @@ class ResourcesController < ApplicationController
       format.html { redirect_to(resources_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def toggle_active
+    @resource = Resource.find(params[:id])
+    @resource.active = (not @resource.active)
+    @resource.save!
+    redirect_to resources_path
   end
 end
