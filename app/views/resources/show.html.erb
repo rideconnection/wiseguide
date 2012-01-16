@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @resource.name %>
+</p>
+
+<p>
+  <b>Phone number:</b>
+  <%= @resource.phone_number %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @resource.email %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @resource.url %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @resource.address %>
+</p>
+
+<p>
+  <b>Hours:</b>
+  <%= @resource.hours %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @resource.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_resource_path(@resource) %> |
+<%= link_to 'Back', resources_path %>

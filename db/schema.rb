@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116054342) do
+ActiveRecord::Schema.define(:version => 20120116103846) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -296,6 +296,18 @@ ActiveRecord::Schema.define(:version => 20120116054342) do
     t.integer  "lock_version",  :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+  end
+
+  create_table "resources", :force => true do |t|
+    t.string   "name"
+    t.string   "phone_number"
+    t.string   "email"
+    t.string   "url"
+    t.text     "address"
+    t.text     "hours"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "response_sets", :force => true do |t|

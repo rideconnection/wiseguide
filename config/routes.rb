@@ -1,4 +1,6 @@
 Wiseguide::Application.routes.draw do
+  resources :resources
+
   resources :organizations
 
   resources :organization_types
