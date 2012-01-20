@@ -19,11 +19,11 @@ class Kase < ActiveRecord::Base
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
 
   validates_presence_of :customer_id
-  validates             :open_date, :date => { :before_or_equal_to => Proc.new { Date.today } }
+  validates             :open_date, :date => { :before_or_equal_to => Proc.new { Date.current } }
   validates_presence_of :referral_source
   validates_presence_of :referral_type_id
   validates_presence_of :funding_source_id
-  validates             :close_date, :date => { :after => :open_date, :before_or_equal_to => Proc.new { Date.today } }, :allow_blank => true
+  validates             :close_date, :date => { :after => :open_date, :before_or_equal_to => Proc.new { Date.current } }, :allow_blank => true
   validates_presence_of :disposition
   validates_presence_of :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
   validates_inclusion_of :county, :in => VALID_COUNTIES.values

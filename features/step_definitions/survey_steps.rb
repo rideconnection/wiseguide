@@ -2,7 +2,7 @@ require 'survey_creator'
 
 Then /^I should be able to paste JSON\-formatted data to create a new survey$/ do
   json_data = JSON.parse(File.read(Rails.root.join("features", "support", "survey_example.json")))
-  title = "Survey #{Time.now.to_f.to_s}" # Make it unique so we can find it after
+  title = "Survey #{Time.current.to_f.to_s}" # Make it unique so we can find it after
   json_data["title"] = title
   fill_in 'survey', :with => json_data.to_json
   click_button 'Create'

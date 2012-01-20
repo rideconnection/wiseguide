@@ -4,7 +4,7 @@ module SurveyCreator
       to_save = []
       survey = nil
       ActiveRecord::Base.transaction do
-        survey = Survey.new(:title=>json_data['title'], :active_at=>DateTime.now)
+        survey = Survey.new(:title=>json_data['title'], :active_at=>DateTime.current)
         survey.inactive_at = nil #no, really
         to_save.push survey
         for section_obj in json_data['sections']

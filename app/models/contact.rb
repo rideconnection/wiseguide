@@ -7,7 +7,7 @@ class Contact < ActiveRecord::Base
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
   validates :description, :presence => true, :length => {:maximum => 30}
-  validates :date_time, :date => { :before_or_equal_to => Proc.new {Time.now} }
+  validates :date_time, :date => { :before_or_equal_to => Proc.new {Time.current} }
 
   default_scope order(:date_time)
 

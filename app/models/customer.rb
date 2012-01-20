@@ -18,7 +18,7 @@ class Customer < ActiveRecord::Base
   validates_presence_of :ethnicity_id
   validates_presence_of :first_name
   validates_presence_of :last_name
-  validates             :birth_date, :date => { :before => Proc.new { Date.today } }
+  validates             :birth_date, :date => { :before => Proc.new { Date.current } }
   validates_presence_of :gender
   validates_presence_of :phone_number_1
   validates_format_of   :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :allow_blank => true
@@ -139,7 +139,7 @@ dmetaphone_alt(%s) LIKE dmetaphone_alt(?) || '%%')" % [field, field, field, fiel
     if birth_date.nil?
       return nil
     end
-    today = Date.today
+    today = Date.current
     years = today.year - birth_date.year #2011 - 1980 = 31
     if today.month < birth_date.month  || today.month == birth_date.month and today.day < birth_date.day #but 4/8 is before 7/3, so age is 30
       years -= 1

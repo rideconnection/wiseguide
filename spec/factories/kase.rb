@@ -1,7 +1,7 @@
 Factory.define :kase do |f|
   f.association :customer
   f.open_date { Date.yesterday }
-  f.close_date { Date.today }
+  f.close_date { Date.current }
   f.referral_source "Source"
   f.association :referral_type
   f.association :funding_source

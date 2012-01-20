@@ -94,7 +94,7 @@ end
 
 Then /^I should be able to close the case$/ do
   # Close date can't be later than today but must be later than (and not equal to) the open date
-  fill_in "Closed", :with => Date.today.strftime('%Y-%m-%d')
+  fill_in "Closed", :with => Date.current.strftime('%Y-%m-%d')
   select "Successful", :from => "Disposition"
   click_button "Save"
   @confirmation_message = 'Case was successfully updated.'

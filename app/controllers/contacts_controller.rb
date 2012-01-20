@@ -9,7 +9,9 @@ class ContactsController < ApplicationController
   end
 
   def new
-    @contact = Contact.new(:kase_id=>params[:kase_id], :date_time=>DateTime.now, :user => current_user)
+    @contact = Contact.new(:kase_id=>params[:kase_id],
+                           :date_time=>DateTime.current,
+                           :user => current_user)
     prep_edit
   end
 

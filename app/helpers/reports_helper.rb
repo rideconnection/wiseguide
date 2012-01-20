@@ -47,10 +47,10 @@ module ReportsHelper
   end
 
   def start_last_month
-    (Date.today - Date.today.day.days + 1.day - 1.month).to_s
+    (Date.current - Date.current.day.days + 1.day - 1.month).to_s
   end
 
   def end_last_month
-    (Date.today - Date.today.day.days).to_s
+    (Date.current - Date.current.day.days).to_s
   end
 end

@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :kase_id
   validates_presence_of :user_id
-  validates :date, :date => { :before_or_equal_to => Proc.new { Date.today } }
+  validates :date, :date => { :before_or_equal_to => Proc.new { Date.current } }
   validates_presence_of :event_type_id
   validates_presence_of :funding_source_id
   validates_numericality_of :duration_in_hours
