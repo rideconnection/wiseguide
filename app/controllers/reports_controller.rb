@@ -10,10 +10,15 @@ class ReportsController < ApplicationController
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])
     @exited_count = 0
-    @work_related_vmr = 0
+    @vmr = 0
     @work_related_tpw = 0
-    @non_work_related_vmr = 0
     @non_work_related_tpw = 0
+    @total_exited = Kase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).count
+    if params[:funding_source_id].present?
+      @funding_source = "Funding Source: #{FundingSource.find(params[:funding_source_id]).name}"
+    else
+      @funding_source = "All Funding Sources"
+    end
 
     kases = Kase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(:outcomes => :trip_reason)
 
@@ -23,20 +28,19 @@ class ReportsController < ApplicationController
       for outcome in kase.outcomes
         vmr = outcome.exit_vehicle_miles_reduced
         tpw = outcome.exit_trip_count
-        if outcome.three_month_vehicle_miles_reduced
+        if outcome.three_month_vehicle_miles_reduced && outcome.three_month_trip_count
           vmr = outcome.three_month_vehicle_miles_reduced
           tpw = outcome.three_month_trip_count
         end
-        if outcome.six_month_vehicle_miles_reduced
+        if outcome.six_month_vehicle_miles_reduced && outcome.six_month_trip_count
           vmr = outcome.six_month_vehicle_miles_reduced
           tpw = outcome.six_month_trip_count
         end
-
+        
+        @vmr += vmr
         if outcome.trip_reason.work_related
-          @work_related_vmr += vmr
           @work_related_tpw += tpw
         else
-          @non_work_related_vmr += vmr
           @non_work_related_tpw += tpw
         end
       end

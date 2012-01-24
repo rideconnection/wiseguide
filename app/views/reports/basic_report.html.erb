@@ -1,6 +1,7 @@
 <div id="page-header">
   <h1>RideWise Productivity Report</h1>
   <%= content_tag :h2, describe_date_range(@start_date,@end_date) %>
+  <%= content_tag :h2, @funding_source %>
 </div>
 
 <table class="auto-zebra">
@@ -12,41 +13,37 @@
   </thead>
 
   <tr>
+    <td class="report-item">Total exited this period (all dispositions)</td>
+    <td class="number"><%= @total_exited %></td>
+  </tr>
+  <tr>
     <td class="report-item">Successfully exited this period</td>
     <td class="number"><%= @exited_count %></td>
   </tr>
 
   <tr class="begin-group">
-    <td class="report-item">Work-related vehicle miles reduced per week</td> 
-    <td class="number"><%=  @work_related_vmr %></td>
+    <td class="report-item">Vehicle miles reduced per week</td> 
+    <td class="number"><%= @vmr %></td>
   </tr>
   <tr>
     <td class="report-item">Work-related trips per week</td> 
-    <td class="number"><%=  @work_related_tpw%></td>
-  </tr>
-  <tr>
-    <td class="report-item">Non-work-related vehicle miles reduced per week</td> 
-    <td class="number"><%=  @non_work_related_vmr %></td>
+    <td class="number"><%= @work_related_tpw %></td>
   </tr>
   <tr>
     <td class="report-item">Non-work-related trips per week</td> 
-    <td class="number"><%=  @non_work_related_tpw%></td>
+    <td class="number"><%= @non_work_related_tpw %></td>
   </tr>
 
   <tr class="begin-group">
-    <td class="report-item">Work-related vehicle miles reduced per year</td> 
-    <td class="number"><%=  @work_related_vmr * 52%></td>
+    <td class="report-item">Vehicle miles reduced per year</td> 
+    <td class="number"><%= @vmr * 52 %></td>
   </tr>
   <tr>
     <td class="report-item">Work-related trips per year</td> 
-    <td class="number"><%=  @work_related_tpw * 52%></td>
-  </tr>
-  <tr>
-    <td class="report-item">Non-work-related vehicle miles reduced per year</td> 
-    <td class="number"><%=  @non_work_related_vmr * 52 %></td>
+    <td class="number"><%= @work_related_tpw * 52 %></td>
   </tr>
   <tr>
     <td class="report-item">Non-work-related trips per year</td> 
-    <td class="number"><%=  @non_work_related_tpw * 52%></td>
+    <td class="number"><%= @non_work_related_tpw * 52 %></td>
   </tr>
 </table>
