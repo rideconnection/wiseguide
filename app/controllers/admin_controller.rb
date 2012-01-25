@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   def users
+    authorize! :read, User
     @users = User.all
   end
 

@@ -7,6 +7,11 @@ class Ability
       return #turned-off users can do nothing
     end
 
+    # Outside user permissions
+    if user.level == 25
+      return
+    end
+
     #system tables
     can :read, Disposition
     can :read, Ethnicity

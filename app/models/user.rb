@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
   validates_presence_of :organization_id
 
+  before_save :clean_level
+
   validates_confirmation_of :password
   validates_uniqueness_of :email
   # Include default devise modules. Others available are:
@@ -49,6 +51,8 @@ class User < ActiveRecord::Base
       return "Deleted"
     when 0
       return "Viewer"
+    when 25
+      return "Outside"
     when 50
       return "Editor"
     when 100
@@ -60,6 +64,10 @@ class User < ActiveRecord::Base
     return level == 100
   end
 
+  def is_outside_user
+    return organization_id > 1
+  end
+
   def update_password(params)
     unless params[:password].blank?
       self.update_with_password(params)
@@ -68,4 +76,17 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  private
+
+  def clean_level
+    # Force outside users to level 25 on save
+    if is_outside_user then
+      self.level = 25
+    elsif self.level == 25
+      # Make formerly outside users viewers by default
+      self.level = 0
+    end
+  end
+ 
 end

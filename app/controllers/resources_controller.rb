@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /resources
   # GET /resources.xml
   def index

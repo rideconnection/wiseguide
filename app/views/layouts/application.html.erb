@@ -24,14 +24,22 @@
   </div><!-- /#header -->
   <div id="crossbar">
     <div class="wrap selfclear">             
+      <% if !current_user.nil? %>
       <ul id="primary-nav" class="selfclear">
-        <li class="customers"><%= link_to "Customers", customers_path %></li>
-        <li class="kases"><%= link_to "Cases", kases_path %></li>
-        <li class="reports"><%= link_to "Reports", reports_path %></li>
+        <% if current_user.is_outside_user %>
+          <!-- TODO: Outside user nav -->
+        <% else %>
+          <li class="customers"><%= link_to "Customers", customers_path %></li>
+          <li class="kases"><%= link_to "Cases", kases_path %></li>
+          <li class="reports"><%= link_to "Reports", reports_path %></li>
+        <% end %>
       </ul>
       <ul id="secondary-nav" class="selfclear">
-        <li class="admin"><%= link_to "Admin", admin_path %></li>
+        <% if !current_user.is_outside_user %>
+          <li class="admin"><%= link_to "Admin", admin_path %></li>
+        <% end %>
       </ul>
+      <% end %>
     </div><!-- /.wrap -->
   </div><!-- /#crossbar -->
 

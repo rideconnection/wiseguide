@@ -2,6 +2,21 @@
   <h1>Create New User</h1>
 </div>
 
+<script type="text/JavaScript">
+  $(document).ready(function() {
+    $("#permissions").hide();
+    $("#user_organization_id").change(function(event) {
+      var element = $("#user_organization_id")[0];
+      var option = element.options[element.selectedIndex];
+      if (option.value == 1) {
+        $("#permissions").show();
+      } else {
+        $("#permissions").hide();
+      }
+    });
+  });
+</script>
+
 <%= form_for @user, :url=>url_for(:action=>:create_user) do |f| %>
   <% if @errors %>
     <div id="error_explanation">
@@ -41,7 +56,7 @@
         <%= collection_select(:user, :organization_id, Organization.all, :id,
                               :name, :prompt => true) %>
       </li>
-      <li>
+      <li id="permissions">
         <%= f.label :permissions, "Permissions:" %>
         <%= f.select :level, [["Admin", 100], ["Editor", 50], ["Viewer", 0]] %>
       </li>

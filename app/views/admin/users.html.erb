@@ -37,7 +37,7 @@
       <% if can? :edit, user %>
       <td>
         <%= form_for(user, :url=>update_user_path(:id=>user.id), :html => { :method => :post }) do |f| %>
-          <%= f.select(:level, user_roles(user.level)) %>
+          <%= f.select(:level, user_roles(user, user.level)) %>
           <%= f.submit "Change role" %>
         <% end %>
       </td>

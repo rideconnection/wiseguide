@@ -68,6 +68,7 @@ module SurveyorControllerCustomMethods
   end
 
   def index
+    authorize! :read, Survey
     @surveys = Survey.all
   end
 

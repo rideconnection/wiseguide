@@ -1,4 +1,6 @@
 class ReferralTypesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /referral_types
   # GET /referral_types.xml
   def index
