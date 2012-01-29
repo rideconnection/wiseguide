@@ -1,4 +1,6 @@
 Wiseguide::Application.routes.draw do
+  resources :assessment_requests
+
   resources :resources
 
   resources :organizations

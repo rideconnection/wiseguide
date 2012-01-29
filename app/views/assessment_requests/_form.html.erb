@@ -1,0 +1,38 @@
+<%= form_for(@assessment_request) do |f| %>
+  <% if @assessment_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assessment_request.errors.count, "error") %> prohibited this assessment_request from being saved:</h2>
+
+      <ul>
+      <% @assessment_request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :customer_first_name %><br />
+    <%= f.text_field :customer_first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_last_name %><br />
+    <%= f.text_field :customer_last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_phone %><br />
+    <%= f.text_field :customer_phone %>
+  </div>
+  <div class="field">
+    <%= f.label :customer_birth_date %><br />
+    <%= f.date_select :customer_birth_date,
+                      :start_year => 1900, :end_year => Time.now.year %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes, :rows => 5 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

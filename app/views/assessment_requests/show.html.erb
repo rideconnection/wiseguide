@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Customer first name:</b>
+  <%= @assessment_request.customer_first_name %>
+</p>
+
+<p>
+  <b>Customer last name:</b>
+  <%= @assessment_request.customer_last_name %>
+</p>
+
+<p>
+  <b>Customer phone:</b>
+  <%= @assessment_request.customer_phone %>
+</p>
+
+<p>
+  <b>Customer birth date:</b>
+  <%= @assessment_request.customer_birth_date %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @assessment_request.notes %>
+</p>
+
+<p>
+  <b>Submitter:</b>
+  <%= @assessment_request.submitter_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_assessment_request_path(@assessment_request) %> |
+<%= link_to 'Back', assessment_requests_path %>

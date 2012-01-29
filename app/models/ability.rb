@@ -9,10 +9,12 @@ class Ability
 
     # Outside user permissions
     if user.level == 25
+      can :create, AssessmentRequest
       return
     end
 
     #system tables
+    can :read, AssessmentRequest
     can :read, Disposition
     can :read, Ethnicity
     can :read, EventType
@@ -30,6 +32,7 @@ class Ability
     else
       ability = :read
     end
+    can ability, AssessmentRequest
     can ability, KaseRoute
     can ability, CustomerImpairment
     can ability, CustomerSupportNetworkMember
@@ -42,6 +45,7 @@ class Ability
     can ability, Survey
 
     unless user.is_admin
+      cannot :destroy, AssessmentRequest
       cannot :destroy, Kase
       cannot :destroy, Customer
       cannot :destroy, Event

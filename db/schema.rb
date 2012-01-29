@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116110000) do
+ActiveRecord::Schema.define(:version => 20120129200305) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(:version => 20120116110000) do
     t.datetime "updated_at"
     t.string   "default_value"
     t.string   "api_id"
+  end
+
+  create_table "assessment_requests", :force => true do |t|
+    t.string   "customer_first_name"
+    t.string   "customer_last_name"
+    t.string   "customer_phone"
+    t.date     "customer_birth_date"
+    t.text     "notes"
+    t.integer  "submitter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contacts", :force => true do |t|
