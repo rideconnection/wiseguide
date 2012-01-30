@@ -27,7 +27,10 @@
       <% if !current_user.nil? %>
       <ul id="primary-nav" class="selfclear">
         <% if current_user.is_outside_user %>
-          <!-- TODO: Outside user nav -->
+          <li class="home"><%= link_to "Dashboard", root_path %></li>
+          <li class="assessment-requests">
+            <%= link_to "Submit Request", new_assessment_request_path %>
+          </li>
         <% else %>
           <li class="customers"><%= link_to "Customers", customers_path %></li>
           <li class="kases"><%= link_to "Cases", kases_path %></li>
