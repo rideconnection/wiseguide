@@ -2,6 +2,18 @@
 <div id="outside-dashboard">
   <div class="section first">
     <h1>Pending Assessments</h1>
+    <ul>
+      <% current_user.organization.assessment_requests.each do |request| %>
+        <li>
+          <% if can? :edit, request %>
+            <%= link_to request.display_name,
+                        edit_assessment_request_path(request) %>
+          <% else %>
+            <%= link_to request.display_name, request %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   </div>
   <div class="section second">
     <h1>Recent Cases</h1>

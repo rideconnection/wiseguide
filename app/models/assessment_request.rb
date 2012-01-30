@@ -9,4 +9,12 @@ class AssessmentRequest < ActiveRecord::Base
   attr_accessible :customer_first_name, :customer_last_name,
                   :customer_birth_date, :customer_phone, :notes,
                   :submitter, :submitter_id
+
+  def display_name
+    return customer_last_name + ", " + customer_first_name
+  end
+  
+  def organization
+    return submitter.organization
+  end
 end

@@ -16,4 +16,14 @@ class Organization < ActiveRecord::Base
   def parent_name
     parent.nil? ? "None" : parent.name
   end
+
+  # Get all the assessment requests that were submitted by this organization
+  def assessment_requests
+    AssessmentRequest.where(:submitter_id => all_users())
+  end
+
+  # Get all users that are in this organization or a child organization
+  def all_users
+    User.where(:organization_id => self.children << self)
+  end
 end

@@ -1381,3 +1381,10 @@ body.surveyor p.response {
 #outside-dashboard .third {
     margin: 0;
 }
+#outside-dashboard ul {
+    margin: 0;
+}
+#outside-dashboard li {
+    list-style-type: none;
+    margin: 0.5em 0;
+}

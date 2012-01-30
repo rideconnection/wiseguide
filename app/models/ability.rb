@@ -8,8 +8,11 @@ class Ability
     end
 
     # Outside user permissions
-    if user.level == 25
+    if user.level == 25 then
       can :create, AssessmentRequest
+      can :read, AssessmentRequest, :organization => user.organization
+      can :read, AssessmentRequest, :organization => user.organization.children
+      can :update, AssessmentRequest, :submitter_id => user.id
       return
     end
 
