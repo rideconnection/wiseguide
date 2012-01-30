@@ -1372,3 +1372,12 @@ body.surveyor div.survey_section ol {
 body.surveyor p.response {
   padding-left : 20px;
 }
+
+#outside-dashboard .section {
+    float: left;
+    width: 30%;
+    margin: 0 5% 0 0;
+}
+#outside-dashboard .third {
+    margin: 0;
+}
