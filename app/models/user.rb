@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   end
 
   def is_outside_user
-    return organization_id > 1
+    return organization.name != 'Ride Connection'
   end
 
   def update_password(params)
