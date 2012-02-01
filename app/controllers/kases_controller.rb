@@ -18,14 +18,16 @@ class KasesController < ApplicationController
   end
 
   def new
+    params[:kase] ||= {}
     in_progress = Disposition.find_by_name('In Progress')
-    @kase = Kase.new(:customer_id=>params[:customer_id], :disposition_id=>in_progress.id)
+    params[:kase].merge!({:customer_id => params[:customer_id], :disposition_id => in_progress.id})
+    setup_sti_model
     @kase.county = Kase::VALID_COUNTIES.fetch(Customer.find(params[:customer_id]).county,nil)
     prep_edit
   end
 
   def create
-    @kase = Kase.new(params[:kase])
+    setup_sti_model
 
     if @kase.save
       redirect_to(@kase, :notice => 'Case was successfully created.') 
@@ -36,7 +38,6 @@ class KasesController < ApplicationController
   end
 
   def update
-
     if @kase.update_attributes(params[:kase])
       redirect_to(@kase, :notice => 'Case was successfully updated.') 
     else
@@ -64,7 +65,8 @@ class KasesController < ApplicationController
     render :json=>{:action=>:destroy, :kase_id=>@kase_route.kase_id, :route_id=>@kase_route.route_id}
   end
 
-  private
+private
+  
   def prep_edit
     @referral_types = ReferralType.accessible_by(current_ability)
     @users = [User.new(:email=>'Unassigned')] + User.active_or_selected(@kase.user_id).accessible_by(current_ability)
@@ -73,6 +75,15 @@ class KasesController < ApplicationController
 
     @kase_route = KaseRoute.new(:kase_id => @kase.id)
     @routes = Route.accessible_by(current_ability)
+  end
 
+  def setup_sti_model
+    # This lets us set the "type" attribute from forms and querystrings
+    model = nil
+    if !params[:kase].blank? and !params[:kase][:type].blank?
+      model = params[:kase].delete(:type).constantize.to_s
+    end
+    @kase = Kase.new(params[:kase])
+    @kase.type = model
   end
 end

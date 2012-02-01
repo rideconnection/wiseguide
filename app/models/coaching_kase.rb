@@ -1,0 +1,1 @@
+class CoachingKase < Kase; end

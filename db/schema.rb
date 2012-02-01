@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129200305) do
+ActiveRecord::Schema.define(:version => 20120201154751) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(:version => 20120129200305) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "county",            :limit => 1
+    t.string   "type"
   end
 
   create_table "organization_types", :force => true do |t|

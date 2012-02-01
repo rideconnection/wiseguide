@@ -1,0 +1,1 @@
+class TrainingKase < Kase; end
