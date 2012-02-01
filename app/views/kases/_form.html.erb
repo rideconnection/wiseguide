@@ -11,53 +11,54 @@
     </div>
   <% end %>
 
-<%= f.hidden_field :customer_id %>
+  <%= f.hidden_field :customer_id %>
+  <%= f.hidden_field :type %>
 
-<ol class="section">
-  <li>
-    <%= f.label :open_date, "Opened" %>
-    <%= f.text_field :open_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
-  </li>
+  <ol class="section">
+    <li>
+      <%= f.label :open_date, "Opened" %>
+      <%= f.text_field :open_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+    </li>
   
-  <li>
-    <%= f.label :referral_source %>
-    <%= f.text_field :referral_source %>
-  </li>
+    <li>
+      <%= f.label :referral_source %>
+      <%= f.text_field :referral_source %>
+    </li>
 
-  <li>
-    <%= f.label :referral_type_id, "Referral Source Type" %>
-    <%= f.collection_select :referral_type_id, @referral_types, :id, :name, :prompt => '<Select Option>' %>
-  </li>
+    <li>
+      <%= f.label :referral_type_id, "Referral Source Type" %>
+      <%= f.collection_select :referral_type_id, @referral_types, :id, :name, :prompt => '<Select Option>' %>
+    </li>
 
-  <li>
-    <%= f.label :user_id, "Assigned to" %>
-    <%= f.collection_select :user_id, @users, :id, :email %>
-  </li>
+    <li>
+      <%= f.label :user_id, "Assigned to" %>
+      <%= f.collection_select :user_id, @users, :id, :email %>
+    </li>
 
-  <li>
-    <%= f.label :county, "County of Service" %>
-    <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>
-  </li>
+    <li>
+      <%= f.label :county, "County of Service" %>
+      <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>
+    </li>
 
-  <li>
-    <%= f.label :funding_source_id, "Default Funding Source" %>
-    <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => '<Select Option>' %>
-  </li>
+    <li>
+      <%= f.label :funding_source_id, "Default Funding Source" %>
+      <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => '<Select Option>' %>
+    </li>
 
-  <li>
-    <%= f.label :close_date, "Closed" %>
-    <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
-  </li>
+    <li>
+      <%= f.label :close_date, "Closed" %>
+      <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+    </li>
 
-  <li>
-    <%= f.label :disposition_id, "Disposition" %>
-    <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
-  </li>
+    <li>
+      <%= f.label :disposition_id, "Disposition" %>
+      <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
+    </li>
   
-  <li>
-    <div class="actions">
-      <%= f.submit "Save" %>
-    </div>
-  </li>
-</ol>
+    <li>
+      <div class="actions">
+        <%= f.submit "Save" %>
+      </div>
+    </li>
+  </ol>
 <% end %>

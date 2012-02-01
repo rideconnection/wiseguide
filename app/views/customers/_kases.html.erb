@@ -1,6 +1,6 @@
 <h1>Cases</h1>
 <% if can? :edit, @customer %>
-  <%= link_to "Add", new_kase_path(:customer_id=>@customer.id), :class => :add %>
+  <%= link_to "Add", new_kase_path(:customer_id=>@customer.id, :kase => {:type => 'TrainingKase'}), :class => :add %>
 <% end %>
 <table>
   <% for kase in @customer.kases %>
