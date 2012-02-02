@@ -22,11 +22,8 @@ class Kase < ActiveRecord::Base
   validates              :open_date, :date => { :before_or_equal_to => Proc.new { Date.current } }
   validates_presence_of  :referral_source
   validates_presence_of  :referral_type_id
-  validates_presence_of  :funding_source_id
-  validates              :close_date, :date => { :after => :open_date, :before_or_equal_to => Proc.new { Date.current } }, :allow_blank => true
   validates_presence_of  :disposition
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
-  validates_inclusion_of :county, :in => VALID_COUNTIES.values
   validate do |kase|
     kase.errors[:disposition_id] << "cannot be 'In Progress' if case is closed" if kase.close_date.present? && kase.disposition.name == 'In Progress'
     kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.subclasses.map{|klass| klass.name}.include?(kase.type)
