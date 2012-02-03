@@ -13,7 +13,7 @@
 <% @organizations.each do |organization| %>
   <tr>
     <td><%= organization.name %></td>
-    <td><%= organization.organization_type.name %></td>
+    <td><%= organization.organization_type_name %></td>
     <td><%= organization.parent_name %></td>
     <td><%= link_to 'Show', organization %></td>
     <td>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129200305) do
+ActiveRecord::Schema.define(:version => 20120203064651) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -225,24 +225,23 @@ ActiveRecord::Schema.define(:version => 20120129200305) do
     t.integer  "disposition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                   :default => 0
+    t.integer  "lock_version",                                :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
-    t.string   "county",            :limit => 1
-  end
-
-  create_table "organization_types", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "county",                         :limit => 1
+    t.string   "type"
+    t.date     "assessment_date"
+    t.string   "assessment_language"
+    t.date     "case_manager_notification_date"
+    t.integer  "case_manager_id"
   end
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
-    t.integer  "organization_type_id"
-    t.integer  "parent_id",            :default => 0
+    t.integer  "parent_id",         :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "organization_type"
   end
 
   create_table "outcomes", :force => true do |t|

@@ -64,8 +64,8 @@ class User < ActiveRecord::Base
     return level == 100
   end
 
-  def is_outside_user
-    return organization.name != 'Ride Connection'
+  def is_outside_user?
+    return organization.is_outside_org?
   end
 
   def update_password(params)
@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
 
   def clean_level
     # Force outside users to level 25 on save
-    if is_outside_user then
+    if is_outside_user? then
       self.level = 25
     elsif self.level == 25
       # Make formerly outside users viewers by default

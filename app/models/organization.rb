@@ -1,16 +1,30 @@
 class Organization < ActiveRecord::Base
-  belongs_to :organization_type
   belongs_to :parent, :class_name => "Organization"
 
-  validates_presence_of :organization_type
-  validates_presence_of :parent, :if => :is_cmo?
+  ORGANIZATION_TYPES = {
+    :parent =>     {:id => "parent",     :name => "Parent Organization"},
+    :government => {:id => "government", :name => "Government Body"},
+    :case_mgmt =>  {:id => "case_mgmt",  :name => "Case Management Organization"}
+  }
+
+  validates_presence_of  :organization_type
+  validates_inclusion_of :organization_type, :in => ORGANIZATION_TYPES.values.collect{|t| t[:id]}
+  validates_presence_of  :parent, :if => :is_cmo?
 
   has_many :users
   has_many :children, :class_name => "Organization",
            :foreign_key => "parent_id", :dependent => :nullify
 
+  def organization_type_name
+    ORGANIZATION_TYPES[organization_type.to_sym][:name]
+  end
+  
   def is_cmo?
-    organization_type.name == 'Case Management Organization'
+    organization_type == ORGANIZATION_TYPES[:case_mgmt][:id]
+  end
+  
+  def is_outside_org?
+    organization_type != ORGANIZATION_TYPES[:parent][:id]
   end
 
   def parent_name

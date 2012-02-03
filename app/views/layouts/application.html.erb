@@ -28,7 +28,7 @@
     <div class="wrap selfclear">             
       <% if !current_user.nil? %>
       <ul id="primary-nav" class="selfclear">
-        <% if current_user.is_outside_user %>
+        <% if current_user.is_outside_user? %>
           <li class="home"><%= link_to "Dashboard", root_path %></li>
           <li class="assessment-requests">
             <%= link_to "Submit Request", new_assessment_request_path %>
@@ -40,7 +40,7 @@
         <% end %>
       </ul>
       <ul id="secondary-nav" class="selfclear">
-        <% if !current_user.is_outside_user %>
+        <% if !current_user.is_outside_user? %>
           <li class="admin"><%= link_to "Admin", admin_path %></li>
         <% end %>
       </ul>
