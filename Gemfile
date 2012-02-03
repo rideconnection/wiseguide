@@ -56,7 +56,7 @@ gem 'spork'
 gem 'launchy'
 gem 'machinist', '>= 2.0.0.beta1'
 gem 'faker'
-gem 'factory_girl_rails'
+gem "factory_girl_rails", "~> 1.5.0"
 
 # Bundle the extra gems:
 # gem 'bj'

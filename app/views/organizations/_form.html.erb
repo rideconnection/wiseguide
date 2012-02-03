@@ -1,9 +1,8 @@
 <%= form_for(@organization) do |f| %>
   <script type="text/JavaScript">
     function updateParentVisible() {
-      var element = $("#organization_organization_type_id")[0];
-      var option = element.options[element.selectedIndex];
-      if (option.value == 3) {
+      var org = $("#organization_organization_type").val();
+      if (org == "<%=j Organization::ORGANIZATION_TYPES[:case_mgmt][:id] %>") {
         $("#organization-parent").show();
       } else {
         $("#organization-parent").hide();
@@ -30,15 +29,16 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :organization_type_id %><br />
-    <%= collection_select(:organization, :organization_type_id,
-                          OrganizationType.all, :id, :name, {:prompt => true},
-                          {:onchange => "updateParentVisible();"}) %>
+    <%= f.label :organization_type %><br />
+    <%= select(:organization, :organization_type, 
+               options_for_select(Organization::ORGANIZATION_TYPES.values.collect{|t| [t[:name], t[:id]]}, @organization.organization_type),
+               {:prompt => true},
+               {:onchange => "updateParentVisible();"}) %>
   </div>
   <div class="field" id="organization-parent">
     <%= f.label :parent_id, "Parent Organization (Government Body)"  %><br />
     <%= collection_select(:organization, :parent_id,
-                          Organization.find_all_by_organization_type_id(2),
+                          Organization.find_all_by_organization_type(Organization::ORGANIZATION_TYPES[:government][:id]),
                           :id, :name, {:include_blank => true}) %>
   </div>
   <div class="actions">

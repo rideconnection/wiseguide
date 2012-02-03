@@ -11,8 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202215210) do
 
+ActiveRecord::Schema.define(:version => 20120203064651) do
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
     t.text     "text"
@@ -236,18 +236,12 @@ ActiveRecord::Schema.define(:version => 20120202215210) do
     t.integer  "case_manager_id"
   end
 
-  create_table "organization_types", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "organizations", :force => true do |t|
     t.string   "name"
-    t.integer  "organization_type_id"
-    t.integer  "parent_id",            :default => 0
+    t.integer  "parent_id",         :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "organization_type"
   end
 
   create_table "outcomes", :force => true do |t|

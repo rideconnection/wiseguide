@@ -31,26 +31,19 @@ end
   EventType.find_or_create_by_name(et)
 end
 
-CSV.foreach(File.join(Rails.root,'db','seeds','impairments.csv'),headers: true) do |r|
+CSV.foreach(File.join(Rails.root,'db','seeds','impairments.csv'), headers: true) do |r|
   Impairment.find_or_create_by_name(r['name'])
 end
 
-CSV.foreach(File.join(Rails.root,'db','seeds','routes.csv'),headers: true) do |r|
+CSV.foreach(File.join(Rails.root,'db','seeds','routes.csv'), headers: true) do |r|
   Route.find_or_create_by_name(r['name'])
 end
 
-CSV.foreach(File.join(Rails.root,'db','seeds','referral_types.csv'),headers: true) do |r|
+CSV.foreach(File.join(Rails.root,'db','seeds','referral_types.csv'), headers: true) do |r|
   ReferralType.find_or_create_by_name(r['name'])
-end
-
-['Ride Connection Staff',
- 'Government Body',
- 'Case Management Organization'
-].each do |name|
-  OrganizationType.find_or_create_by_name(name)
 end
 
 Organization.find_or_create_by_name(
   :name => 'Ride Connection',
-  :organization_type => OrganizationType.find_by_name('Ride Connection Staff'),
+  :organization_type => Organization::ORGANIZATION_TYPES[:parent][:id]
 )
