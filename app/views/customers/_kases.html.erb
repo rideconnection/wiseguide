@@ -1,8 +1,68 @@
+<script type="text/JavaScript">
+  $(document).ready(function() {
+    var linkmenu = $('#new_kase_links');
+    var links = linkmenu.find('li > a');
+    var wrapper = $('#new_kase_links_container');
+    wrapper.before(linkmenu);
+    wrapper.remove();
+    var trigger = $('<a class="add" href="#">Add</a>');
+    linkmenu.before(trigger);
+    linkmenu.hide();
+    linkmenu.parent().css('position', 'relative');
+    trigger.css('position', 'relative');
+    linkmenu.css({whiteSpace: 'nowrap', width: 'auto'});
+    trigger.addClass('kase_dropdown'); // We need to calculate these values
+                                       // after the kase_dropdown class is
+                                       // applied since that's what will be
+                                       // active when the menu is visible.
+    var t =  parseInt(trigger.outerHeight()) 
+      + 3; /* half padding-top + border-top-width */
+    var l = parseInt(trigger.css('margin-left')) 
+      - (
+        linkmenu.outerWidth() 
+        - trigger.outerWidth()
+      );
+    linkmenu.css({position: 'absolute', top: t + 'px', left: l + 'px'});
+    trigger.removeClass('kase_dropdown'); // Back to normal
+    trigger.click(function(e){
+      menu = $('#new_kase_links');
+      menu.toggle(); 
+      $(this).toggleClass('kase_dropdown');
+      return false;
+    });
+  });
+</script>
+<style type="text/css" media="screen">
+  #new_kase_links, .kase_dropdown {
+    border: 1px solid black;
+    padding: 4px;
+    background-color: #fff !important;
+  }
+  a.kase_dropdown {
+    border-radius: 5px 5px 0 0;
+    padding: 4px 4px 7px 21px;
+    background-position: 1px center;
+    border-bottom: 0 none;
+    z-index: 101;
+  }
+  #new_kase_links {
+    border-radius: 5px 0 5px 5px;
+    z-index: 100;
+  }
+</style>
 <h1>Cases</h1>
 <% if can? :edit, @customer %>
-  <%= link_to "Add", new_kase_path(:customer_id=>@customer.id, :kase => {:type => 'TrainingKase'}), :class => :add %>
+  <ul id="new_kase_links_container">
+    <li>Add new...
+      <ul id="new_kase_links">
+        <li><%= link_to "Coaching Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "CoachingKase"}) %></li>
+        <li><%= link_to "Training Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "TrainingKase"}) %></li>
+      </ul>
+    </li>
+  </ul>
 <% end %>
 <table>
+  <tr><td colspan="3">Woooo!</td></tr>
   <% for kase in @customer.kases %>
     <tr class="auto-zebra">
       <td><%= kase.open_date %> -</td>

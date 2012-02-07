@@ -35,16 +35,18 @@
       <%= f.collection_select :user_id, @users, :id, :email %>
     </li>
 
-    <li>
-      <%= f.label :county, "County of Service" %>
-      <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>
-    </li>
+    <% if @kase.type == "TrainingKase" %>
+      <li>
+        <%= f.label :county, "County of Service" %>
+        <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>
+      </li>
 
-    <li>
-      <%= f.label :funding_source_id, "Default Funding Source" %>
-      <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => '<Select Option>' %>
-    </li>
-
+      <li>
+        <%= f.label :funding_source_id, "Default Funding Source" %>
+        <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => '<Select Option>' %>
+      </li>
+    <% end -%>
+    
     <li>
       <%= f.label :close_date, "Closed" %>
       <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
@@ -55,6 +57,28 @@
       <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
     </li>
   
+    <% if @kase.type == "CoachingKase" %>
+      <li>
+        <%= f.label :case_manager_id, "Case Manager" %>
+        <%= f.collection_select :case_manager_id, @case_managers, :id, :email, {:prompt => "<Select Case Manager>"} %>
+      </li>
+
+      <li>
+        <%= f.label :case_manager_notification_date, "Case Manager Notification Date" %>
+        <%= f.text_field :case_manager_notification_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+      </li>
+
+      <li>
+        <%= f.label :assessment_language, "Assessment Language" %>
+        <%= f.text_field :assessment_language %>
+      </li>
+
+      <li>
+        <%= f.label :assessment_date, "Assessment Date" %>
+        <%= f.text_field :assessment_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+      </li>
+    <% end -%>
+    
     <li>
       <div class="actions">
         <%= f.submit "Save" %>

@@ -1,3 +1,7 @@
+# We deleted the original model file on 03-Feb-2012, so this is a 
+# placeholder model just for the migration.
+class OrganizationType < ActiveRecord::Base; end
+
 # Create a Ride Connection organization if it doesn't exist.  Add all
 # users to it.
 class PopulateInitialOrganization < ActiveRecord::Migration
@@ -9,9 +13,8 @@ class PopulateInitialOrganization < ActiveRecord::Migration
       OrganizationType.find_or_create_by_name(name)
     end
     type = OrganizationType.find_by_name('Ride Connection Staff')
-    rc = Organization.find_or_create_by_name(
-      :name => 'Ride Connection',
-      :organization_type => type)
+    rc = Organization.find_or_initialize_by_name('Ride Connection', :organization_type_id => type.id)
+    rc.save!(:validate => false) unless rc.persisted?
 
     User.all.each do |user|
       if user.organization.nil? then

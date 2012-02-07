@@ -28,9 +28,10 @@ class KasesController < ApplicationController
 
   def create
     setup_sti_model
-
+    
     if @kase.save
-      redirect_to(@kase, :notice => 'Case was successfully created.') 
+      @kase.reload
+      redirect_to(@kase, :notice => '%s was successfully created.' % @kase.class.human_name.sub(/\bKase\b/, 'Case')) 
     else
       prep_edit
       render :action => "new"
@@ -39,7 +40,7 @@ class KasesController < ApplicationController
 
   def update
     if @kase.update_attributes(params[:kase])
-      redirect_to(@kase, :notice => 'Case was successfully updated.') 
+      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.human_name.sub(/\bKase\b/, 'Case')) 
     else
       prep_edit
       render :action => "show"
@@ -48,7 +49,7 @@ class KasesController < ApplicationController
 
   def destroy
     @kase.destroy
-    redirect_to(kases_url, :notice => "Case was successfully deleted.")
+    redirect_to(kases_url, :notice => "%s was successfully deleted." % @kase.class.human_name.sub(/\bKase\b/, 'Case'))
   end
 
   def add_route
@@ -69,7 +70,8 @@ private
   
   def prep_edit
     @referral_types = ReferralType.accessible_by(current_ability)
-    @users = [User.new(:email=>'Unassigned')] + User.active_or_selected(@kase.user_id).accessible_by(current_ability)
+    @users = [User.new(:email=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
+    @case_managers = User.outside_or_selected(@kase.case_manager_id).accessible_by(current_ability)
     @dispositions = Disposition.accessible_by(current_ability)
     @funding_sources = FundingSource.accessible_by(current_ability)
 
@@ -78,12 +80,36 @@ private
   end
 
   def setup_sti_model
-    # This lets us set the "type" attribute from forms and querystrings
-    model = nil
+    # Attempt to instantiate the correct Kase subclass based on the type 
+    # parameter sent from forms and querystrings
+    # logger.debug "Attempting to detect implied Kase subclass"
     if !params[:kase].blank? and !params[:kase][:type].blank?
-      model = params[:kase].delete(:type).constantize.to_s
+      # Type param found, let's see if it's a valid subclass
+      type = params[:kase].delete(:type)
+      # logger.debug "Type param '#{type}' found. Looking for match in list of Kase.descendants:"
+      begin
+        # logger.debug "Attempting to constantize '#{type}' to a model class"
+        model = type.constantize
+        # logger.debug "Attempting to instantiate '#{type}' model class"
+        @kase = model.new(params[:kase])
+        # logger.debug @kase.inspect
+      rescue => e
+        # Type param found, but an error prevented us from creating the 
+        # object. Fall through to create a generic Kase object
+        # logger.debug "Type param '#{type}' found, but an error prevented us from creating the object: #{e}"
+      else
+        # No errors encountered, return having instantiated the proper 
+        # subclass
+        # logger.debug "No errors encountered, returning"
+        return
+      end
+    else
+      # No type param was found, fall through to create a generic Kase object
+      # logger.debug "Type param not found"
     end
+    # If all else fails just instantiate a generic Kase object
+    # logger.debug "Could not instantiate a subclass. Creating generic Kase object instead"
     @kase = Kase.new(params[:kase])
-    @kase.type = model
+    # logger.debug @kase.inspect
   end
 end

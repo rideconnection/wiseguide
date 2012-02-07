@@ -26,7 +26,7 @@ class Kase < ActiveRecord::Base
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
   validate do |kase|
     kase.errors[:disposition_id] << "cannot be 'In Progress' if case is closed" if kase.close_date.present? && kase.disposition.name == 'In Progress'
-    kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.subclasses.map{|klass| klass.name}.include?(kase.type)
+    kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.descendants.map{|klass| klass.original_model_name}.include?(kase.type)
   end
 
   scope :assigned_to, lambda {|user| where(:user_id => user.id) }
@@ -42,11 +42,17 @@ class Kase < ActiveRecord::Base
   scope :has_six_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
   scope :for_funding_source_id, lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
 
-  # Make sure our STI children are routed properly
+  # Make sure our STI children are routed through the parent routes
   def self.inherited(child)
-    child.instance_eval do
+    child.instance_eval do      
+      alias :original_model_name :model_name
+            
       def model_name
         Kase.model_name
+      end
+      
+      def human_name
+        self.original_model_name.underscore.humanize.titlecase
       end
     end
     super

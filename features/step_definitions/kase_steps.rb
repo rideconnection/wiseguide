@@ -1,20 +1,40 @@
-When /^I click the link to add a case$/ do
-  find("#kases a[href='/cases/new?customer_id=#{@customer.id}']").click
+When /^I click the link to add a ([^ ]+) case$/ do |type|
+  find("#kases a[href='/cases/new?customer_id=#{@customer.id}&kase[type]=#{type.titlecase}Kase']").click
 end
 
-Then /^I should be able to create a new open, unassigned case for the customer$/ do
+def fill_common_kase_attributes
   # Use 'Yesterday' for the open date so that we can close it 'Today' in other tests
   fill_in "Opened", :with => Date.yesterday.strftime('%Y-%m-%d')
   fill_in "Referral source", :with => "Source"
   select @referral_type.name, :from => "Referral Source Type"
-  select @funding_source.name, :from => "Default Funding Source"
+end
+
+def fill_common_open_unassigned_kase_attributes  
+  fill_common_kase_attributes
   select "Unassigned", :from => "Assigned to"
-  select "In Progress", :from => "Disposition"
+  select "In Progress", :from => "Disposition"  
+end
+
+Then /^I should be able to create a new open, unassigned coaching case for the customer$/ do
+  fill_common_open_unassigned_kase_attributes
+  select @case_manager.email, :from => "Case Manager"
+  fill_in "Assessment Language", :with => "Pirate"
+  fill_in "Assessment Date", :with => Date.yesterday.strftime('%Y-%m-%d')
+  click_button "Save"
+  # Get the newly generated ID so we can find the record later
+  @kase = Kase.find_by_open_date(Date.yesterday.strftime('%Y-%m-%d'))
+  @confirmation_message = 'Coaching Case was successfully created.'
+  step %Q(I should see a confirmation message)
+end
+
+Then /^I should be able to create a new open, unassigned training case for the customer$/ do
+  fill_common_open_unassigned_kase_attributes
+  select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
   click_button "Save"
   # Get the newly generated ID so we can find the record later
   @kase = Kase.find_by_open_date(Date.yesterday.strftime('%Y-%m-%d'))
-  @confirmation_message = 'Case was successfully created.'
+  @confirmation_message = 'Training Case was successfully created.'
   step %Q(I should see a confirmation message)
 end
 
@@ -111,7 +131,7 @@ Then /^I should( not)? see the case listed on the Cases page$/ do |negation|
   end
 end
 
-Then /^I should( not)? see the case listed as "([^"]*)" on the case(?:'s) customer(?:'s) profile$/ do |negation, disposition|
+Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) profile$/ do |negation, disposition|
   assertion = negation ? :should_not : :should
   visit "/customers/#{@kase.customer.id}"
   selector = "a[href='/cases/#{@kase.id}']"
@@ -149,4 +169,16 @@ end
 Then /^I should see an error message because I don't have permission to delete the case$/ do
   # page.driver.status_code.should be 403
   page.should have_content("You are not allowed to take the action you requested.")
+end
+
+Then /^I should not see any coaching case fields$/ do
+  page.should_not have_selector("#kase_case_manager_id")
+  page.should_not have_selector("#kase_case_manager_notification_date")
+  page.should_not have_selector("#kase_assessment_language")
+  page.should_not have_selector("#kase_assessment_date")
+end
+
+Then /^I should not see any training case fields$/ do
+  page.should_not have_selector("#kase_county")
+  page.should_not have_selector("#kase_funding_source_id")
 end

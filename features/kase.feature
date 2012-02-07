@@ -1,9 +1,10 @@
-Feature: Manage kases aka cases
+Feature: Manage cases aka kases
   As a user of the system
   trainers and admins
-  want to be able to manage cases
+  want to be able to manage coaching and training cases
   
-  Scenario: Trainers can create new cases
+  @kases
+  Scenario: Trainers can create new training cases
     Given I am logged in as a trainer
       And a customer exists
       And a referral type exists
@@ -11,13 +12,30 @@ Feature: Manage kases aka cases
       And I am on the homepage
     When I click on the "Customers" link
       And I click through to the customer's profile
-      And I click the link to add a case
-    Then I should be able to create a new open, unassigned case for the customer
+      And I click the link to add a training case
+    Then I should not see any coaching case fields
+      And I should be able to create a new open, unassigned training case for the customer
       And I should see a confirmation message
-      And I should see the case listed as "In Progress" on the case's customer's profile
+      And I should see the case listed as "In Progress" on the customer's profile
       And I should see the case listed in the "Wait List" section of the Cases page
   
-  Scenario: Trainers can edit a case by assigning it to themselves
+  @kases
+  Scenario: Trainers can create new coaching cases
+    Given I am logged in as a trainer
+      And a customer exists
+      And a case manager exists
+      And a referral type exists
+      And I am on the homepage
+    When I click on the "Customers" link
+      And I click through to the customer's profile
+      And I click the link to add a coaching case
+    Then I should not see any training case fields
+      And I should be able to create a new open, unassigned coaching case for the customer
+      And I should see a confirmation message
+      And I should see the case listed as "In Progress" on the customer's profile
+      And I should see the case listed in the "Wait List" section of the Cases page
+  
+  Scenario: Trainers can assign cases to themselves
     Given I am logged in as a trainer
       And an unassigned open case exists
       And I am on the homepage
@@ -27,7 +45,7 @@ Feature: Manage kases aka cases
       And I should see a confirmation message
       And I should see the case listed in the "Open" sub-section of the "My Cases" section of the Cases page
   
-  Scenario: Trainers can edit a case by assigning it to another trainer
+  Scenario: Trainers can assign cases to another trainer
     Given I am logged in as a trainer
       And another trainer exists
       And an unassigned open case exists
@@ -49,7 +67,7 @@ Feature: Manage kases aka cases
     Then I should be able to close the case
       And I should see a confirmation message
       And I should not see the case listed on the Cases page
-      And I should see the case listed as "Successful" on the case's customer's profile
+      And I should see the case listed as "Successful" on the customer's profile
   
   Scenario: Trainers can close a case assigned to another trainer
     Given I am logged in as a trainer
@@ -62,7 +80,7 @@ Feature: Manage kases aka cases
     Then I should be able to close the case
       And I should see a confirmation message
       And I should not see the case listed on the Cases page
-      And I should see the case listed as "Successful" on the case's customer's profile
+      And I should see the case listed as "Successful" on the customer's profile
   
   @javascript
   Scenario: Trainers cannot delete a case
