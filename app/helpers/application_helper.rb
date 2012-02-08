@@ -21,4 +21,8 @@ module ApplicationHelper
     "#{a} #{b}".gsub(/_/, '-')
   end
 
+  def kase_type_icon(kase)
+    raw "[" + content_tag(:span, kase.class.humanized_name[0], :title => kase.class.humanized_name) + "]"
+  end
+
 end

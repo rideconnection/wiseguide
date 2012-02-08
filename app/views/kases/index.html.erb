@@ -4,19 +4,19 @@
     <h2>Open</h2>
     <% for kase in @my_open_kases %>
       <li class="open">
-        <%= link_to kase.customer.name_reversed, kase %><br/>
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %>
       </li>
     <% end %>
     <h2>3 Month Follow-ups</h2>
     <% for kase in @my_three_month_follow_ups %>
-      <liclass="3_month_follow_ups">
-        <%= link_to kase.customer.name_reversed, kase %> (closed <%= kase.close_date %>)<br/> 
+      <li class="3_month_follow_ups">
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (closed <%= kase.close_date %>) 
       </li>
     <% end %>
     <h2>6 Month Follow-ups</h2>
     <% for kase in @my_six_month_follow_ups %>
       <li class="6_month_follow_ups">
-        <%= link_to kase.customer.name_reversed, kase %> (closed <%= kase.close_date %>)<br/> 
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (closed <%= kase.close_date %>) 
       </li>
     <% end %>
   </ol>
@@ -25,19 +25,19 @@
     <h2>Open</h2>
     <% for kase in @other_open_kases %>
       <li class="open">
-        <%= link_to kase.customer.name_reversed, kase %> (<%= kase.assigned_to.email %>)<br/> 
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.assigned_to.email %>) 
       </li>
     <% end %>
     <h2>3 Month Follow-ups</h2>
     <% for kase in @other_three_month_follow_ups %>
       <li class="3_month_follow_ups">
-        <%= link_to kase.customer.name_reversed, kase %> (closed <%= kase.close_date %>)<br/> 
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (closed <%= kase.close_date %>) 
       </li>
     <% end %>
     <h2>6 Month Follow-ups</h2>
     <% for kase in @other_six_month_follow_ups %>
       <li class="6_month_follow_ups">
-        <%= link_to kase.customer.name_reversed, kase %> (closed <%= kase.close_date %>)<br/> 
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (closed <%= kase.close_date %>) 
       </li>
     <% end %>
   </ol>
@@ -45,7 +45,7 @@
     <h1>Wait List</h1>
     <% for kase in @wait_list %>
       <li>
-        <%= link_to kase.customer.name_reversed, kase %> (<%= kase.open_date.strftime('%v') %>)<br/>
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.open_date.strftime('%v') %>)
       </li>
     <% end %>
   </ol>

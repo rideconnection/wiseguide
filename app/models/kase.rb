@@ -54,6 +54,10 @@ class Kase < ActiveRecord::Base
       def human_name
         self.original_model_name.underscore.humanize.titlecase
       end
+      
+      def humanized_name
+        human_name.sub(/\bKase\b/, 'Case')
+      end
     end
     super
   end

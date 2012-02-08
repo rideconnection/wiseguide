@@ -31,7 +31,7 @@ class KasesController < ApplicationController
     
     if @kase.save
       @kase.reload
-      redirect_to(@kase, :notice => '%s was successfully created.' % @kase.class.human_name.sub(/\bKase\b/, 'Case')) 
+      redirect_to(@kase, :notice => '%s was successfully created.' % @kase.class.humanized_name) 
     else
       prep_edit
       render :action => "new"
@@ -40,7 +40,7 @@ class KasesController < ApplicationController
 
   def update
     if @kase.update_attributes(params[:kase])
-      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.human_name.sub(/\bKase\b/, 'Case')) 
+      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.humanized_name) 
     else
       prep_edit
       render :action => "show"
@@ -49,7 +49,7 @@ class KasesController < ApplicationController
 
   def destroy
     @kase.destroy
-    redirect_to(kases_url, :notice => "%s was successfully deleted." % @kase.class.human_name.sub(/\bKase\b/, 'Case'))
+    redirect_to(kases_url, :notice => "%s was successfully deleted." % @kase.class.humanized_name)
   end
 
   def add_route

@@ -61,10 +61,11 @@
     </li>
   </ul>
 <% end %>
-<table>
+<table cellpadding="2">
   <% for kase in @customer.kases %>
     <tr class="auto-zebra">
-      <td><%= kase.open_date %> -</td>
+      <td><%= kase.open_date %></td>
+      <td><%= kase_type_icon kase %></td>
       <td><%= kase.disposition.name %></td>
       <td><%= link_to "Details", kase, :class=>"details" %></td>
     </tr>

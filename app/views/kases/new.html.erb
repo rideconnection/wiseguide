@@ -1,4 +1,4 @@
-<%= render 'shared/breadcrumbs', :target => @kase, :name => 'Case' %>
+<%= render 'shared/breadcrumbs', :target => @kase, :name => "New #{@kase.class.humanized_name}" %>
 <fieldset>
   <%= render "form" %>
 </fieldset>
