@@ -5,6 +5,7 @@ def load_sandbox_data
   raise 'Sandboxing not permitted in production.' if Rails.env == 'production' 
   create_users
   create_customers
+  create_simple_survey
 end
 
 def create_users
@@ -17,6 +18,7 @@ def create_users
   Factory.create(:user,
                  :email => 'viewer@rideconnection.org',
                  :level => 0)
+  Factory.create(:case_manager)
 end
 
 def create_customers
@@ -57,4 +59,9 @@ def create_customers
       :county         => County.all.sample.name
     )
   end
+end
+
+def create_simple_survey
+  # This will create all of the appropriate associations too
+  Factory(:answer)
 end

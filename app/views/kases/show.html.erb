@@ -8,34 +8,38 @@
     <%#= last_updated @kase %>
     <ol class="section" id="contacts">
       <li>
-      <%= render "contacts" %>
+        <%= render "contacts" %>
       </li>
     </ol>
     
-    <ol class="section" id="events">
-      <li>
-      <%= render "events" %>
-      </li>
-    </ol>
+    <% unless @kase.type == "CoachingKase" %>
+      <ol class="section" id="events">
+        <li>
+          <%= render "events" %>
+        </li>
+      </ol>
+    <% end -%>
   </div>
 
   <div class="second">
     <ol class="section" id="surveys">
       <li>
-      <%= render "surveys" %>
+        <%= render "surveys" %>
       </li>
     </ol>
     
-    <ol class="section" id="trained_routes">
-      <li>
-      <%= render "routes", :locals=>{:edit => false} %>
-      </li>
-    </ol>
+    <% unless @kase.type == "CoachingKase" %>
+      <ol class="section" id="trained_routes">
+        <li>
+          <%= render "routes", :locals=>{:edit => false} %>
+        </li>
+      </ol>
 
-    <ol class="section" id="outcomes">
-      <li>
-      <%= render "outcomes" %>
-      </li>
-    </ol>
+      <ol class="section" id="outcomes">
+        <li>
+          <%= render "outcomes" %>
+        </li>
+      </ol>
+    <% end -%>
   </div>
 </fieldset>

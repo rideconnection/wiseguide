@@ -145,7 +145,17 @@ end
 
 Given /^an open case exists$/ do
   @kase = Factory(:open_kase)
-  @customer = @kase.customer  
+  @customer = @kase.customer
+end
+
+Given /^an open coaching case exists$/ do
+  @kase = Factory(:open_coaching_kase)
+  @customer = @kase.customer
+end
+
+Given /^an open training case exists$/ do
+  @kase = Factory(:open_training_kase)
+  @customer = @kase.customer
 end
 
 Then /^I should( not)? see a button to delete the case$/ do |negation|

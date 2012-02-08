@@ -1,5 +1,5 @@
 <h1><%= local_assigns[:title].nil? ? 'Assessments' : title%></h1>
-<% if can? :edit, @kase %>
+<% if can?(:edit, @kase) && !(@kase.type == "CoachingKase" && @kase.response_sets.count > 0)%>
   <%= link_to "Add", new_survey_path(:kase_id=>@kase.id), :class => "add" %>
 <% end %>
 <table>

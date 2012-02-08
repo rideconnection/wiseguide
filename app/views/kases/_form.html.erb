@@ -47,16 +47,6 @@
       </li>
     <% end -%>
     
-    <li>
-      <%= f.label :close_date, "Closed" %>
-      <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
-    </li>
-
-    <li>
-      <%= f.label :disposition_id, "Disposition" %>
-      <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
-    </li>
-  
     <% if @kase.type == "CoachingKase" %>
       <li>
         <%= f.label :case_manager_id, "Case Manager" %>
@@ -79,6 +69,16 @@
       </li>
     <% end -%>
     
+    <li>
+      <%= f.label :close_date, "Closed" %>
+      <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+    </li>
+
+    <li>
+      <%= f.label :disposition_id, "Disposition" %>
+      <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
+    </li>
+  
     <li>
       <div class="actions">
         <%= f.submit "Save" %>

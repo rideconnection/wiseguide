@@ -3,7 +3,6 @@ Feature: Manage cases aka kases
   trainers and admins
   want to be able to manage coaching and training cases
   
-  @kases
   Scenario: Trainers can create new training cases
     Given I am logged in as a trainer
       And a customer exists
@@ -19,7 +18,6 @@ Feature: Manage cases aka kases
       And I should see the case listed as "In Progress" on the customer's profile
       And I should see the case listed in the "Wait List" section of the Cases page
   
-  @kases
   Scenario: Trainers can create new coaching cases
     Given I am logged in as a trainer
       And a customer exists

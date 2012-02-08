@@ -4,5 +4,4 @@ class ResponseSet < ActiveRecord::Base
   belongs_to :kase
   has_one    :customer, :through => :kase
   belongs_to :user
-
 end
