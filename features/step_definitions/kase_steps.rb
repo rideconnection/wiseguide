@@ -135,7 +135,7 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
   assertion = negation ? :should_not : :should
   visit "/customers/#{@kase.customer.id}"
   selector = "a[href='/cases/#{@kase.id}']"
-  find("#kases #{selector}").find(:xpath,".//..//..//td[2]").send(assertion, have_content(disposition))
+  find("#kases #{selector}").find(:xpath,".//..//..//td[3]").send(assertion, have_content(disposition))
 end
 
 Given /^an open case exists and is assigned to the other trainer$/ do
