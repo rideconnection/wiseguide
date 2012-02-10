@@ -1,72 +1,55 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'rake'
+# Framework
+gem "rails", "~> 3.0.11"
+gem "rake"
 
-gem 'rails', '3.0.11'
-
-gem 'pg'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3-ruby', :require => 'sqlite3'
-
+# Authentication and authorization
+gem "cancan"
 gem "devise"
 
-gem "cancan"
-
-gem 'will_paginate', '3.0.pre2'
-
+# Utilities
+gem "date_validator"
+gem "exception_notification", 
+  :git => "git://github.com/rails/exception_notification.git", 
+  :require => "exception_notifier"
+gem "formtastic", "~> 1.2.4"
+gem "haml", "~> 3.1.3"
+gem "jquery-rails", ">= 0.2.6"
 gem "paperclip"
+gem "userstamp"
+gem "will_paginate", "3.0.pre2"
 
-gem 'jquery-rails', '>= 0.2.6'
-
-gem 'userstamp'
-
-gem 'formtastic', '1.2.4'
-
-gem 'surveyor', :git => 'git://github.com/openplans/surveyor.git', :branch => 'rails3'
-
-gem 'haml', '3.1.3'
-
-gem 'exception_notification',
-    :git => "git://github.com/rails/exception_notification.git",
-    :require => "exception_notifier"
-
-gem 'date_validator'
-
-# Use unicorn as the web server
-# gem 'unicorn'
+# Note: We are including a heavily customized version of Surveyor based off on an old fork
+gem "surveyor", :git => "git://github.com/openplans/surveyor.git", 
+  :branch => "rails3"
 
 # Deploy with Capistrano
-gem 'capistrano'
-gem 'capistrano-ext'
+gem "capistrano",     :require => false # We need it to be installed, but it's
+gem "capistrano-ext", :require => false # not a runtime dependency
 
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-gem 'ruby-debug19'
+group :production, :staging do
+  gem "pg"
+end
 
-# Cucumber and testing utilities
-gem 'cucumber'
-gem 'cucumber-rails'
-gem 'capybara-firebug'
-gem 'database_cleaner'
-gem 'rspec-rails'
-gem 'spork'
-gem 'launchy'
-gem 'machinist', '>= 2.0.0.beta1'
-gem 'faker'
-gem "factory_girl_rails", "~> 1.5.0"
+group :development do
+  gem "cucumber-rails"
+  gem "rspec-rails"
+  gem "spork"
+  gem "launchy"
+end
 
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
+group :development, :test do
+  gem "capybara-firebug"
+  gem "cucumber"
+  gem "database_cleaner"
+  gem "ruby-debug19", :require => "ruby-debug"
+  gem "sqlite3-ruby", :require => "sqlite3"
+end
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
+group :development, :test, :staging do
+  # Latest factory_girl gem results in "Invalid gemspec" error, so force using
+  # older version. See http://groups.google.com/group/factory_girl/browse_thread/thread/b7154740b72ab301
+  gem "factory_girl_rails", "~> 1.5.0"
+  gem "faker"
+end
