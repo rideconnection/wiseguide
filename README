@@ -11,7 +11,8 @@ by OpenPlans.
 Development Environment
 =======================
 
-If you already have RVM installed, CD in to the wiseguide project directory and accept the RVM prompt. You may be prompted to install the required Ruby
+If you already have RVM installed, CD in to the wiseguide project directory and
+accept the RVM prompt. You may be prompted to install the required Ruby
 version, too. Once that is all set, install the bundler gem then skip to the
 "Install dependencies" step.
 
@@ -39,7 +40,7 @@ Now that you're in a fresh RVM environment, you can:
   $ bundle install
 
 Copy config/database.yml.example to database.yml and tweak to suit your
-needs.  (It works out of the box, if you're working with SQLite.  Fuzzy
+needs.  (It works out of the box if you're working with SQLite. Fuzzy
 matching is not present in SQLite, however.)
 
 Copy config/app_config_template.yml to app_config.yml and tweak to suit
@@ -50,19 +51,66 @@ Bootstrap environment
 
 Populate the database:
 
-  $ rake db:setup
+  $ bundle exec rake db:setup
 
 In a development environment, you can load some fake sandbox data with:
 
-  $ rake db:sandbox:load
+  $ bundle exec rake db:sandbox:load
 
 It will create (among other things) an initial admin account, so you can login
 as 'admin@rideconnection.org' with password 'password'.
  
-That's it!  You can now run a test server with "rails s" or run the tests:
+That's it!  You can now run a test server with "rails s" or run the tests.
 
-  $ rake test
-  $ rake cucumber
+Resetting the development database
+----------------------
+
+In the event you need to reset the database, the following command will perform
+all of the necessary steps:
+
+  $ bundle exec rake db:drop:all; bundle exec rake db:create:all; bundle exec rake db:migrate; bundle exec rake db:seed; bundle exec rake db:sandbox:load; bundle exec rake db:test:prepare
+
+Testing
+=======
+
+We are using Rspec for unit testing and cucumber for integration and functional
+testing. You can run them using the following commands:
+
+  $ bundle exec rake test
+  $ bundle exec rake cucumber
+
+Speeding up your tests
+----------------------
+
+The spork gem has been included and preconfigured in order to help speed up the 
+execution of tests. If you are only going to be running the test suite once or 
+need to setup a CI server, you won't want to use spork. But if you will be
+running tests frequently, while developing a new feature or refactoring, etc., 
+then preloading your test environment into spork will save you a few seconds 
+or minutes per test execution. To use spork while testing, first boot up spork:
+
+  $ bundle exec spork
+  
+for Rspec tests, or 
+  
+  $ bundle exec spork cucumber
+  
+for running Cucumber features. Note that these two servers can be run in the 
+background simultaneously as they use different ports. Then to run your tests
+within the spork environment:
+
+  $ bundle exec rspec [path_to_your_spec(s)] --drb
+
+or
+
+  $ bundle exec cucumber [path_to_your_feature(s)] --drb
+  
+Note that because spork preloads your environment, you will have to restart the
+spork server anytime you modify your model or configuration files, or anything
+else that will be cached by the Rails server.
+
+See also http://chrismdp.github.com/2010/11/getting-spork-working-now-on-rails-3-rspec-2-and-cucumber/
+and http://opinionatedprogrammer.com/2011/02/profiling-spork-for-faster-start-up-time/.
 
 Deployment
 ==========
