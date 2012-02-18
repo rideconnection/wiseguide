@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :referral_document do
+    association :kase
     last_printed_at nil
   end
 end

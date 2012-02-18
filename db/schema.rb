@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218012352) do
+ActiveRecord::Schema.define(:version => 20120218032516) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -318,7 +318,10 @@ ActiveRecord::Schema.define(:version => 20120218012352) do
     t.datetime "last_printed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "kase_id"
   end
+
+  add_index "referral_documents", ["kase_id"], :name => "index_referral_documents_on_kase_id"
 
   create_table "referral_types", :force => true do |t|
     t.string   "name"

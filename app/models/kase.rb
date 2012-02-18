@@ -15,6 +15,7 @@ class Kase < ActiveRecord::Base
   has_many :kase_routes
   has_many :routes, :through=>:kase_routes
   has_many :outcomes
+  has_many :referral_documents
 
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
 
