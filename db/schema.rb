@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203064651) do
+ActiveRecord::Schema.define(:version => 20120218012352) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -297,6 +297,27 @@ ActiveRecord::Schema.define(:version => 20120203064651) do
     t.datetime "updated_at"
     t.integer  "correct_answer_id"
     t.string   "api_id"
+  end
+
+  create_table "referral_document_resources", :force => true do |t|
+    t.integer  "resource_id"
+    t.text     "note"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "referral_document_id"
+  end
+
+  add_index "referral_document_resources", ["referral_document_id", "resource_id"], :name => "idx_referral_document_resources_referral_document_id_resource_id", :unique => true
+  add_index "referral_document_resources", ["referral_document_id"], :name => "index_referral_document_resources_on_referral_document_id"
+
+  create_table "referral_documents", :force => true do |t|
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "last_printed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "referral_types", :force => true do |t|
