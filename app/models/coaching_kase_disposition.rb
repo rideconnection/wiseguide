@@ -1,0 +1,1 @@
+class CoachingKaseDisposition < Disposition; end

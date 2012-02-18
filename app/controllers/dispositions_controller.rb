@@ -23,7 +23,7 @@ class DispositionsController < ApplicationController
   # GET /dispositions/new
   # GET /dispositions/new.xml
   def new
-    @disposition = Disposition.new
+    setup_sti_model
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,7 +39,7 @@ class DispositionsController < ApplicationController
   # POST /dispositions
   # POST /dispositions.xml
   def create
-    @disposition = Disposition.new(params[:disposition])
+    setup_sti_model
 
     respond_to do |format|
       if @disposition.save
@@ -77,5 +77,17 @@ class DispositionsController < ApplicationController
       format.html { redirect_to(dispositions_url) }
       format.xml  { head :ok }
     end
+  end
+  
+private
+
+  def setup_sti_model
+    # This lets us set the "type" attribute from forms and querystrings
+    model = nil
+    if !params[:disposition].blank? and !params[:disposition][:type].blank?
+      model = params[:disposition].delete(:type).constantize.to_s
+    end
+    @disposition = Disposition.new(params[:disposition])
+    @disposition.type = model
   end
 end

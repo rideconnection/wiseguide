@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218032516) do
+ActiveRecord::Schema.define(:version => 20120218153720) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -150,7 +150,11 @@ ActiveRecord::Schema.define(:version => 20120218032516) do
     t.integer  "lock_version",  :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "type"
   end
+
+  add_index "dispositions", ["name", "type"], :name => "index_dispositions_on_name_and_type", :unique => true
+  add_index "dispositions", ["type"], :name => "index_dispositions_on_type"
 
   create_table "ethnicities", :force => true do |t|
     t.string   "name"
@@ -235,6 +239,8 @@ ActiveRecord::Schema.define(:version => 20120218032516) do
     t.date     "case_manager_notification_date"
     t.integer  "case_manager_id"
   end
+
+  add_index "kases", ["type"], :name => "index_kases_on_type"
 
   create_table "organizations", :force => true do |t|
     t.string   "name"
