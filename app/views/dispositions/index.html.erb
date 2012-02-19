@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Type</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,6 +12,7 @@
 <% @dispositions.each do |disposition| %>
   <tr>
     <td><%= disposition.name %></td>
+    <td><%= disposition.type %></td>
     <td><%= link_to 'Show', disposition %></td>
     <td><%= link_to 'Edit', edit_disposition_path(disposition) %></td>
     <td><%= link_to 'Destroy', disposition, :confirm => 'Are you sure?', :method => :delete %></td>

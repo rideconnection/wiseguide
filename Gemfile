@@ -48,8 +48,6 @@ group :development, :test do
 end
 
 group :development, :test, :staging do
-  # Latest factory_girl gem results in "Invalid gemspec" error, so force using
-  # older version. See http://groups.google.com/group/factory_girl/browse_thread/thread/b7154740b72ab301
-  gem "factory_girl_rails", "~> 1.5.0"
+  gem "factory_girl_rails"
   gem "faker"
 end

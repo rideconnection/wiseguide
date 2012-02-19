@@ -18,6 +18,7 @@ Feature: Manage surveys aka Assessments
     And an open case exists assigned to me
     And a simple survey exists
     And I am on the homepage
+  Then show me the page
   When I click on the "Cases" link
     And I click on the link to the existing case
     And I click the link to add an assessment

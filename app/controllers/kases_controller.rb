@@ -19,7 +19,7 @@ class KasesController < ApplicationController
 
   def new
     params[:kase] ||= {}
-    in_progress = Disposition.find_by_name('In Progress')
+    in_progress = Disposition.find_by_name_and_type('In Progress', "#{params[:kase][:type]}Disposition")
     params[:kase].merge!({:customer_id => params[:customer_id], :disposition_id => in_progress.id})
     setup_sti_model
     @kase.county = Kase::VALID_COUNTIES.fetch(Customer.find(params[:customer_id]).county,nil)
@@ -72,7 +72,7 @@ private
     @referral_types = ReferralType.accessible_by(current_ability)
     @users = [User.new(:email=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
     @case_managers = User.outside_or_selected(@kase.case_manager_id).accessible_by(current_ability)
-    @dispositions = Disposition.accessible_by(current_ability)
+    @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
 
     @kase_route = KaseRoute.new(:kase_id => @kase.id)

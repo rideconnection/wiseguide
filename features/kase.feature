@@ -58,7 +58,7 @@ Feature: Manage cases aka kases
   Scenario: Trainers can close a case assigned to themselves
     Given I am logged in as a trainer
       And an open case exists and is assigned to me
-      And a disposition exists with a name of "Successful"
+      # And a disposition exists with a name of "Successful"
       And I am on the homepage
     When I click on the "Cases" link
       And I click through to the case details
@@ -71,7 +71,7 @@ Feature: Manage cases aka kases
     Given I am logged in as a trainer
       And another trainer exists
       And an open case exists and is assigned to the other trainer
-      And a disposition exists with a name of "Successful"
+      # And a disposition exists with a name of "Successful"
       And I am on the homepage
     When I click on the "Cases" link
       And I click through to the case details

@@ -31,11 +31,11 @@ class Customer < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 50
   
-  scope :with_successful_exit_in_range_for_county, lambda{|start_date,end_date,county_code| where("customers.id IN (SELECT customer_id FROM kases WHERE disposition_id = ? AND close_date BETWEEN ? AND ? AND county = ?)",Disposition.successful.id,start_date,end_date,county_code)}
+  scope :with_successful_exit_in_range_for_county, lambda{|start_date,end_date,county_code| where("customers.id IN (SELECT customer_id FROM kases WHERE disposition_id IN (?) AND close_date BETWEEN ? AND ? AND county = ?)",Disposition.successful.collect(&:id),start_date,end_date,county_code)}
 
   def self.with_new_successful_exit_in_range_for_county(start_date,end_date,county_code)
     fy_start_date = Date.new(start_date.year - (start_date.month < 7 ? 1 : 0), 7, 1)
-    self.with_successful_exit_in_range_for_county(start_date,end_date,county_code).where("customers.id NOT IN (SELECT customer_id FROM kases WHERE disposition_id = ? AND close_date BETWEEN ? AND ? AND county = ?)",Disposition.successful.id,fy_start_date,start_date - 1.day,county_code)
+    self.with_successful_exit_in_range_for_county(start_date,end_date,county_code).where("customers.id NOT IN (SELECT customer_id FROM kases WHERE disposition_id IN (?) AND close_date BETWEEN ? AND ? AND county = ?)",Disposition.successful.collect(&:id),fy_start_date,start_date - 1.day,county_code)
   end
 
   def self.search(term)

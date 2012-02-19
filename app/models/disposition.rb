@@ -9,7 +9,7 @@ class Disposition < ActiveRecord::Base
   end
 
   def self.successful
-    self.where(:name => 'Successful').first
+    self.where(:name => 'Successful')
   end
   
   # Make sure our STI children are routed through the parent routes
