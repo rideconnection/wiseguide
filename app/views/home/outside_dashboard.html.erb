@@ -3,7 +3,7 @@
   <div class="section first">
     <h1>Pending Assessments</h1>
     <ul>
-      <% current_user.organization.assessment_requests.each do |request| %>
+      <% @pending_assessments.each do |request| %>
         <li>
           <%= link_to request.display_name, request %>
         </li>
@@ -12,6 +12,13 @@
   </div>
   <div class="section second">
     <h1>Recent Cases</h1>
+    <ul>
+      <% @recent_cases.each do |kase| %>
+        <li>
+          <%= link_to kase.customer.name_reversed, kase %>
+        </li>
+      <% end %>
+    </ul>
   </div>
   <div class="section third">
     <h1>Search</h1>
