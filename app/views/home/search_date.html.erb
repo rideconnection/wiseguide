@@ -1,0 +1,16 @@
+<fieldset>
+<div id="outside-dashboard">
+<div class="section first">
+  <h1>Search Results</h1>
+  <ul>
+    <% @search_results.each do |kase| %>
+      <li><%= link_to kase.customer.name_reversed, kase %></li>
+    <% end %>
+  </ul>
+</div>
+<div class="section second">
+  <h1>Refine Search</h1>
+  <%= render 'search_date' %>
+</div>
+</div>
+</fieldset>

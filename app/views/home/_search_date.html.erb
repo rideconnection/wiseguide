@@ -1,0 +1,25 @@
+<%= form_tag url_for(:action=>:search_date) do |f| %>
+<table class="search-form">
+<tr>
+  <td colspan="2"><b>Search for cases in date range:</b></td>
+</tr>
+<tr>
+  <td align="right">Start date:</td>
+  <td>
+    <%= text_field_tag :start_date, @start_date,
+                       :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+  </td>
+</tr>
+<tr>
+  <td align="right">End date:</td>
+  <td>
+    <%= text_field_tag :end_date, @end_date,
+                       :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><%= submit_tag :Search %></td>
+</tr>
+</table>
+<% end %>

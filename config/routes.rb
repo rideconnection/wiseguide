@@ -90,5 +90,8 @@ Wiseguide::Application.routes.draw do
   match "assessment_requests/(:id)/create_case",
         :controller=>:assessment_requests, :action=>:create_case
 
+  match 'search_name', :controller=>:home, :action=>:search_name
+  match 'search_date', :controller=>:home, :action=>:search_date
+
   root :to => "home#index"
 end

@@ -1,0 +1,11 @@
+<%= form_tag url_for(:action=>:search_name) do |f| %>
+<table class="search-form">
+<tr>
+  <td colspan="2"><b>Search for cases by customer name:</b></td>
+</tr>
+<tr>
+  <td><%= text_field_tag :customer_name, @query, :size => 30 %></td>
+  <td><%= submit_tag :Search %></td>
+</tr>
+</table>
+<% end %>

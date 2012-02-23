@@ -1402,3 +1402,7 @@ ul.customer-select-list {
 ul.customer-select-list li {
     margin: 0.5em 0;
 }
+
+table.search-form {
+    width: 60%;
+}
