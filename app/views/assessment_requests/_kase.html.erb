@@ -1,0 +1,15 @@
+<h1>Case</h1>
+<% if @assessment_request.customer.nil? %>
+  Set customer (above) before creating a case.
+<% elsif @assessment_request.kase.nil? %>
+  No associated case.
+  <% if can? :create, Kase %>
+    <%= link_to 'Create...', :controller => :assessment_requests,
+                :action => :create_case, :id => @assessment_request %>
+  <% end %>
+<% elsif can? :read, @assessment_request.kase %>
+  <%= link_to "View Case ##{@assessment_request.kase_id}",
+              @assessment_request.kase %>
+<% else %>
+  Case no: <%= @assessment_request.kase_id %>
+<% end %>

@@ -2,34 +2,27 @@
 
 <table>
   <tr>
-    <th>Customer first name</th>
-    <th>Customer last name</th>
+    <th>Customer name</th>
     <th>Customer phone</th>
     <th>Customer birth date</th>
     <th>Notes</th>
     <th>Submitter</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @assessment_requests.each do |assessment_request| %>
   <tr>
-    <td><%= assessment_request.customer_first_name %></td>
-    <td><%= assessment_request.customer_last_name %></td>
+    <td>
+      <%= link_to assessment_request.display_name, assessment_request %>
+    </td>
     <td><%= assessment_request.customer_phone %></td>
     <td><%= assessment_request.customer_birth_date %></td>
     <td><%= assessment_request.notes %></td>
     <td><%= assessment_request.submitter.display_name %></td>
-    <td><%= link_to 'Show', assessment_request %></td>
-    <td>
-      <% if can? :update, assessment_request %>
-        <%= link_to 'Edit', edit_assessment_request_path(assessment_request) %>
-      <% end %>
-    </td>
     <td>
       <% if can? :destroy, assessment_request %>
-        <%= link_to 'Destroy', assessment_request, :confirm => 'Are you sure?', :method => :delete %>
+        <%= button_to 'Delete', assessment_request,
+                      :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
     </td>
   </tr>

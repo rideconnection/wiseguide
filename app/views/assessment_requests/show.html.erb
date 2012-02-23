@@ -1,35 +1,19 @@
-<p id="notice"><%= notice %></p>
+<fieldset>
+  <ol class="first">
+    <h1>Assessment Request</h1>
+    <%= render 'form' %>
+  </ol>
+  <ol class="second">
+    <ol class="section" id="customer">
+      <li>
+        <%= render "customer" %>
+      </li>
+    </ol>
 
-<p>
-  <b>Customer first name:</b>
-  <%= @assessment_request.customer_first_name %>
-</p>
-
-<p>
-  <b>Customer last name:</b>
-  <%= @assessment_request.customer_last_name %>
-</p>
-
-<p>
-  <b>Customer phone:</b>
-  <%= @assessment_request.customer_phone %>
-</p>
-
-<p>
-  <b>Customer birth date:</b>
-  <%= @assessment_request.customer_birth_date %>
-</p>
-
-<p>
-  <b>Notes:</b>
-  <%= @assessment_request.notes %>
-</p>
-
-<p>
-  <b>Submitter:</b>
-  <%= @assessment_request.submitter.display_name %>
-</p>
-
-
-<%= link_to 'Edit', edit_assessment_request_path(@assessment_request) %> |
-<%= link_to 'Back', assessment_requests_path %>
+    <ol class="section" id="case">
+      <li>
+        <%= render "kase" %>
+      </li>
+    </ol>
+  </ol>
+</fieldset>

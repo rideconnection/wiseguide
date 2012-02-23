@@ -5,12 +5,7 @@
     <ul>
       <% current_user.organization.assessment_requests.each do |request| %>
         <li>
-          <% if can? :edit, request %>
-            <%= link_to request.display_name,
-                        edit_assessment_request_path(request) %>
-          <% else %>
-            <%= link_to request.display_name, request %>
-          <% end %>
+          <%= link_to request.display_name, request %>
         </li>
       <% end %>
     </ul>

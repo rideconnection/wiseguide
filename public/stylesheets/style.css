@@ -1394,3 +1394,11 @@ body.surveyor p.response {
     list-style-type: none;
     margin: 0.5em 0;
 }
+
+ul.customer-select-list {
+    list-style-type: none;
+    margin: 1.5em 0;
+}
+ul.customer-select-list li {
+    margin: 0.5em 0;
+}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218153720) do
+ActiveRecord::Schema.define(:version => 20120222233300) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(:version => 20120218153720) do
     t.integer  "submitter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "kase_id"
+    t.integer  "customer_id"
   end
 
   create_table "contacts", :force => true do |t|
@@ -181,16 +183,16 @@ ActiveRecord::Schema.define(:version => 20120218153720) do
     t.date     "date"
     t.integer  "event_type_id"
     t.integer  "funding_source_id"
-    t.decimal  "duration_in_hours"
+    t.decimal  "duration_in_hours", :precision => 5, :scale => 2
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",      :default => 0
+    t.integer  "lock_version",                                    :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "show_full_notes",   :default => false
+    t.boolean  "show_full_notes",                                 :default => false
   end
 
   create_table "funding_sources", :force => true do |t|
@@ -238,6 +240,7 @@ ActiveRecord::Schema.define(:version => 20120218153720) do
     t.string   "assessment_language"
     t.date     "case_manager_notification_date"
     t.integer  "case_manager_id"
+    t.integer  "assessment_request_id"
   end
 
   add_index "kases", ["type"], :name => "index_kases_on_type"
@@ -315,7 +318,7 @@ ActiveRecord::Schema.define(:version => 20120218153720) do
     t.integer  "referral_document_id"
   end
 
-  add_index "referral_document_resources", ["referral_document_id", "resource_id"], :name => "idx_referral_document_resources_referral_document_id_resource_id", :unique => true
+  add_index "referral_document_resources", ["referral_document_id", "resource_id"], :name => "idx_refdoc_resources_refdoc_id_resource_id", :unique => true
   add_index "referral_document_resources", ["referral_document_id"], :name => "index_referral_document_resources_on_referral_document_id"
 
   create_table "referral_documents", :force => true do |t|

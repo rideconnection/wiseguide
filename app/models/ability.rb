@@ -13,6 +13,18 @@ class Ability
       can :read, AssessmentRequest, :organization => user.organization
       can :read, AssessmentRequest, :organization => user.organization.children
       can :update, AssessmentRequest, :submitter_id => user.id
+      can :read, Customer do |customer|
+        result = false
+        AssessmentRequest.where(:submitter_id => user.id).each do |r|
+          if r.customer_id == customer.id then
+            result = true
+          end
+        end
+        result
+      end
+      can :read, Kase do |kase|
+        kase.assessment_request.submitter_id == user.id
+      end
       return
     end
 

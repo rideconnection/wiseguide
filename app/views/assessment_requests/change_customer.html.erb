@@ -1,0 +1,39 @@
+<div id="page-header">
+  <h1>
+    <%= link_to @assessment_request.display_name, @assessment_request %>
+    > Select Customer
+  </h1>
+</div>
+<fieldset>
+
+<%= form_tag url_for(:action=>:select_customer) do |f| %>
+<%= hidden_field_tag :assessment_request, @assessment_request.id %>
+<% already_selected = false %>
+<% if @similar_customers.empty? %>
+  <h2>No similar customers found</h2>
+<% else %>
+  <h2>Similar existing customers</h2>
+  <ul class="customer-select-list">
+  <% for customer in @similar_customers %>
+    <li>
+      <% if customer.id == @assessment_request.customer_id %>
+        <%= radio_button_tag :customer_id, "#{customer.id}", true %>
+        <% already_selected = true %>
+      <% else %>
+        <%= radio_button_tag :customer_id, "#{customer.id}" %>
+      <% end %>
+      <%= label_tag "customer_id_#{customer.id}", customer.name %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<ul class="customer-select-list">
+<li>
+  <%= radio_button_tag :customer_id, "0", !already_selected %>
+  <%= label_tag 'customer_id_0', "Create a new customer" %>
+</li>
+</ul>
+<%= submit_tag :Continue %>
+<% end %>
+<%= button_to :Cancel, @assessment_request, :method => :get %>
+</fieldset>

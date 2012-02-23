@@ -31,7 +31,15 @@ class KasesController < ApplicationController
     
     if @kase.save
       @kase.reload
-      redirect_to(@kase, :notice => '%s was successfully created.' % @kase.class.humanized_name) 
+      notice = "#{@kase.class.humanized_name} was successfully created."
+      if !@kase.assessment_request_id.nil?
+        request = AssessmentRequest.find(@kase.assessment_request_id)
+        request.kase = @kase
+        request.save!
+        redirect_to(request, :notice => notice)
+      else
+        redirect_to(@kase, :notice => notice)
+      end
     else
       prep_edit
       render :action => "new"

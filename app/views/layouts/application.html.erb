@@ -36,6 +36,9 @@
         <% else %>
           <li class="customers"><%= link_to "Customers", customers_path %></li>
           <li class="kases"><%= link_to "Cases", kases_path %></li>
+          <li class="assessment-requests">
+            <%= link_to "Requests", assessment_requests_path %>
+          </li>
           <li class="reports"><%= link_to "Reports", reports_path %></li>
         <% end %>
       </ul>

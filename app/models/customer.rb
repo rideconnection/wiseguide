@@ -30,6 +30,8 @@ class Customer < ActiveRecord::Base
 
   cattr_reader :per_page
   @@per_page = 50
+
+  include ActiveSupport::Rescuable
   
   scope :with_successful_exit_in_range_for_county, lambda{|start_date,end_date,county_code| where("customers.id IN (SELECT customer_id FROM kases WHERE disposition_id IN (?) AND close_date BETWEEN ? AND ? AND county = ?)",Disposition.successful.collect(&:id),start_date,end_date,county_code)}
 
@@ -102,7 +104,13 @@ class Customer < ActiveRecord::Base
     conditions = [query] + args
     Rails.logger.debug "QUERY: #{conditions}"
     # raise "#{conditions}"
-    Customer.where(conditions)
+    case ActiveRecord::Base.connection.adapter_name
+      # With SQLite, do not attempt metaphone queries (unsupported)
+      when "SQLite"
+        []
+      else
+        Customer.where(conditions)
+    end
   end
   
   def self.make_customer_name_query(field, value, option=nil)

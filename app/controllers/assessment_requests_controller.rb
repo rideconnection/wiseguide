@@ -1,5 +1,5 @@
 class AssessmentRequestsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:change_customer, :select_customer]
 
   # GET /assessment_requests
   # GET /assessment_requests.xml
@@ -34,9 +34,43 @@ class AssessmentRequestsController < ApplicationController
     end
   end
 
-  # GET /assessment_requests/1/edit
-  def edit
+  # GET /assessment_requests/1/change_customer
+  def change_customer
     @assessment_request = AssessmentRequest.find(params[:id])
+    @similar_customers = Customer.search(@assessment_request.display_name)
+    authorize! :update, @assessment_request
+  end
+
+  # GET /assessment_requests/1/create_case
+  def create_case
+    kase = {
+      :type => :CoachingKase,
+      :assessment_request_id => @assessment_request.id,
+    }
+    redirect_to :controller => :kases, :action => :new, :kase => kase,
+                :customer_id => @assessment_request.customer_id
+  end
+
+  # POST /assessment_requests/1/select_customer
+  def select_customer
+    @assessment_request = AssessmentRequest.find(params[:assessment_request])
+    authorize! :update, @assessment_request
+    if params[:customer_id] == "0" then
+      customer = {
+        :first_name => @assessment_request.customer_first_name,
+        :last_name => @assessment_request.customer_last_name,
+        :phone_number_1 => @assessment_request.customer_phone,
+        :birth_date => @assessment_request.customer_birth_date,
+        :notes => @assessment_request.notes,
+      }
+      redirect_to :controller=>:customers, :action=>:new, :customer=>customer,
+                  :assessment_request=>@assessment_request
+    else
+      customer = Customer.find(params[:customer_id])
+      @assessment_request.customer = customer
+      @assessment_request.save!
+      redirect_to @assessment_request
+    end
   end
 
   # POST /assessment_requests

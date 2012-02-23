@@ -2,13 +2,20 @@ Create the initial user for WiseGuide
 
 <%= form_for @user, :url=>url_for(:action=>:init) do |f| %>
 
+<%= f.label :first_name %><br/>
+<%= f.text_field :first_name %><br/>
+<%= f.label :last_name %><br/>
+<%= f.text_field :last_name %><br/>
 <%= f.label :email %><br/>
 <%= f.text_field :email %><br/>
 <%= f.label :password %><br/>
 <%= f.password_field :password %><br/>
 <%= f.label :confirm_password %><br/>
 <%= f.password_field :password_confirmation %><br/>
-
+<%= f.label :organization_id %><br/>
+<%= collection_select(:user, :organization_id,
+                      Organization.all, :id, :name) %><br/>
+<br/>
 <%= f.submit :create %>
 
 

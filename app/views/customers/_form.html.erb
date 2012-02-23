@@ -9,6 +9,9 @@
       </ul>
     </div>
   <% end %>
+    <% unless @assessment_request.nil? %>
+    <%= hidden_field_tag :assessment_request, @assessment_request %>
+    <% end %>
 
     <li>
     <%= f.label :first_name %>

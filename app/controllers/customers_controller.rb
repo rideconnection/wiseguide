@@ -18,14 +18,28 @@ class CustomersController < ApplicationController
   end
 
   def new
+    if !params[:assessment_request].nil? then
+      @assessment_request = params[:assessment_request]
+    end
     prep_edit
   end
 
   def create
     @customer = Customer.new(params[:customer])
-
+    if !params[:assessment_request].nil? then
+      @assessment_request = params[:assessment_request]
+    end
     if @customer.save
-      redirect_to(@customer, :notice => 'Customer was successfully created.') 
+      notice = 'Customer was successfully created.'
+      if !@assessment_request.nil? then
+        request = AssessmentRequest.find(@assessment_request)
+        request.customer = @customer
+        request.save!
+        redirect_to :controller=>:assessment_requests, :action=>:show,
+                    :id=>params[:assessment_request], :notice=>notice
+      else
+        redirect_to(@customer, :notice => notice) 
+      end
     else
       prep_edit
       render :action => "new"

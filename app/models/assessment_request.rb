@@ -1,5 +1,7 @@
 class AssessmentRequest < ActiveRecord::Base
   belongs_to :submitter, :class_name => "User", :foreign_key => :submitter_id
+  belongs_to :customer
+  belongs_to :kase
 
   validates_presence_of :customer_first_name
   validates_presence_of :customer_last_name

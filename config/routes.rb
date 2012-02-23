@@ -83,5 +83,12 @@ Wiseguide::Application.routes.draw do
   match "resources/(:id)/toggle_active",
         :controller=>:resources, :action=>:toggle_active
 
+  match "assessment_requests/(:id)/change_customer",
+        :controller=>:assessment_requests, :action=>:change_customer
+  match "assessment_requests/(:id)/select_customer",
+        :controller=>:assessment_requests, :action=>:select_customer
+  match "assessment_requests/(:id)/create_case",
+        :controller=>:assessment_requests, :action=>:create_case
+
   root :to => "home#index"
 end
