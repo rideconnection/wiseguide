@@ -7,6 +7,20 @@ class Ability
       return #turned-off users can do nothing
     end
 
+    #system tables
+    can :read, AssessmentRequest
+    can :read, Disposition
+    can :read, Ethnicity
+    can :read, EventType
+    can :read, FundingSource
+    can :read, Impairment
+    can :read, Organization
+    can :read, ReferralType
+    can :read, Route
+    can :read, TripReason
+    can :read, User
+    can :read, County
+
     # Outside user permissions
     if user.level == 25 then
       can :create, AssessmentRequest
@@ -27,20 +41,6 @@ class Ability
       end
       return
     end
-
-    #system tables
-    can :read, AssessmentRequest
-    can :read, Disposition
-    can :read, Ethnicity
-    can :read, EventType
-    can :read, FundingSource
-    can :read, Impairment
-    can :read, Organization
-    can :read, ReferralType
-    can :read, Route
-    can :read, TripReason
-    can :read, User
-    can :read, County
 
     if user.level >= 50
       ability = :manage
