@@ -16,6 +16,7 @@ module ApplicationHelper
   end
   
   def bodytag_class
+    return @bodytag_class unless @bodytag_class.blank?
     a = controller.class.to_s.underscore.gsub(/_controller$/, '')
     b = controller.action_name.underscore
     "#{a} #{b}".gsub(/_/, '-')

@@ -49,10 +49,10 @@ Then /^I should( not)? see the case listed when I return to the customer(?:'s) p
   end
 end
 
-Then /^I should( not)? see the case listed in the "([^"]*)" section of the Cases page$/ do |negation, section|
+Then /^I should( not)? see the case listed in the "([^"]*)" section of the (Coaching|Training) Cases page$/ do |negation, section, type|
   assertion = negation ? :should_not : :should
   section.downcase!; section.strip!; section.gsub!(/\s+/, '_')
-  visit "/cases"
+  visit "/cases/#{type.downcase}"
   selector = "a[href='/cases/#{@kase.id}']"
   page.send(assertion, have_selector("##{section} #{selector}"))
   if !negation
@@ -60,8 +60,8 @@ Then /^I should( not)? see the case listed in the "([^"]*)" section of the Cases
   end
 end
 
-Given /^an unassigned open case exists$/ do
-  @kase = Factory(:open_kase, :assigned_to => nil)
+Given /^an unassigned open training case exists$/ do
+  @kase = Factory(:open_training_kase, :assigned_to => nil)
   @customer = @kase.customer
 end
 
@@ -76,11 +76,11 @@ Then /^I should be able to assign the case to myself$/ do
   step %Q(I should see a confirmation message)
 end
 
-Then /^I should( not)? see the case listed in the "([^"]*)" sub\-section of the "([^"]*)" section of the Cases page$/ do |negation, sub_section, section|
+Then /^I should( not)? see the case listed in the "([^"]*)" sub\-section of the "([^"]*)" section of the (Coaching|Training) Cases page$/ do |negation, sub_section, section, type|
   assertion = negation ? :should_not : :should
   section.downcase!; section.strip!; section.gsub!(/\s+/, '_')
   sub_section.downcase!; sub_section.strip!; sub_section.gsub!(/\s+/, '_')
-  visit "/cases"
+  visit "/cases/#{type.downcase}"
   selector = "a[href='/cases/#{@kase.id}']"
   page.send(assertion, have_selector("##{section} .#{sub_section} #{selector}"))
   if !negation
@@ -99,16 +99,16 @@ Then /^I should be able to assign the case to the other trainer$/ do
   step %Q(I should see a confirmation message)  
 end
 
-Then /^the other trainer should( not)? be listed as the case assignee$/ do |negation|
+Then /^the other trainer should( not)? be listed as the case assignee on the (Coaching|Training) Cases page$/ do |negation, type|
   # This step refers to the Cases page and the "Other Cases" list
   assertion = negation ? :should_not : :should
-  visit "/cases"
+  visit "/cases/#{type.downcase}"
   selector = "a[href='/cases/#{@kase.id}']"
   find(selector).find(:xpath,".//..").send(assertion, have_content("(#{@other_trainer.email})"))
 end
 
-Given /^an open case exists and is assigned to me$/ do
-  @kase = Factory(:open_kase, :assigned_to => @current_user)
+Given /^an open training case exists and is assigned to me$/ do
+  @kase = Factory(:open_training_kase, :assigned_to => @current_user)
   @customer = @kase.customer
 end
 
@@ -121,9 +121,10 @@ Then /^I should be able to close the case$/ do
   step %Q(I should see a confirmation message)  
 end
 
-Then /^I should( not)? see the case listed on the Cases page$/ do |negation|
+Then /^I should( not)? see the case listed on the (Coaching|Training) Cases page$/ do |negation, type|
   assertion = negation ? :should_not : :should
-  visit "/cases"
+  url = "/cases/#{type.downcase}"
+  visit url
   selector = "a[href='/cases/#{@kase.id}']"
   page.send(assertion, have_selector(selector))
   if !negation
@@ -138,23 +139,18 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
   find("#kases #{selector}").find(:xpath,".//..//..//td[3]").send(assertion, have_content(disposition))
 end
 
-Given /^an open case exists and is assigned to the other trainer$/ do
-  @kase = Factory(:open_kase, :assigned_to => @other_trainer)
-  @customer = @kase.customer
-end
-
-Given /^an open case exists$/ do
-  @kase = Factory(:open_kase)
-  @customer = @kase.customer
-end
-
-Given /^an open coaching case exists$/ do
-  @kase = Factory(:open_coaching_kase)
+Given /^an open training case exists and is assigned to the other trainer$/ do
+  @kase = Factory(:open_training_kase, :assigned_to => @other_trainer)
   @customer = @kase.customer
 end
 
 Given /^an open training case exists$/ do
   @kase = Factory(:open_training_kase)
+  @customer = @kase.customer
+end
+
+Given /^an open coaching case exists$/ do
+  @kase = Factory(:open_coaching_kase)
   @customer = @kase.customer
 end
 

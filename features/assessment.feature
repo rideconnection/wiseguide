@@ -8,7 +8,7 @@ Feature: Manage assessments aka response sets
       And an open training case exists
       And the case has one assessment
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should see a link to add a new assessment
 
@@ -17,6 +17,6 @@ Feature: Manage assessments aka response sets
       And an open coaching case exists
       And the case has one assessment
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Coaching Cases" link
       And I click through to the case details
     Then I should not see a link to add a new assessment

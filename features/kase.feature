@@ -16,7 +16,7 @@ Feature: Manage cases aka kases
       And I should be able to create a new open, unassigned training case for the customer
       And I should see a confirmation message
       And I should see the case listed as "In Progress" on the customer's profile
-      And I should see the case listed in the "Wait List" section of the Cases page
+      And I should see the case listed in the "Wait List" section of the Training Cases page
   
   Scenario: Trainers can create new coaching cases
     Given I am logged in as a trainer
@@ -31,61 +31,61 @@ Feature: Manage cases aka kases
       And I should be able to create a new open, unassigned coaching case for the customer
       And I should see a confirmation message
       And I should see the case listed as "In Progress" on the customer's profile
-      And I should see the case listed in the "Wait List" section of the Cases page
+      And I should see the case listed in the "Wait List" section of the Coaching Cases page
   
   Scenario: Trainers can assign cases to themselves
     Given I am logged in as a trainer
-      And an unassigned open case exists
+      And an unassigned open training case exists
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should be able to assign the case to myself
       And I should see a confirmation message
-      And I should see the case listed in the "Open" sub-section of the "My Cases" section of the Cases page
+      And I should see the case listed in the "Open" sub-section of the "My Cases" section of the Training Cases page
   
   Scenario: Trainers can assign cases to another trainer
     Given I am logged in as a trainer
       And another trainer exists
-      And an unassigned open case exists
+      And an unassigned open training case exists
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should be able to assign the case to the other trainer
       And I should see a confirmation message
-      And I should see the case listed in the "Open" sub-section of the "Other Cases" section of the Cases page
-      And the other trainer should be listed as the case assignee
+      And I should see the case listed in the "Open" sub-section of the "Other Cases" section of the Training Cases page
+      And the other trainer should be listed as the case assignee on the Training Cases page
   
   Scenario: Trainers can close a case assigned to themselves
     Given I am logged in as a trainer
-      And an open case exists and is assigned to me
+      And an open training case exists and is assigned to me
       # And a disposition exists with a name of "Successful"
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should be able to close the case
       And I should see a confirmation message
-      And I should not see the case listed on the Cases page
+      And I should not see the case listed on the Training Cases page
       And I should see the case listed as "Successful" on the customer's profile
   
   Scenario: Trainers can close a case assigned to another trainer
     Given I am logged in as a trainer
       And another trainer exists
-      And an open case exists and is assigned to the other trainer
+      And an open training case exists and is assigned to the other trainer
       # And a disposition exists with a name of "Successful"
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should be able to close the case
       And I should see a confirmation message
-      And I should not see the case listed on the Cases page
+      And I should not see the case listed on the Training Cases page
       And I should see the case listed as "Successful" on the customer's profile
   
   @javascript
   Scenario: Trainers cannot delete a case
     Given I am logged in as an trainer
-      And an open case exists
+      And an open training case exists
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should see a button to delete the case
       And I should be prompted to confirm the deletion when I click the case's delete button
@@ -95,9 +95,9 @@ Feature: Manage cases aka kases
   @javascript
   Scenario: Admins can delete a case
     Given I am logged in as an admin
-      And an open case exists
+      And an open training case exists
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should see a button to delete the case
       And I should be prompted to confirm the deletion when I click the case's delete button

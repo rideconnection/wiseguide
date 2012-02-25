@@ -41,6 +41,8 @@ Wiseguide::Application.routes.draw do
   resources :kases, :path => "cases" do 
     post "add_route", :on=>:collection
     post "delete_route", :on=>:collection
+    get "coaching", :on=>:collection, :action => :index, :kase => {:type => 'CoachingKase'}
+    get "training", :on=>:collection, :action => :index, :kase => {:type => 'TrainingKase'}
   end
 
   resources :contacts

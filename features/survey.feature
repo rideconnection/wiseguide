@@ -15,12 +15,12 @@ Feature: Manage surveys aka Assessments
  
   Scenario: Trainers can complete surveys
   Given I am logged in as a trainer
-    And an open case exists assigned to me
+    And an open training case exists and is assigned to me
     And a simple survey exists
     And I am on the homepage
   Then show me the page
-  When I click on the "Cases" link
-    And I click on the link to the existing case
+  When I click on the "Training Cases" link
+    And I click through to the case details
     And I click the link to add an assessment
     And I click the button for the open survey
   Then I should be able to complete the survey form

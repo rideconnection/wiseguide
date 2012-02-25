@@ -8,10 +8,10 @@ Feature: Manage routes trained on cases
   @javascript 
   Scenario: Trainers can add trained routes to cases
     Given I am logged in as a trainer
-      And an open case exists
+      And an open training case exists
       And a route exists with a name of "Hometown Express 123"
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
       And I click the link to add a trained route
     Then I should be able to add a trained route using the AJAX form
@@ -22,10 +22,10 @@ Feature: Manage routes trained on cases
   @javascript
   Scenario: Trainers can delete trained routes from cases
     Given I am logged in as a trainer
-      And an open case exists
+      And an open training case exists
       And a trained route exists for the existing case
       And I am on the homepage
-    When I click on the "Cases" link
+    When I click on the "Training Cases" link
       And I click through to the case details
     Then I should see a button to delete the trained route
       And I should be prompted to confirm the deletion when I click the trained routes's delete button

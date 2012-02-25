@@ -18,17 +18,9 @@ Then /^I should( not)? see the survey listed when I return to the surveys list$/
   page.send(assertion, have_content("#{@survey.title}"))
 end
 
-Given /^an open case exists assigned to me$/ do
-  @kase = Factory(:open_kase, :assigned_to => @current_user)
-end
-
 Given /^a simple survey exists$/ do
   json_data = JSON.parse(File.read(Rails.root.join("features", "support", "survey_example.json")))
   @survey = SurveyCreator.create_survey(json_data)
-end
-
-When /^I click on the link to the existing case$/ do
-  find(".kases a[href='/cases/#{@kase.id}']").click
 end
 
 When /^I click the link to add an assessment$/ do

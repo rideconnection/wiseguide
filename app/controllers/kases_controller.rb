@@ -4,6 +4,11 @@ class KasesController < ApplicationController
   def index
     name_ordered = 'customers.last_name, customers.first_name'
     
+    if !params[:kase].blank? and !params[:kase][:type].blank?
+      @kases = @kases.where(:type => params[:kase][:type])
+      @bodytag_class = params[:kase][:type].pluralize.underscore.gsub(/_/, '-')
+    end
+    
     @my_open_kases = @kases.open.assigned_to(current_user).joins(:customer).order(name_ordered)
     @my_three_month_follow_ups = @kases.assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
     @my_six_month_follow_ups = @kases.assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
