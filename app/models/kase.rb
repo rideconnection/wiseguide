@@ -10,13 +10,13 @@ class Kase < ActiveRecord::Base
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
-  has_many :contacts
-  has_many :events
-  has_many :response_sets
-  has_many :kase_routes
+  has_many :contacts, :dependent => :destroy
+  has_many :events, :dependent => :destroy
+  has_many :response_sets, :dependent => :destroy
+  has_many :kase_routes, :dependent => :destroy
   has_many :routes, :through=>:kase_routes
-  has_many :outcomes
-  has_many :referral_documents
+  has_many :outcomes, :dependent => :destroy
+  has_many :referral_documents, :dependent => :destroy
 
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
 
