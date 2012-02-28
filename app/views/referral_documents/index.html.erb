@@ -1,0 +1,21 @@
+<h1>Listing referral_documents</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @referral_documents.each do |referral_document| %>
+  <tr>
+    <td><%= link_to 'Show', referral_document %></td>
+    <td><%= link_to 'Edit', edit_referral_document_path(referral_document) %></td>
+    <td><%= link_to 'Destroy', referral_document, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Referral document', new_referral_document_path %>

@@ -5,11 +5,9 @@
   <%= stylesheet_link_tag "style.css", :media=>"screen" %>
   <%= stylesheet_link_tag "print.css", :media=>"print" %>
   <%= stylesheet_link_tag "jquery-ui-1.8.9.custom.css" %>
-
   <%= javascript_include_tag %w{jquery.min jquery-ui jquery-ui-timepicker-addon jquery-Gtimepicker jquery.fn.autoresize dateFormat application rails} %>
-  
   <%= csrf_meta_tag %>
-
+  <%= content_for?(:head) ? yield(:head) : '' %>
 </head>
 <body class="<%= bodytag_class %>">
   <div id="header">
@@ -51,21 +49,12 @@
       <% end %>
     </div><!-- /.wrap -->
   </div><!-- /#crossbar -->
-
-
   <div id="main">
-
     <div class="wrap selfclear">
-
       <%= raw( flash_type(:notice) + flash_type(:alert) ) %>
-
       <%= content_for?(:menu_bar) ? yield(:menu_bar) : '' %>
-
       <%= yield %>
-
      </div><!-- /.wrap -->
-
   </div><!-- /#main -->
-
 </body>
 </html>

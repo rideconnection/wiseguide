@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<ol>
+  <% for resource in @referral_document.resources %>
+  <li><strong><%= resource.resource.name %></strong><br>
+    <%= resource.note %><hr></li>
+  <% end %>
+</ol>
+
+<%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
+<%= link_to "Destroy", @referral_document, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Back', referral_documents_path %>

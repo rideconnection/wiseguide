@@ -1,0 +1,40 @@
+<% content_for :head do %>
+  <%= javascript_tag do %>
+    function remove_fields(link) {
+      $(link).prev("input[type=hidden]").val("1");
+      $(link).closest(".fields").hide();
+    }
+
+    function add_fields(link, association, content) {
+      var new_id = new Date().getTime();
+      var regexp = new RegExp("new_" + association, "g");
+      $(link).parent().before(content.replace(regexp, new_id));
+    }
+  <% end %>
+<% end %>
+
+<%= form_for(@referral_document) do |f| %>
+  <%= f.hidden_field :kase_id %>
+  <% if @referral_document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@referral_document.errors.count, "error") %> prohibited this referral_document from being saved:</h2>
+
+      <ul>
+      <% @referral_document.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.fields_for :resources do |builder| %>
+      <%= render 'resource_fields', :f => builder %>
+    <% end %>
+    <p><%= link_to_add_fields "Add Resource", f, :resources %>
+  </fieldset>
+  
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

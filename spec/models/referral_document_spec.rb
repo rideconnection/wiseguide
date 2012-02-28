@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe ReferralDocument do
+  before do
+    @resource = Factory.build(:referral_document_resource, :referral_document => nil)
+  end
+
   it "should create a new instance given valid attributes" do
-    # We could put this in a before block to take advantage of transactions,
-    # but I prefer to explicitly state why we are building a new object, 
-    # especially since rebuilding it before each test is overkill, and
-    # I can live with knowing I'm breaking convention here by destroying an
-    # object from inside a test.
-    valid = Factory(:referral_document)
-    valid.destroy
+    valid = Factory.build(:referral_document_prototype)
+    valid.resources << @resource
+    valid.valid?.should be_true
   end
   
   context "associations" do
@@ -17,15 +17,15 @@ describe ReferralDocument do
     end
     
     it "should be able add referral document resources" do
-      resource = @refdoc.resources.create(:resource => Factory(:resource))
-      @refdoc.resources.count.should eq(1)
-      @refdoc.resources.first.should eq(resource)
+      expect{@refdoc.resources << @resource}.to change{@refdoc.resources.count}.by(1)
+      @refdoc.resources.last.should eq(@resource)
     end
     
-    it "should only be printable when one or more referral document resources are associated" do
-      @refdoc.printable?.should be_false
-      @refdoc.resources.create(:resource => Factory(:resource))
-      @refdoc.printable?.should be_true
+    it "should require at least one referral document resources are associated" do
+      refdoc = Factory.build(:referral_document_prototype)
+      refdoc.valid?.should be_false
+      refdoc.resources << @resource
+      refdoc.valid?.should be_true
     end
   end
 end

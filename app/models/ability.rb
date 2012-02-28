@@ -9,6 +9,7 @@ class Ability
 
     #system tables
     can :read, AssessmentRequest
+    can :read, County
     can :read, Disposition
     can :read, Ethnicity
     can :read, EventType
@@ -19,13 +20,12 @@ class Ability
     can :read, Route
     can :read, TripReason
     can :read, User
-    can :read, County
 
     # Outside user permissions
     if user.level == 25 then
       can :create, AssessmentRequest
-      can :read, AssessmentRequest, :organization => user.organization
-      can :read, AssessmentRequest, :organization => user.organization.children
+      can :read,   AssessmentRequest, :organization => user.organization
+      can :read,   AssessmentRequest, :organization => user.organization.children
       can :update, AssessmentRequest, :submitter_id => user.id
       can :read, Customer do |customer|
         result = false
@@ -47,31 +47,36 @@ class Ability
     else
       ability = :read
     end
+    
     can ability, AssessmentRequest
-    can ability, KaseRoute
+    can ability, Customer
     can ability, CustomerImpairment
     can ability, CustomerSupportNetworkMember
-    can ability, Kase
-    can ability, Customer
     can ability, Event
+    can ability, Kase
+    can ability, KaseRoute
     can ability, Outcome
+    can ability, ReferralDocument
+    can ability, ReferralDocumentResource
     can ability, Resource
     can ability, ResponseSet
     can ability, Survey
 
     unless user.is_admin
       cannot :destroy, AssessmentRequest
-      cannot :destroy, Kase
       cannot :destroy, Customer
       cannot :destroy, Event
+      cannot :destroy, Kase
       cannot :destroy, Outcome
+      cannot :destroy, ReferralDocument
+      cannot :destroy, ReferralDocumentResource
       cannot :destroy, Resource
       cannot :destroy, ResponseSet
       cannot :destroy, Survey
     end
 
     #users can only read the cases of others
-    can :read, Contact
+    can :read,   Contact
     can :manage, Contact, :user_id == user.id
 
     #and admins are admins

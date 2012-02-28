@@ -1,0 +1,33 @@
+<h1>Referral Documents</h1>
+<% if can?(:edit, @kase) %>
+  <%= link_to "Add", new_referral_document_path(:kase_id=>@kase.id), :class => "add" %>
+<% end %>
+<table>
+  <!-- thead>
+    <tr>
+      <th>Created</th>
+      <th>Last printing</th>
+    </tr>
+  </thead -->
+  <tbody>
+    <% for referral_document in @kase.referral_documents %>
+      <tr class="auto-zebra">
+        <td>
+          <%= referral_document.created_at.strftime "%Y-%m-%d"  %>
+        </td>
+        <td>
+          <%= referral_document.last_printed_at.strftime "%Y-%m-%d" unless referral_document.last_printed_at.blank? %>
+        </td>
+        <td>
+          <%= link_to "View", referral_document_path(referral_document), :class=>"details" %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_referral_document_path(referral_document), :class => :edit %>
+        </td>
+        <td>
+          <%= link_to "", referral_document_path(referral_document), :class => "delete", :method => :delete, :confirm => "Are you sure?" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

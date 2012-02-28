@@ -5,6 +5,8 @@ class Resource < ActiveRecord::Base
     :address => "Street address",
     :url => "URL",
   }
+  
+  scope :active, where(:active => true)
 
   def self.human_attribute_name(attr, options={})
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super

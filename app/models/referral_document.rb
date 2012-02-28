@@ -4,9 +4,13 @@ class ReferralDocument < ActiveRecord::Base
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
   belongs_to :kase
-  has_many :resources, :class_name => 'ReferralDocumentResource'
+  has_many :resources, :class_name => 'ReferralDocumentResource', :dependent => :destroy
   
-  def printable?
-    self.resources.count > 0
+  accepts_nested_attributes_for :resources, :allow_destroy => true, :reject_if => lambda { |a| a[:resource_id].blank? }
+  
+  validates_associated :resources
+  
+  validate do |document|
+    document.errors[:base] << "Referral document must have at least one resource" if document.resources.blank?
   end
 end
