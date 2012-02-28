@@ -19,7 +19,10 @@
           <%= referral_document.last_printed_at.strftime "%Y-%m-%d" unless referral_document.last_printed_at.blank? %>
         </td>
         <td>
-          <%= link_to "Details", edit_referral_document_path(referral_document), :class=>"details" %>
+          <%= link_to "Details", referral_document_path(referral_document), :class=>"details" %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_referral_document_path(referral_document), :class=>"edit" %>
         </td>
       </tr>
     <% end %>

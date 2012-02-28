@@ -1,0 +1,14 @@
+<%= render 'shared/breadcrumbs', :target => @referral_document, :name => 'Referral Document' %>
+<%= link_to "Delete", referral_document_path(@referral_document), :method => "delete", :confirm => "Are you sure you want to delete this referral document?", :class => "delete" if can?(:delete, @referral_document) %>
+
+<ol>
+  <% for resource in @referral_document.resources %>
+  <li><strong><%= resource.resource.name %></strong><br>
+    <%= resource.note %><hr></li>
+  <% end %>
+</ol>
+
+<p><%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
+  <%= link_to 'Back', kase_path(@referral_document.kase) %></p>
+
+<p><%= last_updated @referral_document %></p>
