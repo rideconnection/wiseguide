@@ -13,4 +13,8 @@ class ReferralDocument < ActiveRecord::Base
   validate do |document|
     document.errors[:base] << "Referral document must have at least one resource" if document.resources.blank?
   end
+  
+  def customer
+    return kase.customer
+  end
 end

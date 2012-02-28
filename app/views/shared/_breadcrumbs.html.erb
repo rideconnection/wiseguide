@@ -1,14 +1,14 @@
 <div id="page-header">
   <h1>
     <% if target.respond_to? :display_name %>
-    <%= link_to target.display_name, target %>
+      <%= link_to target.display_name, target %>
     <% else %>
-    <%= link_to target.customer.name, target.customer %> 
+      <%= link_to target.customer.name, target.customer %> 
     <% end %>
-    > 
+    &gt;
     <% if target.respond_to? :kase %>
       <%= link_to "Case Opened #{target.kase.open_date.strftime("%v")}", target.kase %> 
-      > 
+      &gt; 
     <% end %>
     <%= target.new_record? ? "New" : "" %>
     <%= name %>

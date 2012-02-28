@@ -1014,10 +1014,11 @@ body.kases h2 a {
   line-height: 24px;
 }
 
-body.outcomes a.delete,
-body.events a.delete,
 body.contacts a.delete,
-body.kases a.delete.kase {
+body.events a.delete,
+body.kases a.delete.kase,
+body.outcomes a.delete,
+body.referral-documents a.delete {
   float  : right;
   margin : -43px 10px 0 0;
 }
