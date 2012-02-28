@@ -153,6 +153,8 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    pdf-inspector (1.0.1)
+      pdf-reader (>= 0.9.0)
     pdf-reader (1.0.0)
       Ascii85 (~> 1.0.0)
       ruby-rc4
@@ -253,6 +255,7 @@ DEPENDENCIES
   jquery-rails (>= 0.2.6)
   launchy
   paperclip
+  pdf-inspector
   pdf-reader
   pg
   prawn!

@@ -50,6 +50,7 @@ group :development, :test do
   gem "database_cleaner"
   gem "ruby-debug19", :require => "ruby-debug"
   gem "sqlite3-ruby", :require => "sqlite3"
+  gem "pdf-inspector", :require => "pdf/inspector"
 end
 
 group :development, :test, :staging do
