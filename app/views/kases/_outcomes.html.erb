@@ -1,4 +1,4 @@
-<h1>Outcomes</h1>
+<h1 class="clearfix">Outcomes</h1>
 
 <% if can? :edit, @kase %>
   <%= link_to "Add", new_outcome_path(:kase_id=>@kase.id), :class => :add %>
@@ -6,42 +6,40 @@
 
 <% for outcome in @kase.outcomes %>
 <h2>
-  <%= outcome.trip_reason.name %>
+  <div class="clearfix"><%= outcome.trip_reason.name %></div>
   <%= link_to( "Edit", edit_outcome_path( outcome ), :class => :edit ) if can? :edit, outcome %>
 </h2>
 <table>
-<tr>
-<th>When</th>
-<th>Trips/wk</th>
-<th>VMR</th>
-</tr>
+  <tr>
+    <th>When</th>
+    <th>Trips/wk</th>
+    <th>VMR</th>
+  </tr>
 
-<tr class="auto-zebra">
-<td>Exit</td>
-<td><%= outcome.exit_trip_count %></td>
-<td><%= outcome.exit_vehicle_miles_reduced %></td>
-</tr>
+  <tr class="auto-zebra">
+    <td>Exit</td>
+    <td><%= outcome.exit_trip_count %></td>
+    <td><%= outcome.exit_vehicle_miles_reduced %></td>
+  </tr>
 
-<tr class="auto-zebra">
-<td>3 Months</td>
-<% if outcome.three_month_unreachable %>
-<td colspan="2">not reachable</td>
-<% else %>
-<td><%= outcome.three_month_trip_count %></td>
-<td><%= outcome.three_month_vehicle_miles_reduced %></td>
-<% end %>
-</tr>
+  <tr class="auto-zebra">
+    <td>3 Months</td>
+    <% if outcome.three_month_unreachable %>
+      <td colspan="2">not reachable</td>
+    <% else %>
+      <td><%= outcome.three_month_trip_count %></td>
+      <td><%= outcome.three_month_vehicle_miles_reduced %></td>
+    <% end %>
+  </tr>
 
-<tr class="auto-zebra">
-<td>6 Months</td>
-<% if outcome.six_month_unreachable %>
-<td colspan="2">not reachable</td>
-<% else %>
-<td><%= outcome.six_month_trip_count %></td>
-<td><%= outcome.six_month_vehicle_miles_reduced %></td>
-<% end %>
-</tr>
-
+  <tr class="auto-zebra">
+    <td>6 Months</td>
+    <% if outcome.six_month_unreachable %>
+      <td colspan="2">not reachable</td>
+    <% else %>
+      <td><%= outcome.six_month_trip_count %></td>
+      <td><%= outcome.six_month_vehicle_miles_reduced %></td>
+    <% end %>
+  </tr>
 </table>
 <% end %>
-

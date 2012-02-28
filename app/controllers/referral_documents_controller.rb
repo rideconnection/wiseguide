@@ -56,7 +56,7 @@ class ReferralDocumentsController < ApplicationController
 
   def destroy
     @referral_document.destroy
-    redirect_to(@referral_document.kase)
+    redirect_to(kase_path(@referral_document.kase), :notice => 'Referral document was successfully deleted.')
   end
   
 private

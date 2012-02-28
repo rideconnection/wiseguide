@@ -1004,12 +1004,12 @@ body.customers a.new-customer {
  */
 body.kases div.first,
 body.kases div.second {
- float : left;
- min-width: 250px;
+ float: left;
+ width: 50%;
 }
 
 body.kases div.first {
- width : 55%;
+ width : 45%;
  margin-right : 5%;
 }
 
@@ -1033,7 +1033,8 @@ ol.section li h1 {
   margin: 0;
 }
 
-ol.section li a.add {
+ol.section li a.add,
+ol#outcomes.section li a.edit {
   float: left;
   margin : -26px 10px 0 280px;
 }

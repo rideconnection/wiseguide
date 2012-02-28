@@ -18,7 +18,6 @@ Feature: Manage surveys aka Assessments
     And an open training case exists and is assigned to me
     And a simple survey exists
     And I am on the homepage
-  Then show me the page
   When I click on the "Training Cases" link
     And I click through to the case details
     And I click the link to add an assessment
