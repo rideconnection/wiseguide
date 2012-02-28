@@ -13,13 +13,16 @@
     <% for referral_document in @kase.referral_documents %>
       <tr class="auto-zebra">
         <td>
-          <%= referral_document.created_at.strftime "%Y-%m-%d"  %>
+          <span title="Created At"><%= referral_document.created_at.strftime "%Y-%m-%d"  %></span>
         </td>
         <td>
-          <%= referral_document.last_printed_at.strftime "%Y-%m-%d" unless referral_document.last_printed_at.blank? %>
+          <span title="Last Printed At"><%= referral_document.last_printed_at.strftime "%Y-%m-%d" unless referral_document.last_printed_at.blank? %></span>
         </td>
         <td>
           <%= link_to "Details", referral_document_path(referral_document), :class=>"details" %>
+        </td>
+        <td>
+          <%= link_to 'PDF', referral_document_path(referral_document, :format => "pdf"), :class => "print" %>
         </td>
         <td>
           <%= link_to "Edit", edit_referral_document_path(referral_document), :class=>"edit" %>

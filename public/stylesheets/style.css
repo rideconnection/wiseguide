@@ -836,6 +836,7 @@ a.new-trip,
 a.delete,
 a.mark-complete,
 a.add,
+a.print,
 a.change-password {
     padding: 5px 0 7px 22px;
     text-decoration: none;
@@ -847,6 +848,9 @@ a.details {
 }
 a.edit {
     background: url(images/card--pencil.png) 2px center no-repeat scroll;
+}
+a.print {
+    background: url(images/report.png) 2px center no-repeat scroll;
 }
 a.new-trip {
     background: url(images/plus-button.png) 2px center no-repeat scroll;
@@ -876,6 +880,8 @@ a.new-trip:hover,
 a.new-trip:active,
 a.edit:hover,
 a.edit:active,
+a.print:hover,
+a.print:active,
 a.delete:hover,
 a.delete:active,
 a.add:hover,

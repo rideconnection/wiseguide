@@ -3,12 +3,23 @@
 
 <ol>
   <% for resource in @referral_document.resources %>
-  <li><strong><%= resource.resource.name %></strong><br>
-    <%= resource.note %><hr></li>
+    <li>
+      <strong><%= resource.resource.name %></strong><br>
+      <table border="0" cellpadding="4" width="500">
+        <tr><th nowrap width="100">Phone:</th><td width="400"><%= resource.resource.phone_number %></td></tr>
+        <tr><th nowrap>Email:</th><td><%= mail_to(resource.resource.email) unless resource.resource.email.blank? %></td></tr>
+        <tr><th nowrap>URL:</th><td><%= link_to(resource.resource.url, resource.resource.url) unless resource.resource.url.blank? %></td></tr>
+        <tr><th nowrap>Address:</th><td><%= resource.resource.address %></td></tr>
+        <tr><th nowrap>Hours:</th><td><%= resource.resource.hours %></td></tr>
+        <tr><th nowrap>Resource Note:</th><td><%= simple_format resource.resource.notes %></td></tr>
+        <tr><th nowrap>Referral Note:</th><td><%= simple_format resource.note %></td></tr>
+      </table>
+    </li>
   <% end %>
 </ol>
 
-<p><%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
+<p><%= link_to 'Print', referral_document_path(@referral_document, :format => "pdf") %> |
+  <%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
   <%= link_to 'Back', kase_path(@referral_document.kase) %></p>
 
 <p><%= last_updated @referral_document %></p>

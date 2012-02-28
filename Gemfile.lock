@@ -11,6 +11,16 @@ GIT
       uuid
 
 GIT
+  remote: git://github.com/prawnpdf/prawn.git
+  revision: fa857312f34a01238faff12ab681f78bf4243652
+  tag: 0.12.0
+  submodules: true
+  specs:
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
+
+GIT
   remote: git://github.com/rails/exception_notification.git
   revision: 192a49a02d63d28b23ed41cebadfedd490929cf1
   specs:
@@ -19,6 +29,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    Ascii85 (1.0.1)
     abstract (1.0.0)
     actionmailer (3.0.11)
       actionpack (= 3.0.11)
@@ -142,6 +153,9 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    pdf-reader (1.0.0)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
     pg (0.13.1)
     polyglot (0.3.3)
     rack (1.2.5)
@@ -187,6 +201,7 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-rc4 (0.1.5)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.6.1)
@@ -205,6 +220,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.31)
     userstamp (2.0.1)
     uuid (2.3.5)
@@ -219,6 +235,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  Ascii85
   cancan
   capistrano
   capistrano-ext
@@ -236,7 +253,9 @@ DEPENDENCIES
   jquery-rails (>= 0.2.6)
   launchy
   paperclip
+  pdf-reader
   pg
+  prawn!
   rails (~> 3.0.11)
   rake
   rspec-rails

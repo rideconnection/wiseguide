@@ -20,6 +20,11 @@ gem "paperclip"
 gem "userstamp"
 gem "will_paginate", "3.0.pre2"
 
+# For PDF Generation
+gem 'prawn', :git => "git://github.com/prawnpdf/prawn.git", :tag => '0.12.0', :submodules => true
+gem "pdf-reader", :require => "pdf/reader"
+gem "Ascii85", :require => "ascii85"
+
 # Note: We are including a heavily customized version of Surveyor based off on an old fork
 gem "surveyor", :git => "git://github.com/openplans/surveyor.git", 
   :branch => "rails3"
