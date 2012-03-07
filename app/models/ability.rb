@@ -37,7 +37,8 @@ class Ability
         result
       end
       can :read, Kase do |kase|
-        kase.assessment_request.submitter_id == user.id
+        org = kase.assessment_request.submitter.organization
+        org == user.organization || org.parent == user.organization
       end
       return
     end
