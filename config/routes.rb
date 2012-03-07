@@ -1,5 +1,4 @@
 Wiseguide::Application.routes.draw do
-  resources :assessment_requests
   resources :contacts
   resources :counties
   resources :customer_impairments, :except => [:index, :show]
@@ -17,6 +16,12 @@ Wiseguide::Application.routes.draw do
   resources :resources
   resources :routes
   resources :trip_reasons
+
+  resources :assessment_requests do
+    member do
+      get 'download_attachment'
+    end
+  end
 
   resources :customers do
     collection do
