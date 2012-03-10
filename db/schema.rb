@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222233300) do
+ActiveRecord::Schema.define(:version => 20120310035945) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -62,7 +62,11 @@ ActiveRecord::Schema.define(:version => 20120222233300) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.boolean  "show_full_notes"
+    t.integer  "customer_id"
   end
+
+  add_index "contacts", ["customer_id"], :name => "index_contacts_on_customer_id"
+  add_index "contacts", ["kase_id"], :name => "index_contacts_on_kase_id"
 
   create_table "counties", :force => true do |t|
     t.string   "name"

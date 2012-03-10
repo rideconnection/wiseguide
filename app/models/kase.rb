@@ -10,7 +10,7 @@ class Kase < ActiveRecord::Base
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
-  has_many :contacts, :dependent => :destroy
+  has_many :contacts, :dependent => :nullify
   has_many :events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
   has_many :kase_routes, :dependent => :destroy

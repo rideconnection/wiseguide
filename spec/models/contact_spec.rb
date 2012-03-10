@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Contact do
   before do
-    @user = Factory(:trainer)
-    @kase = Factory(:kase, :assigned_to => @user)
-    @contact = Factory.build(:contact, :kase => @kase, :user => @user)
+    @customer = Factory(:customer)
+    @customer_kase = Factory(:kase, :customer => @customer)
+    @contact = Factory.build(:contact, :customer => @customer)
   end
   
   it "should create a new instance given valid attributes" do
@@ -30,8 +30,32 @@ describe Contact do
   end
   
   context "associations" do
-    it "should have a customer attribute that returns the associated case's customer" do
-      @contact.customer.should eq(@kase.customer)
+    it "should have a required customer attribute" do
+      @contact.customer = nil
+      @contact.valid?.should be_false
+    end
+    
+    it "should have a kase attribute" do
+      @contact.kase = @customer_kase
+      @contact.kase.should eq(@customer_kase)
+    end
+  end
+  
+  context "without a case association" do
+    before do
+      @kase = Factory(:kase)
+    end
+    
+    it "should should allow a nil kase association" do
+      @contact.kase = nil
+      @contact.valid?.should be_true
+    end
+    
+    it "should limit the kase association to kases belonging to the associated customer" do
+      @contact.kase = @kase
+      @contact.valid?.should be_false
+      @contact.kase = @customer_kase
+      @contact.valid?.should be_true
     end
   end
 end

@@ -3,6 +3,7 @@ class Customer < ActiveRecord::Base
   has_many :customer_impairments, :dependent => :destroy
   has_many :impairments, :through => :customer_impairments
   has_many :kases, :dependent => :restrict
+  has_many :contacts, :dependent => :destroy
   has_many :customer_support_network_members, :dependent => :destroy
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
@@ -25,7 +26,7 @@ class Customer < ActiveRecord::Base
   validates_presence_of :address
   validates_presence_of :city
   validates_length_of   :state, :is => 2
-  validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?},:message => "should be 12345 or 12345-6789" 
+  validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-6789" 
   validates_presence_of :county
 
   cattr_reader :per_page
