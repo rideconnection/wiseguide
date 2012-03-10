@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222233300) do
+ActiveRecord::Schema.define(:version => 20120307052953) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(:version => 20120222233300) do
     t.datetime "updated_at"
     t.integer  "kase_id"
     t.integer  "customer_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "contacts", :force => true do |t|
@@ -183,16 +187,16 @@ ActiveRecord::Schema.define(:version => 20120222233300) do
     t.date     "date"
     t.integer  "event_type_id"
     t.integer  "funding_source_id"
-    t.decimal  "duration_in_hours"
+    t.decimal  "duration_in_hours", :precision => 5, :scale => 2
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",      :default => 0
+    t.integer  "lock_version",                                    :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "show_full_notes",   :default => false
+    t.boolean  "show_full_notes",                                 :default => false
   end
 
   create_table "funding_sources", :force => true do |t|
