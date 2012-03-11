@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(:version => 20120310035945) do
     t.datetime "updated_at"
     t.integer  "kase_id"
     t.integer  "customer_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "contacts", :force => true do |t|

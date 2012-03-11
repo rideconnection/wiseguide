@@ -4,7 +4,7 @@
 <% elsif @assessment_request.kase.nil? %>
   No associated case.
   <% if can? :create, Kase %>
-    <%= link_to 'Create...', :controller => :assessment_requests,
+    <%= link_to 'Create new coaching case...', :controller => :assessment_requests,
                 :action => :create_case, :id => @assessment_request %>
   <% end %>
 <% elsif can? :read, @assessment_request.kase %>

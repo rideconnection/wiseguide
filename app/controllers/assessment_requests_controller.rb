@@ -101,7 +101,7 @@ class AssessmentRequestsController < ApplicationController
         format.html { redirect_to(@assessment_request, :notice => 'Assessment request was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "show" }
         format.xml  { render :xml => @assessment_request.errors, :status => :unprocessable_entity }
       end
     end
@@ -118,4 +118,16 @@ class AssessmentRequestsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # GET /assessment_requests/1/download_attachment
+  def download_attachment
+    if @assessment_request.attachment.exists?
+      send_file @assessment_request.attachment.path,
+                :type => @assessment_request.attachment_content_type,
+                :disposition => 'inline'
+    else
+      raise ActionController::RoutingError.new('No attachment found')
+    end
+  end
+
 end

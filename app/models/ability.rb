@@ -2,13 +2,14 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    # Read access implies download_attachment access
+    alias_action :download_attachment, :to => :read
 
     if user.level < 0
       return #turned-off users can do nothing
     end
 
     #system tables
-    can :read, AssessmentRequest
     can :read, County
     can :read, Disposition
     can :read, Ethnicity
@@ -37,7 +38,8 @@ class Ability
         result
       end
       can :read, Kase do |kase|
-        kase.assessment_request.submitter_id == user.id
+        org = kase.assessment_request.submitter.organization
+        org == user.organization || org.parent == user.organization
       end
       return
     end
