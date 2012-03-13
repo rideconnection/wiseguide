@@ -7,27 +7,32 @@
     <ol class="section first">
       <%= render 'form', :f => f %>
       <li>
-      <%= last_updated @customer %>
+        <%= last_updated @customer %>
       </li>
     </ol>
     <ol class="section second" id="impairments">
       <li>
-      <%= render "impairments", :form => f %>
+        <%= render "impairments", :form => f %>
       </li>
     </ol>
     <ol class="section third" id="network">
       <li>
-      <%= render "network" %>
+        <%= render "network" %>
       </li>
     </ol>
     <ol class="section second notes" id="notes_and_photo">
       <li>
-      <%= render "notes_and_photo", :f => f %>
+        <%= render "notes_and_photo", :f => f %>
       </li>
     </ol>
     <ol class="section third" id="kases">
       <li>
-      <%= render "kases" %>
+        <%= render "kases" %>
+      </li>
+    </ol>
+    <ol class="section third" id="contacts">
+      <li>
+        <%= render "contacts" %>
       </li>
     </ol>
     

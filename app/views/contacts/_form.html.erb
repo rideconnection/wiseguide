@@ -1,5 +1,6 @@
 <%= form_for @contact do |f| %>
 <fieldset>
+  <%= f.hidden_field :customer_id %>
   <%= f.hidden_field :kase_id %>
   <%= render "shared/error_messages", :target => @contact %> 
   <ol class="section fourth">

@@ -6,7 +6,7 @@ FactoryGirl.define do
     description "My Contact"
   end
   
-  factory :contact_with_kase, :parent => :contact do
-    after_build {|c| c.kase = Factory(:kase, :customer => c.customer)}
+  factory :contact_with_open_training_kase, :parent => :contact do
+    after_build {|c| c.kase = Factory(:open_training_kase, :customer => c.customer)}
   end
 end

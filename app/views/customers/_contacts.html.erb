@@ -1,0 +1,23 @@
+<h1>Contacts</h1>
+<% if can? :edit, @customer %>
+  <%= link_to "Add", new_contact_path(:customer_id => @customer.id), :class => :add %>
+<% end %>
+
+<table>
+  <% for contact in @customer.contacts %>
+    <% cycle = cycle("even","odd") %>
+    <tr class=<%= cycle %>>
+      <td><%= contact.date_time.to_date %></td>
+      <td><%= contact.method %></td>
+      <td><%= contact.description %></td>
+      <td><%= link_to "Details", edit_contact_path(contact), :class=>"details" %></td>
+    </tr>
+    <% if contact.show_full_notes? %>
+      <tr class=<%= cycle %>>
+        <td></td>
+        <td colspan="2"><%= contact.notes %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  <% end %> 
+</table>

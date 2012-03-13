@@ -46,3 +46,7 @@ Then /^I should( not)? see a link to the customer(?:'s)? profile when I return t
   page.send(assertion, have_selector("a[href='/customers/#{@customer.id}']"))
   page.send(assertion, have_content("#{@customer.last_name}, #{@customer.first_name}"))
 end
+
+When /^I click (?:on|through to) the customer(?:'s)? (?:profile|link)$/ do
+  find("a[href='/customers/#{@customer.id}']").click
+end

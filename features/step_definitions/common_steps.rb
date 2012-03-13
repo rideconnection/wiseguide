@@ -19,10 +19,6 @@ When /^I click on the "([^"]+)" link$/ do |link|
   click_link link
 end
 
-When /^I click (?:on|through to) the customer(?:'s)? (?:profile|link)$/ do
-  find("a[href='/customers/#{@customer.id}']").click
-end
-
 Then /^I should see a confirmation message$/ do
   page.should have_content(@confirmation_message)
 end
@@ -30,3 +26,16 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Then /^I should be on the (.*) page$/ do |page_name|
+  object = instance_variable_get("@#{page_name}")
+  page.current_path.should == send("#{page_name.downcase.gsub(' ','_')}_path", object)
+  page.status_code.should == 200
+end
+
+Then /^I should be redirected to the (.*) page$/ do |page_name|
+  page.driver.request.env['HTTP_REFERER'].should_not be_nil
+  page.driver.request.env['HTTP_REFERER'].should_not == page.current_url
+  step %Q(I should be on the #{page_name} page)
+end
+
