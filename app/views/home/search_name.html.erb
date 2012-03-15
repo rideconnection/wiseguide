@@ -4,7 +4,9 @@
   <h1>Search Results</h1>
   <ul>
     <% @search_results.each do |kase| %>
-      <li><%= link_to kase.customer.name_reversed, kase %></li>
+      <% if can? :read, kase %>
+        <li><%= link_to kase.customer.name_reversed, kase %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
