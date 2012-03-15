@@ -2,7 +2,7 @@ class Organization < ActiveRecord::Base
   belongs_to :parent, :class_name => "Organization"
 
   ORGANIZATION_TYPES = {
-    :parent =>     {:id => "parent",     :name => "Parent Organization"},
+    :staff =>      {:id => "staff",      :name => "Staff Organization"},
     :government => {:id => "government", :name => "Government Body"},
     :case_mgmt =>  {:id => "case_mgmt",  :name => "Case Management Organization"}
   }
@@ -24,7 +24,7 @@ class Organization < ActiveRecord::Base
   end
   
   def is_outside_org?
-    organization_type != ORGANIZATION_TYPES[:parent][:id]
+    organization_type != ORGANIZATION_TYPES[:staff][:id]
   end
 
   def parent_name

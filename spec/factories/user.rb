@@ -2,7 +2,7 @@ Factory.define :user do |f|
   f.first_name 'Test'
   f.last_name 'User'
   f.email {"user.#{Time.current.to_f}@rideconnection.org"}
-  f.association :organization, :factory => :parent_organization
+  f.association :organization, :factory => :staff_organization
   f.level 0
   f.password "password"
   f.password_confirmation { |u| u.password }
@@ -12,7 +12,7 @@ Factory.define :trainer, :parent => :user do |f|
   f.first_name 'Trainer'
   f.last_name 'User'
   f.email {"trainer.#{Time.current.to_f}@rideconnection.org" }
-  f.association :organization, :factory => :parent_organization
+  f.association :organization, :factory => :staff_organization
   f.level 50
 end
 
@@ -20,7 +20,7 @@ Factory.define :admin, :parent => :user do |f|
   f.first_name 'Admin'
   f.last_name 'User'
   f.email {"admin.#{Time.current.to_f}@rideconnection.org"}
-  f.association :organization, :factory => :parent_organization
+  f.association :organization, :factory => :staff_organization
   f.level 100
 end
 

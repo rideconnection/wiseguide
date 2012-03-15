@@ -12,8 +12,8 @@ FactoryGirl.define do
     organization_type Organization::ORGANIZATION_TYPES[:government][:id]
   end
 
-  factory :parent_organization, :class => :organization do
-    name "My Parent Organization"
-    organization_type Organization::ORGANIZATION_TYPES[:parent][:id]
+  factory :staff_organization, :class => :organization do
+    name "My Staff Organization"
+    organization_type Organization::ORGANIZATION_TYPES[:staff][:id]
   end
 end

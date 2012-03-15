@@ -50,5 +50,5 @@ end
 
 Organization.find_or_create_by_name(
   :name => 'Ride Connection',
-  :organization_type => Organization::ORGANIZATION_TYPES[:parent][:id]
+  :organization_type => Organization::ORGANIZATION_TYPES[:staff][:id]
 )
