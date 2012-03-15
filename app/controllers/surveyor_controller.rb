@@ -38,7 +38,7 @@ module SurveyorControllerCustomMethods
   def surveyor_finish
     request = @kase.assessment_request
     unless request.nil?
-      AssessmentMailer.customer_assessed_email request.submitter, @kase
+      AssessmentMailer.customer_assessed_email(request.submitter, @kase).deliver
     end
     kase_path @kase
   end
