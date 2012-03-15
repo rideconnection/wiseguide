@@ -2,10 +2,11 @@
   <h1>
     <% if target.respond_to? :display_name %>
       <%= link_to target.display_name, target %>
-    <% else %>
+      &gt;
+    <% elsif target.respond_to? :customer and !target.customer.nil? %>
       <%= link_to target.customer.name, target.customer %> 
+      &gt;
     <% end %>
-    &gt;
     <% if target.respond_to? :kase and !target.kase.nil? %>
       <%= link_to "Case Opened #{target.kase.open_date.strftime("%v")}", target.kase %> 
       &gt; 
