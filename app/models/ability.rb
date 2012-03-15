@@ -38,8 +38,11 @@ class Ability
         result
       end
       can :read, Kase do |kase|
-        org = kase.assessment_request.submitter.organization
-        org == user.organization || org.parent == user.organization
+        request = kase.assessment_request
+        unless request.nil? then
+          org = kase.assessment_request.submitter.organization
+          org == user.organization || org.parent == user.organization
+        end
       end
       return
     end
