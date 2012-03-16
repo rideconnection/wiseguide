@@ -7,9 +7,10 @@ class Organization < ActiveRecord::Base
     :case_mgmt =>  {:id => "case_mgmt",  :name => "Case Management Organization"}
   }
 
+  validates_presence_of :name
   validates_presence_of  :organization_type
   validates_inclusion_of :organization_type, :in => ORGANIZATION_TYPES.values.collect{|t| t[:id]}
-  validates_presence_of  :parent, :if => :is_cmo?
+  validate :validate_parent
 
   has_many :users, :dependent => :restrict
   has_many :children, :class_name => "Organization",
@@ -40,4 +41,21 @@ class Organization < ActiveRecord::Base
   def all_users
     User.where(:organization_id => self.children << self)
   end
+
+  def validate_parent
+    case organization_type
+    when ORGANIZATION_TYPES[:staff][:id], ORGANIZATION_TYPES[:government][:id]
+      unless parent_id.nil? || parent_id == 0
+        errors.add_to_base("#{organization_type_name} cannot have a parent.")
+      end
+    when ORGANIZATION_TYPES[:case_mgmt][:id]
+      if parent_id.nil? || parent_id == 0
+        errors.add_to_base("#{organization_type_name} must have a parent.")
+      elsif parent.organization_type != ORGANIZATION_TYPES[:government][:id]
+        errors.add_to_base("Parent organization must be a " +
+            "#{ORGANIZATION_TYPES[:government][:name]}")
+      end
+    end
+  end
+
 end
