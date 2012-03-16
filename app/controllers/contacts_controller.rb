@@ -4,11 +4,18 @@ class ContactsController < ApplicationController
   def index
   end
 
+  def show
+    @readonly = true
+    prep_edit
+  end
+
   def edit
+    @readonly = false
     prep_edit
   end
 
   def new
+    @readonly = false
     attrs = Hash.new
     if !params[:kase_id].blank? then
       @kase = Kase.find(params[:kase_id])

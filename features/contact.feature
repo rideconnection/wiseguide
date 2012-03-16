@@ -11,7 +11,7 @@ Feature: Manage contacts aka contact events
       And I am on the homepage
     When I click on the "Customers" link
       And I click through to the customer's profile
-    Then I should see the case-less contact event
+    Then I should see the read-only case-less contact event
       And I should not see the contact event associated with the case
     
   Scenario: Only contact events associated with a case should appear on the case profile
@@ -22,7 +22,7 @@ Feature: Manage contacts aka contact events
       And I am on the homepage
     When I click on the "Training Cases" link
       And I click through to the case details
-    Then I should see the contact event associated with the case
+    Then I should see the read-only contact event associated with the case
       And I should not see the case-less contact event
       
   Scenario: Trainers should be able to create a case-less contact event from a customer's profile

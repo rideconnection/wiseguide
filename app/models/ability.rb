@@ -44,6 +44,9 @@ class Ability
           org == user.organization || org.parent == user.organization
         end
       end
+      can :read, Contact do |contact|
+        can?(:read, contact.kase) || can?(:read, contact.customer)
+      end
       return
     end
 

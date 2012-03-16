@@ -10,7 +10,9 @@
       <td><%= contact.date_time.to_date %></td>
       <td><%= contact.method %></td>
       <td><%= contact.description %></td>
-      <td><%= link_to "Details", edit_contact_path(contact), :class=>"details" %></td>
+      <td><%= link_to "Details",
+                can?(:update, contact) ? edit_contact_path(contact) : contact,
+                :class=>"details" %></td>
     </tr>
     <% if contact.show_full_notes? %>
       <tr class=<%= cycle %>>

@@ -12,9 +12,19 @@ Then /^I should( not)? see the case\-less contact event$/ do |negation|
   find('#contacts').send(assertion, have_selector("a.details[href='#{edit_contact_path(@contact_event)}']"))
 end
 
+Then /^I should( not)? see the read\-only case\-less contact event$/ do |negation|
+  assertion = negation ? :should_not : :should
+  find('#contacts').send(assertion, have_selector("a.details[href='#{contact_path(@contact_event)}']"))
+end
+
 Then /^I should( not)? see the contact event associated with the case$/ do |negation|
   assertion = negation ? :should_not : :should
   find('#contacts').send(assertion, have_selector("a.details[href='#{edit_contact_path(@contact_with_kase)}']"))
+end
+
+Then /^I should( not)? see the read\-only contact event associated with the case$/ do |negation|
+  assertion = negation ? :should_not : :should
+  find('#contacts').send(assertion, have_selector("a.details[href='#{contact_path(@contact_with_kase)}']"))
 end
 
 When /^I click on the link to add a case\-less contact event$/ do
