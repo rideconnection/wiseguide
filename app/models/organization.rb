@@ -39,7 +39,7 @@ class Organization < ActiveRecord::Base
 
   # Get all users that are in this organization or a child organization
   def all_users
-    User.where(:organization_id => self.children << self)
+    User.where(:organization_id => self.children + [self])
   end
 
   def validate_parent
