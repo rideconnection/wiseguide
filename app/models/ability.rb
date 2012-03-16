@@ -82,7 +82,7 @@ class Ability
 
     #users can only read the cases of others
     can :read,   Contact
-    can :manage, Contact, :user_id == user.id
+    can :manage, Contact, :user_id => user.id
 
     #and admins are admins
     if user.is_admin
