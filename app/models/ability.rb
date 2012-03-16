@@ -24,7 +24,7 @@ class Ability
 
     # Outside user permissions
     if user.level == 25 then
-      can :create, AssessmentRequest
+      can :create, AssessmentRequest if user.organization.is_cmo?
       can :read,   AssessmentRequest, :organization => user.organization
       can :read,   AssessmentRequest, :organization => user.organization.children
       can :update, AssessmentRequest, :submitter_id => user.id
