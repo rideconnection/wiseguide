@@ -14,7 +14,7 @@
       });
       $('#page-header').after($menu);
       
-      var $reports = $('.predefined-report h2');
+      var $reports = $('.predefined-report h2').sort(function(a, b){return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;});
       $reports.each(function(){
         $li = $('<li>');
         $a = $('<a>');
@@ -48,9 +48,9 @@
         'padding':               '5px'
       });
       
+      $('.predefined-report').hide();
       $menu.before('<h2>Available Reports:</h2>');
-      $menu.find('li:first').css('background-color', '#ccc');
-      $('.predefined-report').hide().first().show();
+      $menu.find('li:first').css('background-color', '#ccc').find('a').click();
     });
   <% end -%>
 <% end -%>
