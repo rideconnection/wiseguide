@@ -3,9 +3,8 @@
     $(document).ready(function(){
       $('.predefined-report fieldset').css('clear', 'none');
       $('.predefined-report').css('margin-left', '235px');
-      $('.predefined-report').hide().first().show();
 
-      var $menu = $('<ul id="report-menu">');
+      var $menu = $('<ul id="reports-menu">');
       $menu.css({
         'float':      'left',
         'list-style': 'none',
@@ -26,6 +25,8 @@
         $a.click(function(){
           $this = $(this);
           $('.predefined-report:visible').hide();
+          $('#reports-menu li').css('background-color', '#eee');
+          $this.closest('li').css('background-color', '#ccc');
           $this.data('target').fadeIn('fast');
         });
       });
@@ -48,6 +49,8 @@
       });
       
       $menu.before('<h2>Available Reports:</h2>');
+      $menu.find('li:first').css('background-color', '#ccc');
+      $('.predefined-report').hide().first().show();
     });
   <% end -%>
 <% end -%>
