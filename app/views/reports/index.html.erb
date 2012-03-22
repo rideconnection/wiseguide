@@ -1,3 +1,57 @@
+<% content_for :head do -%>
+  <%= javascript_tag do -%>
+    $(document).ready(function(){
+      $('.predefined-report fieldset').css('clear', 'none');
+      $('.predefined-report').css('margin-left', '235px');
+      $('.predefined-report').hide().first().show();
+
+      var $menu = $('<ul id="report-menu">');
+      $menu.css({
+        'float':      'left',
+        'list-style': 'none',
+        'margin':     '0',
+        'padding':    '0',
+        'width':      '200px'
+      });
+      $('#page-header').after($menu);
+      
+      var $reports = $('.predefined-report h2');
+      $reports.each(function(){
+        $li = $('<li>');
+        $a = $('<a>');
+        $a.text($(this).text());
+        $a.data('target', $(this).closest('.predefined-report'));
+        $li.append($a)
+        $menu.append($li);
+        $a.click(function(){
+          $this = $(this);
+          $('.predefined-report:visible').hide();
+          $this.data('target').fadeIn('fast');
+        });
+      });
+      
+      $menu.find('li a').css({
+        'color':       '#000 !important',
+        'cursor':      'pointer',
+        'display':     'block',
+        'font-weight': 'bold'
+      });
+
+      $menu.find('li').css({
+        '-moz-border-radius':    '5px',
+        '-webkit-border-radius': '5px',
+        'background-color':      '#eee',
+        'border':                '1px solid #bbb',
+        'border-radius':         '5px',
+        'margin':                '4px 0',
+        'padding':               '5px'
+      });
+      
+      $menu.before('<h2>Available Reports:</h2>');
+    });
+  <% end -%>
+<% end -%>
+
 <div id="page-header">
   <h1>Reports</h1>
 </div>
