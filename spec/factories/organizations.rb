@@ -6,7 +6,8 @@ FactoryGirl.define do
     organization_type Organization::ORGANIZATION_TYPES[:case_mgmt][:id]
     association :parent, :factory => :government_organization
   end
-
+  factory :case_management_organization, :parent => :case_mgmt_organization do; end
+  
   factory :government_organization, :class => :organization do
     name "My Government Organization"
     organization_type Organization::ORGANIZATION_TYPES[:government][:id]

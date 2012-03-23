@@ -268,6 +268,41 @@ class ReportsController < ApplicationController
     end
     send_data csv, :type => "text/csv", :filename => "events #{start_date.to_s} to #{end_date.to_s}.csv", :disposition => 'attachment'    
   end
+  
+  def monthly_transportation
+    # Create “Monthly Transportation Report” under Reports tab with year and 
+    # month selectors, producing a table of the customers assessed during the 
+    # month and columns:
+    # * Customer name
+    # * Date referred
+    # * Date of first customer contact by RideConnection
+    # * Date of the assessment
+    # * Date the CMO was notified of assessment completion
+    
+    @start_date = Date.parse(params[:start_date])
+    @end_date = Date.parse(params[:end_date])
+    @records = []
+    kases = Kase.where(:assessment_date => @start_date..@end_date).joins(:customer).select("kases.*, customers.first_name, customers.last_name").order('assessment_date ASC, last_name ASC, first_name ASC')
+    kases.each do |kase|
+      first_contact_date = ""
+      if !kase.contacts.empty?
+        first_contact_date = kase.contacts.order(:date_time).first.date_time.strftime('%Y-%m-%d')
+      end
+      referral_date = ""
+      if !kase.assessment_request.nil?
+        referral_date = kase.assessment_request.created_at.strftime('%Y-%m-%d')
+      end
+      @records << {
+        :kase_id => kase.id,
+        :customer_id => kase.customer.id,
+        :customer_name => kase.customer.name_reversed,
+        :referral_date => referral_date,
+        :first_contact_date => first_contact_date,
+        :assessment_date => kase.assessment_date.to_s,
+        :cmo_notified_date => kase.case_manager_notification_date.to_s
+      }
+    end
+  end
 
   private
 

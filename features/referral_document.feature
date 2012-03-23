@@ -5,7 +5,7 @@ Feature: Manage referral documents
   
   Scenario: Trainers can create a new referral document
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a resource exists
       And I am on the homepage
     When I click on the "Training Cases" link
@@ -20,7 +20,7 @@ Feature: Manage referral documents
   @javascript
   Scenario: Trainers can add a resource to an existing referral document
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a referral document exists for the existing case
       And a resource exists with a name of "Sweet Resource"
       And I am on the homepage
@@ -36,7 +36,7 @@ Feature: Manage referral documents
   @javascript
   Scenario: Trainers can remove a resource from an existing referral document
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a referral document exists for the existing case
       And a resource exists with a name of "Sweet Resource"
       And the resource is assigned to the referral document as a second resource
@@ -50,7 +50,7 @@ Feature: Manage referral documents
     
   Scenario: Trainers can print a referral document
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a referral document exists for the existing case
       And I am on the homepage
     When I click on the "Training Cases" link
@@ -65,7 +65,7 @@ Feature: Manage referral documents
   @javascript
   Scenario: Trainers can not delete a referral document
     Given I am logged in as an trainer
-      And an open training case exists
+      And there is an open training case
       And a referral document exists for the existing case
       And I am on the homepage
     When I click on the "Training Cases" link
@@ -81,7 +81,7 @@ Feature: Manage referral documents
   @javascript
   Scenario: Admins can delete a referral document
     Given I am logged in as an admin
-      And an open training case exists
+      And there is an open training case
       And a referral document exists for the existing case
       And I am on the homepage
     When I click on the "Training Cases" link

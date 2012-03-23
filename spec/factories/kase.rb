@@ -35,3 +35,14 @@ Factory.define :training_kase,        :parent => :kase do |f|; end
 Factory.define :closed_training_kase, :parent => :closed_kase do |f|; end
 Factory.define :open_training_kase,   :parent => :open_kase do |f|; end
 Factory.define :closed_coaching_kase, :parent => :coaching_kase do |f|; end
+
+# aliases for cucumber steps
+Factory.define :case,                 :parent => :kase do |f|; end
+Factory.define :open_case  ,          :parent => :open_kase do |f|; end
+Factory.define :closed_case,          :parent => :closed_kase do |f|; end
+Factory.define :coaching_case,        :parent => :coaching_kase do |f|; end
+Factory.define :training_case,        :parent => :training_kase do |f|; end
+Factory.define :closed_training_case, :parent => :closed_training_kase do |f|; end
+Factory.define :open_coaching_case,   :parent => :open_coaching_kase do |f|; end
+Factory.define :open_training_case,   :parent => :open_training_kase do |f|; end
+Factory.define :closed_coaching_case, :parent => :closed_coaching_kase do |f|; end

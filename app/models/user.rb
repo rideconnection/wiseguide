@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
 
   belongs_to :organization
 
-  has_many :surveys, :dependent => :nullify
   has_many :kases, :dependent => :nullify
   has_many :contacts, :dependent => :nullify
   has_many :events, :dependent => :nullify

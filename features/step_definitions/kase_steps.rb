@@ -144,12 +144,12 @@ Given /^an open training case exists and is assigned to the other trainer$/ do
   @customer = @kase.customer
 end
 
-Given /^an open training case exists$/ do
+Given /^there is an open training case$/ do
   @kase = Factory(:open_training_kase)
   @customer = @kase.customer
 end
 
-Given /^an open coaching case exists$/ do
+Given /^there is an open coaching case$/ do
   @kase = Factory(:open_coaching_kase)
   @customer = @kase.customer
 end

@@ -10,7 +10,7 @@
         'list-style': 'none',
         'margin':     '0',
         'padding':    '0',
-        'width':      '200px'
+        'width':      '215px'
       });
       $('#page-header').after($menu);
       
@@ -59,7 +59,7 @@
   <h1>Reports</h1>
 </div>
 
-<div class="predefined-report" data-name="monthly">
+<div class="predefined-report" data-name="monthly" id="basic_report">
   <form action="<%= url_for(:action => 'basic_report') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Productivity Report</h2>
@@ -83,7 +83,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="demographic">
+<div class="predefined-report" data-name="demographic" id="age_and_ethnicity">
   <form action="<%= url_for(:action => 'age_and_ethnicity') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Age and Ethnicity Report</h2>
@@ -103,7 +103,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="trainer">
+<div class="predefined-report" data-name="trainer" id="trainer">
   <form action="<%= url_for(:action => 'trainer') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Trainer Report</h2>
@@ -123,7 +123,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="trainee">
+<div class="predefined-report" data-name="trainee" id="trainee">
   <form action="<%= url_for(:action => 'trainee') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Trainee Report</h2>
@@ -143,7 +143,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="route">
+<div class="predefined-report" data-name="route" id="route">
   <form action="<%= url_for(:action => 'route') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Route Report</h2>
@@ -167,7 +167,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="outcomes">
+<div class="predefined-report" data-name="outcomes" id="outcomes">
   <form action="<%= url_for(:action => 'outcomes') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Outcomes Export</h2>
@@ -187,7 +187,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="cases">
+<div class="predefined-report" data-name="cases" id="opened_cases">
   <form action="<%= url_for(:action => 'opened_cases') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Opened Cases Export</h2>
@@ -207,7 +207,7 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="cases">
+<div class="predefined-report" data-name="cases" id="closed_cases">
   <form action="<%= url_for(:action => 'closed_cases') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Closed Cases Export</h2>
@@ -227,10 +227,30 @@
   </form>
 </div>
 
-<div class="predefined-report" data-name="events">
+<div class="predefined-report" data-name="events" id="events">
   <form action="<%= url_for(:action => 'events') %>" class="run-report">
     <fieldset>
       <h2 class="report-header">Events Export</h2>
+      <p></p>
+      <ol>
+        <li>
+          <label>Start date:</label>
+          <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+        <li>
+          <label>End date:</label>
+          <input type="text" name="end_date" value="<%= end_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+      </ol>
+      <input type="submit" name="report" value="Report">
+    </fieldset>
+  </form>
+</div>
+
+<div class="predefined-report" data-name="" id="monthly_transportation">
+  <form action="<%= url_for(:action => 'monthly_transportation') %>" class="run-report">
+    <fieldset>
+      <h2 class="report-header">Monthly Transportation Report</h2>
       <p></p>
       <ol>
         <li>

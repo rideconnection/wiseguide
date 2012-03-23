@@ -4,12 +4,12 @@ class Kase < ActiveRecord::Base
   belongs_to :funding_source
   belongs_to :disposition
   belongs_to :assigned_to, :foreign_key=>:user_id, :class_name=>"User"
-  belongs_to :assessment_request
 
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
+  has_one  :assessment_request, :dependent => :nullify
   has_many :contacts, :dependent => :nullify
   has_many :events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy

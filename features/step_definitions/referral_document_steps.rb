@@ -27,6 +27,7 @@ Given /^a referral document exists for the existing case$/ do
 end
 
 When /^I click on the link to edit the referral document$/ do
+  save_and_open_page
   find("#referral_documents a[href='/referral_documents/#{@referral_document.id}/edit']").click
 end
 

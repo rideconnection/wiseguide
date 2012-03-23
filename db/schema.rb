@@ -191,16 +191,16 @@ ActiveRecord::Schema.define(:version => 20120315234947) do
     t.date     "date"
     t.integer  "event_type_id"
     t.integer  "funding_source_id"
-    t.decimal  "duration_in_hours", :precision => 5, :scale => 2
+    t.decimal  "duration_in_hours"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                    :default => 0
+    t.integer  "lock_version",      :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "show_full_notes",                                 :default => false
+    t.boolean  "show_full_notes",   :default => false
   end
 
   create_table "funding_sources", :force => true do |t|

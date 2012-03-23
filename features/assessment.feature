@@ -5,7 +5,7 @@ Feature: Manage assessments aka response sets
   
   Scenario: Trainers should be allowed to add multiple assessments to a training case
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And the case has one assessment
       And I am on the homepage
     When I click on the "Training Cases" link
@@ -14,7 +14,7 @@ Feature: Manage assessments aka response sets
 
   Scenario: Trainers should only be allowed to add one assessment to a coaching case
     Given I am logged in as a trainer
-      And an open coaching case exists
+      And there is an open coaching case
       And the case has one assessment
       And I am on the homepage
     When I click on the "Coaching Cases" link

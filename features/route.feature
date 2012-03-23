@@ -8,7 +8,7 @@ Feature: Manage routes trained on cases
   @javascript 
   Scenario: Trainers can add trained routes to cases
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a route exists with a name of "Hometown Express 123"
       And I am on the homepage
     When I click on the "Training Cases" link
@@ -22,7 +22,7 @@ Feature: Manage routes trained on cases
   @javascript
   Scenario: Trainers can delete trained routes from cases
     Given I am logged in as a trainer
-      And an open training case exists
+      And there is an open training case
       And a trained route exists for the existing case
       And I am on the homepage
     When I click on the "Training Cases" link

@@ -1,0 +1,32 @@
+<div id="page-header">
+  <h1>Monthly Transportation Report<h1>
+  <%= content_tag :h2, describe_date_range(@start_date, @end_date) %>
+</div>
+
+<table class="auto-zebra" id="monthly_transportation">
+  <thead>
+    <tr>
+      <th>Customer Name</th>
+      <th>Referral Date</th>
+      <th>First Contact</th>
+      <th>Assessment Date</th>
+      <th>CMO Notified</th>
+    </th>
+  </thead>
+  <tbody>
+    <% if !@records.empty? %>
+      <% @records.each do |record| %>
+        <tr>
+          <td><%= link_to record[:customer_name], customer_path(record[:customer_id]) %></td>
+          <td><%= record[:referral_date] %></td>
+          <td><%= record[:first_contact_date] %></td>
+          <td><%= record[:assessment_date] %></td>
+          <td><%= record[:cmo_notified_date] %></td>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5">No records found for that date range</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

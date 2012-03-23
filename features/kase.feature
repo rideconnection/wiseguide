@@ -83,7 +83,7 @@ Feature: Manage cases aka kases
   @javascript
   Scenario: Trainers cannot delete a case
     Given I am logged in as an trainer
-      And an open training case exists
+      And there is an open training case
       And I am on the homepage
     When I click on the "Training Cases" link
       And I click through to the case details
@@ -95,7 +95,7 @@ Feature: Manage cases aka kases
   @javascript
   Scenario: Admins can delete a case
     Given I am logged in as an admin
-      And an open training case exists
+      And there is an open training case
       And I am on the homepage
     When I click on the "Training Cases" link
       And I click through to the case details
