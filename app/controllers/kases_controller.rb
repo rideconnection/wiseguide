@@ -84,7 +84,7 @@ private
   def prep_edit
     @referral_types = ReferralType.accessible_by(current_ability)
     @users = [User.new(:email=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
-    @case_managers = User.outside_or_selected(@kase.case_manager_id).accessible_by(current_ability)
+    @case_managers = User.cmo_or_selected(@kase.case_manager_id).accessible_by(current_ability)
     @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
 

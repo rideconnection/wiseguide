@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   scope :active, where("users.level >= 0")
   scope :inside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject(&:is_outside_org?).collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
   scope :outside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject{|o| !o.is_outside_org?}.collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
+  scope :cmo_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject{|o| !o.is_cmo?}.collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
 
   def display_name
     if first_name.blank? then
