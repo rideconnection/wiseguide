@@ -4,6 +4,11 @@
     <%= render 'form' %>
   </ol>
   <ol class="second">
+    <div class="field">
+      <label>Submitted by:</label>
+      <%= @assessment_request.submitter.display_name %>
+      &lt;<%= @assessment_request.submitter.email %>&gt;
+    </div>
     <ol class="section" id="customer">
       <li>
         <%= render "customer" %>

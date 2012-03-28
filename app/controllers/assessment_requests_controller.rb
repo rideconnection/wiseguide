@@ -46,6 +46,7 @@ class AssessmentRequestsController < ApplicationController
     kase = {
       :type => :CoachingKase,
       :assessment_request_id => @assessment_request.id,
+      :case_manager_id => @assessment_request.submitter.id,
     }
     redirect_to :controller => :kases, :action => :new, :kase => kase,
                 :customer_id => @assessment_request.customer_id
