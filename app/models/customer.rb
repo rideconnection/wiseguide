@@ -30,6 +30,16 @@ class Customer < ActiveRecord::Base
   validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-6789" 
   validates_presence_of :county
 
+  HUMAN_ATTRIBUTE_NAMES = {
+    :veteran_status => "Veteran?",
+    :spouse_of_veteran_status => "Spouse, widow, or widower of a veteran?",
+    :ada_service_eligibility_status_id => "TriMet Lift Eligibity status"
+  }
+  
+  def self.human_attribute_name(attr, options={})
+    HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
+  end
+
   cattr_reader :per_page
   @@per_page = 50
 

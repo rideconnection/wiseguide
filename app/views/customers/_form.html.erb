@@ -87,3 +87,29 @@
     <%= f.label :county %>
     <%= f.select :county, @counties, :prompt => '<Select County>' %>
     </li>
+
+    <li>
+    <%= f.label :veteran_status %>
+    <%= f.check_box :veteran_status %>
+    </li>
+
+    <li>
+    <%= f.label :spouse_of_veteran_status %>
+    <%= f.check_box :spouse_of_veteran_status %><br><br>
+    </li>
+
+    <li>
+    <%= f.label :honored_citizen_cardholder %>
+    <%= f.check_box :honored_citizen_cardholder %><br><br>
+    </li>
+
+    <li>
+    <%= f.label :primary_language %>
+    <%= f.text_field :primary_language %>
+    </li>
+
+    <li>
+    <%= f.label :ada_service_eligibility_status_id %>
+    <%= f.collection_select :ada_service_eligibility_status_id, @ada_service_eligibility_statuses, :id, :name, :include_blank => '<Select TriMet Lift Eligibity>' %><br><br>
+    </li>
+    

@@ -72,5 +72,6 @@ class CustomersController < ApplicationController
     @ethnicities = Ethnicity.all
     @genders = ALL_GENDERS
     @counties = (County.all.collect {|c| c.name} << @customer.county).compact.uniq.sort
+    @ada_service_eligibility_statuses = AdaServiceEligibilityStatus.order(:name).all
   end
 end
