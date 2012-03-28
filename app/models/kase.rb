@@ -14,7 +14,7 @@ class Kase < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
   has_many :kase_routes, :dependent => :destroy
-  has_many :routes, :through=>:kase_routes
+  has_many :routes, :through => :kase_routes
   has_many :outcomes, :dependent => :destroy
   has_many :referral_documents, :dependent => :destroy
 

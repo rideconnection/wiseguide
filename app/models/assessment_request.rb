@@ -2,6 +2,8 @@ class AssessmentRequest < ActiveRecord::Base
   belongs_to :submitter, :class_name => "User", :foreign_key => :submitter_id
   belongs_to :customer
   belongs_to :kase
+  
+  has_one :referring_organization, :through => :submitter, :source => :organization
 
   has_attached_file :attachment,
     :path => ":rails_root/uploads/:attachment/:id/:basename.:extension",
@@ -17,7 +19,7 @@ class AssessmentRequest < ActiveRecord::Base
 
   attr_accessible :attachment, :customer_first_name, :customer_last_name,
                   :customer_birth_date, :customer_phone, :notes,
-                  :submitter, :submitter_id
+                  :submitter, :submitter_id, :customer, :customer_id
 
   def display_name
     return customer_last_name + ", " + customer_first_name

@@ -1,14 +1,16 @@
 class User < ActiveRecord::Base
   model_stamper
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
+
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
-
   belongs_to :organization
 
   has_many :kases, :dependent => :nullify
   has_many :contacts, :dependent => :nullify
   has_many :events, :dependent => :nullify
+  has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
+  has_many :referred_kases, :through => :assessment_requests, :source => :kase
 
   validates_presence_of :first_name
   validates_presence_of :last_name
