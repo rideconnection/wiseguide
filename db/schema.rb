@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120328062148) do
+ActiveRecord::Schema.define(:version => 20120328065248) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(:version => 20120328062148) do
     t.string   "email"
     t.string   "address"
     t.string   "city"
-    t.string   "state",                               :default => "OR"
+    t.string   "state",                                           :default => "OR"
     t.string   "zip"
     t.integer  "ethnicity_id"
     t.text     "notes"
@@ -128,12 +128,17 @@ ActiveRecord::Schema.define(:version => 20120328062148) do
     t.datetime "portrait_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                        :default => 0
+    t.integer  "lock_version",                                    :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "phone_number_3"
     t.string   "phone_number_4"
-    t.string   "county",                :limit => 25
+    t.string   "county",                            :limit => 25
+    t.boolean  "veteran_status"
+    t.boolean  "spouse_of_veteran_status"
+    t.boolean  "honored_citizen_cardholder"
+    t.string   "primary_language"
+    t.integer  "ada_service_eligibility_status_id"
   end
 
   create_table "dependencies", :force => true do |t|

@@ -1,5 +1,6 @@
 class Customer < ActiveRecord::Base
   belongs_to :ethnicity
+  belongs_to :ada_service_eligibility_status
   has_many :customer_impairments, :dependent => :destroy
   has_many :impairments, :through => :customer_impairments
   has_many :kases, :dependent => :restrict
