@@ -52,3 +52,7 @@ Organization.find_or_create_by_name(
   :name => 'Ride Connection',
   :organization_type => Organization::ORGANIZATION_TYPES[:staff][:id]
 )
+
+["Application Pending", "Conditional Eligibility", "Never Applied", "Not Eligible", "Out of ADA Area", "Service Terminated", "Temporary Conditional Eligibility", "Unconditional Eligibility"].each do |status|
+  AdaServiceEligibilityStatus.find_or_create_by_name(status)
+end
