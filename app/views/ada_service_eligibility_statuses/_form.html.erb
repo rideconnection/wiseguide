@@ -1,0 +1,21 @@
+<%= form_for(@ada_service_eligibility_status) do |f| %>
+  <% if @ada_service_eligibility_status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ada_service_eligibility_status.errors.count, "error") %> prohibited this ada_service_eligibility_status from being saved:</h2>
+
+      <ul>
+      <% @ada_service_eligibility_status.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

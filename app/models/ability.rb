@@ -10,6 +10,7 @@ class Ability
     end
 
     #system tables
+    can :read, AdaServiceEligibilityStatus
     can :read, County
     can :read, Disposition
     can :read, Ethnicity

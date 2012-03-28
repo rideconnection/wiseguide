@@ -1,0 +1,23 @@
+<h1>Listing ada_service_eligibility_statuses</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ada_service_eligibility_statuses.each do |ada_service_eligibility_status| %>
+  <tr>
+    <td><%= ada_service_eligibility_status.name %></td>
+    <td><%= link_to 'Show', ada_service_eligibility_status %></td>
+    <td><%= link_to 'Edit', edit_ada_service_eligibility_status_path(ada_service_eligibility_status) %></td>
+    <td><%= link_to 'Destroy', ada_service_eligibility_status, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ada service eligibility status', new_ada_service_eligibility_status_path %>

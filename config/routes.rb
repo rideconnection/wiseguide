@@ -1,4 +1,6 @@
 Wiseguide::Application.routes.draw do
+
+  resources :ada_service_eligibility_statuses
   resources :contacts
   resources :counties
   resources :customer_impairments, :except => [:index, :show]
