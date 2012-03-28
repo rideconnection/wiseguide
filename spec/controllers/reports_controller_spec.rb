@@ -44,28 +44,28 @@ describe ReportsController do
     end
   end
   
-  def get_monthly_transportation
-    get :monthly_transportation, :start_date => "2000-01-01", :end_date => "2000-01-30"
+  def get_with_date_range (action)
+    get action, :start_date => "2000-01-01", :end_date => "2000-01-30"
   end
     
   describe "GET monthly_transportation" do
     it "should be successful" do
-      get_monthly_transportation
+      get_with_date_range :monthly_transportation
       response.should be_success
     end
   
     it "should render the monthly_transportation template" do
-      get_monthly_transportation
+      get_with_date_range :monthly_transportation
       response.should render_template("monthly_transportation")
     end
   
     it "should assign @start_date" do
-      get_monthly_transportation
+      get_with_date_range :monthly_transportation
       assigns(:start_date).should eq(Date.parse("2000-01-01"))
     end
     
     it "should assign @end_date" do
-      get_monthly_transportation
+      get_with_date_range :monthly_transportation
       assigns(:end_date).should eq(Date.parse("2000-01-30"))
     end
 
@@ -138,10 +138,53 @@ describe ReportsController do
     #         :cmo_notified_date => "2011-01-02"
     #       }
     #     ]
-    #     get_monthly_transportation
+    #     get_with_date_range :monthly_transportation
     #     debugger
     #     assigns(:records).should =~ records
     #   end
     # end
+
+    # So, instead:
+    it "should assign @records" do
+      get_with_date_range :monthly_transportation
+      assigns(:records).should_not be_nil
+    end
+  end
+  
+  describe "GET customer_referral" do
+    it "should be successful" do
+      get_with_date_range :customer_referral
+      response.should be_success
+    end
+  
+    it "should render the customer_referral template" do
+      get_with_date_range :customer_referral
+      response.should render_template("customer_referral")
+    end
+  
+    it "should assign @start_date" do
+      get_with_date_range :customer_referral
+      assigns(:start_date).should eq(Date.parse("2000-01-01"))
+    end
+    
+    it "should assign @end_date" do
+      get_with_date_range :customer_referral
+      assigns(:end_date).should eq(Date.parse("2000-01-30"))
+    end
+
+    it "should assign @assessments_performed" do
+      get_with_date_range :customer_referral
+      assigns(:assessments_performed).should_not be_nil
+    end
+
+    it "should assign @referral_sources" do
+      get_with_date_range :customer_referral
+      assigns(:referral_sources).should_not be_nil
+    end
+
+    it "should assign @services_referred" do
+      get_with_date_range :customer_referral
+      assigns(:services_referred).should_not be_nil
+    end
   end
 end

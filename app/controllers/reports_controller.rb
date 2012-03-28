@@ -304,6 +304,27 @@ class ReportsController < ApplicationController
     end
   end
 
+  def customer_referral
+    @start_date = Date.parse(params[:start_date])
+    @end_date = Date.parse(params[:end_date])
+    
+    # a calculation of the number of coaching cases that have an assessment 
+    # date within the specified date range
+    @assessments_performed = Kase.where("assessment_date BETWEEN ? AND ?", @start_date, @end_date).count
+
+    # A list of CMOs whose case managers have created assessment requests that
+    # are linked to cases with an assessment date within the date range 
+    # specified, and the number of unique customers assessed via those cases
+    @referral_sources = Organization.joins(:users, "inner join assessment_requests on users.id = assessment_requests.submitter_id", "inner join kases on assessment_requests.kase_id = kases.id", "inner join customers on kases.customer_id = customers.id").select("COUNT(DISTINCT(customers.id)) as 'customers_assessed', organizations.id AS 'organization_id', organizations.name as 'organization_name'").group("organizations.id, organizations.name").order("organizations.name").where("kases.assessment_date BETWEEN ? AND ?", @start_date, @end_date)
+
+    # A list of services (aka resources) that are linked via referral 
+    # documents to cases that have an assessment date within the specified 
+    # date range and the number of customers who were referred to each service
+    # through the following relationship:
+    # customer -> kase -> referral_document -> referral_document_resource -> resource
+    @services_referred = Resource.joins(:referral_documents, "inner join kases on referral_documents.kase_id = kases.id", "inner join customers on kases.customer_id = customers.id").select("COUNT(DISTINCT(customers.id)) as 'customers_referred', resources.id as 'resource_id', resources.name as 'resource_name'").group("resources.id, resources.name").order("resources.name").where("kases.assessment_date BETWEEN ? AND ?", @start_date, @end_date)
+  end
+
   private
 
   def outcomes_row(customer,kase,outcome)

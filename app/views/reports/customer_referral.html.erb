@@ -1,0 +1,65 @@
+<div id="page-header">
+  <h1>Customer Referral Report<h1>
+  <%= content_tag :h2, describe_date_range(@start_date, @end_date) %>
+</div>
+
+<h2>Assessments Performed</h2>
+<table class="auto-zebra" id="assessments_performed">
+  <thead>
+    <tr>
+      <th>Assessments Performed</th>
+    </th>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @assessments_performed %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Referral Sources</h2>
+<table class="auto-zebra" id="referral_sources">
+  <thead>
+    <tr>
+      <th>Referral Source</th>
+      <th>Customers Assessed</th>
+    </th>
+  </thead>
+  <tbody>
+    <% if !@referral_sources.empty? %>
+      <% @referral_sources.each do |record| %>
+        <tr>
+          <td><%= record[:organization_name] %></td>
+          <td><%= record[:customers_assessed] %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="2">No records found for that date range</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Services Referred</h2>
+<table class="auto-zebra" id="services_referred">
+  <thead>
+    <tr>
+      <th>Service Name</th>
+      <th>Customers Referred</th>
+    </th>
+  </thead>
+  <tbody>
+    <% if !@services_referred.empty? %>
+      <% @services_referred.each do |record| %>
+        <tr>
+          <td><%= record[:resource_name] %></td>
+          <td><%= record[:customers_referred] %></td>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="2">No records found for that date range</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

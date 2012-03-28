@@ -266,3 +266,23 @@
     </fieldset>
   </form>
 </div>
+
+<div class="predefined-report" data-name="" id="customer_referral">
+  <form action="<%= url_for(:action => 'customer_referral') %>" class="run-report">
+    <fieldset>
+      <h2 class="report-header">Customer Referral Report</h2>
+      <p></p>
+      <ol>
+        <li>
+          <label>Start date:</label>
+          <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+        <li>
+          <label>End date:</label>
+          <input type="text" name="end_date" value="<%= end_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+      </ol>
+      <input type="submit" name="report" value="Report">
+    </fieldset>
+  </form>
+</div>
