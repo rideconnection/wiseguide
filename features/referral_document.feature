@@ -15,8 +15,8 @@ Feature: Manage referral documents
       And I should see a confirmation message
       And I should see the referral document under the Referral Documents section of the case profile
   
-  # @firebug 
-  # @pause_on_fail
+  @firebug 
+  @pause_on_fail
   @javascript
   Scenario: Trainers can add a resource to an existing referral document
     Given I am logged in as a trainer
@@ -31,8 +31,8 @@ Feature: Manage referral documents
       And I should see a confirmation message
       And I should see the new resource listed when I click on the referral document details link
   
-  # @firebug 
-  # @pause_on_fail
+  @firebug 
+  @pause_on_fail
   @javascript
   Scenario: Trainers can remove a resource from an existing referral document
     Given I am logged in as a trainer

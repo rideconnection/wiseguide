@@ -14,7 +14,7 @@ class ReferralDocumentPdf < Prawn::Document
   end
   
   def resources
-    @refdoc.resources.each do |resource|
+    @refdoc.referral_document_resources.each do |resource|
       move_down 40
       resource_details(resource)
     end

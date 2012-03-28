@@ -2,17 +2,17 @@
 <%= link_to "Delete", referral_document_path(@referral_document), :method => "delete", :confirm => "Are you sure you want to delete this referral document?", :class => "delete" if can?(:delete, @referral_document) %>
 
 <ol>
-  <% for resource in @referral_document.resources %>
+  <% for referral_document_resource in @referral_document.referral_document_resources %>
     <li>
-      <strong><%= resource.resource.name %></strong><br>
+      <strong><%= referral_document_resource.resource.name %></strong><br>
       <table border="0" cellpadding="4" width="500">
-        <tr><th nowrap width="100">Phone:</th><td width="400"><%= resource.resource.phone_number %></td></tr>
-        <tr><th nowrap>Email:</th><td><%= mail_to(resource.resource.email) unless resource.resource.email.blank? %></td></tr>
-        <tr><th nowrap>URL:</th><td><%= link_to(resource.resource.url, resource.resource.url) unless resource.resource.url.blank? %></td></tr>
-        <tr><th nowrap>Address:</th><td><%= resource.resource.address %></td></tr>
-        <tr><th nowrap>Hours:</th><td><%= resource.resource.hours %></td></tr>
-        <tr><th nowrap>Resource Note:</th><td><%= simple_format resource.resource.notes %></td></tr>
-        <tr><th nowrap>Referral Note:</th><td><%= simple_format resource.note %></td></tr>
+        <tr><th nowrap width="100">Phone:</th><td width="400"><%= referral_document_resource.resource.phone_number %></td></tr>
+        <tr><th nowrap>Email:</th><td><%= mail_to(referral_document_resource.resource.email) unless referral_document_resource.resource.email.blank? %></td></tr>
+        <tr><th nowrap>URL:</th><td><%= link_to(referral_document_resource.resource.url, referral_document_resource.resource.url) unless referral_document_resource.resource.url.blank? %></td></tr>
+        <tr><th nowrap>Address:</th><td><%= referral_document_resource.resource.address %></td></tr>
+        <tr><th nowrap>Hours:</th><td><%= referral_document_resource.resource.hours %></td></tr>
+        <tr><th nowrap>Resource Note:</th><td><%= simple_format referral_document_resource.resource.notes %></td></tr>
+        <tr><th nowrap>Referral Note:</th><td><%= simple_format referral_document_resource.note %></td></tr>
       </table>
     </li>
   <% end %>

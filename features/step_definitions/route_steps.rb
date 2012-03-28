@@ -1,5 +1,4 @@
 When /^I click the link to add a trained route$/ do
-  save_and_open_page
   find("#trained_routes a[href='/cases/add_route?kase_id=#{@kase.id}']").click
 end
 

@@ -27,7 +27,6 @@ Given /^a referral document exists for the existing case$/ do
 end
 
 When /^I click on the link to edit the referral document$/ do
-  save_and_open_page
   find("#referral_documents a[href='/referral_documents/#{@referral_document.id}/edit']").click
 end
 
@@ -56,7 +55,7 @@ Then /^I should not see the new resource listed when I click on the referral doc
 end
 
 Given /^the resource is assigned to the referral document as a second resource$/ do
-  @referral_document.resources.create(:resource => @resource)
+  @referral_document.referral_document_resources.create(:resource => @resource)
 end
 
 Then /^I should be able to delete the second resource$/ do
@@ -80,7 +79,7 @@ end
 
 Then /^I should see the referral document details$/ do
   page.should have_content("Referral Document for #{@referral_document.customer.name}")
-  page.should have_content("#{@referral_document.resources.first.resource.name}")
+  page.should have_content("#{@referral_document.referral_document_resources.first.resource.name}")
   page.should have_content("Referral document opened at #{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 

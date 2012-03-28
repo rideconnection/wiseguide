@@ -20,7 +20,7 @@ class ReferralDocumentsController < ApplicationController
   end
 
   def new
-    @referral_document = ReferralDocument.new(:kase_id=>params[:kase_id])
+    @referral_document = ReferralDocument.new(:kase_id => params[:kase_id])
     prep_edit
   end
 
@@ -63,12 +63,12 @@ private
   
   def prep_edit
     @resources = Resource.active
-    if !params[:referral_document].blank? and !params[:referral_document][:resources_attributes].blank?
-      params[:referral_document][:resources_attributes].each do |resource|
-        @referral_document.resources.build(ReferralDocumentResource.new.attributes.merge(resource[1].slice(*ReferralDocumentResource.new.attributes.keys)))
+    if !params[:referral_document].blank? and !params[:referral_document][:referral_document_resources_attributes].blank?
+      params[:referral_document][:referral_document_resources_attributes].each do |referral_document_resource|
+        @referral_document.referral_document_resources.build(ReferralDocumentResource.new.attributes.merge(referral_document_resource[1].slice(*ReferralDocumentResource.new.attributes.keys)))
       end
-    elsif @referral_document.resources.count == 0
-      @referral_document.resources.build
+    elsif @referral_document.referral_document_resources.count == 0
+      @referral_document.referral_document_resources.build
     end
   end
 end
