@@ -4,6 +4,10 @@ class OrganizationType < ActiveRecord::Base; end
 
 class Organization
   belongs_to :organization_type
+
+  def is_outside_org?
+    organization_type.name != 'Ride Connection Staff'
+  end
 end
 
 # Create a Ride Connection organization if it doesn't exist.  Add all
