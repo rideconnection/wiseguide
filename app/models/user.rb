@@ -83,6 +83,7 @@ class User < ActiveRecord::Base
   private
 
   def clean_level
+    return if level == -1
     # Force outside users to level 25 on save
     if is_outside_user? then
       self.level = 25
