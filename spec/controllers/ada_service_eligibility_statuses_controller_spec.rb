@@ -24,20 +24,18 @@ describe AdaServiceEligibilityStatusesController do
   # AdaServiceEligibilityStatus. As you add validations to AdaServiceEligibilityStatus, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
-  end
-  
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # AdaServiceEligibilityStatusesController. Be sure to keep this updated too.
-  def valid_session
-    {}
+    {:name => "My Name"}
   end
 
+  before(:each) do
+    @request.env["devise.mapping"] = Devise.mappings[:admin]
+    sign_in Factory.create(:admin)
+  end
+  
   describe "GET index" do
     it "assigns all ada_service_eligibility_statuses as @ada_service_eligibility_statuses" do
       ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:ada_service_eligibility_statuses).should eq([ada_service_eligibility_status])
     end
   end
@@ -45,14 +43,14 @@ describe AdaServiceEligibilityStatusesController do
   describe "GET show" do
     it "assigns the requested ada_service_eligibility_status as @ada_service_eligibility_status" do
       ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-      get :show, {:id => ada_service_eligibility_status.to_param}, valid_session
+      get :show, {:id => ada_service_eligibility_status.to_param}
       assigns(:ada_service_eligibility_status).should eq(ada_service_eligibility_status)
     end
   end
 
   describe "GET new" do
     it "assigns a new ada_service_eligibility_status as @ada_service_eligibility_status" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:ada_service_eligibility_status).should be_a_new(AdaServiceEligibilityStatus)
     end
   end
@@ -60,7 +58,7 @@ describe AdaServiceEligibilityStatusesController do
   describe "GET edit" do
     it "assigns the requested ada_service_eligibility_status as @ada_service_eligibility_status" do
       ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-      get :edit, {:id => ada_service_eligibility_status.to_param}, valid_session
+      get :edit, {:id => ada_service_eligibility_status.to_param}
       assigns(:ada_service_eligibility_status).should eq(ada_service_eligibility_status)
     end
   end
@@ -69,18 +67,18 @@ describe AdaServiceEligibilityStatusesController do
     describe "with valid params" do
       it "creates a new AdaServiceEligibilityStatus" do
         expect {
-          post :create, {:ada_service_eligibility_status => valid_attributes}, valid_session
+          post :create, {:ada_service_eligibility_status => valid_attributes}
         }.to change(AdaServiceEligibilityStatus, :count).by(1)
       end
 
       it "assigns a newly created ada_service_eligibility_status as @ada_service_eligibility_status" do
-        post :create, {:ada_service_eligibility_status => valid_attributes}, valid_session
+        post :create, {:ada_service_eligibility_status => valid_attributes}
         assigns(:ada_service_eligibility_status).should be_a(AdaServiceEligibilityStatus)
         assigns(:ada_service_eligibility_status).should be_persisted
       end
 
       it "redirects to the created ada_service_eligibility_status" do
-        post :create, {:ada_service_eligibility_status => valid_attributes}, valid_session
+        post :create, {:ada_service_eligibility_status => valid_attributes}
         response.should redirect_to(AdaServiceEligibilityStatus.last)
       end
     end
@@ -89,14 +87,14 @@ describe AdaServiceEligibilityStatusesController do
       it "assigns a newly created but unsaved ada_service_eligibility_status as @ada_service_eligibility_status" do
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        post :create, {:ada_service_eligibility_status => {}}, valid_session
+        post :create, {:ada_service_eligibility_status => {}}
         assigns(:ada_service_eligibility_status).should be_a_new(AdaServiceEligibilityStatus)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        post :create, {:ada_service_eligibility_status => {}}, valid_session
+        post :create, {:ada_service_eligibility_status => {}}
         response.should render_template("new")
       end
     end
@@ -111,18 +109,18 @@ describe AdaServiceEligibilityStatusesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         AdaServiceEligibilityStatus.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {'these' => 'params'}}, valid_session
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {'these' => 'params'}}
       end
 
       it "assigns the requested ada_service_eligibility_status as @ada_service_eligibility_status" do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => valid_attributes}, valid_session
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => valid_attributes}
         assigns(:ada_service_eligibility_status).should eq(ada_service_eligibility_status)
       end
 
       it "redirects to the ada_service_eligibility_status" do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => valid_attributes}, valid_session
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => valid_attributes}
         response.should redirect_to(ada_service_eligibility_status)
       end
     end
@@ -132,7 +130,7 @@ describe AdaServiceEligibilityStatusesController do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}, valid_session
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}
         assigns(:ada_service_eligibility_status).should eq(ada_service_eligibility_status)
       end
 
@@ -140,7 +138,7 @@ describe AdaServiceEligibilityStatusesController do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}, valid_session
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}
         response.should render_template("edit")
       end
     end
@@ -150,13 +148,13 @@ describe AdaServiceEligibilityStatusesController do
     it "destroys the requested ada_service_eligibility_status" do
       ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
       expect {
-        delete :destroy, {:id => ada_service_eligibility_status.to_param}, valid_session
+        delete :destroy, {:id => ada_service_eligibility_status.to_param}
       }.to change(AdaServiceEligibilityStatus, :count).by(-1)
     end
 
     it "redirects to the ada_service_eligibility_statuses list" do
       ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
-      delete :destroy, {:id => ada_service_eligibility_status.to_param}, valid_session
+      delete :destroy, {:id => ada_service_eligibility_status.to_param}
       response.should redirect_to(ada_service_eligibility_statuses_url)
     end
   end
