@@ -33,6 +33,7 @@ class Customer < ActiveRecord::Base
   HUMAN_ATTRIBUTE_NAMES = {
     :veteran_status => "Veteran?",
     :spouse_of_veteran_status => "Spouse, widow, or widower of a veteran?",
+    :honored_citizen_cardholder => "Honored citizen cardholder?",
     :ada_service_eligibility_status_id => "TriMet Lift Eligibity status"
   }
   

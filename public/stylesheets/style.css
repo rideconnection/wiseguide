@@ -556,6 +556,11 @@ fieldset ol.section li label {
     width: 35%;
     margin-right: 2%;
 }
+fieldset ol.section li label.options {
+    float: none;
+    width: auto;
+    margin-right: 2em;
+}
 fieldset ol.section li input {
     max-width: 200px;
 }

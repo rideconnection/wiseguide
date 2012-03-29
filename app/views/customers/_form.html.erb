@@ -90,17 +90,26 @@
 
     <li>
     <%= f.label :veteran_status %>
-    <%= f.check_box :veteran_status %>
+    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+      <%= f.radio_button :veteran_status, option[1] %>
+      <%= f.label :veteran_status, option[0], :value => option[1], :class => 'options' %>
+    <% end %>
     </li>
 
     <li>
     <%= f.label :spouse_of_veteran_status %>
-    <%= f.check_box :spouse_of_veteran_status %><br><br>
+    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+      <%= f.radio_button :spouse_of_veteran_status, option[1] %>
+      <%= f.label :spouse_of_veteran_status, option[0], :value => option[1], :class => 'options' %>
+    <% end %><br><br>
     </li>
 
     <li>
     <%= f.label :honored_citizen_cardholder %>
-    <%= f.check_box :honored_citizen_cardholder %><br><br>
+    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+      <%= f.radio_button :honored_citizen_cardholder, option[1] %>
+      <%= f.label :honored_citizen_cardholder, option[0], :value => option[1], :class => 'options' %>
+    <% end %>
     </li>
 
     <li>
