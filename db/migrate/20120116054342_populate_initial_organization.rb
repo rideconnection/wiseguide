@@ -2,6 +2,10 @@
 # placeholder model just for the migration.
 class OrganizationType < ActiveRecord::Base; end
 
+class Organization
+  belongs_to :organization_type
+end
+
 # Create a Ride Connection organization if it doesn't exist.  Add all
 # users to it.
 class PopulateInitialOrganization < ActiveRecord::Migration
