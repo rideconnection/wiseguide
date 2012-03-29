@@ -63,4 +63,9 @@ class Kase < ActiveRecord::Base
     end
     super
   end
+
+  # Perform any post-survey logic
+  def assessment_complete
+  end
+
 end
