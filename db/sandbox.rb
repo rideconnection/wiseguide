@@ -9,16 +9,10 @@ def load_sandbox_data
 end
 
 def create_users
-  Factory.create(:user,
-                 :email => 'admin@rideconnection.org',
-                 :level => 100)
-  Factory.create(:user,
-                 :email => 'trainer@rideconnection.org',
-                 :level => 50)
-  Factory.create(:user,
-                 :email => 'viewer@rideconnection.org',
-                 :level => 0)
-  Factory.create(:case_manager)
+  Factory.create(:admin,        :email => 'admin@rideconnection.org')
+  Factory.create(:trainer,      :email => 'trainer@rideconnection.org')
+  Factory.create(:user,         :email => 'viewer@rideconnection.org')
+  Factory.create(:case_manager, :email => 'case_manager@rideconnection.org')
 end
 
 def create_customers

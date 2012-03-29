@@ -80,11 +80,19 @@ class OrganizationsController < ApplicationController
   def destroy
     @organization = Organization.find(params[:id])
     authorize! :destroy, @organization
-    @organization.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(organizations_url) }
-      format.xml  { head :ok }
+    if !@organization.users.empty?
+      respond_to do |format|
+        format.html { redirect_to(@organization, :alert => 'You cannot delete an organization that still has users assigned to it.') }
+        format.xml  { render :xml => @organization.errors, :status => :unprocessable_entity }
+      end
+    else
+      @organization.destroy
+
+      respond_to do |format|
+        format.html { redirect_to(organizations_url, :notice => 'Organization was successfully deleted.') }
+        format.xml  { head :ok }
+      end
     end
   end
 end
