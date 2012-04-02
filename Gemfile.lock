@@ -31,6 +31,9 @@ GEM
   specs:
     Ascii85 (1.0.1)
     abstract (1.0.0)
+    accept_values_for (0.4.3)
+      activemodel (>= 3.0.0)
+      rspec
     actionmailer (3.0.11)
       actionpack (= 3.0.11)
       mail (~> 2.2.19)
@@ -238,6 +241,7 @@ PLATFORMS
 
 DEPENDENCIES
   Ascii85
+  accept_values_for (~> 0.4.3)
   cancan
   capistrano
   capistrano-ext

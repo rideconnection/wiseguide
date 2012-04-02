@@ -1,5 +1,6 @@
 class KasesController < ApplicationController
   load_and_authorize_resource
+  before_filter :setup_household_stat_params, :only => [:update, :create]
 
   def index
     name_ordered = 'customers.last_name, customers.first_name'
@@ -124,5 +125,19 @@ private
     # logger.debug "Could not instantiate a subclass. Creating generic Kase object instead"
     @kase = Kase.new(params[:kase])
     # logger.debug @kase.inspect
+  end
+  
+  def setup_household_stat_params
+    if !params[:kase].blank? and !params[:kase][:household_size_declined].blank? and !params[:kase][:household_size_declined] == "1"
+      params[:kase][:household_size] = nil
+    else
+      params[:kase][:household_size_declined] == nil
+    end
+      
+    if !params[:kase].blank? and !params[:kase][:household_income_declined].blank? and !params[:kase][:household_income_declined] == "1"
+      params[:kase][:household_income] = nil
+    else
+      params[:kase][:household_income_declined] == nil
+    end
   end
 end

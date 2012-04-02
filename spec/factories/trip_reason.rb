@@ -1,0 +1,1 @@
+Factory.define :trip_reason do |f|; end

@@ -455,6 +455,12 @@ form textarea {
     box-shadow:inset 1px 2px 2px #ccc;
 }
 
+form input[type="text"].disabled,
+form input[type="password"].disabled,
+form textarea.disabled {
+    color: #bbb;
+}
+
 :-moz-placeholder {
   font-style:italic;
   color: #aaa

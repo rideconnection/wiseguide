@@ -14,10 +14,19 @@ class Disposition < ActiveRecord::Base
   
   # Make sure our STI children are routed through the parent routes
   def self.inherited(child)
-    child.instance_eval do
+    child.instance_eval do      
       alias :original_model_name :model_name
+            
       def model_name
         Disposition.model_name
+      end
+      
+      def human_name
+        self.original_model_name.underscore.humanize.titlecase
+      end
+      
+      def humanized_name
+        human_name.sub(/\bKase\b/, 'Case')
       end
     end
     super

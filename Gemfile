@@ -51,6 +51,7 @@ group :development, :test do
   gem "ruby-debug19", :require => "ruby-debug"
   gem "sqlite3-ruby", :require => "sqlite3"
   gem "pdf-inspector", :require => "pdf/inspector"
+  gem "accept_values_for", "~> 0.4.3"
 end
 
 group :development, :test, :staging do
