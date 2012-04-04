@@ -115,19 +115,21 @@ describe Kase do
   end
   
   describe "household_size" do
-    it { should accept_values_for(:household_size, nil, "", 0, 1) }
+    it { should accept_values_for(:household_size, nil, "", 0, 1, "0", "123") }
+    it { should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456") }
   end
   
   describe "household_size_declined" do
-    it { should accept_values_for(:household_size_declined, nil, "", true, false) }
+    it { should accept_values_for(:household_size_declined, nil, "", true, false, 1, 0, "1", "0") }
   end
   
   describe "household_income" do
-    it { should accept_values_for(:household_income, nil, "", 0, 1) }
+    it { should accept_values_for(:household_income, nil, "", 0, 1, "0", "123") }
+    it { should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456") }
   end
   
   describe "household_income_declined" do
-    it { should accept_values_for(:household_income_declined, nil, "", true, false) }
+    it { should accept_values_for(:household_income_declined, nil, "", true, false, 1, 0, "1", "0") }
   end
   
   context "associations" do

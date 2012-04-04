@@ -133,11 +133,15 @@ private
     else
       params[:kase][:household_size_declined] == nil
     end
-      
+    
     if !params[:kase].blank? and !params[:kase][:household_income_declined].blank? and !params[:kase][:household_income_declined] == "1"
       params[:kase][:household_income] = nil
     else
       params[:kase][:household_income_declined] == nil
     end
+    
+    # Remove any commas
+    params[:kase][:household_size].gsub!(",", "")
+    params[:kase][:household_size].gsub!(",", "")
   end
 end

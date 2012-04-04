@@ -110,13 +110,13 @@
   
     <li>
       <%= f.label :household_size %>
-      <%= f.text_field :household_size %> or 
+      <%= f.text_field :household_size, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or 
       <%= f.check_box :household_size_declined, :style => "vertical-align: middle" %> <%= f.label :household_size_declined, "Declined to answer", :class => 'options' %>
     </li>
 
     <li>
       <%= f.label :household_income %>
-      <%= f.text_field :household_income %> or
+      <%= f.text_field :household_income, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or
       <%= f.check_box :household_income_declined, :style => "vertical-align: middle" %> <%= f.label :household_income_declined, "Declined to answer", :class => 'options' %>
     </li>
 
