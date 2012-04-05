@@ -1,6 +1,6 @@
 class KasesController < ApplicationController
   load_and_authorize_resource
-  before_filter :setup_household_stat_params, :only => [:update, :create]
+  before_filter :cleanup_household_stat_params, :only => [:update, :create]
 
   def index
     name_ordered = 'customers.last_name, customers.first_name'
@@ -127,21 +127,21 @@ private
     # logger.debug @kase.inspect
   end
   
-  def setup_household_stat_params
-    if !params[:kase].blank? and !params[:kase][:household_size_declined].blank? and !params[:kase][:household_size_declined] == "1"
-      params[:kase][:household_size] = nil
-    else
-      params[:kase][:household_size_declined] == nil
-    end
-    
-    if !params[:kase].blank? and !params[:kase][:household_income_declined].blank? and !params[:kase][:household_income_declined] == "1"
+  def cleanup_household_stat_params
+    if !params[:kase].blank? and !params[:kase][:household_income_alternate_response].blank?
       params[:kase][:household_income] = nil
     else
-      params[:kase][:household_income_declined] == nil
+      params[:kase][:household_income_alternate_response] == nil
+    end
+    
+    if !params[:kase].blank? and !params[:kase][:household_size_alternate_response].blank?
+      params[:kase][:household_size] = nil
+    else
+      params[:kase][:household_size_alternate_response] == nil
     end
     
     # Remove any commas
-    params[:kase][:household_size].gsub!(",", "")
-    params[:kase][:household_size].gsub!(",", "")
+    params[:kase][:household_income].gsub!(",", "") unless params[:kase][:household_income].blank?
+    params[:kase][:household_size].gsub!(",", "") unless params[:kase][:household_size].blank?
   end
 end

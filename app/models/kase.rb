@@ -28,11 +28,15 @@ class Kase < ActiveRecord::Base
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
   validates              :household_income, :numericality => { :only_integer => true }, :allow_blank => true
   validates              :household_size,   :numericality => { :only_integer => true }, :allow_blank => true
+  validates              :household_income_alternate_response, :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
+  validates              :household_size_alternate_response,   :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
   validate do |kase|
     kase.errors[:disposition_id] << "cannot be 'In Progress' if case is closed" if kase.close_date.present? && kase.disposition && kase.disposition.name == 'In Progress'
     kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.descendants.map{|klass| klass.original_model_name}.include?(kase.type)
   end
-
+  
+  before_save :cleanup_household_stats
+  
   scope :assigned_to, lambda {|user| where(:user_id => user.id) }
   scope :not_assigned_to, lambda {|user| where('user_id <> ?',user.id)}
   scope :unassigned, where(:user_id => nil)
@@ -68,6 +72,13 @@ class Kase < ActiveRecord::Base
 
   # Perform any post-survey logic
   def assessment_complete
+  end
+  
+private
+
+  def cleanup_household_stats
+    self.household_income = nil if !self.household_income_alternate_response.blank?
+    self.household_size = nil if !self.household_size_alternate_response.blank?
   end
 
 end

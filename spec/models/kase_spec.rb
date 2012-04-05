@@ -119,8 +119,25 @@ describe Kase do
     it { should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456") }
   end
   
-  describe "household_size_declined" do
-    it { should accept_values_for(:household_size_declined, nil, "", true, false, 1, 0, "1", "0") }
+  describe "household_size_alternate_response" do
+    it { should accept_values_for(:household_size_alternate_response, nil, "", "Unknown", "Refused") }
+    it { should_not accept_values_for(:household_size_alternate_response, "Foo") }
+
+    before do
+      @kase = Factory(:kase)
+    end
+    
+    it "should set household_size to nil when valued" do
+      @kase.household_size = 1234
+      @kase.save!
+      @kase.reload
+      @kase.household_size.should eq(1234)
+      
+      @kase.household_size_alternate_response = "Unknown"
+      @kase.save!
+      @kase.reload
+      @kase.household_size.should be_nil
+    end
   end
   
   describe "household_income" do
@@ -128,8 +145,25 @@ describe Kase do
     it { should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456") }
   end
   
-  describe "household_income_declined" do
-    it { should accept_values_for(:household_income_declined, nil, "", true, false, 1, 0, "1", "0") }
+  describe "household_income_alternate_response" do
+    it { should accept_values_for(:household_income_alternate_response, nil, "", "Unknown", "Refused") }
+    it { should_not accept_values_for(:household_income_alternate_response, "Foo") }
+    
+    before do
+      @kase = Factory(:kase)
+    end
+    
+    it "should set household_income to nil when valued" do
+      @kase.household_income = 1234
+      @kase.save!
+      @kase.reload
+      @kase.household_income.should eq(1234)
+      
+      @kase.household_income_alternate_response = "Unknown"
+      @kase.save!
+      @kase.reload
+      @kase.household_income.should be_nil
+    end
   end
   
   context "associations" do
@@ -304,6 +338,8 @@ describe Kase do
     
     pending "resolution scopes" do
       # TODO - make these pass
+      # I don't have enough information about what these are supposed to do to
+      # setup the test properly.
       
       before do
         @successful = Factory(:disposition, :name => "Successful")

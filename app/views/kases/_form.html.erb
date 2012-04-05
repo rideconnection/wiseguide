@@ -1,22 +1,22 @@
 <% content_for :head do %>
   <%= javascript_tag do %>
     $(document).ready(function(){
-      $("#kase_household_size_declined").change(function(){
-        update_household_stats($("#kase_household_size"), $(this).attr("checked"))
+      $("#kase_household_income_alternate_response").change(function(){
+        update_household_stats($("#kase_household_income"), $(this).val() != "")
       });
       
-      $("#kase_household_income_declined").change(function(){
-        update_household_stats($("#kase_household_income"), $(this).attr("checked"))
+      $("#kase_household_size_alternate_response").change(function(){
+        update_household_stats($("#kase_household_size"), $(this).val() != "")
       });
       
-      update_household_stats($("#kase_household_size"), $("#kase_household_size_declined").attr("checked"))
+      update_household_stats($("#kase_household_income"), $("#kase_household_income_alternate_response").val() != "")
       
-      update_household_stats($("#kase_household_income"), $("#kase_household_income_declined").attr("checked"))
+      update_household_stats($("#kase_household_size"), $("#kase_household_size_alternate_response").val() != "")
     });
     
-    function update_household_stats(input, checked) {
-      $(input).attr("disabled", checked).attr("readonly", checked);
-      if (checked) {
+    function update_household_stats(input, disable) {
+      $(input).attr("disabled", disable).attr("readonly", disable);
+      if (disable) {
         $(input).addClass("disabled");
       }
       else {
@@ -111,13 +111,13 @@
     <li>
       <%= f.label :household_size %>
       <%= f.text_field :household_size, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or 
-      <%= f.check_box :household_size_declined, :style => "vertical-align: middle" %> <%= f.label :household_size_declined, "Declined to answer", :class => 'options' %>
+      <%= f.select :household_size_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
     </li>
 
     <li>
       <%= f.label :household_income %>
       <%= f.text_field :household_income, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or
-      <%= f.check_box :household_income_declined, :style => "vertical-align: middle" %> <%= f.label :household_income_declined, "Declined to answer", :class => 'options' %>
+      <%= f.select :household_income_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
     </li>
 
     <li>
