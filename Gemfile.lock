@@ -161,7 +161,7 @@ GEM
     pdf-reader (1.0.0)
       Ascii85 (~> 1.0.0)
       ruby-rc4
-    pg (0.13.1)
+    pg (0.13.2)
     polyglot (0.3.3)
     rack (1.2.5)
     rack-mount (0.6.14)
