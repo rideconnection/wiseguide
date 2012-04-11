@@ -23,6 +23,16 @@ class AssessmentRequestsController < ApplicationController
     end
   end
 
+  # GET /assessment_requests/1/edit
+  def edit
+    @assessment_request = AssessmentRequest.find(params[:id])
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.xml  { render :xml => @assessment_request }
+    end
+  end
+
   # GET /assessment_requests/new
   # GET /assessment_requests/new.xml
   def new

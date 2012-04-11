@@ -13,36 +13,49 @@
 
   <div class="field">
     <%= f.label :customer_first_name %><br />
-    <%= f.text_field :customer_first_name %>
+    <%= f.text_field :customer_first_name,
+                     :readonly => readonly %>
   </div>
   <div class="field">
     <%= f.label :customer_last_name %><br />
-    <%= f.text_field :customer_last_name %>
+    <%= f.text_field :customer_last_name,
+                     :readonly => readonly %>
   </div>
   <div class="field">
     <%= f.label :customer_phone %><br />
-    <%= f.text_field :customer_phone %>
+    <%= f.text_field :customer_phone,
+                     :readonly => readonly %>
   </div>
   <div class="field">
     <%= f.label :customer_birth_date %><br />
     <%= f.date_select :customer_birth_date,
-                      :start_year => 1900, :end_year => Time.now.year %>
+                      :start_year => 1900, :end_year => Time.now.year,
+                      :disabled => readonly %>
   </div>
   <div class="field">
     <%= f.label :notes %><br />
-    <%= f.text_area :notes, :rows => 5 %>
+    <%= f.text_area :notes, :rows => 5,
+                    :readonly => readonly %>
   </div>
   <div class="field">
     <%= f.label :attachment, "Attachment" %><br />
     <% if @assessment_request.attachment.exists? %>
-    Download:
-    <%= link_to @assessment_request.attachment.original_filename,
-                @assessment_request.attachment.url %><br/><br/>
-    Replace attachment:<br/>
+      Download:
+      <%= link_to @assessment_request.attachment.original_filename,
+                  @assessment_request.attachment.url %><br/><br/>
+      <% if not readonly %>
+        Replace attachment:<br/>
+      <% end %>
+    <% elsif readonly %>
+      None
     <% end %>
-    <%= f.file_field :attachment %>
+    <% if not readonly %>
+      <%= f.file_field :attachment %>
+    <% end %>
   </div>
   <div class="actions">
-    <%= f.submit "Save" %>
+    <% if not readonly %>
+      <%= f.submit "Save" %>
+    <% end %>
   </div>
 <% end %>

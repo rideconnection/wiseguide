@@ -1,6 +1,10 @@
 <h1>Case</h1>
 <% if @assessment_request.customer.nil? %>
-  Set customer (above) before creating a case.
+  <% if can? :edit, @assessment_request %>
+    Set customer (above) before creating a case.
+  <% else %>
+    No associated case.
+  <% end %>
 <% elsif @assessment_request.kase.nil? %>
   No associated case.
   <% if can? :create, Kase %>

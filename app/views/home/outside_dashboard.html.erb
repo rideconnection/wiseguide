@@ -5,7 +5,12 @@
     <ul>
       <% @pending_assessments.each do |request| %>
         <li>
-          <%= link_to request.display_name, request %>
+          <% if can? :edit, request %>
+            <%= link_to request.display_name,
+                        edit_assessment_request_path(request) %>
+          <% else %>
+            <%= link_to request.display_name, request %>
+          <% end %>
         </li>
       <% end %>
     </ul>

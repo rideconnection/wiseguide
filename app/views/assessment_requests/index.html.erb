@@ -13,7 +13,12 @@
 <% @assessment_requests.each do |assessment_request| %>
   <tr>
     <td>
-      <%= link_to assessment_request.display_name, assessment_request %>
+      <% if can? :edit, assessment_request %>
+        <%= link_to assessment_request.display_name,
+                    edit_assessment_request_path(assessment_request) %>
+      <% else %>
+        <%= link_to assessment_request.display_name, assessment_request %>
+      <% end %>
     </td>
     <td><%= assessment_request.customer_phone %></td>
     <td><%= assessment_request.customer_birth_date %></td>
