@@ -22,7 +22,7 @@
       <% else %>
         <%= radio_button_tag :customer_id, "#{customer.id}" %>
       <% end %>
-      <%= label_tag "customer_id_#{customer.id}", customer.name %>
+      <%= label_tag "customer_id_#{customer.id}", customer.name_reversed %>
     </li>
   <% end %>
   </ul>

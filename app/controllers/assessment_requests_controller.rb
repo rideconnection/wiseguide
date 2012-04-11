@@ -47,8 +47,9 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/1/change_customer
   def change_customer
     @assessment_request = AssessmentRequest.find(params[:id])
-    @similar_customers = Customer.search(@assessment_request.display_name)
     authorize! :update, @assessment_request
+    @similar_customers = Customer.search(@assessment_request.display_name)
+        .order('last_name, first_name')
   end
 
   # GET /assessment_requests/1/create_case
