@@ -94,8 +94,14 @@ class AssessmentRequestsController < ApplicationController
 
     respond_to do |format|
       if @assessment_request.save
-        format.html { redirect_to(@assessment_request, :notice => 'Assessment request was successfully created.') }
-        format.xml  { render :xml => @assessment_request, :status => :created, :location => @assessment_request }
+        format.html do
+          redirect_to root_path,
+                      :notice => 'Assessment request was successfully created.'
+        end
+        format.xml do
+           render :xml => @assessment_request, :status => :created,
+                  :location => @assessment_request
+        end
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @assessment_request.errors, :status => :unprocessable_entity }
@@ -110,7 +116,10 @@ class AssessmentRequestsController < ApplicationController
 
     respond_to do |format|
       if @assessment_request.update_attributes(params[:assessment_request])
-        format.html { redirect_to(@assessment_request, :notice => 'Assessment request was successfully updated.') }
+        format.html do
+          redirect_to root_path,
+                      :notice => 'Assessment request was successfully updated.'
+        end
         format.xml  { head :ok }
       else
         format.html { render :action => "show" }
