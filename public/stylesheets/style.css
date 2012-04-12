@@ -1362,6 +1362,10 @@ body.surveyor div.survey_section input[type=checkbox] {
 
 body.surveyor div.survey_section label {
   vertical-align: middle;
+  display: block;
+  float: left;
+  min-width: 50px;
+  padding-right: 15px;
 }
 
 body.surveyor div.survey_section li.surveyor_check_boxes {
@@ -1369,7 +1373,7 @@ body.surveyor div.survey_section li.surveyor_check_boxes {
 }
 
 body.surveyor div.survey_section li.surveyor_check_boxes input[type=text] {
-  margin-left: 5px;
+  margin-top: -4px;
 }
 
 body.surveyor div.survey_section li.string label {

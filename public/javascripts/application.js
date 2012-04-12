@@ -37,7 +37,10 @@ $(function(){
   $("textarea[data-behavior=autoresize]").autoResize({
       extraSpace      : 20
   }).trigger('change');
-  
+  $("body.surveyor textarea").autoResize({
+      extraSpace      : 20
+  }).trigger('change');
+
   // Disable table header styles that are not on first line of table in surveys
   $("body.surveyor tr").not(":first-child").find("th").css("background", "none").css("color", "#444")
 });
