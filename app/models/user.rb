@@ -17,13 +17,16 @@ class User < ActiveRecord::Base
   validates_presence_of :organization_id
 
   before_save :clean_level
-
-  validates_confirmation_of :password
+  
+  validates_format_of :password, :if => :password_required?,
+                      :with => /^(?=.*[0-9])(?=.*[\W&&[^\s] ])([\w\W&&[^\s] ]+)$/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/ns7ftUQhFb
+                      :message => "must have at least one number and at least one non-alphanumeric character"
+  
   validates_uniqueness_of :email
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name, :last_name, :phone_number

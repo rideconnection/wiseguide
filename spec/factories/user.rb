@@ -4,7 +4,7 @@ Factory.define :user do |f|
   f.email {"user.#{Time.current.to_f}@rideconnection.org"}
   f.association :organization, :factory => :staff_organization
   f.level 0
-  f.password "password"
+  f.password "password 1"
   f.password_confirmation { |u| u.password }
 end
 

@@ -9,10 +9,17 @@ def load_sandbox_data
 end
 
 def create_users
-  Factory.create(:admin,        :email => 'admin@rideconnection.org')
-  Factory.create(:trainer,      :email => 'trainer@rideconnection.org')
-  Factory.create(:user,         :email => 'viewer@rideconnection.org')
-  Factory.create(:case_manager, :email => 'case_manager@rideconnection.org')
+  puts "Creating test users"
+  puts "-- ALL TEST USERS HAVE PASSWORD \"password 1\""
+  Factory.create(:admin,        :password => "password 1", :email => 'admin@rideconnection.org')
+  puts "-- Created test user admin@rideconnection.org"
+  Factory.create(:trainer,      :password => "password 1", :email => 'trainer@rideconnection.org')
+  puts "-- Created test user trainer@rideconnection.org"
+  Factory.create(:user,         :password => "password 1", :email => 'viewer@rideconnection.org')
+  puts "-- Created test user viewer@rideconnection.org"
+  Factory.create(:case_manager, :password => "password 1", :email => 'case_manager@rideconnection.org')
+  puts "-- Created test user case_manager@rideconnection.org"
+  puts "Finished creating test users"
 end
 
 def create_customers

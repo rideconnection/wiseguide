@@ -58,9 +58,7 @@ class UsersController < Devise::SessionsController
     redirect_to "/users"
   end
 
-  def show_change_password
-    @user = current_user
-  end
+  def show_change_password; end
 
   def change_password
     if current_user.update_password(params[:user])
