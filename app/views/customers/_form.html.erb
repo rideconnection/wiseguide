@@ -14,27 +14,27 @@
     <% end %>
 
     <li>
-    <%= f.label :first_name %>
+    <%= f.label :first_name, "* First name" %>
     <%= f.text_field :first_name %>
     </li>
 
     <li>
-    <%= f.label :last_name %>
+    <%= f.label :last_name, "* Last name" %>
     <%= f.text_field :last_name %>
     </li>
 
     <li>
-    <%= f.label :birth_date %>
+    <%= f.label :birth_date, "* Birth date" %>
     <%= f.text_field :birth_date, :class => "birthdatepicker", :placeholder => "yyyy-mm-dd"  %>
     </li>
 
     <li>
-    <%= f.label :gender %>
+    <%= f.label :gender, "* Gender" %>
     <%= f.select :gender, @genders, :prompt => '<Select Gender>' %>
     </li>
 
     <li>
-    <%= f.label :ethnicity_id %>
+    <%= f.label :ethnicity_id, "* Ethnicity" %>
     <%= f.collection_select :ethnicity_id, @ethnicities, :id, :name, :prompt => '<Select Ethnicity>' %>
     </li>
 
@@ -64,27 +64,27 @@
     </li>
 
     <li>
-    <%= f.label :address %>
+    <%= f.label :address, "* Address" %>
     <%= f.text_field :address %>
     </li>
 
     <li>
-    <%= f.label :city %>
+    <%= f.label :city, "* City" %>
     <%= f.text_field :city %>
     </li>
 
     <li>
-    <%= f.label :state %>
+    <%= f.label :state, "* State" %>
     <%= f.text_field :state %>
     </li>
 
     <li>
-    <%= f.label :zip %>
+    <%= f.label :zip, "* ZIP code" %>
     <%= f.text_field :zip %>
     </li>
 
     <li>
-    <%= f.label :county %>
+    <%= f.label :county, "* County" %>
     <%= f.select :county, @counties, :prompt => '<Select County>' %>
     </li>
 
