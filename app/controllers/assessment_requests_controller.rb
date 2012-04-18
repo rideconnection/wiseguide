@@ -4,7 +4,7 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests
   # GET /assessment_requests.xml
   def index
-    @assessment_requests = AssessmentRequest.all
+    @assessment_requests = AssessmentRequest.order("created_at ASC")
 
     respond_to do |format|
       format.html # index.html.erb
