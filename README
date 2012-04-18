@@ -58,7 +58,7 @@ In a development environment, you can load some fake sandbox data with:
   $ bundle exec rake db:sandbox:load
 
 It will create (among other things) an initial admin account, so you can login
-as 'admin@rideconnection.org' with password 'password'.
+as 'admin@rideconnection.org' with password 'password 1'.
  
 That's it!  You can now run a test server with "rails s" or run the tests.
 

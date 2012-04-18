@@ -2,7 +2,7 @@ Given /^I am logged in as an? (.*)$/ do |user_type|
   @current_user = Factory(user_type.split(" ").join("_"))
   visit '/users/sign_in'
   fill_in 'user_email', :with => @current_user.email
-  fill_in 'user_password', :with => 'password'
+  fill_in 'user_password', :with => 'password 1'
   click_button 'Sign in'
   page.should have_content('Signed in successfully.')
 end
