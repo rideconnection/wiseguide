@@ -7,6 +7,7 @@ Factory.define :user do |f|
   f.password "password 1"
   f.password_confirmation { |u| u.password }
 end
+Factory.define :viewer, :parent => :user do |f|; end
 
 Factory.define :trainer, :parent => :user do |f|
   f.first_name 'Trainer'

@@ -45,13 +45,14 @@ group :development do
 end
 
 group :development, :test do
+  gem "accept_values_for", "~> 0.4.3"
   gem "capybara-firebug"
   gem "cucumber"
   gem "database_cleaner"
+  gem "pdf-inspector", :require => "pdf/inspector"
   gem "ruby-debug19", :require => "ruby-debug"
   gem "sqlite3-ruby", :require => "sqlite3"
-  gem "pdf-inspector", :require => "pdf/inspector"
-  gem "accept_values_for", "~> 0.4.3"
+  gem 'email_spec'
 end
 
 group :development, :test, :staging do
