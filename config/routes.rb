@@ -51,7 +51,8 @@ Wiseguide::Application.routes.draw do
     put "new_survey", :on=>:collection, :to=>"surveyor#create_survey", :as=>:new_survey
   end
 
-  devise_for :users, :controllers=>{:sessions=>"users"} do
+  devise_for :users, :controllers=>{:sessions=>"users"}
+  devise_scope :user do
     delete "user" => "users#delete"
     get "edit_user" => "users#edit"
     get "init" => "users#show_init"

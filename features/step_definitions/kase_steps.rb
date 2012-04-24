@@ -1,5 +1,5 @@
 When /^I click the link to add a ([^ ]+) case$/ do |type|
-  find("#kases a[href='/cases/new?customer_id=#{@customer.id}&kase[type]=#{type.titlecase}Kase']").click
+  find("#kases a[href='/cases/new?customer_id=#{@customer.id}&kase%5Btype%5D=#{type.titlecase}Kase']").click
 end
 
 def fill_common_kase_attributes

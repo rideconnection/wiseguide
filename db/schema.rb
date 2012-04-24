@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503003550) do
+ActiveRecord::Schema.define(:version => 20120503043300) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"

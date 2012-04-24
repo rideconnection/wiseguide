@@ -73,14 +73,13 @@ end
 
 Then /^I should be served the referral document as a PDF$/ do
   page.response_headers['Content-Type'].should == "application/pdf"
-  pdf = PDF::Inspector::Text.analyze(page.source).strings.join(" ")
-  page.driver.response.instance_variable_set('@body', pdf)
+  content = PDF::Inspector::Text.analyze(page.source).strings.join(" ")
+  page.driver.browser.instance_variable_set('@dom', Nokogiri::HTML(content))
 end
 
 Then /^I should see the referral document details$/ do
   page.should have_content("Referral Document for #{@referral_document.customer.name}")
   page.should have_content("#{@referral_document.referral_document_resources.first.resource.name}")
-  puts page.body
   page.should have_content("Referral document opened at#{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 

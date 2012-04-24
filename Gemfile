@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 # Framework
-gem "rails", "~> 3.0.11"
+gem "rails", "~> 3.2.0"
 gem "rake"
 
 # Authentication and authorization
@@ -16,12 +16,18 @@ gem "exception_notification",
 gem "formtastic", "~> 1.2.4"
 gem "haml", "~> 3.1.3"
 gem "jquery-rails", ">= 0.2.6"
-gem "paperclip"
-gem "userstamp"
-gem "will_paginate", "3.0.pre2"
+gem "paperclip", "~> 3.0.2"
+# Using userstamp from git for now, because 2.0.2 (Rails 3.2 compatible) has
+# not been uploaded to rubygems as of this writing.
+gem "userstamp",
+  :git => "git://github.com/delynn/userstamp.git",
+  :ref => "777633a"
+gem "uuidtools"
+gem "will_paginate", "~> 3.0.3"
 
 # For PDF Generation
-gem 'prawn', :git => "git://github.com/prawnpdf/prawn.git", :tag => '0.12.0', :submodules => true
+gem 'prawn', :git => "git://github.com/prawnpdf/prawn.git",
+  :ref => "d06f81b", :submodules => true
 gem "pdf-reader", :require => "pdf/reader"
 gem "Ascii85", :require => "ascii85"
 
@@ -37,7 +43,7 @@ end
 
 group :development do
   gem "rspec-rails"
-  gem "spork"
+  gem "spork-rails"
   gem "launchy"
 end
 
