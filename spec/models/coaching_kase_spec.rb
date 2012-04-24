@@ -41,6 +41,23 @@ describe CoachingKase do
     it { should accept_values_for(:case_manager_id, nil, "", 0, 1) }
   end
   
+  describe "medicaid_eligible" do
+    it "should allow true" do
+      @valid_kase.medicaid_eligible = true
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow false" do
+      @valid_kase.medicaid_eligible = false
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow nil" do
+      @valid_kase.medicaid_eligible = nil
+      @valid_kase.valid?.should be_true
+    end
+  end
+  
   describe "case_manager association" do
     it "should require a valid, persisted case manager" do
       kase = CoachingKase.new

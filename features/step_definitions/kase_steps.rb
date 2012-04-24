@@ -182,6 +182,7 @@ Then /^I should not see any coaching case fields$/ do
   page.should_not have_selector("#kase_case_manager_notification_date")
   page.should_not have_selector("#kase_assessment_language")
   page.should_not have_selector("#kase_assessment_date")
+  page.should_not have_selector("#kase_medicaid_eligible")
 end
 
 Then /^I should not see any training case fields$/ do

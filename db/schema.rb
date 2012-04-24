@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418023056) do
+ActiveRecord::Schema.define(:version => 20120424060316) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -266,6 +266,7 @@ ActiveRecord::Schema.define(:version => 20120418023056) do
     t.integer  "household_income"
     t.string   "household_size_alternate_response"
     t.string   "household_income_alternate_response"
+    t.boolean  "medicaid_eligible"
   end
 
   add_index "kases", ["type"], :name => "index_kases_on_type"

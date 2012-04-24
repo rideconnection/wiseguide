@@ -166,6 +166,26 @@ describe Kase do
     end
   end
   
+  describe "medicaid_eligible" do
+    before do
+      @kase = Factory(:kase)
+    end
+    
+    it "should allow true" do
+      @kase.valid?.should be_true
+    end
+
+    it "should allow false" do
+      @kase.medicaid_eligible = false
+      @kase.valid?.should be_true
+    end
+
+    it "should allow nil" do
+      @kase.medicaid_eligible = nil
+      @kase.valid?.should be_true
+    end
+  end
+  
   context "associations" do
     before do
       @kase = Kase.new
