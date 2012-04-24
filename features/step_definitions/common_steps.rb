@@ -7,6 +7,20 @@ Given /^I am logged in as an? (.*)$/ do |user_type|
   page.should have_content('Signed in successfully.')
 end
 
+Given /^my name is "([^"]+)"$/ do |name|
+  first_name, last_name = name.strip.split(/\W+/)
+  @current_user.first_name = first_name
+  @current_user.last_name = last_name
+  @current_user.save!
+  @current_user.reload
+end
+
+Given /^I belong to organization ([0-9]+)$/ do |organization_id|
+  @current_user.organization_id = organization_id
+  @current_user.save!
+  @current_user.reload
+end
+
 Given /^I (?:go to|visit|am on) the homepage$/ do
   visit('/')
 end
@@ -46,4 +60,31 @@ end
 Then /^I should be denied access to the page with an error code of ([0-9]+) and an error message of "(.*)"$/ do |error_code, error_message|
   page.status_code.should == error_code.to_i
   page.should have_content(error_message)
+end
+
+def check_simple_table_data (table_id, table)
+  within("table#%s" % table_id) do
+    header_map = []
+    within("thead tr:first") do
+      columns = all("th").collect{ |column| column.text.downcase.strip }
+      columns.size.should >= table.headers.size
+      
+      table.headers.each_with_index do |header, index|
+        column = columns.index(header.downcase.strip)
+        column.should_not be_nil
+        header_map << column
+      end        
+    end
+  
+    within("tbody" % table_id) do
+      all("tr").size.should == table.rows.size
+      
+      xpath_base = './/tr[%i]/td[%i]';
+      table.hashes.each_with_index do |row, index|
+        row.values.each_with_index do |value, column|
+          find(:xpath, xpath_base % [index + 1, header_map[column] + 1]).should have_content(value)
+        end
+      end
+    end
+  end
 end

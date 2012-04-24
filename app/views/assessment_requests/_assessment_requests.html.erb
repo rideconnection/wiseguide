@@ -1,0 +1,30 @@
+<% if !@assessment_requests.blank? %>
+  <% @assessment_requests.each do |assessment_request| %>
+    <tr>
+      <td>
+        <% if can? :edit, assessment_request %>
+          <%= link_to assessment_request.created_at.strftime("%m/%d/%4Y %I:%M %p"),
+                      edit_assessment_request_path(assessment_request) %>
+        <% else %>
+          <%= link_to assessment_request.created_at.strftime("%m/%d/%4Y %I:%M %p"), assessment_request %>
+        <% end %>
+      </td>
+      <td><%= assessment_request.display_name %></td>
+      <td><%= assessment_request.customer_phone %></td>
+      <td><%= assessment_request.customer_birth_date %></td>
+      <td><%= assessment_request.notes %></td>
+      <td><%= assessment_request.submitter.display_name %></td>
+      <td><%= assessment_request.status %></td>
+      <td>
+        <% if can? :destroy, assessment_request %>
+          <%= button_to 'Delete', assessment_request,
+                        :confirm => 'Are you sure?', :method => :delete %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+<% else %>
+  <tr>
+    <td colspan="7" class="error">There are no assessment requests that match your request</td>
+  </tr>
+<% end %>

@@ -367,28 +367,37 @@ body.admin #secondary-nav li.admin a:link, body.admin #secondary-nav li.admin a:
  *
  */
 .notice {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     background-color: #ffffc6;
+    border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
-    padding: 10px;
     line-height: 1.2;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    padding: 10px;
 }
 .alert {
-    color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     background-color: #e5004d;
+    border-radius: 5px;
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
-    padding: 10px;
     line-height: 1.2;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    padding: 10px;
 }
 .alert a {
     color: #ffffc6;
+}
+.box {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  line-height: 1.2;
+  margin: 0 0 1em;
+  padding: 10px;
 }
 #flash {
     color: #fff;
@@ -1430,4 +1439,46 @@ ul.customer-select-list li {
 
 table.search-form {
     width: 60%;
+}
+
+/*
+ *
+ * Assessment Request Dashboard Filter
+ *
+ */
+
+#assessment-requests caption {
+  text-align: left;
+}
+
+#assessment-request-filter h3 {
+  float: left;
+  font-size: 1em;
+  height: 1.4em;
+  margin: 0 1em 0.5em 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 110px;
+} 
+ 
+#assessment-request-filter ul.filters {
+  font-size: 1em;
+  height: 1.4em;
+  margin: 0 0 0.5em 0;
+  padding: 0;
+}
+
+#assessment-request-filter ul.filters li {
+  float: left;
+  font-size: 1em;
+  list-style: none outside none;
+  margin: 0 1em 0 0;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 125px;
+}
+
+#assessment-request-filter input[type=submit] {
+  margin: 0;
 }

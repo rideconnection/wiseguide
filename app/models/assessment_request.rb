@@ -16,10 +16,37 @@ class AssessmentRequest < ActiveRecord::Base
   validates_presence_of :customer_last_name
   validates_presence_of :customer_phone
   validates_presence_of :submitter
+  validates_inclusion_of :reason_not_completed, :in => ["Could not reach", "Duplicate request"], :allow_blank => true
 
   attr_accessible :attachment, :customer_first_name, :customer_last_name,
                   :customer_birth_date, :customer_phone, :notes,
-                  :submitter, :submitter_id, :customer, :customer_id
+                  :submitter, :submitter_id, :customer, :customer_id,
+                  :reason_not_completed
+
+  scope :submitted_by, lambda { |users| where(:submitter_id => Array(users).collect(&:id)) }
+  scope :belonging_to, lambda { |organizations| joins(:referring_organization).where("organizations.id IN (?)", Array(organizations).collect(&:id)) }
+
+  # "Pending" (reason_not_completed is blank and no associated TC case)
+  scope :pending, where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)")
+  
+  # "Not completed" (reason_not_completed is not blank)
+  scope :not_completed, where("reason_not_completed > ''")
+  
+  # "Completed" (kase_id foreign key is not blank)
+  scope :completed, where("kase_id > 0")
+
+  # scope :assigned_to, lambda {|user| where(:user_id => user.id) }
+  # scope :not_assigned_to, lambda {|user| where('user_id <> ?',user.id)}
+  # scope :unassigned, where(:user_id => nil)
+  # scope :open, where(:close_date => nil)
+  # scope :opened_in_range, lambda{|date_range| where(:open_date => date_range)}
+  # scope :open_in_range, lambda{|date_range| where("NOT (COALESCE(kases.close_date,?) < ? OR kases.open_date > ?)", date_range.begin, date_range.begin, date_range.end)}
+  # scope :closed, where('close_date IS NOT NULL')
+  # scope :closed_in_range, lambda{|date_range| where(:close_date => date_range)}
+  # scope :successful, lambda{where("disposition_id IN (?)", Disposition.successful.collect(&:id))}
+  # scope :has_three_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id=kases.id AND (three_month_unreachable = ? OR three_month_trip_count IS NOT NULL))', 3.months.ago + 1.week, true)}
+  # scope :has_six_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
+  # scope :for_funding_source_id, lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
 
   def display_name
     return customer_last_name + ", " + customer_first_name
@@ -27,5 +54,18 @@ class AssessmentRequest < ActiveRecord::Base
   
   def organization
     return submitter.organization
+  end
+  
+  def status
+    # "Pending" (reason_not_completed is blank and no associated TC case)
+    # "Not completed" (reason_not_completed is not blank)
+    # "Completed" (kase_id foreign key is not blank)
+    if !kase_id.blank?
+      "Completed"
+    elsif !reason_not_completed.blank?
+      "Not completed (#{reason_not_completed})"
+    else
+      "Pending"
+    end
   end
 end

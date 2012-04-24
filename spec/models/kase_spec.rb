@@ -356,65 +356,64 @@ describe Kase do
       end
     end
     
-    pending "resolution scopes" do
-      # TODO - make these pass
-      # I don't have enough information about what these are supposed to do to
-      # setup the test properly.
+    context "resolution scopes" do
+      # TODO
+      pending "I don't have enough information about what these are supposed to do to setup the test properly."
       
-      before do
-        @successful = Factory(:disposition, :name => "Successful")
-        @not_successful = Factory(:disposition, :name => "Not Successful")
-        
-        debugger
-        
-        @three_month_follow_ups = []
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
-        @three_month_follow_ups << kase
-        
-        kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 3.months.ago)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 4.months.ago)
-        kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => nil)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 1.month.ago)
-        kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => 3)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
-        kase.outcomes << Factory(:outcome, :three_month_unreachable => false, :three_month_trip_count => nil)
-        @three_month_follow_ups << kase
-        
-        @six_month_follow_ups = []
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
-        @six_month_follow_ups << kase
-
-        kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 6.months.ago)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 7.months.ago)
-        kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => nil)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 5.month.ago)
-        kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => 3)
-        
-        kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
-        kase.outcomes << Factory(:outcome, :six_month_unreachable => false, :six_month_trip_count => nil)
-        @six_month_follow_ups << kase
-        
-        # We need to reload these to get the correct sub classes
-        @three_month_follow_ups = @three_month_follow_ups.map{|k| Kase.find(k.id)}
-        @six_month_follow_ups   = @six_month_follow_ups.map{|k| Kase.find(k.id)}
-      end
-      
-      it "should define a has_three_month_follow_ups_due scope" do
-        # lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id=kases.id AND (three_month_unreachable = ? OR three_month_trip_count IS NOT NULL))', 3.months.ago + 1.week, true)}
-        Kase.has_three_month_follow_ups_due.should =~ @three_month_follow_ups
-      end
-
-      it "should define a has_six_month_follow_ups_due scope" do
-        # lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
-        Kase.has_six_month_follow_ups_due.should =~ @six_month_follow_ups
-      end
+      # before do
+      #   @successful = Factory(:disposition, :name => "Successful")
+      #   @not_successful = Factory(:disposition, :name => "Not Successful")
+      #   
+      #   debugger
+      #   
+      #   @three_month_follow_ups = []
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
+      #   @three_month_follow_ups << kase
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 3.months.ago)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 4.months.ago)
+      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => nil)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 1.month.ago)
+      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => 3)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
+      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => false, :three_month_trip_count => nil)
+      #   @three_month_follow_ups << kase
+      #   
+      #   @six_month_follow_ups = []
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
+      #   @six_month_follow_ups << kase
+      # 
+      #   kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 6.months.ago)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 7.months.ago)
+      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => nil)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 5.month.ago)
+      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => 3)
+      #   
+      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
+      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => false, :six_month_trip_count => nil)
+      #   @six_month_follow_ups << kase
+      #   
+      #   # We need to reload these to get the correct sub classes
+      #   @three_month_follow_ups = @three_month_follow_ups.map{|k| Kase.find(k.id)}
+      #   @six_month_follow_ups   = @six_month_follow_ups.map{|k| Kase.find(k.id)}
+      # end
+      # 
+      # it "should define a has_three_month_follow_ups_due scope" do
+      #   # lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id=kases.id AND (three_month_unreachable = ? OR three_month_trip_count IS NOT NULL))', 3.months.ago + 1.week, true)}
+      #   Kase.has_three_month_follow_ups_due.should =~ @three_month_follow_ups
+      # end
+      # 
+      # it "should define a has_six_month_follow_ups_due scope" do
+      #   # lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
+      #   Kase.has_six_month_follow_ups_due.should =~ @six_month_follow_ups
+      # end
     end
     
     context "for_funding_source_id scope" do
