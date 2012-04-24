@@ -85,9 +85,9 @@ class User < ActiveRecord::Base
   # Generates a random password in accordance with the validation filter above
   def self.random_password
     specials = ((32..47).to_a + (58..64).to_a + (91..96).to_a + (123..126).to_a).pack('U*').chars.to_a
-    numbers  = (0..9).to_a
+    numbers  = (1..9).to_a
     alpha    = ('a'..'z').to_a + ('A'..'Z').to_a
-    %w{i I l L 1 O o 0}.each{ |ambiguous_character| 
+    %w{i I l L 1 O o}.each{ |ambiguous_character| 
       alpha.delete ambiguous_character 
     }
     characters = (alpha + specials + numbers)
