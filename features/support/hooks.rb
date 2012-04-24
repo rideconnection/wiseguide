@@ -5,8 +5,8 @@ Before do
   load("#{Rails.root}/db/seeds.rb")
 
   # Create users that will be used in the scenarios
-  Factory.create(:admin)
-  Factory.create(:trainer)
+  FactoryGirl.create(:admin)
+  FactoryGirl.create(:trainer)
 end
 
 After do |scenario|

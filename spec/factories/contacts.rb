@@ -7,6 +7,6 @@ FactoryGirl.define do
   end
   
   factory :contact_with_open_training_kase, :parent => :contact, :aliases => [:contact_event_with_open_training_kase] do
-    after_build {|c| c.kase = Factory(:open_training_kase, :customer => c.customer)}
+    after_build {|c| c.kase = FactoryGirl.create(:open_training_kase, :customer => c.customer)}
   end
 end

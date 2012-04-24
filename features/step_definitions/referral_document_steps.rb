@@ -23,7 +23,7 @@ Then /^I should( not)? see the referral document under the Referral Documents se
 end
 
 Given /^a referral document exists for the existing case$/ do
-  @referral_document = Factory(:referral_document, :kase => @kase)
+  @referral_document = FactoryGirl.create(:referral_document, :kase => @kase)
 end
 
 When /^I click on the link to edit the referral document$/ do

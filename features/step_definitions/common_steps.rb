@@ -1,5 +1,5 @@
 Given /^I am logged in as an? (.*)$/ do |user_type|
-  @current_user = Factory(user_type.split(" ").join("_"))
+  @current_user = FactoryGirl.create(user_type.split(" ").join("_"))
   visit '/users/sign_in'
   fill_in 'user_email', :with => @current_user.email
   fill_in 'user_password', :with => 'password 1'

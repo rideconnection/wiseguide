@@ -1,9 +1,9 @@
 Given /^the customer has a case\-less contact event$/ do
-  @contact_event = Factory(:contact, :customer => @customer)
+  @contact_event = FactoryGirl.create(:contact, :customer => @customer)
 end
 
 Given /^the customer has a contact event associated with an open training case$/ do
-  @contact_with_kase = Factory(:contact_with_open_training_kase, :customer => @customer)
+  @contact_with_kase = FactoryGirl.create(:contact_with_open_training_kase, :customer => @customer)
   @kase = @contact_with_kase.kase
 end
 

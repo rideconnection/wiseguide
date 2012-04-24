@@ -9,7 +9,7 @@ FactoryGirl.define do
 
   factory :referral_document, :parent => :referral_document_prototype do
     after_build do |f|
-      f.referral_document_resources << Factory.build(:referral_document_resource, :referral_document => nil)
+      f.referral_document_resources << FactoryGirl.build(:referral_document_resource, :referral_document => nil)
     end
   end
 end

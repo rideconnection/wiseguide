@@ -61,7 +61,7 @@ Then /^I should( not)? see the case listed in the "([^"]*)" section of the (Coac
 end
 
 Given /^an unassigned open training case exists$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => nil)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => nil)
   @customer = @kase.customer
 end
 
@@ -89,7 +89,7 @@ Then /^I should( not)? see the case listed in the "([^"]*)" sub\-section of the 
 end
 
 Given /^another trainer exists$/ do
-  @other_trainer = Factory(:trainer)
+  @other_trainer = FactoryGirl.create(:trainer)
 end
 
 Then /^I should be able to assign the case to the other trainer$/ do
@@ -108,7 +108,7 @@ Then /^the other trainer should( not)? be listed as the case assignee on the (Co
 end
 
 Given /^an open training case exists and is assigned to me$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => @current_user)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @current_user)
   @customer = @kase.customer
 end
 
@@ -140,17 +140,17 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
 end
 
 Given /^an open training case exists and is assigned to the other trainer$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => @other_trainer)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @other_trainer)
   @customer = @kase.customer
 end
 
 Given /^there is an open training case$/ do
-  @kase = Factory(:open_training_kase)
+  @kase = FactoryGirl.create(:open_training_kase)
   @customer = @kase.customer
 end
 
 Given /^there is an open coaching case$/ do
-  @kase = Factory(:open_coaching_kase)
+  @kase = FactoryGirl.create(:open_coaching_kase)
   @customer = @kase.customer
 end
 

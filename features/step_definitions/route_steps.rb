@@ -21,7 +21,7 @@ Then /^I should( not)? see the trained route under the Routes Trained section of
 end
 
 Given /^a trained route exists for the existing case$/ do
-  @route = Factory(:route)
+  @route = FactoryGirl.create(:route)
   @kase.routes << @route
 end
 
