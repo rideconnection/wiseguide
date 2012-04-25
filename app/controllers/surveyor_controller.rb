@@ -36,7 +36,7 @@ module SurveyorControllerCustomMethods
   end
 
   def surveyor_finish
-    # @kase.assessment_complete
+    @kase.assessment_complete
     kase_path @kase
   end
 
