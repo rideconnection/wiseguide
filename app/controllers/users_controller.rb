@@ -20,15 +20,14 @@ class UsersController < Devise::SessionsController
     authorize! :edit, User
     
     user_params = params[:user]
-    user_params[:password] = user_params[:password_confirmation] = Devise.friendly_token[0..8]
+    user_params[:password] = user_params[:password_confirmation] = User.random_password
     @user = User.new(user_params)
     @user.level = user_params[:level] #this should be unnecesary
 
     begin
       @user.save!
       NewUserMailer.new_user_email(@user, @user.password).deliver
-      flash[:notice] =
-          "#{@user.email} has been added and a password has been emailed"
+      flash[:notice] = "#{@user.email} has been added and a password has been emailed"
       redirect_to users_path
     rescue Exception => e
       flash[:notice] = "Could not create user: #{e.message}"
@@ -50,17 +49,17 @@ class UsersController < Devise::SessionsController
     redirect_to "/users"
   end
 
+  # POST /update_user
   def update
     @user = User.find(params[:id])
     authorize! :edit, @user
     @user.level = params[:user][:level]
     @user.save
+    flash[:notice] = "#{@user.email}'s role has been changed"
     redirect_to "/users"
   end
 
-  def show_change_password
-    @user = current_user
-  end
+  def show_change_password; end
 
   def change_password
     if current_user.update_password(params[:user])

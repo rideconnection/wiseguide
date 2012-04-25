@@ -78,7 +78,7 @@
     <li>
       <%= f.label :user_id, "Assigned to" %>
       <% if can? :edit, @kase %>
-        <%= f.collection_select :user_id, @users, :id, :email %>
+        <%= f.collection_select :user_id, @users, :id, :email, :prompt => (@kase.new_record? ? '<Select Assigned to>' : false) %>
       <% else %>
         <%= @kase.assigned_to.display_name unless @kase.assigned_to.blank? %>&nbsp;
       <% end %>
@@ -108,7 +108,7 @@
       <li>
         <%= f.label :case_manager_id, "Case Manager" %>
         <% if can? :edit, @kase %>
-          <%= f.collection_select :case_manager_id, @case_managers, :id, :email, {:prompt => "<Select Case Manager>"} %>
+          <%= f.collection_select :case_manager_id, @case_managers, :id, :email, :prompt => (@kase.new_record? ? "<Select Case Manager>" : false), :include_blank => "N/A" %>
         <% else %>
           <%= @kase.case_manager.display_name unless @kase.case_manager.blank? %>&nbsp;
         <% end %>
@@ -138,6 +138,18 @@
           <%= f.text_field :assessment_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
         <% else %>
           <%= @kase.assessment_date.strftime("%v") unless @kase.assessment_date.blank? %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :medicaid_eligible %>
+        <% if can? :edit, @kase %>
+          <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+            <%= f.radio_button :medicaid_eligible, option[1] %>
+            <%= f.label :medicaid_eligible, option[0], :value => option[1], :class => 'options' %>
+          <% end %>
+        <% else %>
+          <%= if @kase.medicaid_eligible.blank? then "N/A" else @kase.medicaid_eligible.to_s end %>&nbsp;
         <% end %>
       </li>
     <% end -%>

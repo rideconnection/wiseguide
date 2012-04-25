@@ -1,4 +1,14 @@
 class User < ActiveRecord::Base
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :first_name, :last_name, :phone_number
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :organization_id
+
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :lockable and :timeoutable
+  devise :database_authenticatable, 
+         :recoverable, :trackable, :validatable
+
   model_stamper
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
 
@@ -12,24 +22,16 @@ class User < ActiveRecord::Base
   has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
   has_many :referred_kases, :through => :assessment_requests, :source => :kase
 
-  validates_presence_of :first_name
-  validates_presence_of :last_name
-  validates_presence_of :organization_id
-
   before_save :clean_level
 
-  validates_confirmation_of :password
+  validates_presence_of   :first_name
+  validates_presence_of   :last_name
   validates_uniqueness_of :email
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :phone_number
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :organization_id
-
+  validates_presence_of   :organization_id  
+  validates_format_of     :password, :if => :password_required?,
+                          :with => /^(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)$/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
+                          :message => "must have at least one number and at least one non-alphanumeric character"
+  
   default_scope order(:email)
   scope :active, where("users.level >= 0")
   scope :inside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject(&:is_outside_org?).collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
@@ -78,6 +80,21 @@ class User < ActiveRecord::Base
       self.errors.add('password', :blank)
       false
     end
+  end
+  
+  # Generates a random password in accordance with the validation filter above
+  def self.random_password
+    specials = ((32..47).to_a + (58..64).to_a + (91..96).to_a + (123..126).to_a).pack('U*').chars.to_a
+    numbers  = (1..9).to_a
+    alpha    = ('a'..'z').to_a + ('A'..'Z').to_a
+    %w{i I l L 1 O o}.each{ |ambiguous_character| 
+      alpha.delete ambiguous_character 
+    }
+    characters = (alpha + specials + numbers)
+    password = Random.new.rand(8..18).times.map{characters.sample}
+    password << specials.sample unless password.join =~ Regexp.new(Regexp.escape(specials.join))
+    password << numbers.sample  unless password.join =~ Regexp.new(Regexp.escape(numbers.join))
+    password.shuffle.join
   end
 
   private

@@ -2,7 +2,7 @@ Given /^I am logged in as an? (.*)$/ do |user_type|
   @current_user = Factory(user_type.split(" ").join("_"))
   visit '/users/sign_in'
   fill_in 'user_email', :with => @current_user.email
-  fill_in 'user_password', :with => 'password'
+  fill_in 'user_password', :with => 'password 1'
   click_button 'Sign in'
   page.should have_content('Signed in successfully.')
 end
@@ -32,7 +32,7 @@ Then /^show me the page$/ do
 end
 
 Then /^I should be on the (.*) page$/ do |page_name|
-  object = instance_variable_get("@#{page_name}")
+  object = instance_variable_get("@#{page_name.gsub(' ','_')}")
   page.current_path.should == send("#{page_name.downcase.gsub(' ','_')}_path", object)
   page.status_code.should == 200
 end
@@ -43,7 +43,7 @@ Then /^I should be redirected to the (.*) page$/ do |page_name|
   step %Q(I should be on the #{page_name} page)
 end
 
-Then /^I should be denied access to the page with an error of "(.*)"$/ do |error|
-  page.status_code.should == 501
-  page.should have_content(error)
+Then /^I should be denied access to the page with an error code of ([0-9]+) and an error message of "(.*)"$/ do |error_code, error_message|
+  page.status_code.should == error_code.to_i
+  page.should have_content(error_message)
 end

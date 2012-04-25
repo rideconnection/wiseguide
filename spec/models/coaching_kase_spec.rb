@@ -41,17 +41,49 @@ describe CoachingKase do
     it { should accept_values_for(:case_manager_id, nil, "", 0, 1) }
   end
   
+  describe "medicaid_eligible" do
+    it "should allow true" do
+      @valid_kase.medicaid_eligible = true
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow false" do
+      @valid_kase.medicaid_eligible = false
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow nil" do
+      @valid_kase.medicaid_eligible = nil
+      @valid_kase.valid?.should be_true
+    end
+  end
+  
   describe "case_manager association" do
-    it "should require a valid, persisted case manager" do
-      kase = CoachingKase.new
-      kase.case_manager = nil
-      kase.valid?
-      kase.errors.keys.should include(:case_manager)
-      kase.errors[:case_manager].should include("can't be blank")
+    before do
+      @invalid_unpersisted_case_manager = Factory.build(:case_manager, :email => nil)
       
-      kase.case_manager = @case_manager
-      kase.valid?
-      kase.errors.keys.should_not include(:case_manager)
+      # We can't use Factory.build here because the returned object will be an
+      # instance of Kase, not CoachingKase, and thus the case_manager 
+      # association wouldn't be available yet.
+      @new_kase = CoachingKase.new
+    end
+    
+    it "should require the case manager to be a valid object, when specified" do
+      @new_kase.case_manager = nil
+      # Don't bother testing if the object is valid or not because the other
+      # validations won't be met yet, just trigger the validations and make 
+      # sure the error collection doesn't contain a :case_manager key
+      @new_kase.valid?
+      @new_kase.errors.keys.should_not include(:case_manager)
+
+      @new_kase.case_manager = @invalid_unpersisted_case_manager
+      @new_kase.valid?
+      @new_kase.errors.keys.should include(:case_manager)
+      @new_kase.errors[:case_manager].should include("is invalid")
+      
+      @new_kase.case_manager = @case_manager
+      @new_kase.valid?
+      @new_kase.errors.keys.should_not include(:case_manager)
     end
   end
 end
