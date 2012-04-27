@@ -4,6 +4,7 @@
 <% end %>
 <table>
 <% for response_set in @kase.response_sets %>
+<% if !response_set.new_record? %>
 <tr class="auto-zebra">
   <td>
     <%= response_set.created_at.strftime "%Y-%m-%d"  %>
@@ -23,5 +24,6 @@
     </td>
   <% end %>
 </tr>
+<% end %>
 <% end %>
 </table>

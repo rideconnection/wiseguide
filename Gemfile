@@ -25,9 +25,7 @@ gem 'prawn', :git => "git://github.com/prawnpdf/prawn.git", :tag => '0.12.0', :s
 gem "pdf-reader", :require => "pdf/reader"
 gem "Ascii85", :require => "ascii85"
 
-# Note: We are including a heavily customized version of Surveyor based off on an old fork
-gem "surveyor", :git => "git://github.com/openplans/surveyor.git", 
-  :branch => "rails3"
+gem "surveyor", "~> 0.22.0"
 
 # Deploy with Capistrano
 gem "capistrano",     :require => false # We need it to be installed, but it's
