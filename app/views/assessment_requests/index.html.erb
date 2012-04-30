@@ -1,39 +1,101 @@
+<% content_for :head do -%>
+  <%= stylesheet_link_tag 'jquery.ajax-loader.css', :media => 'screen, projection' %>
+  <%= javascript_include_tag 'jquery.ajax-loader.min.js' %>
+  <%= javascript_tag do %>
+    jQuery.ajaxSetup({
+      beforeSend: function() {
+        $('body').ajaxLoader();
+      },
+      complete: function(){
+         $('body').ajaxLoaderRemove();
+      },
+      success: function() {}
+    });
+    $(document).ready(function($){
+      //
+      // Pretty up the form
+      //
+      var $form = $('#assessment-request-filter');
+      var $headers = $('#assessment-request-filter h3');
+      var $user_type_filters = $('#user-type-filters li');
+      var $current_status_filters = $('#current-status-filters li');
+      
+      if ($user_type_filters.length == $current_status_filters.length) {
+        // Adjust the header widths
+        $headers.css('width', 'auto');
+        h1_w = $($headers[0]).width();
+        h2_w = $($headers[1]).width();
+        $headers.width(Math.max(h1_w, h2_w) + 'px');
+        
+        // Adjust the list item widths
+        $user_type_filters.css('width', 'auto');
+        $current_status_filters.css('width', 'auto');
+        $user_type_filters.each(function(index) {
+          $li1 = $($user_type_filters[index]);
+          $li2 = $($current_status_filters[index]);
+          li1_w = $li1.width();
+          li2_w = $li2.width();
+          $().add($li1).add($li2).width(Math.max(li1_w, li2_w) + 'px');
+        });
+      }
+      
+      //
+      // Ajaxify the form
+      //
+      $options = $().add($current_status_filters.find('input')).add($user_type_filters.find('input'));
+      $options.change(function() {
+        $.get($form.attr("action"), $form.serialize(), null, 'script');
+        return false;
+      });
+      $form.find('input[type=submit]').hide();
+    });
+  <% end %> 
+<% end -%>
+
 <h1>Assessment Requests</h1>
 
-<table>
-  <tr>
-    <th>Request Date</th>
-    <th>Customer name</th>
-    <th>Customer phone</th>
-    <th>Customer birth date</th>
-    <th>Notes</th>
-    <th>Submitter</th>
-    <th></th>
-  </tr>
-
-<% @assessment_requests.each do |assessment_request| %>
-  <tr>
-    <td>
-      <% if can? :edit, assessment_request %>
-        <%= link_to assessment_request.created_at.strftime("%m/%d/%4Y %I:%M %p"),
-                    edit_assessment_request_path(assessment_request) %>
-      <% else %>
-        <%= link_to assessment_request.created_at.strftime("%m/%d/%4Y %I:%M %p"), assessment_request %>
-      <% end %>
-    </td>
-    <td><%= assessment_request.display_name %></td>
-    <td><%= assessment_request.customer_phone %></td>
-    <td><%= assessment_request.customer_birth_date %></td>
-    <td><%= assessment_request.notes %></td>
-    <td><%= assessment_request.submitter.display_name %></td>
-    <td>
-      <% if can? :destroy, assessment_request %>
-        <%= button_to 'Delete', assessment_request,
-                      :confirm => 'Are you sure?', :method => :delete %>
-      <% end %>
-    </td>
-  </tr>
-<% end %>
+<table id="assessment-requests">
+  <caption class="box">
+    <h2>Filter Requests</h2>
+    <%= form_tag assessment_requests_path, :method => :get, :id => "assessment-request-filter" do %>
+      <h3>By User Type:</h3>
+      <ul id="user-type-filters" class="filters">
+        <% {:all => "Anyone", :mine => "Me", :my_organization => "My Organization", :outside_users => "Outside users"}.each do |filter, label| %>
+          <li>
+            <%= label_tag "user-type-filter-#{filter.to_s}" do %>
+              <%= radio_button_tag "user_type_filter", filter.to_s, ((!params.blank? && params[:user_type_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:user_type_filter].blank?))), :id => "user-type-filter-#{filter.to_s}", :class => 'filter' %>&nbsp;<%= label %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <h3>By Current Status:</h3>
+      <ul id="current-status-filters" class="filters">
+        <% {:all => "All", :pending => "Pending", :not_completed => "Not completed", :completed => "Completed"}.each do |filter, label| %>
+          <li>
+            <%= label_tag "current-status-filter-#{filter.to_s}" do %>
+              <%= radio_button_tag "current_status_filter", filter.to_s, ((!params.blank? && params[:current_status_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:current_status_filter].blank?))), :id => "current-status-filter-#{filter.to_s}", :class => 'filter' %>&nbsp;<%= label %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="clearfix"><%= submit_tag "Filter", :name => nil, :disabled => false, :disable_with => "Applying filter..." %></div>
+    <% end -%>
+  </caption>
+  <thead>
+    <tr>
+      <th>Request Date</th>
+      <th>Customer name</th>
+      <th>Customer phone</th>
+      <th>Customer birth date</th>
+      <th>Notes</th>
+      <th>Submitter</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render 'assessment_requests' %>
+  </tbody>
 </table>
 
 <br />

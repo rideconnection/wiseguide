@@ -15,6 +15,8 @@ class Organization < ActiveRecord::Base
   has_many :users, :dependent => :restrict
   has_many :children, :class_name => "Organization",
            :foreign_key => "parent_id", :dependent => :nullify
+  
+  scope :outside, where("organization_type != ?", ORGANIZATION_TYPES[:staff][:id])
 
   def organization_type_name
     ORGANIZATION_TYPES[organization_type.to_sym][:name]
@@ -57,5 +59,4 @@ class Organization < ActiveRecord::Base
       end
     end
   end
-
 end

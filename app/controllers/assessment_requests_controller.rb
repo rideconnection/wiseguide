@@ -4,10 +4,34 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests
   # GET /assessment_requests.xml
   def index
-    @assessment_requests = AssessmentRequest.order("created_at ASC")
+    params[:user_type_filter] ||= "all"
+    params[:current_status_filter] ||= "all"
+
+    query = AssessmentRequest.scoped
+        
+    case params[:user_type_filter].to_sym
+    when :mine
+      query = query.submitted_by(current_user)
+    when :my_organization
+      query = query.belonging_to(current_user.organization)
+    when :outside_users
+      query = query.belonging_to(Organization.outside)
+    end
+        
+    case params[:current_status_filter].to_sym
+    when :pending
+      query = query.pending
+    when :not_completed
+      query = query.not_completed
+    when :completed
+      query = query.completed
+    end
+        
+    @assessment_requests = query.order("created_at ASC").all
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js   # index.js.erb
       format.xml  { render :xml => @assessment_requests }
     end
   end
@@ -48,8 +72,7 @@ class AssessmentRequestsController < ApplicationController
   def change_customer
     @assessment_request = AssessmentRequest.find(params[:id])
     authorize! :update, @assessment_request
-    @similar_customers = Customer.search(@assessment_request.display_name)
-        .order('last_name, first_name')
+    @similar_customers = Customer.search(@assessment_request.display_name).order('last_name, first_name')
   end
 
   # GET /assessment_requests/1/create_case

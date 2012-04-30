@@ -33,6 +33,10 @@
                       :disabled => readonly %>
   </div>
   <div class="field">
+    <%= f.label :reason_not_completed %><br />
+    <%= f.select :reason_not_completed, ["Could not reach", "Duplicate request"], {:include_blank => ""} %>
+  </div>
+  <div class="field">
     <%= f.label :notes %><br />
     <%= f.text_area :notes, :rows => 5,
                     :readonly => readonly %>

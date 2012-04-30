@@ -3,7 +3,7 @@ When /^I submit the "Monthly Transportation Report" form with a date range of "(
 end
 
 Then /^I should see the following report in the "Monthly Transportation Report" table:$/ do |table|
-  check_report_data "monthly_transportation", table
+  check_simple_table_data "monthly_transportation", table
 end
 
 Given /^the following referral document associations exist:$/ do |table|
@@ -26,15 +26,15 @@ When /^I submit the "Customer Referral Report" form with a date range of "([^"]*
 end
 
 Then /^I should see the following report in the "Assessments Performed" table:$/ do |table|
-  check_report_data "assessments_performed", table
+  check_simple_table_data "assessments_performed", table
 end
 
 Then /^I should see the following report in the "Referral Sources" table:$/ do |table|
-  check_report_data "referral_sources", table
+  check_simple_table_data "referral_sources", table
 end
 
 Then /^I should see the following report in the "Services Referred" table:$/ do |table|
-  check_report_data "services_referred", table
+  check_simple_table_data "services_referred", table
 end
 
 def fill_in_date_range (parent_id, start_date, end_date)
@@ -42,17 +42,5 @@ def fill_in_date_range (parent_id, start_date, end_date)
     fill_in "start_date", :with => start_date
     fill_in "end_date", :with => end_date
     click_button "Report"
-  end
-end
-
-def check_report_data (table_id, table)
-  # Convert all headers to lower case symbol
-  table.map_headers! {|header| header.downcase.to_sym }
-
-  table.hashes.each_with_index do |row, index|
-    xpath_base = '//table[@id="%s"]/tbody/tr[%i]/td[%i]';
-    row.keys.each_with_index do |key, index_2|
-      find(:xpath, xpath_base % [table_id, index + 1, index_2 + 1]).should have_content(row[key])
-    end
   end
 end
