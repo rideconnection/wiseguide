@@ -3,8 +3,6 @@ Feature: Manage organizations
   trainers and admins
   want to be able to manage organizations
 
-  @firebug 
-  @pause_on_fail
   @javascript
   Scenario: Admins can delete organizations
     Given I am logged in as an admin
@@ -16,8 +14,6 @@ Feature: Manage organizations
       And I should see a confirmation message
       And I should not see a link to the organization's profile when I return to the organizations list
 
-  @firebug 
-  @pause_on_fail
   @javascript
   Scenario: Admins cannot delete organizations that still have users assigned to them
     Given I am logged in as an admin

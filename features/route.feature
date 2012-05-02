@@ -3,8 +3,6 @@ Feature: Manage routes trained on cases
   trainers and admins
   want to be able to manage routes trained on cases
   
-  # @firebug 
-  # @pause_on_fail
   @javascript 
   Scenario: Trainers can add trained routes to cases
     Given I am logged in as a trainer
@@ -17,8 +15,6 @@ Feature: Manage routes trained on cases
     Then I should be able to add a trained route using the AJAX form
       And I should see the trained route under the Routes Trained section of the case profile
   
-  # @firebug 
-  # @pause_on_fail
   @javascript
   Scenario: Trainers can delete trained routes from cases
     Given I am logged in as a trainer

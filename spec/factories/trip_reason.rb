@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory:trip_reason do |f|
+  factory :trip_reason do
   end
 end

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Contact do
   before do
-    @customer = Factory(:customer)
-    @customer_kase = Factory(:kase, :customer => @customer)
-    @contact = Factory.build(:contact, :customer => @customer)
+    @customer = FactoryGirl.create(:customer)
+    @customer_kase = FactoryGirl.create(:kase, :customer => @customer)
+    @contact = FactoryGirl.build(:contact, :customer => @customer)
   end
   
   it "should create a new instance given valid attributes" do
@@ -43,7 +43,7 @@ describe Contact do
   
   context "without a case association" do
     before do
-      @kase = Factory(:kase)
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should should allow a nil kase association" do

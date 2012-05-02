@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe User do
   before do
-    @staff_organization = Factory(:staff_organization)
-    @government_organization = Factory(:government_organization)
-    @case_mgmt_organization = Factory(:case_mgmt_organization)
+    @staff_organization = FactoryGirl.create(:staff_organization)
+    @government_organization = FactoryGirl.create(:government_organization)
+    @case_mgmt_organization = FactoryGirl.create(:case_mgmt_organization)
     
     @valid_attributes = {
       :first_name            => "FirstName",
@@ -44,8 +44,8 @@ describe User do
     
     describe "uniqueness" do
       before do
-        Factory(:user, :email => 'z@y.xw')
-        @duplicate = Factory.build(:user, :email => 'z@y.xw')
+        FactoryGirl.create(:user, :email => 'z@y.xw')
+        @duplicate = FactoryGirl.build(:user, :email => 'z@y.xw')
       end
       
       it "should be unique" do
@@ -85,7 +85,7 @@ describe User do
 
   context "instance methods" do
     before do
-      @valid_user = Factory(:user, :first_name => "FirstName", :last_name => "LastName")
+      @valid_user = FactoryGirl.create(:user, :first_name => "FirstName", :last_name => "LastName")
     end
     
     describe "display_name" do
@@ -188,7 +188,7 @@ describe User do
   
     describe "update_password" do
       before do
-        @valid_user = Factory(:user, :password => "password 1")
+        @valid_user = FactoryGirl.create(:user, :password => "password 1")
       end
       
       it "should return false when both params are blank" do

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe CoachingKase do
   before do
-    @in_progress = Factory(:disposition, :name => "In Progress")
+    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
     
-    @case_manager = Factory(:case_manager)
+    @case_manager = FactoryGirl.create(:case_manager)
     
     @valid_attributes = {
       :customer_id      => 1,
@@ -60,9 +60,9 @@ describe CoachingKase do
   
   describe "case_manager association" do
     before do
-      @invalid_unpersisted_case_manager = Factory.build(:case_manager, :email => nil)
+      @invalid_unpersisted_case_manager = FactoryGirl.build(:case_manager, :email => nil)
       
-      # We can't use Factory.build here because the returned object will be an
+      # We can't use FactoryGirl.build here because the returned object will be an
       # instance of Kase, not CoachingKase, and thus the case_manager 
       # association wouldn't be available yet.
       @new_kase = CoachingKase.new

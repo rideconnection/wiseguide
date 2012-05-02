@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AdaServiceEligibilityStatus do
   before do
-    @status = Factory.build(:ada_service_eligibility_status)
+    @status = FactoryGirl.build(:ada_service_eligibility_status)
   end
   
   it "should create a new instance given valid attributes" do

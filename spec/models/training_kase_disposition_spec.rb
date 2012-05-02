@@ -7,7 +7,7 @@ describe TrainingKaseDisposition do
     # especially since rebuilding it before each test is overkill, and
     # I can live with knowing I'm breaking convention here by destroying an
     # object from inside a test.
-    valid = Factory(:training_kase_disposition)
+    valid = FactoryGirl.create(:training_kase_disposition)
     valid.destroy
   end
 end

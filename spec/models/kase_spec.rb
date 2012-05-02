@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Kase do
   before do
-    @in_progress = Factory(:disposition, :name => "In Progress")
+    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
   end
   
   describe "customer_id" do
@@ -17,7 +17,7 @@ describe Kase do
 
   describe "close_date" do
     before do
-      @not_in_progress = Factory(:disposition, :name => "Not In Progress")
+      @not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
     end
     
     it "should not be required if the disposition is 'In Progress'" do
@@ -62,7 +62,7 @@ describe Kase do
 
   describe "disposition_id" do
     before do
-      @not_in_progress = Factory(:disposition, :name => "Not In Progress")
+      @not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
     end
     
     it "cannot be 'In Progress' if case is closed" do
@@ -124,7 +124,7 @@ describe Kase do
     it { should_not accept_values_for(:household_size_alternate_response, "Foo") }
 
     before do
-      @kase = Factory(:kase)
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should set household_size to nil when valued" do
@@ -150,7 +150,7 @@ describe Kase do
     it { should_not accept_values_for(:household_income_alternate_response, "Foo") }
     
     before do
-      @kase = Factory(:kase)
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should set household_income to nil when valued" do
@@ -168,7 +168,7 @@ describe Kase do
   
   describe "medicaid_eligible" do
     before do
-      @kase = Factory(:kase)
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should allow true" do
@@ -248,23 +248,23 @@ describe Kase do
   context "class scopes" do
     context "assignment scopes" do
       before do
-        @user_1 = Factory(:user)
-        @user_2 = Factory(:user)
+        @user_1 = FactoryGirl.create(:user)
+        @user_2 = FactoryGirl.create(:user)
 
         @assigned_kases = []
-        @assigned_kases << Factory(:kase, :assigned_to => @user_1)
-        @assigned_kases << Factory(:kase, :assigned_to => @user_1)
-        @assigned_kases << Factory(:kase, :assigned_to => @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
 
         @not_assigned_kases = []
-        @not_assigned_kases << Factory(:kase, :assigned_to => @user_2)
-        @not_assigned_kases << Factory(:kase, :assigned_to => @user_2)
-        @not_assigned_kases << Factory(:kase, :assigned_to => @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
 
         @unassigned_kases = []
-        @unassigned_kases << Factory(:kase, :assigned_to => nil)
-        @unassigned_kases << Factory(:kase, :assigned_to => nil)
-        @unassigned_kases << Factory(:kase, :assigned_to => nil)
+        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
+        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
+        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
         
         # We need to reload these to get the correct sub classes
         @assigned_kases     = @assigned_kases.map{|k| Kase.find(k.id)}
@@ -290,15 +290,15 @@ describe Kase do
     
     context "date range scopes" do
       before do
-        @open_kase_today        = Factory(:open_kase, :open_date => Date.current)
-        @open_kase_yesterday    = Factory(:open_kase, :open_date => Date.yesterday)
-        @open_kase_2_months_ago = Factory(:open_kase, :open_date => 2.months.ago)
-        @open_kase_3_months_ago = Factory(:open_kase, :open_date => 3.months.ago)
+        @open_kase_today        = FactoryGirl.create(:open_kase, :open_date => Date.current)
+        @open_kase_yesterday    = FactoryGirl.create(:open_kase, :open_date => Date.yesterday)
+        @open_kase_2_months_ago = FactoryGirl.create(:open_kase, :open_date => 2.months.ago)
+        @open_kase_3_months_ago = FactoryGirl.create(:open_kase, :open_date => 3.months.ago)
                 
-        @closed_kase_today        = Factory(:closed_kase, :open_date => Date.current, :close_date => Date.current)
-        @closed_kase_yesterday    = Factory(:closed_kase, :open_date => Date.yesterday, :close_date => Date.yesterday)
-        @closed_kase_2_months_ago = Factory(:closed_kase, :open_date => 2.months.ago, :close_date => 2.months.ago)
-        @closed_kase_3_months_ago = Factory(:closed_kase, :open_date => 3.months.ago, :close_date => 3.months.ago)
+        @closed_kase_today        = FactoryGirl.create(:closed_kase, :open_date => Date.current, :close_date => Date.current)
+        @closed_kase_yesterday    = FactoryGirl.create(:closed_kase, :open_date => Date.yesterday, :close_date => Date.yesterday)
+        @closed_kase_2_months_ago = FactoryGirl.create(:closed_kase, :open_date => 2.months.ago, :close_date => 2.months.ago)
+        @closed_kase_3_months_ago = FactoryGirl.create(:closed_kase, :open_date => 3.months.ago, :close_date => 3.months.ago)
 
         # We need to reload these to get the correct sub classes
         @open_kase_today          = Kase.find(@open_kase_today.id)
@@ -339,11 +339,11 @@ describe Kase do
 
     context "successful scope" do
       before do
-        @successful = Factory(:disposition, :name => "Successful")
-        @not_successful = Factory(:disposition, :name => "Not Successful")
+        @successful = FactoryGirl.create(:disposition, :name => "Successful")
+        @not_successful = FactoryGirl.create(:disposition, :name => "Not Successful")
         
-        @succesful_kase = Factory(:closed_kase, :disposition => @successful)
-        @unsuccesful_kase = Factory(:closed_kase, :disposition => @not_successful)
+        @succesful_kase = FactoryGirl.create(:closed_kase, :disposition => @successful)
+        @unsuccesful_kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful)
 
         # We need to reload these to get the correct sub classes
         @succesful_kase = Kase.find(@succesful_kase.id)
@@ -361,43 +361,43 @@ describe Kase do
       pending "I don't have enough information about what these are supposed to do to setup the test properly."
       
       # before do
-      #   @successful = Factory(:disposition, :name => "Successful")
-      #   @not_successful = Factory(:disposition, :name => "Not Successful")
+      #   @successful = FactoryGirl.create(:disposition, :name => "Successful")
+      #   @not_successful = FactoryGirl.create(:disposition, :name => "Not Successful")
       #   
       #   debugger
       #   
       #   @three_month_follow_ups = []
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
       #   @three_month_follow_ups << kase
       #   
-      #   kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 3.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful, :close_date => 3.months.ago)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 4.months.ago)
-      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 4.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => true, :three_month_trip_count => nil)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 1.month.ago)
-      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => true, :three_month_trip_count => 3)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 1.month.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => true, :three_month_trip_count => 3)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
-      #   kase.outcomes << Factory(:outcome, :three_month_unreachable => false, :three_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => false, :three_month_trip_count => nil)
       #   @three_month_follow_ups << kase
       #   
       #   @six_month_follow_ups = []
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
       #   @six_month_follow_ups << kase
       # 
-      #   kase = Factory(:closed_kase, :disposition => @not_successful, :close_date => 6.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful, :close_date => 6.months.ago)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 7.months.ago)
-      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 7.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => true, :six_month_trip_count => nil)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 5.month.ago)
-      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => true, :six_month_trip_count => 3)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 5.month.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => true, :six_month_trip_count => 3)
       #   
-      #   kase = Factory(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
-      #   kase.outcomes << Factory(:outcome, :six_month_unreachable => false, :six_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => false, :six_month_trip_count => nil)
       #   @six_month_follow_ups << kase
       #   
       #   # We need to reload these to get the correct sub classes
@@ -418,16 +418,16 @@ describe Kase do
     
     context "for_funding_source_id scope" do
       before do
-        @funding_source_1 = Factory(:funding_source)
-        @funding_source_2 = Factory(:funding_source)
+        @funding_source_1 = FactoryGirl.create(:funding_source)
+        @funding_source_2 = FactoryGirl.create(:funding_source)
         
         @funded_kases = []
-        @funded_kases << Factory(:kase, :funding_source => @funding_source_1)
-        @funded_kases << Factory(:kase, :funding_source => @funding_source_1)
+        @funded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_1)
+        @funded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_1)
 
         @unfunded_kases = []
-        @unfunded_kases << Factory(:kase, :funding_source => @funding_source_2)
-        @unfunded_kases << Factory(:kase, :funding_source => @funding_source_2)
+        @unfunded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_2)
+        @unfunded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_2)
 
         # We need to reload these to get the correct sub classes
         @funded_kases   = @funded_kases.map{|k| Kase.find(k.id)}

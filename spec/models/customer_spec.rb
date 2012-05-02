@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Customer do
   before do
-    @customer = Factory.build(:customer)
+    @customer = FactoryGirl.build(:customer)
   end
   
   it "should create a new instance given valid attributes" do
@@ -74,7 +74,7 @@ describe Customer do
   
   describe "ada_service_eligibility_status_id" do
     before do
-      @ada_service_eligibility_status = Factory(:ada_service_eligibility_status)
+      @ada_service_eligibility_status = FactoryGirl.create(:ada_service_eligibility_status)
     end
     
     it "should allow an integer value" do

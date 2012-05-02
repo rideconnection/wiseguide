@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  factory :answer do |f|
-    f.sequence(:text) {|n| "Answer #{n}" }
-    f.response_class "text"
-    f.association :question
+  factory :answer do
+    sequence(:text) {|n| "Answer #{n}" }
+    response_class "text"
+    association :question
   end
 end

@@ -4,9 +4,8 @@ FactoryGirl.define do
     association :customer
     date_time Time.current
     description "My Contact"
-  end
-  
-  factory :contact_with_open_training_kase, :parent => :contact, :aliases => [:contact_event_with_open_training_kase] do
-    after_build {|c| c.kase = FactoryGirl.create(:open_training_kase, :customer => c.customer)}
+    factory :contact_with_open_training_kase, :aliases => [:contact_event_with_open_training_kase] do
+      after_build {|c| c.kase = FactoryGirl.create(:open_training_kase, :customer => c.customer)}
+    end
   end
 end
