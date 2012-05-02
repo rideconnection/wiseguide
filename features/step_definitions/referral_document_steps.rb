@@ -80,7 +80,8 @@ end
 Then /^I should see the referral document details$/ do
   page.should have_content("Referral Document for #{@referral_document.customer.name}")
   page.should have_content("#{@referral_document.referral_document_resources.first.resource.name}")
-  page.should have_content("Referral document opened at #{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
+  puts page.body
+  page.should have_content("Referral document opened at#{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 
 Then /^I should( not)? see a button to delete the referral document$/ do|negation|

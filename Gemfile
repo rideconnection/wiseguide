@@ -38,7 +38,7 @@ group :production, :staging do
 end
 
 group :development do
-  gem "cucumber-rails"
+  gem "cucumber-rails", "~> 1.3.0"
   gem "rspec-rails"
   gem "spork"
   gem "launchy"
