@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503043300) do
+ActiveRecord::Schema.define(:version => 20120508160358) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -269,8 +269,10 @@ ActiveRecord::Schema.define(:version => 20120503043300) do
     t.string   "household_size_alternate_response"
     t.string   "household_income_alternate_response"
     t.boolean  "medicaid_eligible"
+    t.boolean  "scheduling_system_entry_required"
   end
 
+  add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"
   add_index "kases", ["type"], :name => "index_kases_on_type"
 
   create_table "organizations", :force => true do |t|

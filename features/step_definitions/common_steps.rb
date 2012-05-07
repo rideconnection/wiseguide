@@ -7,7 +7,7 @@ Given /^I am logged in as an? (.*)$/ do |user_type|
   page.should have_content('Signed in successfully.')
 end
 
-Given /^my name is "([^"]+)"$/ do |name|
+Given /^my name is "([^"]*)"$/ do |name|
   first_name, last_name = name.strip.split(/\W+/)
   @current_user.first_name = first_name
   @current_user.last_name = last_name
@@ -37,7 +37,7 @@ Then /^I should see a confirmation message$/ do
   page.should have_content(@confirmation_message)
 end
 
-Then /^I should see the error message "(.*)"$/ do |error_message|
+Then /^I should see the error message "([^"]*)"$/ do |error_message|
   page.should have_content(error_message)
 end
 
@@ -87,4 +87,32 @@ def check_simple_table_data (table_id, table)
       end
     end
   end
+end
+
+Then /^I should see a "([^"]*)" checkbox$/ do |label|
+  page.should have_field(label, :type => "checkbox")
+end
+
+When /^I (un)?check the "([^"]*)" checkbox$/ do |checked_state, label|
+  checked_state = (checked_state) ? "uncheck" : "check"
+  page.send(checked_state, label)
+end
+
+Then /^the "([^"]*)" checkbox should be (un)?checked$/ do |label, checked_state|
+  checked_state = (checked_state) ? "has_unchecked_field?" : "has_checked_field?"
+  page.send(checked_state, label)
+end
+
+When /^I save the form$/ do
+  click_button "Save"
+end
+
+Then /^I should( not)? see a main section titled "([^"]*)"$/ do |negation, title|
+  assertion = negation ? :should_not : :should
+  page.send(assertion, have_selector("h1", text: title))
+end
+
+Then /^I should( not)? see a secondary section titled "([^"]*)"$/ do |negation, title|
+  assertion = negation ? :should_not : :should
+  page.send(assertion, have_selector("h2", text: title))
 end

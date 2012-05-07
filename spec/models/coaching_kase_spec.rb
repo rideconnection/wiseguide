@@ -58,6 +58,23 @@ describe CoachingKase do
     end
   end
   
+  describe "scheduling_system_entry_required" do
+    it "should allow true" do
+      @valid_kase.scheduling_system_entry_required = true
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow false" do
+      @valid_kase.scheduling_system_entry_required = false
+      @valid_kase.valid?.should be_true
+    end
+
+    it "should allow nil" do
+      @valid_kase.scheduling_system_entry_required = nil
+      @valid_kase.valid?.should be_true
+    end
+  end
+  
   describe "case_manager association" do
     before do
       @invalid_unpersisted_case_manager = FactoryGirl.build(:case_manager, :email => nil)

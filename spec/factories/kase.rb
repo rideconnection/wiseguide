@@ -15,7 +15,7 @@ FactoryGirl.define do
       close_date ""
       # I hate having to rely on seed data being loaded, but there is special
       # functionality assigned to disposition names.
-      disposition { Disposition.find_by_name_and_type("In Progress", "TrainingKaseDisposition") }
+      disposition { Disposition.find_or_create_by_name_and_type("In Progress", "TrainingKaseDisposition") }
     end
 
     factory :coaching_kase, :aliases => [:closed_coaching_kase, :coaching_case, :closed_coaching_case] do
@@ -24,7 +24,7 @@ FactoryGirl.define do
 
       factory :open_coaching_kase, :aliases => [:open_coaching_case] do
         close_date ""
-        disposition { Disposition.find_by_name_and_type("In Progress", "CoachingKaseDisposition") }
+        disposition { Disposition.find_or_create_by_name_and_type("In Progress", "CoachingKaseDisposition") }
       end
     end
   end

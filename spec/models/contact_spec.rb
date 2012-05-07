@@ -16,6 +16,10 @@ describe Contact do
     @contact.valid?.should be_false
     @contact.description = "A"
     @contact.valid?.should be_true
+    @contact.description = "A" * 201
+    @contact.valid?.should be_false
+    @contact.description = "A" * 200
+    @contact.valid?.should be_true
   end
   
   it "should require a valid date_time before or equal to the current time" do

@@ -6,8 +6,9 @@ class KasesController < ApplicationController
     name_ordered = 'customers.last_name, customers.first_name'
     
     if !params[:kase].blank? and !params[:kase][:type].blank?
-      @kases = @kases.where(:type => params[:kase][:type])
-      @bodytag_class = params[:kase][:type].pluralize.underscore.gsub(/_/, '-')
+      @kase_type = params[:kase][:type]
+      @kases = @kases.where(:type => @kase_type)
+      @bodytag_class = @kase_type.pluralize.underscore.gsub(/_/, '-')
     end
     
     @my_open_kases = @kases.open.assigned_to(current_user).joins(:customer).order(name_ordered)
@@ -17,6 +18,10 @@ class KasesController < ApplicationController
     @other_three_month_follow_ups = @kases.not_assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
     @other_six_month_follow_ups = @kases.not_assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
     @wait_list = @kases.unassigned.order(:open_date)
+    
+    if @kase_type == "CoachingKase"
+      @data_entry_needed = @kases.where(:scheduling_system_entry_required => true)
+    end
   end
 
   def show
@@ -53,8 +58,31 @@ class KasesController < ApplicationController
   end
 
   def update
-    if @kase.update_attributes(params[:kase])
-      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.humanized_name) 
+    @kase.attributes = params[:kase]
+    
+    state_changed = false
+    if @kase.scheduling_system_entry_required_changed?
+      state_changed = true
+    end
+    
+    saved = false
+    ActiveRecord::Base.transaction do
+      if @kase.save
+        saved = true
+        begin
+          generate_contact_event!(
+            (@kase.scheduling_system_entry_required == true) ? "Case marked for entry into trip scheduling system" : "Data entry into trip scheduling system complete"
+          ) if state_changed
+        rescue ActiveRecord::RecordInvalid => err
+          saved = false
+          @kase.errors[:base] << "An error prevented the object from being saved. Please try again. (#{err.to_s})"
+          raise ActiveRecord::Rollback
+        end
+      end
+    end
+    
+    if saved
+      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.humanized_name)
     else
       prep_edit
       render :action => "show"
@@ -143,5 +171,17 @@ private
     # Remove any commas
     params[:kase][:household_income].gsub!(",", "") unless params[:kase][:household_income].blank?
     params[:kase][:household_size].gsub!(",", "") unless params[:kase][:household_size].blank?
+  end
+  
+  def generate_contact_event!(description, notes = nil)
+    Contact.create!(
+      kase: @kase,
+      customer: @kase.customer,
+      user: current_user,
+      method: "Case Action",
+      date_time: DateTime.current,
+      description: description,
+      notes: notes
+    )
   end
 end

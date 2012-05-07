@@ -48,5 +48,13 @@
         <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.open_date.strftime('%v') %>)
       </li>
     <% end %>
+    <% if @kase_type == "CoachingKase" %>
+      <h1>Data Entry Needed</h1>
+      <% for kase in @data_entry_needed %>
+        <li class="data_entry_needed">
+          <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.open_date.strftime('%v') %>)
+        </li>
+      <% end %>
+    <% end %>
   </ol>
 </fieldset>

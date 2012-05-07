@@ -6,7 +6,7 @@ class Contact < ActiveRecord::Base
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
-  validates :description, :presence => true, :length => {:maximum => 30}
+  validates :description, :presence => true, :length => {:maximum => 200}
   validates :date_time, :date => { :before_or_equal_to => Proc.new {Time.current} }
   validates_presence_of :customer
   validates_associated :customer
