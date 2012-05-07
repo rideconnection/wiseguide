@@ -42,15 +42,14 @@ group :production, :staging do
 end
 
 group :development do
-  gem "cucumber-rails"
   gem "launchy"
-  gem "rspec-rails"
   gem "spork-rails"
 end
 
 group :test do
   gem "accept_values_for", "~> 0.4.3"
   gem "capybara-firebug"
+  gem "cucumber-rails", :require => false
   gem "database_cleaner"
   gem "debugger"
   gem "email_spec"
@@ -59,6 +58,7 @@ end
 
 group :development, :test do
   gem "debugger"
+  gem "rspec-rails"
   gem "sqlite3-ruby", :require => "sqlite3"
 end
 
