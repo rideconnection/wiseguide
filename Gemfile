@@ -58,7 +58,7 @@ group :test do
 end
 
 group :development, :test do
-  gem "ruby-debug19", :require => "ruby-debug"
+  gem "debugger"
   gem "sqlite3-ruby", :require => "sqlite3"
 end
 
