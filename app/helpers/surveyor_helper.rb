@@ -17,7 +17,7 @@ module SurveyorHelper
     this_answer = (set.string_value || set.text_value || set.integer_value || set.float_value).to_s
     if this_answer.blank?
       set.answer.text
-    elsif set.answer.hide_label
+    elsif set.answer.display_type == 'hidden_label'
       this_answer
     else
       "#{set.answer.text}: #{this_answer}"

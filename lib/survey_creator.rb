@@ -52,7 +52,10 @@ module SurveyCreator
                               :display_order => question_index)
       i = 1
       for answer in question_obj["answers"]
-        answer = Answer.new(:question=>question, :text=>answer["text"], :display_order=>i, :response_class=>answer['response_class'], :display_type=>answer['hide_label'])
+        answer = Answer.new(:question=>question, :text=>answer['text'],
+                            :display_order=>i,
+                            :display_type=>answer['display_type'],
+                            :response_class=>answer['response_class'])
         i += 1
         to_save.push answer
       end

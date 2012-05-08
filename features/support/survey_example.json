@@ -47,25 +47,25 @@
             { "title" : "Where did you go?  Who did you go with?",
               "pick" : "none", 
               "answers" : [
-                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+                { "text" : "Answer", "response_class" : "text", "display_type" : "hidden_label" }
               ]
             },
             { "title" : "What other types of transportation have you used?",
               "pick" : "none", 
               "answers" : [
-                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+                { "text" : "Answer", "response_class" : "text", "display_type" : "hidden_label" }
               ]
             },
             { "title" : "How do you get to places now?", 
               "pick" : "none", 
               "answers" : [
-                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+                { "text" : "Answer", "response_class" : "text", "display_type" : "hidden_label" }
               ]
             },
             { "title" : "What are your reasons for not using the bus before?",
               "pick" : "none", 
               "answers" : [
-                { "text" : "Answer", "response_class" : "text", "hide_label" : true }
+                { "text" : "Answer", "response_class" : "text", "display_type" : "hidden_label" }
               ]
             }
           ]
