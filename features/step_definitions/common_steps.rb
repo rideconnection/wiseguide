@@ -33,12 +33,21 @@ When /^I click on the "([^"]+)" link$/ do |link|
   click_link link
 end
 
-Then /^I should see a confirmation message$/ do
-  page.should have_content(@confirmation_message)
+Then /^I should( not)? see a confirmation message$/ do |negation|
+  step %Q(I should#{negation ? " not" : ""} see the notice "#{@confirmation_message}")
 end
 
-Then /^I should see the error message "([^"]*)"$/ do |error_message|
-  page.should have_content(error_message)
+Then /^I should( not)? see the notice "([^"]*)"$/ do |negation, message|
+  assertion = negation ? :should_not : :should
+  page.send(assertion, have_selector("#flash .info", :text => message))
+end
+
+Then /^I should( not)? see the confirmation message "([^"]*)"$/ do |negation, confirmation_message|
+  step %Q(I should#{negation ? " not" : ""} see the notice "#{confirmation_message}")
+end
+
+Then /^I should( not)? see the error message "([^"]*)"$/ do |negation, error_message|
+  step %Q(I should#{negation ? " not" : ""} see the notice "#{error_message}")
 end
 
 Then /^show me the page$/ do
@@ -89,8 +98,13 @@ def check_simple_table_data (table_id, table)
   end
 end
 
-Then /^I should see a "([^"]*)" checkbox$/ do |label|
+Then /^I should see a(?:n)? "([^"]*)" checkbox$/ do |label|
   page.should have_field(label, :type => "checkbox")
+end
+
+Then /^I should( not)? see a(?:n)? "([^"]*)" button$/ do |negation, label|
+  assertion = negation ? :should_not : :should
+  page.send(assertion, have_button(label))
 end
 
 When /^I (un)?check the "([^"]*)" checkbox$/ do |checked_state, label|
@@ -103,16 +117,20 @@ Then /^the "([^"]*)" checkbox should be (un)?checked$/ do |label, checked_state|
   page.send(checked_state, label)
 end
 
+When /^I click the "([^"]*)" button$/ do |label|
+  click_button label
+end
+
 When /^I save the form$/ do
   click_button "Save"
 end
 
 Then /^I should( not)? see a main section titled "([^"]*)"$/ do |negation, title|
   assertion = negation ? :should_not : :should
-  page.send(assertion, have_selector("h1", text: title))
+  page.send(assertion, have_selector("h1", :text => title))
 end
 
 Then /^I should( not)? see a secondary section titled "([^"]*)"$/ do |negation, title|
   assertion = negation ? :should_not : :should
-  page.send(assertion, have_selector("h2", text: title))
+  page.send(assertion, have_selector("h2", :text => title))
 end

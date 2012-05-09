@@ -12,9 +12,13 @@ Spork.prefork do
   require 'selenium-webdriver'
   require 'selenium/webdriver/firefox/bridge'
   require 'rack/handler/webrick'
+  require 'prickle/capybara'
   
   # We're going to use our custom factory_girl step definition file instead
   # require 'factory_girl/step_definitions'
+  
+  World(Capybara::DSL)
+  World(Prickle::Capybara)
 end
 
 # Transaction is MUCH faster than truncation. However, cucumber-rails has to

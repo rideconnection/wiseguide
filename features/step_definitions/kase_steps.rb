@@ -77,6 +77,35 @@ Given /^an unassigned open training case exists$/ do
   @customer = @kase.customer
 end
 
+Given /^an open coaching case exists$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+end
+
+Given /^an open training case exists$/ do
+  @kase = FactoryGirl.create(:open_training_kase)
+end
+
+Given /^an open coaching case exists belonging to the customer and assigned to the case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase, :customer => @customer.first)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = @case_manager
+  @kase.save
+end
+
+Given /^an open coaching case exists assigned to the case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = @case_manager
+  @kase.save
+end
+
+Given /^an open coaching case exists with no case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = nil
+  @kase.save
+end
+
 When /^I click through to the case details$/ do
   find("a[href='/cases/#{@kase.id}']").click
 end
@@ -176,7 +205,7 @@ Then /^I should be prompted to confirm the deletion when I click the case(?:'s)?
   button = find("a.delete.kase[href='/cases/#{@kase.id}'][data-method=delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this case?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   @confirmation_message = 'Case was successfully deleted.'
   # Don't confirm just yet because we may want to test if it failed (due to permissions)
 end

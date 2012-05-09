@@ -81,14 +81,14 @@ describe ReportsController do
     #     FactoryGirl.create(:customer, :id => 3, :first_name => "Darth",  :last_name => "Vader")
     #     FactoryGirl.create(:customer, :id => 4, :first_name => "Master", :last_name => "Chief")
     # 
-    #     FactoryGirl.create(:open_coaching_case, :id => 1, :open_date => "2010-12-31", :assessment_date => "2010-12-31", :case_manager_notification_date => "2010-12-31", :customer_id => 1)
-    #     FactoryGirl.create(:open_coaching_case, :id => 3, :open_date => "2011-01-01", :assessment_date => "2011-01-02", :case_manager_notification_date => "2011-01-02", :customer_id => 2)
-    #     FactoryGirl.create(:open_coaching_case, :id => 6, :open_date => "2011-01-30", :assessment_date => "2011-02-01", :case_manager_notification_date => "2011-02-01", :customer_id => 3)
-    #     FactoryGirl.create(:open_coaching_case, :id => 7, :open_date => "2011-04-02", :assessment_date => "2011-04-02", :case_manager_notification_date => "2011-01-02", :customer_id => 4)
+    #     FactoryGirl.create(:open_coaching_kase, :id => 1, :open_date => "2010-12-31", :assessment_date => "2010-12-31", :case_manager_notification_date => "2010-12-31", :customer_id => 1)
+    #     FactoryGirl.create(:open_coaching_kase, :id => 3, :open_date => "2011-01-01", :assessment_date => "2011-01-02", :case_manager_notification_date => "2011-01-02", :customer_id => 2)
+    #     FactoryGirl.create(:open_coaching_kase, :id => 6, :open_date => "2011-01-30", :assessment_date => "2011-02-01", :case_manager_notification_date => "2011-02-01", :customer_id => 3)
+    #     FactoryGirl.create(:open_coaching_kase, :id => 7, :open_date => "2011-04-02", :assessment_date => "2011-04-02", :case_manager_notification_date => "2011-01-02", :customer_id => 4)
     # 
-    #     FactoryGirl.create(:closed_coaching_case, :id => 2, :open_date => "2010-12-31", :close_date => "2011-01-01", :assessment_date => "2011-01-01", :case_manager_notification_date => "2011-01-01", :customer_id => 3)
-    #     FactoryGirl.create(:closed_coaching_case, :id => 4, :open_date => "2011-01-01", :close_date => "2011-01-02", :assessment_date => "2011-01-01", :case_manager_notification_date => "2011-01-02", :customer_id => 1)
-    #     FactoryGirl.create(:closed_coaching_case, :id => 5, :open_date => "2011-01-30", :close_date => "2011-02-01", :assessment_date => "2011-02-01", :case_manager_notification_date => "2011-02-01", :customer_id => 2)
+    #     FactoryGirl.create(:closed_coaching_kase, :id => 2, :open_date => "2010-12-31", :close_date => "2011-01-01", :assessment_date => "2011-01-01", :case_manager_notification_date => "2011-01-01", :customer_id => 3)
+    #     FactoryGirl.create(:closed_coaching_kase, :id => 4, :open_date => "2011-01-01", :close_date => "2011-01-02", :assessment_date => "2011-01-01", :case_manager_notification_date => "2011-01-02", :customer_id => 1)
+    #     FactoryGirl.create(:closed_coaching_kase, :id => 5, :open_date => "2011-01-30", :close_date => "2011-02-01", :assessment_date => "2011-02-01", :case_manager_notification_date => "2011-02-01", :customer_id => 2)
     # 
     #     FactoryGirl.create(:assessment_request, :id => 1, :customer_first_name => "Robert", :customer_last_name => "Villa",  :customer_id => 1, :kase_id => 1, :created_at => "2010-12-01")
     #     FactoryGirl.create(:assessment_request, :id => 2, :customer_first_name => "Barty",  :customer_last_name => "Crouch", :customer_id => 2, :kase_id => 3, :created_at => "2010-12-20")

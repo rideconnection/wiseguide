@@ -107,6 +107,28 @@ class KasesController < ApplicationController
     @kase_route.destroy
     render :json=>{:action=>:destroy, :kase_id=>@kase_route.kase_id, :route_id=>@kase_route.route_id}
   end
+  
+  def notify_manager
+    authorize! :edit, @kase
+    if !@kase.case_manager.blank?
+      ActiveRecord::Base.transaction do
+        begin
+          AssessmentMailer.customer_assessed_email(@kase.case_manager, @kase).deliver
+          @kase.case_manager_notification_date = Date.current
+          @kase.save!
+          redirect_to(@kase, :notice => 'The notification has been sent.') and return
+        rescue => err
+          flash[:alert] = "An error prevented the object from being saved. Please try again. (#{err.to_s})"
+          raise ActiveRecord::Rollback
+        end
+      end
+    else
+      flash[:alert] = "The notification could not be sent because there is no case manager assigned."
+    end
+
+    prep_edit
+    render :action => "show"
+  end
 
 private
   

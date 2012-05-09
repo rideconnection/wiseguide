@@ -58,6 +58,7 @@ group :test do
   gem "factory_girl_rails"
   gem "faker"
   gem "pdf-inspector", :require => "pdf/inspector"
+  gem "prickle"
 end
 
 group :development, :test do

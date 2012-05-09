@@ -41,7 +41,7 @@ Feature: Customer search
 
   Scenario: Searching limits the displayed customers
     When I enter "brad" into the search box
-      And I click the "Search" button
+      And I click the "Search" button in the customer search form
     Then I should see the following customers in the customers table:
       | Name                  |
       | Bradey Sr., Robert    |

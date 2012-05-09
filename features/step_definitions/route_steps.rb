@@ -37,7 +37,7 @@ Then /^I should be prompted to confirm the deletion when I click the trained rou
   button = find(selector)
   button['data-confirm'].should eql("Are you sure?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   wait_until{ page.has_no_selector?(selector) }
   # No confirmation message is displayed by this action
 end
@@ -88,7 +88,7 @@ Then /^I should be prompted to confirm the deletion when I click the routes's de
   button = find(selector)
   button['data-confirm'].should eql("Are you sure?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   wait_until{ page.has_no_selector?(selector) }
   # No confirmation message is displayed by this action
 end
