@@ -54,14 +54,10 @@ class Customer < ActiveRecord::Base
   end
 
   def self.search(term)
-    if term.match /^[a-z]+$/i
-      #a single word, either a first or a last name
-      query, args = make_customer_name_query("first_name", term)
-      lnquery, lnargs = make_customer_name_query("last_name", term)
-      query += " or " + lnquery
-      args += lnargs
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
+    term.strip! unless term.nil?
+    if term.blank?
+      query = ''
+      args = []
     elsif term.match /^[a-z]+[ ,]\s*$/i
       comma = term.index(",")
       #a single word, either a first or a last name, complete
@@ -110,8 +106,13 @@ class Customer < ActiveRecord::Base
       Rails.logger.debug "QUERY: #{query}"
       Rails.logger.debug "QUERY: #{args}"
     else
-      query = ''
-      args = []
+      #a single word, either a first or a last name
+      query, args = make_customer_name_query("first_name", term)
+      lnquery, lnargs = make_customer_name_query("last_name", term)
+      query += " or " + lnquery
+      args += lnargs
+      Rails.logger.debug "QUERY: #{query}"
+      Rails.logger.debug "QUERY: #{args}"
     end
 
     conditions = [query] + args
