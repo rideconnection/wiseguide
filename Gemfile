@@ -49,6 +49,7 @@ end
 group :test do
   gem "accept_values_for", "~> 0.4.3"
   gem "capybara-firebug"
+  gem "cucumber"
   gem "cucumber-rails", :require => false
   gem "database_cleaner"
   gem "debugger"
