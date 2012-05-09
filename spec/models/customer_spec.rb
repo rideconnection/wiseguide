@@ -97,16 +97,16 @@ describe Customer do
   describe "search" do
     if connection_supports_dmetaphone?
       before(:all) do
-        FactoryGirl.create(:customer, :first_name => "Donna",       :last_name => "Jennings")
+        FactoryGirl.create(:customer, :first_name => "Donna",       :last_name => "Roberts")
         FactoryGirl.create(:customer, :first_name => "Jennifer",    :last_name => "Donnings")
-        FactoryGirl.create(:customer, :first_name => "Robert",      :last_name => "Bradey Sr.")
+        FactoryGirl.create(:customer, :first_name => "Robert",      :last_name => "Bradley Sr.")
         FactoryGirl.create(:customer, :first_name => "Bobby",       :last_name => "O'Brady")
-        FactoryGirl.create(:customer, :first_name => "Bradley",     :last_name => "Christchurch")
+        FactoryGirl.create(:customer, :first_name => "Bradley",     :last_name => "Srocco")
         FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bobson")
-        FactoryGirl.create(:customer, :first_name => "Bob",         :last_name => "Bradey")
+        FactoryGirl.create(:customer, :first_name => "Bob",         :last_name => "Bradley")
         FactoryGirl.create(:customer, :first_name => "Christopher", :last_name => "Carlson")
         FactoryGirl.create(:customer, :first_name => "Brady",       :last_name => "Robert")
-        FactoryGirl.create(:customer, :first_name => "Barb",        :last_name => "Bradey")
+        FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bradley")
       end
     
       after(:all) do
@@ -119,96 +119,72 @@ describe Customer do
       # soundex search. When in doubt, run the search manually and copy the 
       # results in to the expected results...
 
-      it "should allow me to search using a single letter" do
-        Customer.search("a").collect(&:name_reversed).should =~ [
-          "Jennings, Donna", 
-          "Donnings, Jennifer", 
-          "O'Brady, Bobby"
+      it "should search for a complete first_name match given a single word followed by a space" do
+        Customer.search("bob ").collect(&:name_reversed).should =~ [
+          "Bradley, Bob",
+          "O'Brady, Bobby" # <= dmetaphone match
         ]
       end
 
-      it "should allow me to search using a partial name" do
-        Customer.search("bra").collect(&:name_reversed).should =~ [
-          "Bradey Sr., Robert",
-          "Bradey, Barb",
-          "Christchurch, Bradley",
-          "Bradey, Bob",
-          "Robert, Brady"
-        ]
-      end
-
-      it "should allow me to search using a complete name" do
-        Customer.search("robert").collect(&:name_reversed).should =~ [
-          "Bradey Sr., Robert", 
-          "Robert, Brady"
-        ]
-      end
-
-      it "should allow me to search using a first name and the first letter of a last name" do
-        Customer.search("robert b").collect(&:name_reversed).should =~ [
-          "Bradey Sr., Robert"
-        ]
-      end
-
-      it "should allow me to search using a first name and the first few letters of a last name" do
-        Customer.search("DONNA JEN").collect(&:name_reversed).should =~ [
-          "Jennings, Donna"
-        ]
-      end
-
-      it "should allow me to search using a last name, a comma, and some of a first name" do
-        Customer.search("bradey, b").collect(&:name_reversed).should =~ [
-          "Bradey, Barb",
-          "Bradey, Bob"
-        ]
-      end
-
-      it "should allow me to search using a last name, a comma, and all of a first name" do
-        pp Customer.search("bradey, barb").collect(&:name_reversed)
-        Customer.search("bradey, barb").collect(&:name_reversed).should =~ [
-          "Bradey, Barb"
-        ]
-      end
-
-      it "should allow me to search for names that include non-alpha characters" do
-        Customer.search("Bradey Sr.").collect(&:name_reversed).should =~ [
-          "Bradey Sr., Robert"
-        ]
-      end
-
-      it "should return all customers when passed a nil term" do
-        Customer.search(nil).collect(&:name_reversed).should =~ [
-          "Jennings, Donna",
-          "Donnings, Jennifer",
-          "Bradey Sr., Robert",
-          "O'Brady, Bobby",
-          "Christchurch, Bradley",
-          "Bobson, Don",
-          "Bradey, Bob",
-          "Carlson, Christopher",
+      it "should search for a complete last name match given a single word followed by a comma" do
+        Customer.search("robert,").collect(&:name_reversed).should =~ [
           "Robert, Brady",
-          "Bradey, Barb"
+          "Roberts, Donna" # <= dmetaphone match
         ]
+      end
+
+      it "should search for a complete first name match and a last name that begins with the second set of characters given a word followed by a space followed by at least one word character" do
+        Customer.search("don bo").collect(&:name_reversed).should =~ [
+          "Bobson, Don",
+          "Bradley, Don" # <= dmetaphone match
+        ]
+      end
+      
+      it "should search for a complete last name match and a first name that begins with the second set of characters given a word followed by a comma followed by an optional space followed by at least one word character" do
+        Customer.search("Bradley, b").collect(&:name_reversed).should =~ [
+          "Bradley, Bob"
+        ]
+      end
+      
+      it "should search for a first name or a last name that begins with the term given at least one word character with no trailing whitespace" do
+        Customer.search("bra").collect(&:name_reversed).should =~ [
+          "Bradley Sr., Robert",
+          "Bradley, Don",
+          "Srocco, Bradley",
+          "Bradley, Bob",
+          "Robert, Brady"
+        ]
+      end
+
+      it "should return no customers when passed a nil term" do
+        Customer.search(nil).collect(&:name_reversed).should =~ []
       end
 
       it "should return all customers when passed a blank term" do
         Customer.search("").collect(&:name_reversed).should =~ [
-          "Jennings, Donna",
+          "Roberts, Donna",
           "Donnings, Jennifer",
-          "Bradey Sr., Robert",
+          "Bradley Sr., Robert",
           "O'Brady, Bobby",
-          "Christchurch, Bradley",
+          "Srocco, Bradley",
           "Bobson, Don",
-          "Bradey, Bob",
+          "Bradley, Bob",
           "Carlson, Christopher",
           "Robert, Brady",
-          "Bradey, Barb"
+          "Bradley, Don"
+        ]
+      end
+      
+      it "should strip leading space before performing the search" do
+        Customer.search(" bob ").collect(&:name_reversed).should =~ [
+          "Bradley, Bob",
+          "O'Brady, Bobby" # <= dmetaphone match
         ]
       end
 
-      it "should strip whitespace from the search term" do
-        Customer.search("  DONNA JEN   ").collect(&:name_reversed).should =~ [
-          "Jennings, Donna"
+      it "should strip non-word and non-space characters before performing the search" do
+        Customer.search("Bradley Sr.").collect(&:name_reversed).should =~ [
+          "Srocco, Bradley"
         ]
       end
     else
