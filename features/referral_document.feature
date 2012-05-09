@@ -55,25 +55,23 @@ Feature: Manage referral documents
     Then I should be served the referral document as a PDF
       And I should see the referral document details
   
-  @wip
-  @firebug 
-  @pause_on_fail
-  @javascript
-  Scenario: Trainers can not delete a referral document
-    Given I am logged in as an trainer
-      And there is an open training case
-      And a referral document exists for the existing case
-      And I am on the homepage
-    When I click on the "Training Cases" link
-      And I click through to the case details
-    Then I should see a button to delete the referral document
-      And I should be prompted to confirm the deletion when I click the referral document's delete button
-      And I should see an error message because I don't have permission to delete the referral document
-      And I should see the referral document listed when I return to the case profile
+  # We don't actually know if this feature was requested, so commenting it out
+  # for now. If it is requested in the future we'll need to add the appropriate
+  # entries to the ability.rb model for CanCan first.
+  # 
+  # @javascript @firebug @pause_on_fail
+  # Scenario: Trainers can not delete a referral document
+  #   Given I am logged in as an trainer
+  #     And there is an open training case
+  #     And a referral document exists for the existing case
+  #     And I am on the homepage
+  #   When I click on the "Training Cases" link
+  #     And I click through to the case details
+  #   Then I should see a button to delete the referral document
+  #     And I should be prompted to confirm the deletion when I click the referral document's delete button
+  #     And I should see an error message because I don't have permission to delete the referral document
+  #     And I should see the referral document listed when I return to the case profile
 
-  @wip
-  @firebug 
-  @pause_on_fail
   @javascript
   Scenario: Admins can delete a referral document
     Given I am logged in as an admin

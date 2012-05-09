@@ -83,7 +83,7 @@ Then /^I should see the referral document details$/ do
   page.should have_content("Referral document opened at#{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 
-Then /^I should( not)? see a button to delete the referral document$/ do|negation|
+Then /^I should( not)? see a button to delete the referral document$/ do |negation|
  assertion = negation ? :should_not : :should
  selector = "#referral_documents a.delete[href='/referral_documents/#{@referral_document.id}'][data-method=delete]"
  page.send(assertion, have_selector(selector))
@@ -106,7 +106,7 @@ Then /^I should see an error message because I don't have permission to delete t
   page.should have_content("You are not allowed to take the action you requested.")
 end
 
-Then /^I should( not)? see the referral document listed when I return to the case(?:'s) profile$/ do |negation|
+Then /^I should( not)? see the referral document listed when I return to the case(?:'s)? profile$/ do |negation|
   assertion = negation ? :should_not : :should
   visit "/cases/#{@referral_document.kase.id}"
   selector = "#referral_documents a[href='/referral_documents/#{@referral_document.id}']"
