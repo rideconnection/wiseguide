@@ -1,18 +1,15 @@
 Before do
-  # This seems to cause more problems then it solves
-  # DatabaseCleaner.start
-  
   load("#{Rails.root}/db/seeds.rb")
 
   # Create users that will be used in the scenarios
-  FactoryGirl.create(:admin)
-  FactoryGirl.create(:trainer)
+  #FactoryGirl.create(:admin)
+  #FactoryGirl.create(:trainer)
 end
 
-After do |scenario|
-  # This seems to cause more problems then it solves
-  # DatabaseCleaner.clean
-end
+# DatabaseCleaner is invoked by cucumber-rails env.rb, so no cleanup is
+# needed here.  Uncomment if any post-scenario logic is needed.
+#After do |scenario|
+#end
 
 After('@pause_on_fail') do |scenario|
   if scenario.respond_to?(:status) && scenario.status == :failed
