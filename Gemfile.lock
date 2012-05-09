@@ -262,9 +262,7 @@ DEPENDENCIES
   cancan
   capistrano
   capistrano-ext
-  capybara
   capybara-firebug
-  cucumber
   cucumber-rails
   database_cleaner
   date_validator

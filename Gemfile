@@ -53,19 +53,13 @@ group :test do
   gem "database_cleaner"
   gem "debugger"
   gem "email_spec"
+  gem "factory_girl_rails"
+  gem "faker"
   gem "pdf-inspector", :require => "pdf/inspector"
+  gem "rspec-rails"
 end
 
 group :development, :test do
   gem "debugger"
-  gem "rspec-rails"
   gem "sqlite3-ruby", :require => "sqlite3"
-end
-
-group :test do
-  gem "capybara"
-  gem "capybara-firebug"
-  gem "cucumber"
-  gem "factory_girl_rails"
-  gem "faker"
 end
