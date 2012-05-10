@@ -318,12 +318,12 @@ describe Kase do
 
       it "should define a opened_in_range scope" do
         # lambda{|date_range| where(:open_date => date_range)}
-        Kase.opened_in_range(2.months.ago..Date.yesterday).should =~ [@open_kase_yesterday, @closed_kase_yesterday, @open_kase_2_months_ago, @closed_kase_2_months_ago]
+        Kase.opened_in_range(2.months.ago.to_date..Date.yesterday).should =~ [@open_kase_yesterday, @closed_kase_yesterday, @open_kase_2_months_ago, @closed_kase_2_months_ago]
       end
 
       it "should define a open_in_range scope" do
         # lambda{|date_range| where("NOT (COALESCE(kases.close_date,?) < ? OR kases.open_date > ?)", date_range.begin, date_range.begin, date_range.end)}
-        Kase.open_in_range(2.months.ago..Date.yesterday).should =~ [@open_kase_yesterday, @closed_kase_yesterday, @open_kase_2_months_ago, @closed_kase_2_months_ago, @open_kase_3_months_ago]
+        Kase.open_in_range(2.months.ago.to_date..Date.yesterday).should =~ [@open_kase_yesterday, @closed_kase_yesterday, @open_kase_2_months_ago, @closed_kase_2_months_ago, @open_kase_3_months_ago]
       end
 
       it "should define a closed scope" do
@@ -333,7 +333,7 @@ describe Kase do
 
       it "should define a closed_in_range scope" do
         # lambda{|date_range| where(:close_date => date_range)}
-        Kase.closed_in_range(2.months.ago..Date.yesterday).should =~ [@closed_kase_yesterday, @closed_kase_2_months_ago]
+        Kase.closed_in_range(2.months.ago.to_date..Date.yesterday).should =~ [@closed_kase_yesterday, @closed_kase_2_months_ago]
       end
     end
 
