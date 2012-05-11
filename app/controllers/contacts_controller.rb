@@ -87,7 +87,7 @@ class ContactsController < ApplicationController
 
   private
   def prep_edit
-    @contact_methods = ['Phone', 'Email', 'Meeting']
+    @contact_methods = ['Phone', 'Email', 'Meeting', 'Case Action']
   end
 
 end
