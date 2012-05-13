@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AssessmentRequest do
   before do
-    @case_manager = Factory(:case_manager)
+    @case_manager = FactoryGirl.create(:case_manager)
     
     @valid_attributes = {
       :customer_first_name => "FirstName",
@@ -105,11 +105,11 @@ describe AssessmentRequest do
     
     describe "status" do
       before do
-        @ar_no_reason_no_kase     = Factory(:assessment_request, :reason_not_completed => nil,   :kase_id => nil)
-        @ar_no_reason_with_kase   = Factory(:assessment_request, :reason_not_completed => nil,   :kase_id => 1)
-        @ar_with_reason_no_kase_1 = Factory(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => nil)
-        @ar_with_reason_no_kase_2 = Factory(:assessment_request, :reason_not_completed => "Duplicate request", :kase_id => nil)
-        @ar_with_reason_with_kase = Factory(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => 1)
+        @ar_no_reason_no_kase     = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase_id => nil)
+        @ar_no_reason_with_kase   = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase_id => 1)
+        @ar_with_reason_no_kase_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => nil)
+        @ar_with_reason_no_kase_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase_id => nil)
+        @ar_with_reason_with_kase = FactoryGirl.create(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => 1)
       end
       
       it "should return \"Pending\" when reason_not_completed is blank and no training kase has been recorded" do
@@ -151,7 +151,7 @@ describe AssessmentRequest do
     
     describe "customer association" do
       before do
-        @customer = Factory(:customer)
+        @customer = FactoryGirl.create(:customer)
       end
       
       it "should have a customer attribute" do
@@ -171,7 +171,7 @@ describe AssessmentRequest do
     describe "kase association" do
       before do
         # Reload the factory object to pick up the proper STI type
-        @kase = TrainingKase.find(Factory(:training_kase).id)
+        @kase = TrainingKase.find(FactoryGirl.create(:training_kase).id)
       end
       
       it "should have a kase attribute" do
@@ -193,7 +193,7 @@ describe AssessmentRequest do
         # We can't reference this until the AssessmentRequest has been saved ,
         # presumably because the `has_one through` can't be calculated until
         # after the submitter association has been saved first. (???)
-        @valid_assessment_request = Factory(:assessment_request, :submitter => @case_manager)
+        @valid_assessment_request = FactoryGirl.create(:assessment_request, :submitter => @case_manager)
       end
       
       it "should have a referring_organization attribute" do
@@ -210,7 +210,7 @@ describe AssessmentRequest do
         # We won't have a valid attachment URL until after the 
         # AssessmentRequest has been saved, since the model ID is used to
         # calculate the path
-        @valid_assessment_request = Factory(:assessment_request)
+        @valid_assessment_request = FactoryGirl.create(:assessment_request)
       end
 
       it "should have an attachment attribute" do
@@ -236,16 +236,16 @@ describe AssessmentRequest do
     describe "submitted_by" do
       # scope :submitted_by, lambda { |user| where(:submitter_id => user.id) }
       before do
-        @user_1 = Factory(:user)
-        @user_2 = Factory(:user)
-        @user_3 = Factory(:user)
+        @user_1 = FactoryGirl.create(:user)
+        @user_2 = FactoryGirl.create(:user)
+        @user_3 = FactoryGirl.create(:user)
         
-        @assessment_request_1 = Factory(:assessment_request, :submitter => @user_1)
-        @assessment_request_2 = Factory(:assessment_request, :submitter => @user_2)
-        @assessment_request_3 = Factory(:assessment_request, :submitter => @user_1)
-        @assessment_request_4 = Factory(:assessment_request, :submitter => @user_2)
-        @assessment_request_5 = Factory(:assessment_request, :submitter => @user_1)
-        @assessment_request_6 = Factory(:assessment_request, :submitter => @user_3)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :submitter => @user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :submitter => @user_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :submitter => @user_3)
       end
 
       it "should have a submitted_by attribute" do
@@ -265,25 +265,25 @@ describe AssessmentRequest do
     describe "belonging_to" do
       # scope :belonging_to, lambda { |organization| joins(:organization).where("organizations.id = ?", organization.id) }
       before do
-        @organization_1 = Factory(:organization)
-        @organization_2 = Factory(:organization)
-        @organization_3 = Factory(:organization)
+        @organization_1 = FactoryGirl.create(:organization)
+        @organization_2 = FactoryGirl.create(:organization)
+        @organization_3 = FactoryGirl.create(:organization)
         
-        user_1 = Factory(:user, :organization => @organization_1)
-        user_2 = Factory(:user, :organization => @organization_2)
-        user_3 = Factory(:user, :organization => @organization_1)
-        user_4 = Factory(:user, :organization => @organization_2)
-        user_5 = Factory(:user, :organization => @organization_3)
+        user_1 = FactoryGirl.create(:user, :organization => @organization_1)
+        user_2 = FactoryGirl.create(:user, :organization => @organization_2)
+        user_3 = FactoryGirl.create(:user, :organization => @organization_1)
+        user_4 = FactoryGirl.create(:user, :organization => @organization_2)
+        user_5 = FactoryGirl.create(:user, :organization => @organization_3)
         
-        @assessment_request_1 = Factory(:assessment_request, :submitter => user_1)
-        @assessment_request_2 = Factory(:assessment_request, :submitter => user_2)
-        @assessment_request_3 = Factory(:assessment_request, :submitter => user_3)
-        @assessment_request_4 = Factory(:assessment_request, :submitter => user_4)
-        @assessment_request_5 = Factory(:assessment_request, :submitter => user_1)
-        @assessment_request_6 = Factory(:assessment_request, :submitter => user_3)
-        @assessment_request_7 = Factory(:assessment_request, :submitter => user_4)
-        @assessment_request_8 = Factory(:assessment_request, :submitter => user_4)
-        @assessment_request_9 = Factory(:assessment_request, :submitter => user_5)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :submitter => user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :submitter => user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :submitter => user_3)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :submitter => user_4)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :submitter => user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :submitter => user_3)
+        @assessment_request_7 = FactoryGirl.create(:assessment_request, :submitter => user_4)
+        @assessment_request_8 = FactoryGirl.create(:assessment_request, :submitter => user_4)
+        @assessment_request_9 = FactoryGirl.create(:assessment_request, :submitter => user_5)
       end
 
       it "should have a belonging_to attribute" do
@@ -304,14 +304,14 @@ describe AssessmentRequest do
       # "Pending" (reason_not_completed is blank and no associated TC case)
       # scope :pending, where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)")
       before do
-        kase = Factory(:kase)
+        kase = FactoryGirl.create(:kase)
         
-        @assessment_request_1 = Factory(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
-        @assessment_request_2 = Factory(:assessment_request, :reason_not_completed => "Duplicate request", :kase => kase)
-        @assessment_request_3 = Factory(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
-        @assessment_request_4 = Factory(:assessment_request, :reason_not_completed => nil,   :kase => kase)
-        @assessment_request_5 = Factory(:assessment_request, :reason_not_completed => "",    :kase => nil)
-        @assessment_request_6 = Factory(:assessment_request, :reason_not_completed => nil,   :kase => kase)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => kase)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase => kase)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :reason_not_completed => "",    :kase => nil)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase => kase)
       end
 
       it "should have a pending attribute" do
@@ -327,12 +327,12 @@ describe AssessmentRequest do
       # "Not completed" (reason_not_completed is not blank)
       # scope :not_completed, where("reason_not_completed IS NOT NULL OR reason_not_completed > ''")
       before do
-        @assessment_request_1 = Factory(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_2 = Factory(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_3 = Factory(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_4 = Factory(:assessment_request, :reason_not_completed => nil)
-        @assessment_request_5 = Factory(:assessment_request, :reason_not_completed => "")
-        @assessment_request_6 = Factory(:assessment_request, :reason_not_completed => nil)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :reason_not_completed => "")
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil)
       end
 
       it "should have a not_completed attribute" do
@@ -348,15 +348,15 @@ describe AssessmentRequest do
       # "Completed" (kase_id foreign key is not blank)
       # scope :completed, where("kase_id > 0")
       before do
-        kase_1 = Factory(:kase)
-        kase_2 = Factory(:kase)
+        kase_1 = FactoryGirl.create(:kase)
+        kase_2 = FactoryGirl.create(:kase)
         
-        @assessment_request_1 = Factory(:assessment_request, :kase => nil)
-        @assessment_request_2 = Factory(:assessment_request, :kase => kase_1)
-        @assessment_request_3 = Factory(:assessment_request, :kase => nil)
-        @assessment_request_4 = Factory(:assessment_request, :kase => kase_2)
-        @assessment_request_5 = Factory(:assessment_request, :kase => nil)
-        @assessment_request_6 = Factory(:assessment_request, :kase => kase_1)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :kase => nil)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :kase => kase_1)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :kase => nil)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :kase => kase_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :kase => nil)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :kase => kase_1)
       end
 
       it "should have a completed attribute" do

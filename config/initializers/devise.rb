@@ -14,6 +14,10 @@ Devise.setup do |config|
   # available as additional gems.
   require 'devise/orm/active_record'
 
+  # Reasonable values needed by upgrade to Devise 2.0
+  config.use_salt_as_remember_token = true
+  config.reset_password_within = 6.hours
+
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
   # just :email. You can configure it to use [:username, :subdomain], so for

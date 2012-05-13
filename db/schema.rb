@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120424191700) do
+ActiveRecord::Schema.define(:version => 20120508160358) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.string   "common_identifier"
     t.integer  "display_order"
     t.boolean  "is_exclusive"
-    t.boolean  "hide_label"
     t.integer  "display_length"
     t.string   "custom_class"
     t.string   "custom_renderer"
@@ -42,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.datetime "updated_at"
     t.string   "default_value"
     t.string   "api_id"
+    t.string   "display_type"
+    t.boolean  "hide_label"
   end
 
   create_table "assessment_requests", :force => true do |t|
@@ -268,8 +269,10 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.string   "household_size_alternate_response"
     t.string   "household_income_alternate_response"
     t.boolean  "medicaid_eligible"
+    t.boolean  "scheduling_system_entry_required"
   end
 
+  add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"
   add_index "kases", ["type"], :name => "index_kases_on_type"
 
   create_table "organizations", :force => true do |t|
@@ -310,6 +313,7 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.string   "custom_renderer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "api_id"
   end
 
   create_table "questions", :force => true do |t|
@@ -392,6 +396,7 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.integer  "kase_id"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "api_id"
   end
 
   add_index "response_sets", ["access_code"], :name => "response_sets_ac_idx", :unique => true
@@ -411,6 +416,7 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "survey_section_id"
+    t.string   "api_id"
   end
 
   add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
@@ -469,11 +475,11 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                         :default => "", :null => false
     t.string   "reset_password_token"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -487,6 +493,7 @@ ActiveRecord::Schema.define(:version => 20120424191700) do
     t.string   "last_name"
     t.string   "phone_number"
     t.integer  "organization_id"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "validation_conditions", :force => true do |t|

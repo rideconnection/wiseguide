@@ -12,10 +12,10 @@ Given /^the following referral document associations exist:$/ do |table|
   table.map_headers! {|header| header.downcase.to_sym }
 
   table.hashes.each_with_index do |row, index|
-    doc = Factory.build(:referral_document_prototype, :id => row[:id], :kase_id => row[:kase_id])
+    doc = FactoryGirl.build(:referral_document_prototype, :id => row[:id], :kase_id => row[:kase_id])
     resources = row[:resource_ids].split(',').map{|id| id.strip.to_i }
     resources.each do |resource_id|
-      doc.referral_document_resources << Factory(:referral_document_resource, :referral_document => nil, :resource_id => resource_id)
+      doc.referral_document_resources << FactoryGirl.create(:referral_document_resource, :referral_document => nil, :resource_id => resource_id)
     end
     doc.save!
   end  

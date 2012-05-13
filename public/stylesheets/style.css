@@ -155,7 +155,8 @@ button {width: auto; overflow: visible;}
 .selfclear:before, .selfclear:after, 
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; } 
 .selfclear:after,
-.clearfix:after { clear: both; }
+.clearfix:after,
+.clear { clear: both; }
 /* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
 .selfclear,
 .clearfix { zoom: 1; }

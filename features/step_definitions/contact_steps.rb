@@ -1,9 +1,9 @@
 Given /^the customer has a case\-less contact event$/ do
-  @contact_event = Factory(:contact, :customer => @customer)
+  @contact_event = FactoryGirl.create(:contact, :customer => @customer)
 end
 
 Given /^the customer has a contact event associated with an open training case$/ do
-  @contact_with_kase = Factory(:contact_with_open_training_kase, :customer => @customer)
+  @contact_with_kase = FactoryGirl.create(:contact_with_open_training_kase, :customer => @customer)
   @kase = @contact_with_kase.kase
 end
 
@@ -52,4 +52,25 @@ end
 Then /^I should be able to complete the contact event form$/ do
   fill_common_contact_event_attributes
   @contact_with_kase = @contact_event
+end
+
+Then /^the contact method should be "([^"]*)"$/ do |method|
+  @contact.method.should == method
+end
+
+Then /^the contact user_id should be my user ID$/ do
+  @contact.user_id.should == @current_user.id
+end
+
+Then /^the contact date should be now$/ do
+  current = DateTime.current
+  @contact.date_time.strftime("%Y%m%d%H%M%S") =~ /^#{Regexp.quote(current.strftime("%Y%m%d%H"))}(#{Regexp.quote(current.strftime("%M"))}|#{Regexp.quote((current - 1.minute).strftime("%M"))})/
+end
+
+Then /^the contact description should be "([^"]*)"$/ do |description|
+   @contact.description.should == description
+end
+
+Then /^the contact notes should be blank$/ do
+  @contact.notes.should be_nil
 end

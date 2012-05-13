@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TrainingKase do
   before do
-    @in_progress = Factory(:disposition, :name => "In Progress")
+    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
     
     @valid_attributes = {
       :customer_id       => 1,

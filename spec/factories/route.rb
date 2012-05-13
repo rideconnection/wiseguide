@@ -1,3 +1,5 @@
-Factory.define :route do |f|
-  f.sequence(:name) {|n| "Route #{n}" }
+FactoryGirl.define do
+  factory :route do
+    sequence(:name) {|n| "Route #{n}" }
+  end
 end

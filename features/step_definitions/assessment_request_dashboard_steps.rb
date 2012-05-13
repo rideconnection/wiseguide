@@ -9,7 +9,7 @@ end
 Given /^the following assessment requests exist that belong to me:$/ do |table|
   table.map_headers! { |header| header.downcase.to_sym }
   table.hashes.each do |row, index|
-    Factory(:assessment_request, row.merge({:submitter => @current_user}))
+    FactoryGirl.create(:assessment_request, row.merge({:submitter => @current_user}))
   end
 end
 

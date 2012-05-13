@@ -11,13 +11,13 @@ end
 def create_users
   puts "Creating test users"
   puts "-- ALL TEST USERS HAVE PASSWORD \"password 1\""
-  Factory.create(:admin,        :password => "password 1", :email => 'admin@rideconnection.org')
+  FactoryGirl.create(:admin,        :password => "password 1", :email => 'admin@rideconnection.org')
   puts "-- Created test user admin@rideconnection.org"
-  Factory.create(:trainer,      :password => "password 1", :email => 'trainer@rideconnection.org')
+  FactoryGirl.create(:trainer,      :password => "password 1", :email => 'trainer@rideconnection.org')
   puts "-- Created test user trainer@rideconnection.org"
-  Factory.create(:user,         :password => "password 1", :email => 'viewer@rideconnection.org')
+  FactoryGirl.create(:user,         :password => "password 1", :email => 'viewer@rideconnection.org')
   puts "-- Created test user viewer@rideconnection.org"
-  Factory.create(:case_manager, :password => "password 1", :email => 'case_manager@rideconnection.org')
+  FactoryGirl.create(:case_manager, :password => "password 1", :email => 'case_manager@rideconnection.org')
   puts "-- Created test user case_manager@rideconnection.org"
   puts "Finished creating test users"
 end
@@ -45,7 +45,7 @@ def create_customers
   ]
   
   20.times do
-    Factory.create(:customer,
+    FactoryGirl.create(:customer,
       :first_name     => Faker::Name.first_name,
       :last_name      => Faker::Name.last_name,
       :email          => Faker::Internet.email,
@@ -64,5 +64,5 @@ end
 
 def create_simple_survey
   # This will create all of the appropriate associations too
-  Factory(:answer)
+  FactoryGirl.create(:answer)
 end

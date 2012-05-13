@@ -131,3 +131,20 @@ This adds support for dmetaphone, which is how we
 phonetically match names.  Run psql and then the following command:
 
 \i /opt/local/share/postgresql84/contrib/fuzzystrmatch.sql 
+
+Fuzzystrmatch setup with Homebrew on Mac
+--------------------------
+Fuzzystrmatch should be included when you install postgres with Homebrew. If
+the following directions don't work for you, first try updating homebrew with 
+`brew update`, then upgrade postgres with `brew upgrade postgres`. (Note that 
+a major version upgrade may cause your databases to need to be migrated. To be 
+safe, first export them all as SQL dumps and store them somewhere safe.) Then
+try these steps again.
+
+1. Make sure postgres is running
+2. run `psql -d {your_database_name}` to login to your database
+3. Once logged in, execute the statement `CREATE EXTENSION fuzzystrmatch;`
+4. It should return "CREATE EXTENSION" if it is successful, or "extension 
+"fuzzystrmatch" already exists" if the library is already installed
+5. Repeat this process for each database you will need it in (development, 
+test, production, etc.)

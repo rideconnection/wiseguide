@@ -147,9 +147,18 @@
           <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
             <%= f.radio_button :medicaid_eligible, option[1] %>
             <%= f.label :medicaid_eligible, option[0], :value => option[1], :class => 'options' %>
-          <% end %>
+          <% end %><br><br>
         <% else %>
           <%= if @kase.medicaid_eligible.blank? then "N/A" else @kase.medicaid_eligible.to_s end %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :scheduling_system_entry_required %>
+        <% if can? :edit, @kase %>
+          <%= f.check_box :scheduling_system_entry_required %><br><br>
+        <% else %>
+          <%= @kase.scheduling_system_entry_required %>&nbsp;
         <% end %>
       </li>
     <% end -%>

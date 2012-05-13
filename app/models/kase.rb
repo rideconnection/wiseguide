@@ -38,13 +38,13 @@ class Kase < ActiveRecord::Base
   before_save :cleanup_household_stats
   
   HUMAN_ATTRIBUTE_NAMES = {
-    :medicaid_eligible => "Are you on Medicaid or the OHP Plan PLUS?"
+    :medicaid_eligible => "Are you on Medicaid or the OHP Plan PLUS?",
+    :scheduling_system_entry_required => "Entry into scheduling system required"
   }
   
   def self.human_attribute_name(attr, options={})
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
   end
-  
   
   scope :assigned_to, lambda {|user| where(:user_id => user.id) }
   scope :not_assigned_to, lambda {|user| where('user_id <> ?',user.id)}

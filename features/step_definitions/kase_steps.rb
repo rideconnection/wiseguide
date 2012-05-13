@@ -1,5 +1,5 @@
 When /^I click the link to add a ([^ ]+) case$/ do |type|
-  find("#kases a[href='/cases/new?customer_id=#{@customer.id}&kase[type]=#{type.titlecase}Kase']").click
+  find("#kases a[href='/cases/new?customer_id=#{@customer.id}&kase%5Btype%5D=#{type.titlecase}Kase']").click
 end
 
 def fill_common_kase_attributes
@@ -15,15 +15,28 @@ def fill_common_open_unassigned_kase_attributes
   select "In Progress", :from => "Disposition"  
 end
 
-Then /^I should be able to create a new open, unassigned coaching case for the customer$/ do
+When /^I complete the required fields for a coaching case$/ do
   fill_common_open_unassigned_kase_attributes
   select @case_manager.email, :from => "Case Manager"
   fill_in "Assessment Language", :with => "Pirate"
   fill_in "Assessment Date", :with => Date.yesterday.strftime('%Y-%m-%d')
-  click_button "Save"
+end
+
+When /^I submit the form to create the (coaching|training) case$/ do |kase_type|
+  step %Q(I save the form)
+  @confirmation_message = "#{kase_type.capitalize} Case was successfully created."
+end
+
+When /^I submit the form to update the case$/ do
+  step %Q(I save the form)
+  @confirmation_message = "Case was successfully updated."
+end
+
+Then /^I should be able to create a new open, unassigned coaching case for the customer$/ do
+  step "I complete the required fields for a coaching case"
+  step "I submit the form to create the coaching case"
   # Get the newly generated ID so we can find the record later
-  @kase = Kase.find_by_open_date(Date.yesterday.strftime('%Y-%m-%d'))
-  @confirmation_message = 'Coaching Case was successfully created.'
+  @kase = CoachingKase.order("id DESC").limit(1).first
   step %Q(I should see a confirmation message)
 end
 
@@ -31,10 +44,9 @@ Then /^I should be able to create a new open, unassigned training case for the c
   fill_common_open_unassigned_kase_attributes
   select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
-  click_button "Save"
+  step "I submit the form to create the training case"
   # Get the newly generated ID so we can find the record later
-  @kase = Kase.find_by_open_date(Date.yesterday.strftime('%Y-%m-%d'))
-  @confirmation_message = 'Training Case was successfully created.'
+  @kase = TrainingKase.order("id DESC").limit(1).first
   step %Q(I should see a confirmation message)
 end
 
@@ -61,7 +73,7 @@ Then /^I should( not)? see the case listed in the "([^"]*)" section of the (Coac
 end
 
 Given /^an unassigned open training case exists$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => nil)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => nil)
   @customer = @kase.customer
 end
 
@@ -71,8 +83,7 @@ end
 
 Then /^I should be able to assign the case to myself$/ do
   select @current_user.email, :from => "Assigned to"
-  click_button "Save"
-  @confirmation_message = 'Case was successfully updated.'
+  step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)
 end
 
@@ -89,13 +100,12 @@ Then /^I should( not)? see the case listed in the "([^"]*)" sub\-section of the 
 end
 
 Given /^another trainer exists$/ do
-  @other_trainer = Factory(:trainer)
+  @other_trainer = FactoryGirl.create(:trainer)
 end
 
 Then /^I should be able to assign the case to the other trainer$/ do
   select @other_trainer.email, :from => "Assigned to"
-  click_button "Save"
-  @confirmation_message = 'Case was successfully updated.'
+  step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)  
 end
 
@@ -108,7 +118,7 @@ Then /^the other trainer should( not)? be listed as the case assignee on the (Co
 end
 
 Given /^an open training case exists and is assigned to me$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => @current_user)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @current_user)
   @customer = @kase.customer
 end
 
@@ -116,8 +126,7 @@ Then /^I should be able to close the case$/ do
   # Close date can't be later than today but must be later than (and not equal to) the open date
   fill_in "Closed", :with => Date.current.strftime('%Y-%m-%d')
   select "Successful", :from => "Disposition"
-  click_button "Save"
-  @confirmation_message = 'Case was successfully updated.'
+  step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)  
 end
 
@@ -140,17 +149,17 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
 end
 
 Given /^an open training case exists and is assigned to the other trainer$/ do
-  @kase = Factory(:open_training_kase, :assigned_to => @other_trainer)
+  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @other_trainer)
   @customer = @kase.customer
 end
 
 Given /^there is an open training case$/ do
-  @kase = Factory(:open_training_kase)
+  @kase = FactoryGirl.create(:open_training_kase)
   @customer = @kase.customer
 end
 
 Given /^there is an open coaching case$/ do
-  @kase = Factory(:open_coaching_kase)
+  @kase = FactoryGirl.create(:open_coaching_kase)
   @customer = @kase.customer
 end
 
@@ -183,9 +192,34 @@ Then /^I should not see any coaching case fields$/ do
   page.should_not have_selector("#kase_assessment_language")
   page.should_not have_selector("#kase_assessment_date")
   page.should_not have_selector("#kase_medicaid_eligible")
+  page.should_not have_selector("#scheduling_system_entry_required")
 end
 
 Then /^I should not see any training case fields$/ do
   page.should_not have_selector("#kase_county")
   page.should_not have_selector("#kase_funding_source_id")
+end
+
+Given /^the case has no contact events$/ do
+  @kase.reload
+  @kase.contacts.size.should == 0
+end
+
+Then /^the case should have 1 contact event$/ do
+  @kase.reload
+  @kase.contacts.size.should == 1
+  @contact = @kase.contacts.first
+end
+
+Given /^the case's "Entry into scheduling system required" field is (OFF|ON)$/ do |checked_state|
+  @kase.scheduling_system_entry_required = (checked_state == "ON") ? true : false
+  @kase.save
+end
+
+Then /^I should see the following cases in the "Data Entry Needed" section:$/ do |table|
+  table.map_headers! {|header| header.downcase.to_sym }
+
+  table.hashes.each do |row|
+    find("li.data_entry_needed a[href='#{kase_path(row[:kase_id])}']").should have_content(row[:customer_name])
+  end
 end

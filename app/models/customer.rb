@@ -54,65 +54,63 @@ class Customer < ActiveRecord::Base
   end
 
   def self.search(term)
-    if term.match /^[a-z]+$/i
-      #a single word, either a first or a last name
-      query, args = make_customer_name_query("first_name", term)
-      lnquery, lnargs = make_customer_name_query("last_name", term)
-      query += " or " + lnquery
-      args += lnargs
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
-    elsif term.match /^[a-z]+[ ,]\s*$/i
-      comma = term.index(",")
-      #a single word, either a first or a last name, complete
-      term.gsub!(",", "")
+    return [] if term.nil?
+    Rails.logger.debug('Search term "%s" was received' % term)
+    term = term.gsub(/[^\w\s,]/i, '').lstrip
+    if term.match /^\w+\s+$/i
+      # Given a single word followed by a space
+      # Then search for a complete first_name match
       term = term.strip
-      if comma
-        query, args = make_customer_name_query("last_name", term, :complete)
-      else
-        query, args = make_customer_name_query("first_name", term, :complete)
-      end
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
-    elsif term.match /^[a-z]+\s+[a-z]$/i
-      #a first name followed by either a middle initial or the first
-      #letter of a last name
-
+      query, args = make_customer_name_query("first_name", term, :complete)
+      Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+\s+$'])
+    elsif term.match /^\w+,\s*$/i
+      # Given a single word followed by a comma
+      # Then search for a complete last_name match
+      term = term.gsub(",", "").strip
+      query, args = make_customer_name_query("last_name", term, :complete)
+      Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+,\s*$'])
+    elsif term.match /^\w+\s+\w+\s*$/i
+      # Given a word followed by a space followed by at least one word character
+      # Then search for a complete first name match and a last name that begins with the second set of characters
       first_name, last_name = term.split(" ").map(&:strip)
-
       query, args = make_customer_name_query("first_name", first_name, :complete)
       lnquery, lnargs = make_customer_name_query("last_name", last_name)
-
       query += " and " + lnquery 
       args += lnargs
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
-    elsif term.match /^[a-z]+\s+[a-z]{2,}$/i
-      #a first name followed by two or more letters of a last name
-
-      first_name, last_name = term.split(" ").map(&:strip)
-
-      query, args = make_customer_name_query("first_name", first_name, :complete)
-      lnquery, lnargs = make_customer_name_query("last_name", last_name)
-      query += " and " + lnquery
-      args += lnargs
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
-    elsif term.match /^[a-z]+\s*,\s*[a-z]+$/i
-      #a last name, a comma, some or all of a first name
-
+      Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+\s+\w+\s*$'])
+    elsif term.match /^\w+,\s*\w+\s*$/i
+      # Given a word followed by a comma followed by an optional space followed by at least one word character
+      # Then search for a complete last name match and a first name that begins with the second set of characters
       last_name, first_name = term.split(",").map(&:strip)
-
       query, args = make_customer_name_query("last_name", last_name, :complete)
       fnquery, fnargs = make_customer_name_query("first_name", first_name)
       query += " and " + fnquery
       args += fnargs
-      Rails.logger.debug "QUERY: #{query}"
-      Rails.logger.debug "QUERY: #{args}"
-    else
+      Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+,\s*\w+\s*$'])
+    elsif term.match(/^\w+$/i)
+      # Given at least one word character with no trailing whitespace
+      # Then search for a first name or a last name that begins with the term
+      term = term.strip
+      query, args = make_customer_name_query("first_name", term)
+      lnquery, lnargs = make_customer_name_query("last_name", term)
+      query += " or " + lnquery
+      args += lnargs
+      Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+$'])
+    elsif term.strip.blank?
+      # Given a search term that contains only whitespace
+      # Then return all rows      
       query = ''
       args = []
+      Rails.logger.debug 'Search term was empty'
+    else
+      # Given a search term that does not match any of the rules above (e.g. it contains non-word characters)
+      # Then return nothing
+      Rails.logger.debug "Search term could not be matched with a known search rule: #{term}"
+      return []
     end
+
+    Rails.logger.debug "QUERY: #{query}"
+    Rails.logger.debug "QUERY: #{args}"
 
     conditions = [query] + args
     Rails.logger.debug "QUERY: #{conditions}"

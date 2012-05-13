@@ -1,5 +1,3 @@
-# Read about factories at http://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :assessment_request do
     customer_first_name "MyString"

@@ -1,1 +1,4 @@
-Factory.define :trip_reason do |f|; end
+FactoryGirl.define do
+  factory :trip_reason do
+  end
+end

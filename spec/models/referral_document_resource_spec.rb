@@ -7,20 +7,20 @@ describe ReferralDocumentResource do
     # especially since rebuilding it before each test is overkill, and
     # I can live with knowing I'm breaking convention here by destroying an
     # object from inside a test.
-    valid = Factory(:referral_document_resource)
+    valid = FactoryGirl.create(:referral_document_resource)
     valid.destroy
   end
   
   context "associations" do    
     it "should required a valid, persisted resource" do
       # With a nil resource
-      doc_resource = Factory.build(:referral_document_resource, :resource => nil)
+      doc_resource = FactoryGirl.build(:referral_document_resource, :resource => nil)
       doc_resource.valid?.should be_false
       doc_resource.errors.keys.should include(:resource)
       doc_resource.errors[:resource].should include("can't be blank")
       
       # With an invalid resource
-      resource = Factory.build(:resource, :name => nil)
+      resource = FactoryGirl.build(:resource, :name => nil)
       doc_resource.resource = resource
       doc_resource.valid?.should be_false
       doc_resource.errors.keys.should include(:resource)

@@ -1,8 +1,11 @@
-Factory.define :question do |f|
-  f.sequence(:text) {|n| "Question #{n}" }
-  f.association :survey_section
+FactoryGirl.define do
+  factory :question do
+    sequence(:text) {|n| "Question #{n}" }
+    association :survey_section
+
+    factory :question_in_group do
+      association :question_group
+    end
+  end
 end
 
-Factory.define :question_in_group, :parent => :question do |f|
-  f.association :question_group
-end

@@ -41,4 +41,4 @@ task :link_database_yml do
   run  "ln -nfs #{deploy_to}/shared/uploads #{deploy_to}/current/uploads"
 end
 
-after "deploy:symlink", :link_database_yml
+after "deploy:create_symlink", :link_database_yml

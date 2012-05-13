@@ -1,3 +1,5 @@
-Factory.define :referral_type do |f|
-  f.sequence(:name) {|n| "Referral Type #{n}" }
+FactoryGirl.define do
+  factory :referral_type do
+    sequence(:name) {|n| "Referral Type #{n}" }
+  end
 end

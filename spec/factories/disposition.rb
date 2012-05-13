@@ -1,12 +1,11 @@
-Factory.define :disposition do |f|
-  f.name {"TrainingKaseDisposition #{Time.current.to_f}" }
-  f.type "TrainingKaseDisposition"
-end
+FactoryGirl.define do
+  factory :disposition, :aliases => [:training_kase_disposition] do
+    name {"TrainingKaseDisposition #{Time.current.to_f}" }
+    type "TrainingKaseDisposition"
 
-# aliases
-Factory.define :training_kase_disposition, :parent => :disposition do |f|; end
-
-Factory.define :coaching_kase_disposition, :parent => :disposition do |f|
-  f.name {"CoachingKaseDisposition #{Time.current.to_f}" }
-  f.type "CoachingKaseDisposition"
+    factory :coaching_kase_disposition do
+      name {"CoachingKaseDisposition #{Time.current.to_f}" }
+      type "CoachingKaseDisposition"
+    end
+  end
 end
