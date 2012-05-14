@@ -44,6 +44,7 @@ end
 group :development do
   gem "launchy"
   gem "spork-rails"
+  gem "thin"
 end
 
 group :test do
