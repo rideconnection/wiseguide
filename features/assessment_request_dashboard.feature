@@ -20,6 +20,9 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | 93 | John       | O'Hurley  | 90              |
         | 94 | Steve      | Harvey    | 91              |
         | 95 | Ned        | Flanders  | 92              |
+      And the following customers exist:
+        | id | first_name | last_name | 
+        | 10 | Kyle       | Krauss    |
       And the following assessment requests exist:
         | customer_first_name | customer_last_name | customer_phone | customer_birth_date | notes | reason_not_completed | submitter_id | kase_id | created_at       |
         | Abe                 | Akron              | 1234567890     |                     |       | Duplicate request    | 90           |         | 2012-04-26 14:30 |
@@ -31,9 +34,10 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Gay                 | Gamma              | 7890123456     |                     |       | Duplicate request    | 90           |         | 2012-04-26 14:36 |
         | Hue                 | Himby              | 8901234567     |                     |       |                      | 91           |         | 2012-04-26 14:37 |
       And the following assessment requests exist that belong to me:
-        | customer_first_name | customer_last_name | customer_phone | customer_birth_date | notes | reason_not_completed | kase_id | created_at       |
-        | Ira                 | Glass              | 9012345678     |                     |       |                      |         | 2012-04-26 14:38 |
-        | Jay                 | Jomba              | 0123456789     |                     |       |                      | 5       | 2012-04-26 14:39 |
+        | customer_first_name | customer_last_name | customer_phone | customer_birth_date | notes | reason_not_completed | customer_id | kase_id | created_at |
+        | Ira                 | Glass              | 9012345678     |                     |       |                      |             |         | 2012-04-26 14:38 |
+        | Jay                 | Jomba              | 0123456789     |                     |       |                      |             | 5       | 2012-04-26 14:39 |
+        | Kyle                | Krauss             | 1234567890     |                     |       |                      | 10          |         | 2012-04-26 14:40 |
       And I am on the homepage
 
   Scenario: Trainers should be able to see all assessment requests in order of creation date
@@ -49,6 +53,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | 04/26/2012 02:37 PM | Himby, Hue    | 8901234567     |                     |       | Louie Anderson | Pending                           |
         | 04/26/2012 02:38 PM | Glass, Ira    | 9012345678     |                     |       | Tony Hawk      | Pending                           |
         | 04/26/2012 02:39 PM | Jomba, Jay    | 0123456789     |                     |       | Tony Hawk      | Completed                         |
+        | 04/26/2012 02:40 PM | Krauss, Kyle  | 1234567890     |                     |       | Tony Hawk      |                                   |
         | 01/01/2042 12:33 PM | Devry, Dot    | 4567890123     |                     |       | John O'Hurley  | Not completed (Could not reach)   |
   
   Scenario: Trainers should see a message when no assessment requests are available
@@ -71,6 +76,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Himby, Hue    | Louie Anderson |
         | Glass, Ira    | Tony Hawk      |
         | Jomba, Jay    | Tony Hawk      |
+        | Krauss, Kyle  | Tony Hawk      |
         | Devry, Dot    | John O'Hurley  |
       And I should see a form to filter by user type
     When I check the "Me" option in the user type filter form
@@ -79,6 +85,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Customer name | Submitter      |
         | Glass, Ira    | Tony Hawk      |
         | Jomba, Jay    | Tony Hawk      |
+        | Krauss, Kyle  | Tony Hawk      |
     When I check the "My Organization" option in the user type filter form
       And I click the "Filter" button to apply filter
     Then I should see the following data in the "Assessment Requests" table:
@@ -87,6 +94,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Gamma, Gay    | Ray Combs      |
         | Glass, Ira    | Tony Hawk      |
         | Jomba, Jay    | Tony Hawk      |
+        | Krauss, Kyle  | Tony Hawk      |
         | Devry, Dot    | John O'Hurley  |
     When I check the "Outside users" option in the user type filter form
       And I click the "Filter" button to apply filter
@@ -110,6 +118,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Himby, Hue    | Louie Anderson |
         | Glass, Ira    | Tony Hawk      |
         | Jomba, Jay    | Tony Hawk      |
+        | Krauss, Kyle  | Tony Hawk      |
         | Devry, Dot    | John O'Hurley  |
 
   Scenario: Trainers should be able to filter requests by the current status
@@ -125,6 +134,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Himby, Hue    | Pending                           |
         | Glass, Ira    | Pending                           |
         | Jomba, Jay    | Completed                         |
+        | Krauss, Kyle  | Pending                           |
         | Devry, Dot    | Not completed (Could not reach)   |
     Then I should see a form to filter by current status
     When I check the "Pending" option in the current status filter form
@@ -133,6 +143,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Customer name | Status                            |
         | Himby, Hue    | Pending                           |
         | Glass, Ira    | Pending                           |
+        | Krauss, Kyle  | Pending                           |
     When I check the "Not completed" option in the current status filter form
       And I click the "Filter" button to apply filter
     Then I should see the following data in the "Assessment Requests" table:
@@ -162,6 +173,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Himby, Hue    | Pending                           |
         | Glass, Ira    | Pending                           |
         | Jomba, Jay    | Completed                         |
+        | Krauss, Kyle  | Pending                           |
         | Devry, Dot    | Not completed (Could not reach)   |
 
   Scenario: Trainers should be able to filter requests by the user type AND the current status
@@ -177,6 +189,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Himby, Hue    |  Louie Anderson | Pending                           |
         | Glass, Ira    |  Tony Hawk      | Pending                           |
         | Jomba, Jay    |  Tony Hawk      | Completed                         |
+        | Krauss, Kyle  |  Tony Hawk      | Pending                           |
         | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
     When I check the "Pending" option in the current status filter form
       And I click the "Filter" button to apply filter
@@ -184,6 +197,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Customer name |  Submitter      | Status                            |
         | Himby, Hue    |  Louie Anderson | Pending                           |
         | Glass, Ira    |  Tony Hawk      | Pending                           |
+        | Krauss, Kyle  |  Tony Hawk      | Pending                           |
     When I check the "Outside users" option in the current status filter form
       And I click the "Filter" button to apply filter
     Then I should see the following data in the "Assessment Requests" table:
@@ -194,7 +208,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
       And I click the "Filter" button to apply filter
     Then I should see the following data in the "Assessment Requests" table:
         | Customer name |  Submitter      | Status                            |
-        | Jomba, Jay    |  Tony Hawk      | Completed                         |        
+        | Jomba, Jay    |  Tony Hawk      | Completed                         |
     When I check the "All" option in the current status filter form
       And I click the "Filter" button to apply filter
     Then I should see the following data in the "Assessment Requests" table:
@@ -203,6 +217,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Gamma, Gay    |  Ray Combs      | Not completed (Duplicate request) |
         | Glass, Ira    |  Tony Hawk      | Pending                           |
         | Jomba, Jay    |  Tony Hawk      | Completed                         |
+        |   |  Tony Hawk      | Pending                           |
         | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
 
   @javascript
@@ -216,8 +231,27 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Customer name |  Submitter      | Status                            |
         | Himby, Hue    |  Louie Anderson | Pending                           |
         | Glass, Ira    |  Tony Hawk      | Pending                           |
+        | Krauss, Kyle  |  Tony Hawk      | Pending                           |
     When I check the "Outside users" option in the current status filter form
     Then the filter should apply and the table data should refresh without having to click the "Filter" button
       And I should see the following data in the "Assessment Requests" table:
         | Customer name |  Submitter      | Status                            |
         | Himby, Hue    |  Louie Anderson | Pending                           |
+
+  Scenario: Trainers can associate a request with a new customer
+    When I click on the "Requests" link
+      And I click the request from Glass, Ira
+      And I click the customer change link
+    Then I should see an empty list of similar customers
+    When I click Continue to create a new customer
+    Then I should see the first name set to Ira
+      And I should see the last name set to Glass
+    When I populate the customer details
+    Then I should see the request associated with Glass, Ira
+
+  Scenario: Trainers can create a case from an assessment request
+    When I click on the "Requests" link
+      And I click the request from Krauss, Kyle
+      And I click on the "Create new coaching case..." link
+      And I populate the coaching case details
+    Then I should see a link to the case
