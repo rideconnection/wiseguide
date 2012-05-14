@@ -33,7 +33,10 @@ body {
 #new_report,
 form.edit_report,
 .csv,
-a.back { display: none; clear: both; }
+a.back,
+.no-print { 
+  display: none; clear: both; 
+}
 
 /* format stuff */
 #header {
