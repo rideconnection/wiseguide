@@ -5,7 +5,7 @@ std_opts = "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} --strict --tags ~@wip
 %>
 default: --drb <%= std_opts %> --tags ~@dmetaphone features
 dmetaphone: --drb <%= std_opts %> features
-# wip: -tags @wip:3 --wip features
-wip: --drb -tags @wip:3 --wip features
+# wip: --tags @wip:3 --wip features
+wip: --drb --tags @wip:3 --wip features
 autotest: --drb --color --format progress --strict
 rerun: --drb <%= rerun_opts %> --format rerun --out rerun.txt --strict --tags ~@wip
