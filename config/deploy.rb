@@ -1,7 +1,5 @@
 #-----Get Capistrano working with RVM-----
-$:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory to the load path.
 require "rvm/capistrano"  # Load RVM's capistrano plugin.    
-set :rvm_type, :user  # Don't use system-wide RVM
 #---------------------------------------------
 
 #-----Get Capistrano working with Bundler-----
