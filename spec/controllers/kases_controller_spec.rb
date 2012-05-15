@@ -10,22 +10,22 @@ describe KasesController do
   describe "GET index" do
     before(:each) do
       # @my_open_kases
-      @my_open_coaching_kase = FactoryGirl.create(:open_coaching_case, assigned_to: @current_user)
-      @my_open_training_kase = FactoryGirl.create(:open_training_case, assigned_to: @current_user)
+      @my_open_coaching_kase = FactoryGirl.create(:open_coaching_kase, assigned_to: @current_user)
+      @my_open_training_kase = FactoryGirl.create(:open_training_kase, assigned_to: @current_user)
       @_my_open_kases = [@my_open_coaching_kase, @my_open_training_kase]
       
       # @other_open_kases
-      @other_open_coaching_kase = FactoryGirl.create(:open_coaching_case)
-      @other_open_training_kase = FactoryGirl.create(:open_training_case)
+      @other_open_coaching_kase = FactoryGirl.create(:open_coaching_kase)
+      @other_open_training_kase = FactoryGirl.create(:open_training_kase)
       @_other_open_kases = [@other_open_coaching_kase, @other_open_training_kase]
       
       # @wait_list
-      @wait_list_coaching_kase = FactoryGirl.create(:coaching_case, assigned_to: nil)
-      @wait_list_training_kase = FactoryGirl.create(:training_case, assigned_to: nil)
+      @wait_list_coaching_kase = FactoryGirl.create(:coaching_kase, assigned_to: nil)
+      @wait_list_training_kase = FactoryGirl.create(:training_kase, assigned_to: nil)
       @_wait_list = [@wait_list_coaching_kase, @wait_list_training_kase]
 
       # @data_entry_needed
-      @data_entry_needed_coaching_kase = FactoryGirl.create(:coaching_case, scheduling_system_entry_required: true)
+      @data_entry_needed_coaching_kase = FactoryGirl.create(:coaching_kase, scheduling_system_entry_required: true)
       @_data_entry_needed = [@data_entry_needed_coaching_kase]
 
       @_kases = [

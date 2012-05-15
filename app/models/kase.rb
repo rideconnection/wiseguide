@@ -22,7 +22,6 @@ class Kase < ActiveRecord::Base
 
   validates_presence_of  :customer_id
   validates              :open_date, :date => { :before_or_equal_to => Proc.new { Date.current } }
-  validates_presence_of  :referral_source
   validates_presence_of  :referral_type_id
   validates_presence_of  :disposition
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
