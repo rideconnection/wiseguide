@@ -148,3 +148,9 @@ try these steps again.
 "fuzzystrmatch" already exists" if the library is already installed
 5. Repeat this process for each database you will need it in (development, 
 test, production, etc.)
+
+If you plan on running any of the tests that require dmetaphone to be present
+you should consider running the above commands on the `template1` database
+which Postgres uses as the template for creating new databases. Otherwise,
+you will need to repeat this process anytime the databases are rebuilt from 
+one of the destructive `rake db:...` commands.

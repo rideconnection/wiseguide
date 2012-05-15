@@ -238,6 +238,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         | Customer name |  Submitter      | Status                            |
         | Himby, Hue    |  Louie Anderson | Pending                           |
 
+  @dmetaphone
   Scenario: Trainers can associate a request with a new customer
     When I click on the "Requests" link
       And I click the request from Glass, Ira
