@@ -55,7 +55,7 @@
 <h1>Assessment Requests</h1>
 
 <table id="assessment-requests">
-  <caption class="box">
+  <caption class="box no-print">
     <h2>Filter Requests</h2>
     <%= form_tag assessment_requests_path, :method => :get, :id => "assessment-request-filter" do %>
       <h3>By User Type:</h3>
@@ -90,7 +90,7 @@
       <th>Notes</th>
       <th>Submitter</th>
       <th>Status</th>
-      <th></th>
+      <th class="no-print"></th>
     </tr>
   </thead>
   <tbody>

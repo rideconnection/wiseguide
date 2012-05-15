@@ -41,6 +41,8 @@ class Customer < ActiveRecord::Base
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
   end
 
+  scope :empty, lambda { where ("1 = 2") }
+
   cattr_reader :per_page
   @@per_page = 50
 
@@ -54,7 +56,7 @@ class Customer < ActiveRecord::Base
   end
 
   def self.search(term)
-    return [] if term.nil?
+    return empty if term.nil?
     Rails.logger.debug('Search term "%s" was received' % term)
     term = term.gsub(/[^\w\s,]/i, '').lstrip
     if term.match /^\w+\s+$/i
@@ -106,7 +108,7 @@ class Customer < ActiveRecord::Base
       # Given a search term that does not match any of the rules above (e.g. it contains non-word characters)
       # Then return nothing
       Rails.logger.debug "Search term could not be matched with a known search rule: #{term}"
-      return []
+      return empty
     end
 
     Rails.logger.debug "QUERY: #{query}"
@@ -118,7 +120,7 @@ class Customer < ActiveRecord::Base
     case ActiveRecord::Base.connection.adapter_name
       # With SQLite, do not attempt metaphone queries (unsupported)
       when "SQLite"
-        []
+        empty
       else
         Customer.where(conditions)
     end

@@ -15,7 +15,7 @@
       <td><%= assessment_request.notes %></td>
       <td><%= assessment_request.submitter.display_name %></td>
       <td><%= assessment_request.status %></td>
-      <td>
+      <td class="no-print">
         <% if can? :destroy, assessment_request %>
           <%= button_to 'Delete', assessment_request,
                         :confirm => 'Are you sure?', :method => :delete %>

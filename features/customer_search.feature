@@ -2,7 +2,7 @@
 # adapter and that the dmetaphone "fuzzystrmatch" functions have been 
 # installed into the test database. Because of this restriction, the default
 # cucumber profile will ignore tests with the @dmetaphone tag. In order to 
-# include these scenarios use the dmetaphone profile in your cucumber command:
+# run these scenarios use the dmetaphone profile in your cucumber command:
 # `cucumber features/customer_search.feature -p dmetaphone`
 
 @dmetaphone
