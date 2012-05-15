@@ -1,6 +1,8 @@
 <% content_for :head do %>
   <% if can? :edit, @kase %>
     <%= javascript_tag do %>
+      var $__original_form_state;
+      
       $(document).ready(function(){
         $("#kase_household_income_alternate_response").change(function(){
           update_household_stats($("#kase_household_income"), $(this).val() != "")
@@ -13,6 +15,19 @@
         update_household_stats($("#kase_household_income"), $("#kase_household_income_alternate_response").val() != "")
       
         update_household_stats($("#kase_household_size"), $("#kase_household_size_alternate_response").val() != "")
+
+        var $notify_case_manager = $("#notify_case_manager");
+        if ($notify_case_manager.size()) {
+          var $kase_form = $("form.edit_kase");
+          $__original_form_state = $kase_form.serialize();
+          $notify_case_manager.submit(function(){
+            if ($__original_form_state != $kase_form.serialize()) {
+              return confirm("You have made changes to the Case form which have not been saved. Are you sure you want to continue?");
+            }
+          });
+          $notify_case_manager.css({float: "left", width: "60%"});
+          $kase_form.find("div.actions").css({width: "auto", paddingRight: "1em"});
+        }
       });
     
       function update_household_stats(input, disable) {
@@ -116,11 +131,7 @@
 
       <li>
         <%= f.label :case_manager_notification_date, "Case Manager Notification Date" %>
-        <% if can? :edit, @kase %>
-          <%= f.text_field :case_manager_notification_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
-        <% else %>
-          <%= @kase.case_manager_notification_date.strftime("%v") unless @kase.case_manager_notification_date.blank? %>&nbsp;
-        <% end %>
+        <%= if @kase.case_manager_notification_date.blank? then "Not notified yet" else @kase.case_manager_notification_date.strftime("%v") end %>&nbsp;
       </li>
 
       <li>
@@ -211,4 +222,12 @@
       </div>
     </li>
   </ol>
+<% end %>
+
+<% if @kase.type == "CoachingKase" && @kase.persisted? %>
+  <%= form_tag(notify_manager_kase_path(@kase), :id => "notify_case_manager") do %>
+    <div class="actions">
+      <%= submit_tag "Email case manager" %>
+    </div>
+  <% end %>
 <% end %>

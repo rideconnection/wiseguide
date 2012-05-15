@@ -68,6 +68,10 @@ Then /^(?:I|they|"([^"]*?)") should receive an email with the following body:$/ 
   open_email(address, :with_text => expected_body)
 end
 
+Then /^(?:the mail queue should be clear|no emails should have been sent)$/ do
+  all_emails.size.should == 0
+end
+
 #
 # Accessing emails
 #

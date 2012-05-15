@@ -11,13 +11,13 @@ Feature: System Reports
         | 2  | Barty      | Crouch    |
         | 3  | Darth      | Vader     |
         | 4  | Master     | Chief     |
-      And the following open coaching cases exist:
+      And the following open coaching kases exist:
         | id | open_date               | assessment_date | case_manager_notification_date | customer_id |
         | 1  | 2010-12-31              | 2010-12-31      | 2010-12-31                     | 1           |
         | 3  | 2011-01-01              | 2011-01-02      | 2011-01-02                     | 2           |
         | 6  | 2011-01-30              | 2011-02-01      | 2011-02-01                     | 3           |
         | 7  | 2011-04-02              | 2011-04-02      | 2011-01-02                     | 4           |
-      And the following closed coaching cases exist:
+      And the following closed coaching kases exist:
         | id | open_date  | close_date | assessment_date | case_manager_notification_date | customer_id |
         | 2  | 2010-12-31 | 2011-01-01 | 2011-01-01      | 2011-01-01                     | 3           |
         | 4  | 2011-01-01 | 2011-01-02 | 2011-01-01      | 2011-01-02                     | 1           |
@@ -83,7 +83,7 @@ Feature: System Reports
         | 6  |
         | 7  |
         | 8  |
-      And the following open coaching cases exist:
+      And the following open coaching kases exist:
         # Matched: 2, 3, 4, 5, 6, 7, 8, 11
         | id | open_date               | assessment_date | customer_id | 
         | 1  | 2010-12-31              | 2010-12-31      | 1           |
@@ -96,7 +96,7 @@ Feature: System Reports
         | 8  | 2011-01-30              | 2011-01-30      | 6           |
         | 9  | 2011-01-30              | 2011-02-01      | 6           |
         | 10 | 2011-02-01              | 2011-02-01      | 7           |
-      And the following closed coaching cases exist:
+      And the following closed coaching kases exist:
         | id | open_date  | close_date | assessment_date | customer_id |
         | 11 | 2011-01-01 | 2011-01-01 | 2011-01-01      | 8           |
         | 12 | 2011-01-30 | 2011-02-01 | 2011-02-01      | 8           |

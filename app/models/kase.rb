@@ -79,10 +79,6 @@ class Kase < ActiveRecord::Base
     super
   end
 
-  # Perform any post-survey logic
-  def assessment_complete
-  end
-  
 private
 
   def cleanup_household_stats

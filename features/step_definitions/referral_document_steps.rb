@@ -96,7 +96,7 @@ Then /^I should be prompted to confirm the deletion when I click the referral do
   button = find("#referral_documents a.delete[href='/referral_documents/#{@referral_document.id}'][data-method=delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this referral document?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   @confirmation_message = 'Referral document was successfully deleted.'
   # Don't confirm just yet because we may want to test if it failed (due to permissions)
 end

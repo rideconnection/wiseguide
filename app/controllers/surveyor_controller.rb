@@ -36,7 +36,7 @@ module SurveyorControllerCustomMethods
   end
 
   def surveyor_finish
-    @kase.assessment_complete
+    @kase.update_attribute(:assessment_date, Date.current)
     kase_path @kase
   end
 

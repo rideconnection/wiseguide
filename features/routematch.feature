@@ -59,7 +59,7 @@ Feature: Routematch
         | 93 | Kenn       | Burnns    |
         | 94 | Mike       | Myers     |
         | 95 | Dave       | Thomas    |
-      And the following open coaching cases exist:
+      And the following open coaching kases exist:
         | id | Customer_id | scheduling_system_entry_required |
         | 90 | 90          | false                            |
         | 91 | 91          | true                             |

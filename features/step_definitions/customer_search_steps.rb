@@ -4,7 +4,7 @@ When /^I enter "([^"]*)" into the search box$/ do |term|
   end
 end
 
-When /^I click the "Search" button$/ do
+When /^I click the "Search" button in the customer search form$/ do
   within("#customer_search_form") do
     click_button "Search"
   end

@@ -8,14 +8,4 @@ class CoachingKase < Kase
   validates :assessment_date, :allow_blank => true, :date => { 
     :before_or_equal_to => Proc.new { Date.current } 
   }
-
-  # Notify case manager and update timestamp
-  def assessment_complete
-    self.assessment_date = Date.current
-    unless self.case_manager.blank?
-      AssessmentMailer.customer_assessed_email(self.case_manager, self).deliver
-      self.case_manager_notification_date = Date.current
-    end
-    save!
-  end
 end
