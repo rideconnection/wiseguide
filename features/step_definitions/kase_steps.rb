@@ -5,7 +5,6 @@ end
 def fill_common_kase_attributes
   # Use 'Yesterday' for the open date so that we can close it 'Today' in other tests
   fill_in "Opened", :with => Date.yesterday.strftime('%Y-%m-%d')
-  fill_in "Referral source", :with => "Source"
   select @referral_type.name, :from => "Referral Source Type"
 end
 
@@ -42,6 +41,7 @@ end
 
 Then /^I should be able to create a new open, unassigned training case for the customer$/ do
   fill_common_open_unassigned_kase_attributes
+  fill_in "Referral source", :with => "Source"
   select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
   step "I submit the form to create the training case"
