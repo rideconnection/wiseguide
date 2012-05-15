@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508160358) do
+ActiveRecord::Schema.define(:version => 20120515055157) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20120508160358) do
     t.boolean  "honored_citizen_cardholder"
     t.string   "primary_language"
     t.integer  "ada_service_eligibility_status_id"
+    t.string   "middle_initial",                    :limit => 1
   end
 
   create_table "dependencies", :force => true do |t|

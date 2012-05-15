@@ -1,5 +1,6 @@
 Then /^I should be able to create a new customer$/ do
   fill_in 'customer[first_name]', :with => 'Alex'
+  fill_in 'customer[middle_initial]', :with => 'A'
   fill_in 'customer[last_name]', :with => 'Trebek'
   fill_in 'customer[birth_date]', :with => '1962-04-01'
   select 'Male', :from => 'customer[gender]'

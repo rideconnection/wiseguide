@@ -9,6 +9,11 @@ describe Customer do
     @customer.valid?.should be_true
   end
   
+  describe "middle_initial" do
+    it { should accept_values_for(:middle_initial, nil, "", "a") }
+    it { should_not accept_values_for(:middle_initial, "aa") }
+  end
+  
   describe "veteran_status" do
     it "should allow true" do
       @customer.veteran_status = true
