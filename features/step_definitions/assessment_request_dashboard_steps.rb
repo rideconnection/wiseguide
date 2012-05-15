@@ -107,8 +107,10 @@ When /^I populate the coaching case details$/ do
   fill_in('Referral source', :with => 'daughter')
   select('Friends & Family', :from => 'Referral Source Type')
   click_button('Save')
+  # Get the newly generated ID so we can find the record later
+  @kase = CoachingKase.order("id DESC").limit(1).first
 end
 
 Then /^I should see a link to the case$/ do
-  find_link("View Case #1")
+  page.should have_selector("a[href='/cases/#{@kase.id}']", :text => "View Case ##{@kase.id}")
 end
