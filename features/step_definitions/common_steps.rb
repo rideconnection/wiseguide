@@ -54,6 +54,10 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
+When /^I reload the page$/ do
+  visit(current_path)
+end
+
 Then /^I should be on the (.*) page$/ do |page_name|
   object = instance_variable_get("@#{page_name.gsub(' ','_')}")
   page.current_path.should == send("#{page_name.downcase.gsub(' ','_')}_path", object)
@@ -71,26 +75,37 @@ Then /^I should be denied access to the page with an error code of ([0-9]+) and 
   page.should have_content(error_message)
 end
 
-def check_simple_table_data (table_id, table)
-  within("table#%s" % table_id) do
-    header_map = []
-    within("thead tr:first") do
-      columns = all("th").collect{ |column| column.text.downcase.strip }
-      columns.size.should >= table.headers.size
+def check_simple_table_data(table_selector, table_data, options = {})
+  options.reverse_merge!(:headers => true)
+    
+  page.should have_selector(table_selector)
+  within(table_selector) do
+    if !options[:headers]
+      header_map = (0...table_data.rows.first.length).to_a
+      row_count = table_data.raw.length
+      table_rows = table_data.raw
+    else
+      header_map = []
+      row_count = table_data.raw.length - 1
+      within("thead tr:first") do
+        columns = all("th").collect{ |column| column.text.downcase.strip }
+        columns.size.should >= table_data.headers.size
       
-      table.headers.each_with_index do |header, index|
-        column = columns.index(header.downcase.strip)
-        column.should_not be_nil
-        header_map << column
-      end        
+        table_data.headers.each_with_index do |header, index|
+          column = columns.index(header.downcase.strip)
+          column.should_not be_nil
+          header_map << column
+        end        
+      end
+      table_rows = table_data.raw[1...table_data.raw.length]
     end
   
-    within("tbody" % table_id) do
-      all("tr").size.should == table.rows.size
+    within("tbody") do
+      all("tr").size.should == row_count
       
       xpath_base = './/tr[%i]/td[%i]';
-      table.hashes.each_with_index do |row, index|
-        row.values.each_with_index do |value, column|
+      table_rows.each_with_index do |row, index|
+        row.each_with_index do |value, column|
           find(:xpath, xpath_base % [index + 1, header_map[column] + 1]).should have_content(value)
         end
       end

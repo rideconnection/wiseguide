@@ -97,6 +97,24 @@ describe Customer do
     it "should have a ada_service_eligibility_status attribute" do
       @customer.should respond_to(:ada_service_eligibility_status)
     end
+    
+    it "should have a assessment_request association" do
+      @customer.should respond_to(:assessment_requests)
+    end
+    
+    describe "assessment_requests" do
+      before do
+        @requests = []
+        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
+        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
+      end
+      
+      it "should return the correct associated assessment requests" do
+        @customer.assessment_requests.should =~ @requests
+        @customer.assessment_requests.destroy_all
+        @customer.assessment_requests(true).should == []
+      end
+    end
   end
   
   describe "search" do

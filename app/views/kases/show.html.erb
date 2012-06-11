@@ -47,5 +47,13 @@
         </li>
       </ol>
     <% end -%>
+
+    <% if @kase.type == "CoachingKase" %>
+      <ol class="section" id="assessment_requests">
+        <li>
+          <%= render "assessment_requests" %>
+        </li>
+      </ol>
+    <% end -%>
   </div>
 </fieldset>

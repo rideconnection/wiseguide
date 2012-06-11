@@ -11,5 +11,5 @@ When /^I click the "Search" button in the customer search form$/ do
 end
 
 Then /^I should see the following customers in the customers table:$/ do |table|
-  check_simple_table_data "customers", table
+  check_simple_table_data "#customers", table
 end

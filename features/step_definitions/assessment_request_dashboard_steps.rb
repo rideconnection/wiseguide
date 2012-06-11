@@ -3,7 +3,7 @@ Given /^there are no assessment requests$/ do
 end
 
 Then /^I should see the following data in the "Assessment Requests" table:$/ do |table|
-  check_simple_table_data "assessment-requests", table
+  check_simple_table_data "#assessment-requests", table
 end
 
 Given /^the following assessment requests exist that belong to me:$/ do |table|
