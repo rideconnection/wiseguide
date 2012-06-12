@@ -6,13 +6,6 @@ Then /^I should see the following data in the "Assessment Requests" table:$/ do 
   check_simple_table_data "#assessment-requests", table
 end
 
-Given /^the following assessment requests exist that belong to me:$/ do |table|
-  table.map_headers! { |header| header.downcase.to_sym }
-  table.hashes.each do |row, index|
-    FactoryGirl.create(:assessment_request, row.merge({:submitter => @current_user}))
-  end
-end
-
 Then /^I should see a form to filter by user type$/ do
   page.should have_selector("h2", :text => "Filter Requests")
   page.should have_selector("#assessment-request-filter")
@@ -26,10 +19,22 @@ Then /^I should see a form to filter by user type$/ do
   end
 end
 
-When /^I check the "([^"]*)" option in the (?:.+) filter form$/ do |option|
-  within("#assessment-request-filter") do
+When /^I check the "([^"]*)" option in the current status filter form$/ do |option|
+  within("#current-status-filters") do
     choose option
-  end    
+  end
+end
+
+When /^I check the "([^"]*)" option in the user type filter form$/ do |option|
+  within("#user-type-filters") do
+    choose option
+  end
+end
+
+When /^I check the "([^"]*)" option in the assignee filter form$/ do |option|
+  within("#assignee-filters") do
+    choose option
+  end
 end
 
 When /^I click the "Filter" button to apply filter$/ do
@@ -52,6 +57,17 @@ Then /^I should see a form to filter by current status$/ do
     page.should have_selector("input[type=radio][name=current_status_filter][value=pending]")
     page.should have_selector("input[type=radio][name=current_status_filter][value=not_completed]")
     page.should have_selector("input[type=radio][name=current_status_filter][value=completed]")
+  end
+end
+
+Then /^I should see a form to filter by assignee$/ do
+  page.should have_selector("h2", :text => "Filter Requests")
+  page.should have_selector("#assessment-request-filter")
+  form = find("#assessment-request-filter")
+  page.should have_selector("ul#assignee-filters")
+  within("ul#assignee-filters") do
+    page.should have_selector("input[type=radio][name=assignee_filter][value=all]")
+    page.should have_selector("input[type=radio][name=assignee_filter][value=me]")
   end
 end
 

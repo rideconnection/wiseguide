@@ -1,18 +1,19 @@
-Given /^I am logged in as an? (.*)$/ do |user_type|
-  @current_user = FactoryGirl.create(user_type.split(" ").join("_"))
+def login_user(user)
   visit '/users/sign_in'
-  fill_in 'user_email', :with => @current_user.email
+  fill_in 'user_email', :with => user.email
   fill_in 'user_password', :with => 'password 1'
   click_button 'Sign in'
   page.should have_content('Signed in successfully.')
 end
 
-Given /^my name is "([^"]*)"$/ do |name|
-  first_name, last_name = name.strip.split(/\W+/)
-  @current_user.first_name = first_name
-  @current_user.last_name = last_name
-  @current_user.save!
-  @current_user.reload
+Given /^I am logged in as an? (.*)$/ do |user_type|
+  @current_user = FactoryGirl.create(user_type.split(" ").join("_"))
+  login_user(@current_user)
+end
+
+Given /^I am logged in as the following (.*):$/ do |user_type, table|
+  @current_user = FactoryGirl.create(user_type.split(" ").join("_"), table.hashes.first)
+  login_user(@current_user)
 end
 
 Given /^I belong to organization ([0-9]+)$/ do |organization_id|

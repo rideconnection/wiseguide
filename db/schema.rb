@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120515055157) do
+ActiveRecord::Schema.define(:version => 20120612211947) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120515055157) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "reason_not_completed"
+    t.integer  "assignee_id"
   end
 
   create_table "contacts", :force => true do |t|
