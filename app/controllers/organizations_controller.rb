@@ -20,6 +20,7 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @organization }
+      format.json { render :json => @organization }
     end
   end
 
