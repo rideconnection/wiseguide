@@ -220,23 +220,97 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
         |   |  Tony Hawk      | Pending                           |
         | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
 
+  Scenario: Filter form state should be preserved in a session store and reapplied on next load
+    When I click on the "Requests" link
+    Then I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Elway, Emm    |  Steve Harvey   | Completed                         |
+      | Akron, Abe    |  Ray Combs      | Not completed (Duplicate request) |
+      | Bixby, Bob    |  Louie Anderson | Completed                         |
+      | Cosby, Cam    |  Richard Karn   | Completed                         |
+      | Furby, Fay    |  Ned Flanders   | Completed                         |
+      | Gamma, Gay    |  Ray Combs      | Not completed (Duplicate request) |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Jomba, Jay    |  Tony Hawk      | Completed                         |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+      | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
+    When I check the "Pending" option in the current status filter form
+    And I click the "Filter" button to apply filter
+    Then I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+    When I reload the page
+    Then the "Pending" option in the current status filter form should be selected
+    And I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |  
+
   @javascript
   Scenario: Trainers with javascript enabled should be able to filter requests using an AJAXified form
     When I click on the "Requests" link
-    Then I should see an AJAXified form to filter by user type
-      And I should see an AJAXified form to filter by current status
+    Then I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Elway, Emm    |  Steve Harvey   | Completed                         |
+      | Akron, Abe    |  Ray Combs      | Not completed (Duplicate request) |
+      | Bixby, Bob    |  Louie Anderson | Completed                         |
+      | Cosby, Cam    |  Richard Karn   | Completed                         |
+      | Furby, Fay    |  Ned Flanders   | Completed                         |
+      | Gamma, Gay    |  Ray Combs      | Not completed (Duplicate request) |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Jomba, Jay    |  Tony Hawk      | Completed                         |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+      | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
+    And I should see an AJAXified form to filter by user type
+    And I should see an AJAXified form to filter by current status
     When I check the "Pending" option in the current status filter form
     Then the filter should apply and the table data should refresh without having to click the "Filter" button
-      And I should see the following data in the "Assessment Requests" table:
-        | Customer name |  Submitter      | Status                            |
-        | Himby, Hue    |  Louie Anderson | Pending                           |
-        | Glass, Ira    |  Tony Hawk      | Pending                           |
-        | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+    And I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
     When I check the "Outside users" option in the current status filter form
     Then the filter should apply and the table data should refresh without having to click the "Filter" button
-      And I should see the following data in the "Assessment Requests" table:
-        | Customer name |  Submitter      | Status                            |
-        | Himby, Hue    |  Louie Anderson | Pending                           |
+    And I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+
+  @javascript
+  Scenario: AJAXified filter form state should be preserved in a session store and reapplied on next load
+    When I click on the "Requests" link
+    Then I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Elway, Emm    |  Steve Harvey   | Completed                         |
+      | Akron, Abe    |  Ray Combs      | Not completed (Duplicate request) |
+      | Bixby, Bob    |  Louie Anderson | Completed                         |
+      | Cosby, Cam    |  Richard Karn   | Completed                         |
+      | Furby, Fay    |  Ned Flanders   | Completed                         |
+      | Gamma, Gay    |  Ray Combs      | Not completed (Duplicate request) |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Jomba, Jay    |  Tony Hawk      | Completed                         |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+      | Devry, Dot    |  John O'Hurley  | Not completed (Could not reach)   |
+    When I check the "Pending" option in the current status filter form
+    Then the filter should apply and the table data should refresh without having to click the "Filter" button
+    And I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |
+    When I reload the page
+    Then the "Pending" option in the current status filter form should be selected
+    And I should see the following data in the "Assessment Requests" table:
+      | Customer name |  Submitter      | Status                            |
+      | Himby, Hue    |  Louie Anderson | Pending                           |
+      | Glass, Ira    |  Tony Hawk      | Pending                           |
+      | Krauss, Kyle  |  Tony Hawk      | Pending                           |  
 
   @dmetaphone
   Scenario: Trainers can associate a request with a new customer

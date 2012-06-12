@@ -127,7 +127,7 @@ When /^I (un)?check the "([^"]*)" checkbox$/ do |checked_state, label|
   page.send(checked_state, label)
 end
 
-Then /^the "([^"]*)" checkbox should be (un)?checked$/ do |label, checked_state|
+Then /^the "([^"]*)" (?:checkbox|radio button) should be (un)?checked$/ do |label, checked_state|
   checked_state = (checked_state) ? "has_unchecked_field?" : "has_checked_field?"
   page.send(checked_state, label)
 end

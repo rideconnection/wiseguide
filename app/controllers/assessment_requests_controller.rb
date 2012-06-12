@@ -4,8 +4,8 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests
   # GET /assessment_requests.xml
   def index
-    params[:user_type_filter] ||= "all"
-    params[:current_status_filter] ||= "all"
+    params[:user_type_filter]      = params[:user_type_filter]      || session[:assessment_requests_index_user_type_filter]      || "all"
+    params[:current_status_filter] = params[:current_status_filter] || session[:assessment_requests_index_current_status_filter] || "all"
 
     query = AssessmentRequest.scoped
         
@@ -28,7 +28,10 @@ class AssessmentRequestsController < ApplicationController
     end
         
     @assessment_requests = query.order("created_at ASC").all
-
+    
+    session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
+    session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js   # index.js.erb

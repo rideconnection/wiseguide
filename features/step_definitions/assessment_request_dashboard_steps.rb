@@ -114,3 +114,9 @@ end
 Then /^I should see a link to the case$/ do
   page.should have_selector("a[href='/cases/#{@kase.id}']", :text => "View Case ##{@kase.id}")
 end
+
+Then /^the "([^"]*)" option in the (?:.+) filter form should be selected$/ do |label|
+  within("#assessment-request-filter") do
+    step %Q(the "#{label}" radio button should be checked)
+  end    
+end
