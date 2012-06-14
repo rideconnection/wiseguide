@@ -165,6 +165,29 @@ describe AssessmentRequest do
       end
     end
     
+    describe "contacts association" do
+      before do
+        @contacts = [
+          FactoryGirl.create(:contact, :contactable => @valid_assessment_request),
+          FactoryGirl.create(:contact, :contactable => @valid_assessment_request)
+        ]
+      end
+      
+      it "should have a contacts attribute" do
+        AssessmentRequest.new.should respond_to(:contacts)
+      end
+
+      it "should return an empty array if no contacts have been associated" do
+        @contacts.map(&:destroy)
+        @valid_assessment_request.contacts(true)
+        @valid_assessment_request.contacts.should == []
+      end
+
+      it "should return the proper contacts" do
+        @valid_assessment_request.contacts.should =~ @contacts
+      end
+    end
+    
     describe "customer association" do
       before do
         @customer = FactoryGirl.create(:customer)

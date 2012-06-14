@@ -199,7 +199,7 @@ describe Kase do
   
   context "associations" do
     before do
-      @kase = Kase.new
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should have a customer attribute" do
@@ -227,8 +227,27 @@ describe Kase do
       @kase.should respond_to(:assessment_request)
     end
     
-    it "should have a contacts attribute" do
-      @kase.should respond_to(:contacts)
+    describe "contacts association" do
+      before do
+        @contacts = [
+          FactoryGirl.create(:contact, :contactable => @kase),
+          FactoryGirl.create(:contact, :contactable => @kase)
+        ]
+      end
+      
+      it "should have a contacts attribute" do
+        Kase.new.should respond_to(:contacts)
+      end
+
+      it "should return an empty array if no contacts have been associated" do
+        @contacts.map(&:destroy)
+        @kase.contacts(true)
+        @kase.contacts.should == []
+      end
+
+      it "should return the proper contacts" do
+        @kase.contacts.should =~ @contacts
+      end
     end
     
     it "should have a events attribute" do

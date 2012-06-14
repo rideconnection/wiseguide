@@ -230,13 +230,13 @@ Then /^I should not see any training case fields$/ do
 end
 
 Given /^the case has no contact events$/ do
-  @kase.reload
-  @kase.contacts.size.should == 0
+  @kase = Kase.find(@kase.id)
+  @kase.contacts(true).size.should == 0
 end
 
 Then /^the case should have 1 contact event$/ do
-  @kase.reload
-  @kase.contacts.size.should == 1
+  @kase = Kase.find(@kase.id)
+  @kase.contacts(true).size.should == 1
   @contact = @kase.contacts.first
 end
 

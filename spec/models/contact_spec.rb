@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe Contact do
   before do
-    @customer = FactoryGirl.create(:customer)
-    @customer_kase = FactoryGirl.create(:kase, :customer => @customer)
-    @contact = FactoryGirl.build(:contact, :customer => @customer)
+    @contact = FactoryGirl.build(:contact)
   end
   
   it "should create a new instance given valid attributes" do
@@ -33,33 +31,109 @@ describe Contact do
     @contact.valid?.should be_true
   end
   
-  context "associations" do
-    it "should have a required customer attribute" do
-      @contact.customer = nil
-      @contact.valid?.should be_false
-    end
-    
-    it "should have a kase attribute" do
-      @contact.kase = @customer_kase
-      @contact.kase.should eq(@customer_kase)
-    end
+  describe "contactable_type" do
+    it { should_not accept_values_for(:contactable_type, nil, "", "foo") }
+    it { should accept_values_for(:contactable_type, "Customer", "Kase", "AssessmentRequest", "TrainingKase", "CoachingKase") }
   end
-  
-  context "without a case association" do
-    before do
-      @kase = FactoryGirl.create(:kase)
-    end
     
-    it "should should allow a nil kase association" do
-      @contact.kase = nil
-      @contact.valid?.should be_true
-    end
-    
-    it "should limit the kase association to kases belonging to the associated customer" do
-      @contact.kase = @kase
-      @contact.valid?.should be_false
-      @contact.kase = @customer_kase
-      @contact.valid?.should be_true
+  context "associations" do
+    describe "contactable" do
+      before do
+        @contact = FactoryGirl.build(:contact)
+      end
+
+      context "with a Customer" do      
+        before do
+          @customer = FactoryGirl.create(:customer)
+          @contact.contactable_type = "Customer"
+        end
+
+        it "should require a valid association" do
+          @contact.contactable_id = nil
+          @contact.should_not be_valid
+
+          @contact.contactable_id = ""
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 0
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 99
+          @contact.should_not be_valid
+
+          @contact.contactable_id = @customer.id
+          @contact.should be_valid
+        end
+
+        it "should return the proper associated object" do
+          @contact.contactable_id = @customer.id
+          @contact.save
+          @contact.contactable.should == @customer
+        end
+      end
+
+      context "with a Kase" do      
+        before do
+          @kase = FactoryGirl.create(:training_kase)
+          @contact.contactable_type = "TrainingKase"
+
+          # We need to reload this to get the correct sub class
+          @kase = Kase.find(@kase.id)
+        end
+
+        it "should require a valid association" do
+          @contact.contactable_id = nil
+          @contact.should_not be_valid
+
+          @contact.contactable_id = ""
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 0
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 99
+          @contact.should_not be_valid
+
+          @contact.contactable_id = @kase.id
+          @contact.should be_valid
+        end
+
+        it "should return the proper associated object" do
+          @contact.contactable_id = @kase.id
+          @contact.save
+          @contact.contactable.should == @kase
+        end
+      end
+
+      context "with an AssessmentRequest" do      
+        before do
+          @assessment_request = FactoryGirl.create(:assessment_request)
+          @contact.contactable_type = "AssessmentRequest"
+        end
+
+        it "should require a valid association" do
+          @contact.contactable_id = nil
+          @contact.should_not be_valid
+
+          @contact.contactable_id = ""
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 0
+          @contact.should_not be_valid
+
+          @contact.contactable_id = 99
+          @contact.should_not be_valid
+
+          @contact.contactable_id = @assessment_request.id
+          @contact.should be_valid
+        end
+
+        it "should return the proper associated object" do
+          @contact.contactable_id = @assessment_request.id
+          @contact.save
+          @contact.contactable.should == @assessment_request
+        end
+      end
     end
   end
 end

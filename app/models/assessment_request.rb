@@ -5,6 +5,7 @@ class AssessmentRequest < ActiveRecord::Base
   belongs_to :kase
   
   has_one :referring_organization, :through => :submitter, :source => :organization
+  has_many :contacts, :as => :contactable, :dependent => :destroy
 
   has_attached_file :attachment,
     :path => ":rails_root/uploads/:attachment/:id/:basename.:extension",

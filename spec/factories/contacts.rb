@@ -1,11 +1,16 @@
 FactoryGirl.define do
-  factory :contact, :aliases => [:contact_event] do
+  factory :contact, :aliases => [:contact_event, :customer_contact, :customer_contact_event] do
     association :user, :factory => :trainer
-    association :customer
     date_time Time.current
-    description "My Contact"
-    factory :contact_with_open_training_kase, :aliases => [:contact_event_with_open_training_kase] do
-      after_build {|c| c.kase = FactoryGirl.create(:open_training_kase, :customer => c.customer)}
+    description "My Contact"    
+    association :contactable, :factory => :customer
+    
+    factory :kase_contact, :aliases => [:kase_contact_event] do
+      association :contactable, :factory => :kase
+    end
+    
+    factory :assessment_request_contact, :aliases => [:assessment_request_contact_event] do
+      association :contactable, :factory => :assessment_request
     end
   end
 end

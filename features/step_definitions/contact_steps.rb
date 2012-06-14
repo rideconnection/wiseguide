@@ -1,38 +1,25 @@
-Given /^the customer has a case\-less contact event$/ do
-  @contact_event = FactoryGirl.create(:contact, :customer => @customer)
+Then /^I should see a contacts list with (\d+) rows?$/ do |row_count|  
+  page.should have_selector("#contacts")
+  within("#contacts") do
+    step %Q(I should see a main section titled "Contacts")
+    all("table tbody tr").count.should == row_count.to_i
+  end
 end
 
-Given /^the customer has a contact event associated with an open training case$/ do
-  @contact_with_kase = FactoryGirl.create(:contact_with_open_training_kase, :customer => @customer)
-  @kase = @contact_with_kase.kase
+Then /^I should see "([^"]*)" in row (\d+) of the contacts list$/ do |value, row|
+  within("#contacts table tbody") do
+    find(:xpath, ".//tr[#{row.to_i}]").should have_content(value)
+  end
 end
 
-Then /^I should( not)? see the case\-less contact event$/ do |negation|
-  assertion = negation ? :should_not : :should
-  find('#contacts').send(assertion, have_selector("a.details[href='#{edit_contact_path(@contact_event)}']"))
-end
-
-Then /^I should( not)? see the read\-only case\-less contact event$/ do |negation|
-  assertion = negation ? :should_not : :should
-  find('#contacts').send(assertion, have_selector("a.details[href='#{contact_path(@contact_event)}']"))
-end
-
-Then /^I should( not)? see the contact event associated with the case$/ do |negation|
-  assertion = negation ? :should_not : :should
-  find('#contacts').send(assertion, have_selector("a.details[href='#{edit_contact_path(@contact_with_kase)}']"))
-end
-
-Then /^I should( not)? see the read\-only contact event associated with the case$/ do |negation|
-  assertion = negation ? :should_not : :should
-  find('#contacts').send(assertion, have_selector("a.details[href='#{contact_path(@contact_with_kase)}']"))
-end
-
-When /^I click on the link to add a case\-less contact event$/ do
-  find("#contacts a.add[href='#{new_contact_path(:customer_id => @customer.id)}']").click
+When /^I should not see a link to add a contact event$/ do
+  within("#contacts") do
+    page.should_not have_selector("a.add")
+  end
 end
 
 When /^I click on the link to add a contact event$/ do
-  find("#contacts a.add[href='#{new_contact_path(:kase_id => @kase.id)}']").click
+  find("#contacts a.add").click
 end
 
 def fill_common_contact_event_attributes

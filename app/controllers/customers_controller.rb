@@ -68,6 +68,7 @@ class CustomersController < ApplicationController
   end
 
   private
+  
   def prep_edit
     @ethnicities = Ethnicity.all
     @genders = ALL_GENDERS

@@ -197,8 +197,7 @@ private
   
   def generate_contact_event!(description, notes = nil)
     Contact.create!(
-      kase: @kase,
-      customer: @kase.customer,
+      contactable: @kase,
       user: current_user,
       method: "Case Action",
       date_time: DateTime.current,

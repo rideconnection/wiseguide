@@ -1,2 +1,2 @@
-<%= render 'shared/breadcrumbs', :target => @contact, :name => 'Contact' %>
+<%= render 'shared/breadcrumbs', :target => @contactable, :name => "#{@contactable.class.humanized_name} Contact" %>
 <%= render "form" %>

@@ -10,7 +10,7 @@ class Kase < ActiveRecord::Base
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
   has_one  :assessment_request, :dependent => :nullify
-  has_many :contacts, :dependent => :nullify
+  has_many :contacts, :as => :contactable, :dependent => :destroy
   has_many :events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
   has_many :kase_routes, :dependent => :destroy

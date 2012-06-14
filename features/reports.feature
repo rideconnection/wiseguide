@@ -28,14 +28,14 @@ Feature: System Reports
         | 2  | Barty               | Crouch             | 2           | 3       | 2010-12-20 |
         | 3  | Darth               | Vader              | 3           | 2       | 2010-12-30 |
       And the following contact events exist:
-        | customer_id | kase_id | date_time  | description   |
-        | 1           |         | 2010-11-01 | I just called |
-        | 1           | 1       | 2011-01-01 | To say        |
-        | 2           | 3       | 2011-01-02 | I love you    |
-        | 2           | 5       | 2011-01-21 | I just called |
-        | 3           | 2       | 2010-12-30 | To say        |
-        | 3           | 2       | 2011-01-01 | How much      |
-        | 4           | 7       | 2011-01-30 | I care        |
+        | contactable_type | contactable_id | date_time  | description   |
+        | Customer         | 1              | 2010-11-01 | I just called |
+        | CoachingKase     | 1              | 2011-01-01 | To say        |
+        | CoachingKase     | 3              | 2011-01-02 | I love you    |
+        | CoachingKase     | 5              | 2011-01-21 | I just called |
+        | CoachingKase     | 2              | 2010-12-30 | To say        |
+        | CoachingKase     | 2              | 2011-01-01 | How much      |
+        | CoachingKase     | 7              | 2011-01-30 | I care        |
       And I am on the homepage
     When I click on the "Reports" link
       And I submit the "Monthly Transportation Report" form with a date range of "2011-01-01" to "2011-01-30"

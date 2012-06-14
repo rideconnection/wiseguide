@@ -59,16 +59,19 @@ When /^I reload the page$/ do
   visit(current_path)
 end
 
-Then /^I should be on the (.*) page$/ do |page_name|
-  object = instance_variable_get("@#{page_name.gsub(' ','_')}")
-  page.current_path.should == send("#{page_name.downcase.gsub(' ','_')}_path", object)
-  page.status_code.should == 200
-end
-
 Then /^I should be redirected to the (.*) page$/ do |page_name|
   page.driver.request.env['HTTP_REFERER'].should_not be_nil
   page.driver.request.env['HTTP_REFERER'].should_not == page.current_url
-  step %Q(I should be on the #{page_name} page)
+  object = instance_variable_get("@#{page_name.gsub(' ','_')}")
+  path = send("#{page_name.downcase.gsub(' ','_')}_path", object)
+  step %Q(I should be redirected to "#{path[1, path.length]}")
+end
+
+Then /^I should be redirected to "([^"]*)"$/ do |route|
+  page.status_code.should == 200
+  page.driver.request.env['HTTP_REFERER'].should_not be_nil
+  page.driver.request.env['HTTP_REFERER'].should_not == page.current_url
+  page.current_path.should == "/#{route}"
 end
 
 Then /^I should be denied access to the page with an error code of ([0-9]+) and an error message of "(.*)"$/ do |error_code, error_message|
@@ -149,4 +152,13 @@ end
 Then /^I should( not)? see a secondary section titled "([^"]*)"$/ do |negation, title|
   assertion = negation ? :should_not : :should
   page.send(assertion, have_selector("h2", :text => title))
+end
+
+Then /^I should( not)? see "([^"]*)"$/ do |negation, content|
+  assertion = (negation) ? :should_not : :should
+  page.send(assertion, have_content(content))
+end
+
+Then /^start the debugger$/ do
+  debugger
 end

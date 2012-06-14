@@ -3,6 +3,9 @@
     <% if target.respond_to? :display_name %>
       <%= link_to target.display_name, target %>
       &gt;
+    <% elsif target.respond_to? :name %>
+      <%= link_to target.name, target %>
+      &gt;
     <% elsif target.respond_to? :customer and !target.customer.nil? %>
       <%= link_to target.customer.name, target.customer %> 
       &gt;

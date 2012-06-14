@@ -22,6 +22,7 @@ gem "paperclip", "~> 3.0.2"
 gem "userstamp",
   :git => "git://github.com/delynn/userstamp.git",
   :ref => "777633a"
+gem 'store_base_sti_class'
 gem "uuidtools"
 gem "will_paginate", "~> 3.0.3"
 

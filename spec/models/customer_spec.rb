@@ -115,6 +115,29 @@ describe Customer do
         @customer.assessment_requests(true).should == []
       end
     end
+    
+    describe "contacts association" do
+      before do
+        @contacts = [
+          FactoryGirl.create(:contact, :contactable => @customer),
+          FactoryGirl.create(:contact, :contactable => @customer)
+        ]
+      end
+      
+      it "should have a contacts attribute" do
+        Customer.new.should respond_to(:contacts)
+      end
+
+      it "should return an empty array if no contacts have been associated" do
+        @contacts.map(&:destroy)
+        @customer.contacts(true)
+        @customer.contacts.should == []
+      end
+
+      it "should return the proper contacts" do
+        @customer.contacts.should =~ @contacts
+      end
+    end
   end
   
   describe "search" do

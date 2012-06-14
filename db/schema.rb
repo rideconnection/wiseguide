@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120612211947) do
+ActiveRecord::Schema.define(:version => 20120614222706) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20120612211947) do
   end
 
   create_table "contacts", :force => true do |t|
-    t.integer  "kase_id"
     t.integer  "user_id"
     t.datetime "date_time"
     t.string   "method"
@@ -73,15 +72,15 @@ ActiveRecord::Schema.define(:version => 20120612211947) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",    :default => 0
+    t.integer  "lock_version",     :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.boolean  "show_full_notes"
-    t.integer  "customer_id"
+    t.string   "contactable_type"
+    t.integer  "contactable_id"
   end
 
-  add_index "contacts", ["customer_id"], :name => "index_contacts_on_customer_id"
-  add_index "contacts", ["kase_id"], :name => "index_contacts_on_kase_id"
+  add_index "contacts", ["contactable_type", "contactable_type"], :name => "index_contacts_on_contactable_type_and_contactable_type"
 
   create_table "counties", :force => true do |t|
     t.string   "name"

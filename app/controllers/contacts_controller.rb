@@ -6,50 +6,33 @@ class ContactsController < ApplicationController
 
   def show
     @readonly = true
+    @contactable = @contact.contactable
     prep_edit
   end
 
   def edit
     @readonly = false
+    @contactable = @contact.contactable
     prep_edit
   end
 
   def new
     @readonly = false
-    attrs = Hash.new
-    if !params[:kase_id].blank? then
-      @kase = Kase.find(params[:kase_id])
-      attrs[:kase_id] = @kase.id
-    end
-    if !params[:customer_id].blank? then
-      @customer = Customer.find(params[:customer_id])
-    else
-      @customer = @kase.customer
-    end
-    attrs[:customer_id] = @customer.id
-    @contact = Contact.new(attrs.merge({
-      :date_time=>DateTime.current,
-      :user => current_user
+    @contactable = params[:contact][:contactable_type].classify.constantize.find(params[:contact][:contactable_id])
+    @contact = Contact.new(params[:contact].merge({
+      :date_time => DateTime.current,
+      :user      => current_user
     }))
     prep_edit
   end
 
   def create
-    if !params[:contact][:kase_id].blank? then
-      @kase = Kase.find(params[:contact][:kase_id])
-      authorize! :edit, @kase
-    else
-      @customer = Customer.find(params[:contact][:customer_id])
-      authorize! :edit, @customer
-    end
+    @contactable = params[:contact][:contactable_type].classify.constantize.find(params[:contact][:contactable_id])
+    authorize! :edit, @contactable
     @contact = Contact.new(params[:contact])
     @contact.user = current_user
     if @contact.save
-      if !params[:contact][:kase_id].blank? then
-        redirect_to(@kase, :notice => 'Contact was successfully created.') 
-      else
-        redirect_to(@customer, :notice => 'Contact was successfully created.')
-      end
+      redirect_to(@contactable, :notice => 'Contact was successfully created.') 
     else
       prep_edit
       render :action => "new"
@@ -57,19 +40,10 @@ class ContactsController < ApplicationController
   end
 
   def update
-    if !params[:contact][:kase_id].blank? then
-      @kase = Kase.find(params[:contact][:kase_id])
-      authorize! :edit, @kase
-    else
-      @customer = Customer.find(params[:contact][:customer_id])
-      authorize! :edit, @customer
-    end
+    @contactable = @contact.contactable
+    authorize! :edit, @contactable
     if @contact.update_attributes(params[:contact])
-      if !params[:contact][:kase_id].blank? then
-        redirect_to(@kase, :notice => 'Contact was successfully updated.') 
-      else
-        redirect_to(@customer, :notice => 'Contact was successfully updated.')
-      end
+      redirect_to(@contact.contactable, :notice => 'Contact was successfully updated.') 
     else
       prep_edit
       render :action => "edit"
@@ -77,17 +51,14 @@ class ContactsController < ApplicationController
   end
 
   def destroy
+    authorize! :edit, @contact.contactable
     @contact.destroy
-    if !@contact.kase_id.blank? then
-      redirect_to(@contact.kase, :notice => 'Contact was successfully deleted.') 
-    else
-      redirect_to(@contact.customer, :notice => 'Contact was successfully deleted.')
-    end
+    redirect_to(@contact.contactable, :notice => 'Contact was successfully deleted.') 
   end
 
   private
+
   def prep_edit
     @contact_methods = ['Phone', 'Email', 'Meeting', 'Case Action']
   end
-
 end
