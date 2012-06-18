@@ -55,16 +55,15 @@ group :test do
   gem "cucumber"
   gem "cucumber-rails", :require => false
   gem "database_cleaner"
-  gem "debugger"
   gem "email_spec"
-  gem "factory_girl_rails"
-  gem "faker"
   gem "pdf-inspector", :require => "pdf/inspector"
   gem "prickle"
 end
 
 group :development, :test do
   gem "debugger"
+  gem "factory_girl_rails"
+  gem "faker"
   gem "rspec-rails"
   gem "sqlite3-ruby", :require => "sqlite3"
 end
