@@ -55,7 +55,7 @@
       //
       // Ajaxify the form
       //
-      $options = $().add($current_status_filters.find('input')).add($user_type_filters.find('input'));
+      $options = $form.find('input[type=radio]');
       $options.change(function() {
         $.get($form.attr("action"), $form.serialize(), null, 'script');
         return false;
