@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20120614222706) do
     t.integer  "contactable_id"
   end
 
-  add_index "contacts", ["contactable_type", "contactable_type"], :name => "index_contacts_on_contactable_type_and_contactable_type"
+  add_index "contacts", ["contactable_type", "contactable_id"], :name => "index_contacts_on_contactable_type_and_contactable_id"
 
   create_table "counties", :force => true do |t|
     t.string   "name"

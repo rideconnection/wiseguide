@@ -2,7 +2,7 @@ class ConvertContactAssociations < ActiveRecord::Migration
   def up
     add_column :contacts, :contactable_type, :string
     add_column :contacts, :contactable_id, :integer
-    add_index  :contacts, [:contactable_type, :contactable_type]
+    add_index  :contacts, [:contactable_type, :contactable_id]
     
     # Convert existing contacts
     Contact.all.each do |contact|
@@ -38,6 +38,6 @@ class ConvertContactAssociations < ActiveRecord::Migration
     
     remove_column :contacts, :contactable_type
     remove_column :contacts, :contactable_id
-    remove_index  :contacts, [:contactable_type, :contactable_type]
+    remove_index  :contacts, [:contactable_type, :contactable_id]
   end
 end
