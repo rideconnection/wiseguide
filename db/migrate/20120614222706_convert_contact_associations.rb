@@ -13,7 +13,7 @@ class ConvertContactAssociations < ActiveRecord::Migration
         contact.contactable_type = "Customer"
         contact.contactable_id   = contact.customer_id
       end
-      contact.save!
+      contact.save(:validate => false)
     end
     
     remove_column :contacts, :kase_id
@@ -28,16 +28,17 @@ class ConvertContactAssociations < ActiveRecord::Migration
     Contact.all.each do |contact|
       if contact.contactable_type == "Kase"
         contact.kase_id     = contact.contactable_id
-        contact.customer_id = Kase.find(contact.contactable_id).customer.id
+        kase = Kase.find_by_id(contact.contactable_id)
+        contact.customer_id = kase.blank? ? 0 : kase.customer.id
       else
         # Note this will catch any newly created AR-type contacts, too.
         contact.customer_id = contact.contactable_id
       end
-      contact.save!
+      contact.save(:validate => false)
     end
     
     remove_column :contacts, :contactable_type
     remove_column :contacts, :contactable_id
-    remove_index  :contacts, [:contactable_type, :contactable_id]
+    # remove_index  :contacts, [:contactable_type, :contactable_id]
   end
 end
