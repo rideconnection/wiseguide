@@ -8,7 +8,7 @@ class Contact < ActiveRecord::Base
   validates :description, :presence => true, :length => {:maximum => 200}
   validates :date_time, :date => { :before_or_equal_to => Proc.new {Time.current} }
   validates :contactable_type, :inclusion => { :in => %w(AssessmentRequest Customer Kase CoachingKase TrainingKase) }
-  validates :contactable, :presence => true, :associated => true
+  validates :contactable, :presence => true, :associated => { :message => "The associated object (Customer, Case, or Assessment Request) is invalid" }
 
   default_scope order(:date_time)
 end
