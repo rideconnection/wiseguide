@@ -39,6 +39,6 @@ class ConvertContactAssociations < ActiveRecord::Migration
     
     remove_column :contacts, :contactable_type
     remove_column :contacts, :contactable_id
-    # remove_index  :contacts, [:contactable_type, :contactable_id]
+    remove_index  :contacts, [:contactable_type, :contactable_id]
   end
 end
