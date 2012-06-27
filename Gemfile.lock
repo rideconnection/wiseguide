@@ -170,6 +170,8 @@ GEM
       ruby-rc4
     pg (0.13.2)
     polyglot (0.3.3)
+    prickle (0.0.6)
+      capybara
     rabl (0.6.10)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
@@ -233,6 +235,8 @@ GEM
     sqlite3 (1.3.6)
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
+    store_base_sti_class (0.0.2)
+      activerecord
     surveyor (0.22.0)
       fastercsv (~> 1.5.4)
       formtastic (~> 1.2.4)
@@ -290,12 +294,14 @@ DEPENDENCIES
   pdf-reader
   pg
   prawn!
+  prickle
   rails (~> 3.2.0)
   rake
   rspec-rails
   rvm-capistrano
   spork-rails
   sqlite3-ruby
+  store_base_sti_class
   surveyor (~> 0.22.0)
   thin
   userstamp!

@@ -3,7 +3,7 @@ When /^I submit the "Monthly Transportation Report" form with a date range of "(
 end
 
 Then /^I should see the following report in the "Monthly Transportation Report" table:$/ do |table|
-  check_simple_table_data "monthly_transportation", table
+  check_simple_table_data "#monthly_transportation", table
 end
 
 Given /^the following referral document associations exist:$/ do |table|
@@ -26,15 +26,15 @@ When /^I submit the "Customer Referral Report" form with a date range of "([^"]*
 end
 
 Then /^I should see the following report in the "Assessments Performed" table:$/ do |table|
-  check_simple_table_data "assessments_performed", table
+  check_simple_table_data "#assessments_performed", table
 end
 
 Then /^I should see the following report in the "Referral Sources" table:$/ do |table|
-  check_simple_table_data "referral_sources", table
+  check_simple_table_data "#referral_sources", table
 end
 
 Then /^I should see the following report in the "Services Referred" table:$/ do |table|
-  check_simple_table_data "services_referred", table
+  check_simple_table_data "#services_referred", table
 end
 
 def fill_in_date_range (parent_id, start_date, end_date)

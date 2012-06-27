@@ -13,7 +13,7 @@ Then /^I should be prompted to confirm the deletion when I click the organizatio
   button = find("a[href=\"/organizations/#{@organization.id}\"][data-method=\"delete\"]")
   button['data-confirm'].should eql("Are you sure?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   @confirmation_message = 'Organization was successfully deleted.'
 end
 

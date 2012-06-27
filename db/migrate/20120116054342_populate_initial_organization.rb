@@ -2,7 +2,7 @@
 # placeholder model just for the migration.
 class OrganizationType < ActiveRecord::Base; end
 
-class Organization
+class Organization < ActiveRecord::Base
   belongs_to :organization_type
 
   def is_outside_org?

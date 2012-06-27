@@ -19,6 +19,11 @@
     </li>
 
     <li>
+    <%= f.label :middle_initial, "Middle initial" %>
+    <%= f.text_field :middle_initial, :maxlength => 1 %>
+    </li>
+
+    <li>
     <%= f.label :last_name, "* Last name" %>
     <%= f.text_field :last_name %>
     </li>
@@ -39,7 +44,7 @@
     </li>
 
     <li>
-    <%= f.label :phone_number_1, "Preferred phone" %>
+    <%= f.label :phone_number_1, "* Preferred phone" %>
     <%= f.text_field :phone_number_1 %>
     </li>
 

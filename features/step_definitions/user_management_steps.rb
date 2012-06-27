@@ -118,7 +118,7 @@ Then /^I should be able to click the button to delete the admin user$/ do
   end
   
   @confirmation_message = "User #{@admin.email} successfully marked deleted."
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   step %Q(I should see a confirmation message)
 end
 

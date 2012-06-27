@@ -1,5 +1,6 @@
 Then /^I should be able to create a new customer$/ do
   fill_in 'customer[first_name]', :with => 'Alex'
+  fill_in 'customer[middle_initial]', :with => 'A'
   fill_in 'customer[last_name]', :with => 'Trebek'
   fill_in 'customer[birth_date]', :with => '1962-04-01'
   select 'Male', :from => 'customer[gender]'
@@ -35,7 +36,7 @@ Then /^I should be prompted to confirm the deletion when I click the customer(?:
   button = find("form[action='/customers/#{@customer.id}'] input[type=submit][value=Delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this user?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   @confirmation_message = 'Customer was successfully deleted.'
   step %Q(I should see a confirmation message)
 end

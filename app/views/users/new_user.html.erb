@@ -4,17 +4,33 @@
 
 <script type="text/JavaScript">
   $(document).ready(function() {
-    $("#permissions").hide();
-    $("#user_organization_id").change(function(event) {
-      var element = $("#user_organization_id")[0];
-      var option = element.options[element.selectedIndex];
-      if (option.value == 1) {
-        $("#permissions").show();
-      } else {
-        $("#permissions").hide();
-      }
+    $("#user_organization_id").change(function() {
+      check_permissions();
     });
+    check_permissions();
   });
+  
+  function check_permissions() {
+    $("#permissions .permissions_note").remove();
+    var element = $("#user_organization_id")[0];
+    if (element.selectedIndex > 0) {
+      $.getJSON('/organizations/'+element.options[element.selectedIndex].value+'.json', function(data) {
+        if (!jQuery.isEmptyObject(data) && data.organization.organization_type == '<%= j Organization::ORGANIZATION_TYPES[:staff][:id] %>') {
+          $("#permissions select").show();
+        }
+        else hide_permissions();
+      })
+      .error(function() { 
+        hide_permissions(); 
+      });
+    } else hide_permissions();    
+  }
+  
+  function hide_permissions() {    
+    $("#permissions select")[0].selectedIndex = 0;
+    $("#permissions select").hide();
+    $("#permissions").append($('<p class="permissions_note">Only applies to Staff Organization users.</p>'));        
+  }
 </script>
 
 <%= form_for @user, :url=>url_for(:action=>:create_user) do |f| %>
@@ -58,7 +74,7 @@
       </li>
       <li id="permissions">
         <%= f.label :permissions, "Permissions:" %>
-        <%= f.select :level, [["Admin", 100], ["Editor", 50], ["Viewer", 0]] %>
+        <%= f.select :level, [["Viewer", 0], ["Editor", 50], ["Admin", 100]] %>
       </li>
     </ol>
 

@@ -5,7 +5,6 @@ end
 def fill_common_kase_attributes
   # Use 'Yesterday' for the open date so that we can close it 'Today' in other tests
   fill_in "Opened", :with => Date.yesterday.strftime('%Y-%m-%d')
-  fill_in "Referral source", :with => "Source"
   select @referral_type.name, :from => "Referral Source Type"
 end
 
@@ -42,6 +41,7 @@ end
 
 Then /^I should be able to create a new open, unassigned training case for the customer$/ do
   fill_common_open_unassigned_kase_attributes
+  fill_in "Referral source", :with => "Source"
   select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
   step "I submit the form to create the training case"
@@ -75,6 +75,35 @@ end
 Given /^an unassigned open training case exists$/ do
   @kase = FactoryGirl.create(:open_training_kase, :assigned_to => nil)
   @customer = @kase.customer
+end
+
+Given /^an open coaching case exists$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+end
+
+Given /^an open training case exists$/ do
+  @kase = FactoryGirl.create(:open_training_kase)
+end
+
+Given /^an open coaching case exists belonging to the customer and assigned to the case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase, :customer => @customer.first)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = @case_manager
+  @kase.save
+end
+
+Given /^an open coaching case exists assigned to the case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = @case_manager
+  @kase.save
+end
+
+Given /^an open coaching case exists with no case manager$/ do
+  @kase = FactoryGirl.create(:open_coaching_kase)
+  @kase = Kase.find(@kase.id) # Reload to get the right STI model
+  @kase.case_manager = nil
+  @kase.save
 end
 
 When /^I click through to the case details$/ do
@@ -176,7 +205,7 @@ Then /^I should be prompted to confirm the deletion when I click the case(?:'s)?
   button = find("a.delete.kase[href='/cases/#{@kase.id}'][data-method=delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this case?")
   button.click
-  page.driver.browser.switch_to.alert.accept
+  popup.confirm
   @confirmation_message = 'Case was successfully deleted.'
   # Don't confirm just yet because we may want to test if it failed (due to permissions)
 end
@@ -201,13 +230,13 @@ Then /^I should not see any training case fields$/ do
 end
 
 Given /^the case has no contact events$/ do
-  @kase.reload
-  @kase.contacts.size.should == 0
+  @kase = Kase.find(@kase.id)
+  @kase.contacts(true).size.should == 0
 end
 
 Then /^the case should have 1 contact event$/ do
-  @kase.reload
-  @kase.contacts.size.should == 1
+  @kase = Kase.find(@kase.id)
+  @kase.contacts(true).size.should == 1
   @contact = @kase.contacts.first
 end
 

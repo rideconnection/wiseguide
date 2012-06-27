@@ -41,6 +41,7 @@ Wiseguide::Application.routes.draw do
     get "training", :on=>:collection, :action => :index, :kase => {:type => 'TrainingKase'}
     post "add_route", :on=>:collection
     post "delete_route", :on=>:collection
+    post "notify_manager", :on => :member
   end
 
   #these are called "assessments" in user-visible text

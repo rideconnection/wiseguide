@@ -10,7 +10,7 @@ class Kase < ActiveRecord::Base
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
 
   has_one  :assessment_request, :dependent => :nullify
-  has_many :contacts, :dependent => :nullify
+  has_many :contacts, :as => :contactable, :dependent => :destroy
   has_many :events, :dependent => :destroy
   has_many :response_sets, :dependent => :destroy
   has_many :kase_routes, :dependent => :destroy
@@ -22,7 +22,6 @@ class Kase < ActiveRecord::Base
 
   validates_presence_of  :customer_id
   validates              :open_date, :date => { :before_or_equal_to => Proc.new { Date.current } }
-  validates_presence_of  :referral_source
   validates_presence_of  :referral_type_id
   validates_presence_of  :disposition
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
@@ -79,10 +78,6 @@ class Kase < ActiveRecord::Base
     super
   end
 
-  # Perform any post-survey logic
-  def assessment_complete
-  end
-  
 private
 
   def cleanup_household_stats

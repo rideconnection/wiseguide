@@ -1,24 +1,35 @@
 require 'spec_helper'
 
 describe CoachingKase do
-  before do
-    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
-    
+  before do    
     @case_manager = FactoryGirl.create(:case_manager)
-    
+
     @valid_attributes = {
-      :customer_id      => 1,
-      :open_date        => Date.current,
-      :referral_source  => "Source",
-      :referral_type_id => 1,
-      :disposition      => @in_progress,
-      :case_manager     => @case_manager
+      :customer_id                         => 1,
+      :open_date                           => Date.current,
+      :close_date                          => Date.current,
+      :referral_source                     => nil,
+      :referral_type_id                    => 1,
+      :user_id                             => nil,
+      :funding_source_id                   => nil,
+      :disposition_id                      => FactoryGirl.create(:disposition).id,
+      :county                              => nil,
+      :type                                => "CoachingKase",
+      :assessment_date                     => nil,
+      :assessment_language                 => nil,
+      :case_manager_notification_date      => nil,
+      :case_manager_id                     => nil,
+      :assessment_request_id               => nil,
+      :household_size                      => nil,
+      :household_income                    => nil,
+      :household_size_alternate_response   => nil,
+      :household_income_alternate_response => nil,
+      :medicaid_eligible                   => nil,
+      :scheduling_system_entry_required    => nil
     }
 
     @valid_kase = CoachingKase.new
-    
-    # We need to override the mass-assignment filters so we can assign a 
-    # valid type attrbiute.
+
     @valid_kase.attributes = @valid_attributes
   end
   
@@ -40,41 +51,7 @@ describe CoachingKase do
   describe "case_manager_id" do
     it { should accept_values_for(:case_manager_id, nil, "", 0, 1) }
   end
-  
-  describe "medicaid_eligible" do
-    it "should allow true" do
-      @valid_kase.medicaid_eligible = true
-      @valid_kase.valid?.should be_true
-    end
-
-    it "should allow false" do
-      @valid_kase.medicaid_eligible = false
-      @valid_kase.valid?.should be_true
-    end
-
-    it "should allow nil" do
-      @valid_kase.medicaid_eligible = nil
-      @valid_kase.valid?.should be_true
-    end
-  end
-  
-  describe "scheduling_system_entry_required" do
-    it "should allow true" do
-      @valid_kase.scheduling_system_entry_required = true
-      @valid_kase.valid?.should be_true
-    end
-
-    it "should allow false" do
-      @valid_kase.scheduling_system_entry_required = false
-      @valid_kase.valid?.should be_true
-    end
-
-    it "should allow nil" do
-      @valid_kase.scheduling_system_entry_required = nil
-      @valid_kase.valid?.should be_true
-    end
-  end
-  
+    
   describe "case_manager association" do
     before do
       @invalid_unpersisted_case_manager = FactoryGirl.build(:case_manager, :email => nil)

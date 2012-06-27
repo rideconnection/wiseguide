@@ -1,11 +1,11 @@
 <h1>Contacts</h1>
-<% if can? :edit, @customer %>
-  <%= link_to "Add", new_contact_path(:contact => {:contactable_type => @customer.class.name, :contactable_id => @customer.id}), :class => :add %>
+<% if can?(:edit, @assessment_request) && @assessment_request.kase.blank? %>
+  <%= link_to "Add", new_contact_path(:contact => {:contactable_type => @assessment_request.class.name, :contactable_id => @assessment_request.id}), :class => :add %>
 <% end %>
 
 <table>
   <tbody>
-    <% for contact in @customer.contacts %>
+    <% for contact in @assessment_request.contacts %>
       <% cycle = cycle("even","odd") %>
       <tr class=<%= cycle %>>
         <td><%= contact.date_time.to_date %></td>

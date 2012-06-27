@@ -14,6 +14,7 @@
       <td><%= assessment_request.customer_birth_date %></td>
       <td><%= assessment_request.notes %></td>
       <td><%= assessment_request.submitter.display_name %></td>
+      <td><%= assessment_request.assignee.display_name unless assessment_request.assignee.blank? %></td>
       <td><%= assessment_request.status %></td>
       <td class="no-print">
         <% if can? :destroy, assessment_request %>
@@ -25,6 +26,6 @@
   <% end %>
 <% else %>
   <tr>
-    <td colspan="7" class="error">There are no assessment requests that match your request</td>
+    <td colspan="9" class="error">There are no assessment requests that match your request</td>
   </tr>
 <% end %>

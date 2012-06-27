@@ -3,6 +3,30 @@ require 'spec_helper'
 describe Kase do
   before do
     @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
+    
+    @valid_attributes = {
+      :customer_id                         => 1,
+      :open_date                           => Date.current,
+      :close_date                          => Date.current,
+      :referral_source                     => "Source",
+      :referral_type_id                    => 1,
+      :user_id                             => nil,
+      :funding_source_id                   => 1,
+      :disposition_id                      => FactoryGirl.create(:disposition).id,
+      :county                              => Kase::VALID_COUNTIES.values.first,
+      :type                                => "TrainingKase",
+      :assessment_date                     => nil,
+      :assessment_language                 => nil,
+      :case_manager_notification_date      => nil,
+      :case_manager_id                     => nil,
+      :assessment_request_id               => nil,
+      :household_size                      => nil,
+      :household_income                    => nil,
+      :household_size_alternate_response   => nil,
+      :household_income_alternate_response => nil,
+      :medicaid_eligible                   => nil,
+      :scheduling_system_entry_required    => nil
+    }
   end
   
   describe "customer_id" do
@@ -43,8 +67,7 @@ describe Kase do
   end
 
   describe "referral_source" do
-    it { should accept_values_for(:referral_source, "a") }
-    it { should_not accept_values_for(:referral_source, nil, "") }
+    it { should accept_values_for(:referral_source, nil, "", "a") }
   end
 
   describe "referral_type_id" do
@@ -167,28 +190,16 @@ describe Kase do
   end
   
   describe "medicaid_eligible" do
-    before do
-      @kase = FactoryGirl.create(:kase)
-    end
-    
-    it "should allow true" do
-      @kase.valid?.should be_true
-    end
-
-    it "should allow false" do
-      @kase.medicaid_eligible = false
-      @kase.valid?.should be_true
-    end
-
-    it "should allow nil" do
-      @kase.medicaid_eligible = nil
-      @kase.valid?.should be_true
-    end
+    it { should accept_values_for(:medicaid_eligible, true, false, nil) }
+  end
+  
+  describe "scheduling_system_entry_required" do
+    it { should accept_values_for(:scheduling_system_entry_required, true, false, nil) }
   end
   
   context "associations" do
     before do
-      @kase = Kase.new
+      @kase = FactoryGirl.create(:kase)
     end
     
     it "should have a customer attribute" do
@@ -216,8 +227,27 @@ describe Kase do
       @kase.should respond_to(:assessment_request)
     end
     
-    it "should have a contacts attribute" do
-      @kase.should respond_to(:contacts)
+    describe "contacts association" do
+      before do
+        @contacts = [
+          FactoryGirl.create(:contact, :contactable => @kase),
+          FactoryGirl.create(:contact, :contactable => @kase)
+        ]
+      end
+      
+      it "should have a contacts attribute" do
+        Kase.new.should respond_to(:contacts)
+      end
+
+      it "should return an empty array if no contacts have been associated" do
+        @contacts.map(&:destroy)
+        @kase.contacts(true)
+        @kase.contacts.should == []
+      end
+
+      it "should return the proper contacts" do
+        @kase.contacts.should =~ @contacts
+      end
     end
     
     it "should have a events attribute" do

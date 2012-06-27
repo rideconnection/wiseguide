@@ -11,13 +11,13 @@ Feature: System Reports
         | 2  | Barty      | Crouch    |
         | 3  | Darth      | Vader     |
         | 4  | Master     | Chief     |
-      And the following open coaching cases exist:
+      And the following open coaching kases exist:
         | id | open_date               | assessment_date | case_manager_notification_date | customer_id |
         | 1  | 2010-12-31              | 2010-12-31      | 2010-12-31                     | 1           |
         | 3  | 2011-01-01              | 2011-01-02      | 2011-01-02                     | 2           |
         | 6  | 2011-01-30              | 2011-02-01      | 2011-02-01                     | 3           |
         | 7  | 2011-04-02              | 2011-04-02      | 2011-01-02                     | 4           |
-      And the following closed coaching cases exist:
+      And the following closed coaching kases exist:
         | id | open_date  | close_date | assessment_date | case_manager_notification_date | customer_id |
         | 2  | 2010-12-31 | 2011-01-01 | 2011-01-01      | 2011-01-01                     | 3           |
         | 4  | 2011-01-01 | 2011-01-02 | 2011-01-01      | 2011-01-02                     | 1           |
@@ -28,14 +28,14 @@ Feature: System Reports
         | 2  | Barty               | Crouch             | 2           | 3       | 2010-12-20 |
         | 3  | Darth               | Vader              | 3           | 2       | 2010-12-30 |
       And the following contact events exist:
-        | customer_id | kase_id | date_time  | description   |
-        | 1           |         | 2010-11-01 | I just called |
-        | 1           | 1       | 2011-01-01 | To say        |
-        | 2           | 3       | 2011-01-02 | I love you    |
-        | 2           | 5       | 2011-01-21 | I just called |
-        | 3           | 2       | 2010-12-30 | To say        |
-        | 3           | 2       | 2011-01-01 | How much      |
-        | 4           | 7       | 2011-01-30 | I care        |
+        | contactable_type | contactable_id | date_time  | description   |
+        | Customer         | 1              | 2010-11-01 | I just called |
+        | CoachingKase     | 1              | 2011-01-01 | To say        |
+        | CoachingKase     | 3              | 2011-01-02 | I love you    |
+        | CoachingKase     | 5              | 2011-01-21 | I just called |
+        | CoachingKase     | 2              | 2010-12-30 | To say        |
+        | CoachingKase     | 2              | 2011-01-01 | How much      |
+        | CoachingKase     | 7              | 2011-01-30 | I care        |
       And I am on the homepage
     When I click on the "Reports" link
       And I submit the "Monthly Transportation Report" form with a date range of "2011-01-01" to "2011-01-30"
@@ -83,7 +83,7 @@ Feature: System Reports
         | 6  |
         | 7  |
         | 8  |
-      And the following open coaching cases exist:
+      And the following open coaching kases exist:
         # Matched: 2, 3, 4, 5, 6, 7, 8, 11
         | id | open_date               | assessment_date | customer_id | 
         | 1  | 2010-12-31              | 2010-12-31      | 1           |
@@ -96,7 +96,7 @@ Feature: System Reports
         | 8  | 2011-01-30              | 2011-01-30      | 6           |
         | 9  | 2011-01-30              | 2011-02-01      | 6           |
         | 10 | 2011-02-01              | 2011-02-01      | 7           |
-      And the following closed coaching cases exist:
+      And the following closed coaching kases exist:
         | id | open_date  | close_date | assessment_date | customer_id |
         | 11 | 2011-01-01 | 2011-01-01 | 2011-01-01      | 8           |
         | 12 | 2011-01-30 | 2011-02-01 | 2011-02-01      | 8           |

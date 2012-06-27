@@ -1,20 +1,15 @@
-WiseGuide is a CRM for rider training programs, such as
-RideWise
+WiseGuide
+=========
+
+WiseGuide is a CRM for rider training programs, such as RideWise.
 
 http://www.rideconnection.org/ride/Services/RideWise.aspx
 
 Funding is provided by Ride Connection, and software development
-by OpenPlans.
-
------------------------
+by OpenPlans and Panoptic Development.
 
 Development Environment
 =======================
-
-If you already have RVM installed, CD in to the wiseguide project directory and
-accept the RVM prompt. You may be prompted to install the required Ruby
-version, too. Once that is all set, install the bundler gem then skip to the
-"Install dependencies" step.
 
 Install RVM
 -----------
@@ -26,24 +21,28 @@ out: http://beginrescueend.com/rvm/
 
 To install rvm, run these two commands:
 
-  $ bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
-  $ echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' >> ~/.bash_profile
+    bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
+    echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function' >> ~/.bash_profile
 
-Open a fresh terminal (or re-source your .bash_profile), cd to the wiseguide
-project directory, and answer 'yes' to the RVM prompt.
+Open a fresh terminal (or re-source your `.bash_profile`), and then follow the
+next step to install dependencies.
 
 Install dependencies
 --------------------
 
-Now that you're in a fresh RVM environment, you can:
+When you change to the wiseguide project directory, you will be prompted by
+RVM to trust the .rvmrc, answer yes to the prompt.  After this, you may be
+prompted to install the required Ruby version; do so if necessary.
 
-  $ bundle install
+Now that your rvm is ready, install the wiseguide dependencies:
+
+    bundle install
 
 Copy config/database.yml.example to database.yml and tweak to suit your
 needs.  (It works out of the box if you're working with SQLite. Fuzzy
 matching is not present in SQLite, however.)
 
-Copy config/app_config_template.yml to app_config.yml and tweak to suit
+Copy `config/app_config_template.yml` to `app_config.yml` and tweak to suit
 your needs. (You will want to put your email address in there at least.)
 
 Bootstrap environment
@@ -51,24 +50,26 @@ Bootstrap environment
 
 Populate the database:
 
-  $ bundle exec rake db:setup
+    bundle exec rake db:setup
 
 In a development environment, you can load some fake sandbox data with:
 
-  $ bundle exec rake db:sandbox:load
+    bundle exec rake db:sandbox:load
 
 It will create (among other things) an initial admin account, so you can login
 as 'admin@rideconnection.org' with password 'password 1'.
  
-That's it!  You can now run a test server with "rails s" or run the tests.
+That's it!  You can now run a development server with `rails s`.
 
 Resetting the development database
-----------------------
+----------------------------------
 
 In the event you need to reset the database, the following command will perform
 all of the necessary steps:
 
-  $ bundle exec rake db:drop:all; bundle exec rake db:create:all; bundle exec rake db:migrate; bundle exec rake db:seed; bundle exec rake db:sandbox:load; bundle exec rake db:test:prepare
+    bundle exec rake db:drop:all && bundle exec rake db:create:all \
+        && bundle exec rake db:migrate && bundle exec rake db:seed \
+        && bundle exec rake db:sandbox:load && bundle exec rake db:test:prepare
 
 Testing
 =======
@@ -76,8 +77,10 @@ Testing
 We are using Rspec for unit testing and cucumber for integration and functional
 testing. You can run them using the following commands:
 
-  $ bundle exec rake test
-  $ bundle exec rake cucumber
+    bundle exec rake test
+    bundle exec rake cucumber
+
+(Just `bundle exec rake` will run all of the tests.)
 
 Speeding up your tests
 ----------------------
@@ -89,51 +92,60 @@ running tests frequently, while developing a new feature or refactoring, etc.,
 then preloading your test environment into spork will save you a few seconds 
 or minutes per test execution. To use spork while testing, first boot up spork:
 
-  $ bundle exec spork
+    bundle exec spork
   
 for Rspec tests, or 
   
-  $ bundle exec spork cucumber
+    bundle exec spork cucumber
   
 for running Cucumber features. Note that these two servers can be run in the 
-background simultaneously as they use different ports. Then to run your tests
-within the spork environment:
+background simultaneously as they use different ports.  The `--drb` option has
+been enabled by default, so the tests will automatically use the spork server
+if it is running.
 
-  $ bundle exec rspec [path_to_your_spec(s)] --drb
-
-or
-
-  $ bundle exec cucumber [path_to_your_feature(s)] --drb
-  
 Note that because spork preloads your environment, you will have to restart the
 spork server anytime you modify your model or configuration files, or anything
 else that will be cached by the Rails server.
 
-See also http://chrismdp.github.com/2010/11/getting-spork-working-now-on-rails-3-rspec-2-and-cucumber/
-and http://opinionatedprogrammer.com/2011/02/profiling-spork-for-faster-start-up-time/.
+See also:
+
+* http://chrismdp.github.com/2010/11/getting-spork-working-now-on-rails-3-rspec-2-and-cucumber/
+* http://opinionatedprogrammer.com/2011/02/profiling-spork-for-faster-start-up-time/
+
+Branches
+========
+
+There are two different deployment environments: staging and production.
+Staging runs the `master` branch, to test the latest features that have been
+developed.  Production runs the `stable` branch, which should contain commits
+that have been tested on staging successfully.
+
+During normal development, you should always be committing to `master`. After
+testing the new features on the staging server, you can check out `stable` and
+`git merge master` to prepare to deploy them to production.
 
 Deployment
 ==========
 
-There are two different deployment environments: staging and production.
-Staging runs the master branch, to test the latest features that have been
-developed.  Production runs the stable branch, which should contain commits
-that have been tested on staging successfully.
+To deploy, run: `cap [staging|production] deploy`
 
-To deploy, run: cap [staging|production] deploy
+Remember to push your changes to the main repository first, since the deploy
+process pulls from there.  Database migrations are currently performed by hand
+after deploying.
 
-Postgres Notes
-==============
+PostgreSQL Notes
+================
 
-To set up postgres for use with WiseGuide, you will need the
-fuzzystrmatch library (included in postgresql-contrib-8.4 in Ubuntu).
-This adds support for dmetaphone, which is how we
-phonetically match names.  Run psql and then the following command:
+To set up PostgreSQL for use with WiseGuide, you will need the fuzzystrmatch
+library (included in postgresql-contrib-8.4 in Ubuntu).  This adds support for
+dmetaphone, which is how we phonetically match names.  Run `psql` (usually as
+the `postgres` user) and then the following command:
 
-\i /opt/local/share/postgresql84/contrib/fuzzystrmatch.sql 
+    \i /opt/local/share/postgresql84/contrib/fuzzystrmatch.sql 
 
 Fuzzystrmatch setup with Homebrew on Mac
---------------------------
+----------------------------------------
+
 Fuzzystrmatch should be included when you install postgres with Homebrew. If
 the following directions don't work for you, first try updating homebrew with 
 `brew update`, then upgrade postgres with `brew upgrade postgres`. (Note that 
@@ -154,3 +166,20 @@ you should consider running the above commands on the `template1` database
 which Postgres uses as the template for creating new databases. Otherwise,
 you will need to repeat this process anytime the databases are rebuilt from 
 one of the destructive `rake db:...` commands.
+
+Server Notes
+============
+
+The servers currently run Apache + Passenger (a.k.a. `mod_rails`) to host the
+application.  The installation is fairly straightforward (see the Passenger
+documentation).
+
+When updating Ruby to a newer version, you need to make a few changes:
+
+1. As deployer, run the `rvm install` command for the new Ruby version.
+2. Deploy as normal, which will make sure the bundle is up to date.
+3. As deployer, `gem install passenger`
+4. Reinstall Apache module: `passenger-install-apache2-module`
+5. Update both /etc/apache2/mods-enabled/passenger.load and conf as directed
+   by the previous command. (The paths will have changed.)
+6. Restart Apache.

@@ -4,8 +4,9 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests
   # GET /assessment_requests.xml
   def index
-    params[:user_type_filter] ||= "all"
-    params[:current_status_filter] ||= "all"
+    params[:user_type_filter]      = params[:user_type_filter]      || session[:assessment_requests_index_user_type_filter]      || "all"
+    params[:current_status_filter] = params[:current_status_filter] || session[:assessment_requests_index_current_status_filter] || "all"
+    params[:assignee_filter]       = params[:assignee_filter]       || session[:assessment_requests_index_assignee_filter]       || "all"
 
     query = AssessmentRequest.scoped
         
@@ -27,8 +28,17 @@ class AssessmentRequestsController < ApplicationController
       query = query.completed
     end
         
+    case params[:assignee_filter].to_sym
+    when :me
+      query = query.assigned_to(current_user)
+    end
+        
     @assessment_requests = query.order("created_at ASC").all
-
+    
+    session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
+    session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
+    session[:assessment_requests_index_assignee_filter]       = params[:assignee_filter]
+    
     respond_to do |format|
       format.html # index.html.erb
       format.js   # index.js.erb
@@ -39,6 +49,8 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/1
   # GET /assessment_requests/1.xml
   def show
+    prep_edit
+    
     @assessment_request = AssessmentRequest.find(params[:id])
 
     respond_to do |format|
@@ -49,6 +61,8 @@ class AssessmentRequestsController < ApplicationController
 
   # GET /assessment_requests/1/edit
   def edit
+    prep_edit
+    
     @assessment_request = AssessmentRequest.find(params[:id])
 
     respond_to do |format|
@@ -60,6 +74,8 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/new
   # GET /assessment_requests/new.xml
   def new
+    prep_edit
+    
     @assessment_request = AssessmentRequest.new
 
     respond_to do |format|
@@ -111,6 +127,8 @@ class AssessmentRequestsController < ApplicationController
   # POST /assessment_requests
   # POST /assessment_requests.xml
   def create
+    prep_edit
+    
     fields = params[:assessment_request]
     fields[:submitter] = current_user
     @assessment_request = AssessmentRequest.new(fields)
@@ -118,7 +136,7 @@ class AssessmentRequestsController < ApplicationController
     respond_to do |format|
       if @assessment_request.save
         format.html do
-          redirect_to root_path,
+          redirect_to current_user.is_outside_user? ? root_path : assessment_requests_path,
                       :notice => 'Assessment request was successfully created.'
         end
         format.xml do
@@ -135,12 +153,14 @@ class AssessmentRequestsController < ApplicationController
   # PUT /assessment_requests/1
   # PUT /assessment_requests/1.xml
   def update
+    prep_edit
+    
     @assessment_request = AssessmentRequest.find(params[:id])
 
     respond_to do |format|
       if @assessment_request.update_attributes(params[:assessment_request])
         format.html do
-          redirect_to root_path,
+          redirect_to current_user.is_outside_user? ? root_path : assessment_requests_path,
                       :notice => 'Assessment request was successfully updated.'
         end
         format.xml  { head :ok }
@@ -174,4 +194,9 @@ class AssessmentRequestsController < ApplicationController
     end
   end
 
+private
+
+  def prep_edit
+    @assignees = [User.new(:email=>'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
+  end
 end

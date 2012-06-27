@@ -22,6 +22,7 @@ gem "paperclip", "~> 3.0.2"
 gem "userstamp",
   :git => "git://github.com/delynn/userstamp.git",
   :ref => "777633a"
+gem 'store_base_sti_class'
 gem "uuidtools"
 gem "will_paginate", "~> 3.0.3"
 
@@ -54,15 +55,15 @@ group :test do
   gem "cucumber"
   gem "cucumber-rails", :require => false
   gem "database_cleaner"
-  gem "debugger"
   gem "email_spec"
-  gem "factory_girl_rails"
-  gem "faker"
   gem "pdf-inspector", :require => "pdf/inspector"
+  gem "prickle"
 end
 
 group :development, :test do
   gem "debugger"
+  gem "factory_girl_rails"
+  gem "faker"
   gem "rspec-rails"
   gem "sqlite3-ruby", :require => "sqlite3"
 end

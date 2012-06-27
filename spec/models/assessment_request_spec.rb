@@ -69,6 +69,10 @@ describe AssessmentRequest do
     end
   end
 
+  describe "assignee_id" do
+    it { should accept_values_for(:assignee_id, nil, "", 0, 1) }
+  end
+
   describe "customer_birth_date" do
     it { should accept_values_for(:customer_birth_date, nil, "", Date.today) }
   end
@@ -139,6 +143,18 @@ describe AssessmentRequest do
   end
   
   context "associations" do
+    describe "assignee association" do
+      it "should have a assignee attribute" do
+        AssessmentRequest.new.should respond_to(:assignee)
+      end
+
+      it "should return the assigned user object" do
+        assignee = FactoryGirl.create(:user)
+        @valid_assessment_request.assignee = assignee
+        @valid_assessment_request.assignee.should == assignee
+      end
+    end
+    
     describe "submitter association" do
       it "should have a submitter attribute" do
         AssessmentRequest.new.should respond_to(:submitter)
@@ -146,6 +162,29 @@ describe AssessmentRequest do
 
       it "should return the submitting user object" do
         @valid_assessment_request.submitter.should == @case_manager
+      end
+    end
+    
+    describe "contacts association" do
+      before do
+        @contacts = [
+          FactoryGirl.create(:contact, :contactable => @valid_assessment_request),
+          FactoryGirl.create(:contact, :contactable => @valid_assessment_request)
+        ]
+      end
+      
+      it "should have a contacts attribute" do
+        AssessmentRequest.new.should respond_to(:contacts)
+      end
+
+      it "should return an empty array if no contacts have been associated" do
+        @contacts.map(&:destroy)
+        @valid_assessment_request.contacts(true)
+        @valid_assessment_request.contacts.should == []
+      end
+
+      it "should return the proper contacts" do
+        @valid_assessment_request.contacts.should =~ @contacts
       end
     end
     
@@ -233,6 +272,35 @@ describe AssessmentRequest do
   end
   
   context "scopes" do
+    describe "assigned_to" do
+      # scope :assigned_to, lambda { |user| where(:assignee_id => user.id) }
+      before do
+        @user_1 = FactoryGirl.create(:user)
+        @user_2 = FactoryGirl.create(:user)
+        @user_3 = FactoryGirl.create(:user)
+        
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, :assignee => @user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, :assignee => @user_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, :assignee => @user_3)
+      end
+    
+      it "should have a assigned_to attribute" do
+        AssessmentRequest.should respond_to(:assigned_to)
+      end
+    
+      it "should return the assessment requests that are assigned to a given user" do
+        AssessmentRequest.assigned_to(@user_1).should =~ [@assessment_request_1, @assessment_request_3, @assessment_request_5]
+        AssessmentRequest.assigned_to(@user_2).should =~ [@assessment_request_2, @assessment_request_4]
+      end
+    
+      it "should return the assessment requests that are assigned to an array of users" do
+        AssessmentRequest.assigned_to([@user_1, @user_2]).should =~ [@assessment_request_1, @assessment_request_3, @assessment_request_5, @assessment_request_2, @assessment_request_4]
+      end
+    end
+    
     describe "submitted_by" do
       # scope :submitted_by, lambda { |user| where(:submitter_id => user.id) }
       before do

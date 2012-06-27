@@ -1,10 +1,11 @@
 class Customer < ActiveRecord::Base
   belongs_to :ethnicity
   belongs_to :ada_service_eligibility_status
+  has_many :assessment_requests
   has_many :customer_impairments, :dependent => :destroy
   has_many :impairments, :through => :customer_impairments
   has_many :kases, :dependent => :restrict
-  has_many :contacts, :dependent => :destroy, :conditions => {:kase_id => nil}
+  has_many :contacts, :as => :contactable, :dependent => :destroy
   has_many :customer_support_network_members, :dependent => :destroy
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
@@ -29,6 +30,7 @@ class Customer < ActiveRecord::Base
   validates_length_of   :state, :is => 2
   validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-6789" 
   validates_presence_of :county
+  validates             :middle_initial, :length => { :maximum => 1 }
 
   HUMAN_ATTRIBUTE_NAMES = {
     :veteran_status => "Veteran?",

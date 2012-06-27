@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508160358) do
+ActiveRecord::Schema.define(:version => 20120614222706) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -61,10 +61,10 @@ ActiveRecord::Schema.define(:version => 20120508160358) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "reason_not_completed"
+    t.integer  "assignee_id"
   end
 
   create_table "contacts", :force => true do |t|
-    t.integer  "kase_id"
     t.integer  "user_id"
     t.datetime "date_time"
     t.string   "method"
@@ -72,15 +72,15 @@ ActiveRecord::Schema.define(:version => 20120508160358) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",    :default => 0
+    t.integer  "lock_version",     :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.boolean  "show_full_notes"
-    t.integer  "customer_id"
+    t.string   "contactable_type"
+    t.integer  "contactable_id"
   end
 
-  add_index "contacts", ["customer_id"], :name => "index_contacts_on_customer_id"
-  add_index "contacts", ["kase_id"], :name => "index_contacts_on_kase_id"
+  add_index "contacts", ["contactable_type", "contactable_id"], :name => "index_contacts_on_contactable_type_and_contactable_id"
 
   create_table "counties", :force => true do |t|
     t.string   "name"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20120508160358) do
     t.boolean  "honored_citizen_cardholder"
     t.string   "primary_language"
     t.integer  "ada_service_eligibility_status_id"
+    t.string   "middle_initial",                    :limit => 1
   end
 
   create_table "dependencies", :force => true do |t|
