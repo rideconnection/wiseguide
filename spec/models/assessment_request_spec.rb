@@ -91,7 +91,7 @@ describe AssessmentRequest do
 
   describe "reason_not_completed" do
     it { should_not accept_values_for(:reason_not_completed, "Foo") }
-    it { should accept_values_for(:reason_not_completed, nil, "", "Could not reach", "Duplicate request") }
+    it { should accept_values_for(:reason_not_completed, nil, "", "Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn") }
   end
 
   context "instance methods" do
