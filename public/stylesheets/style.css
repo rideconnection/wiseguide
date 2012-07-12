@@ -1085,7 +1085,7 @@ body.customers dd {
   padding-left: 20px;
 }
 
-body.customers th {
+body.customers table.customers th {
   padding: 5px 10px;
 }
 
@@ -1264,7 +1264,7 @@ div.predefined-report form.run-report input[type="submit"]:hover {
     background: #009FFB;
 }
 
-body.reports table th {
+body.reports table.auto-zebra th {
     padding: 5px 10px;
     border-right: 1px solid #3674b3;
 }
