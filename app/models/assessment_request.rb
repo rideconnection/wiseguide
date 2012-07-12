@@ -18,7 +18,7 @@ class AssessmentRequest < ActiveRecord::Base
   validates_presence_of :customer_last_name
   validates_presence_of :customer_phone
   validates_presence_of :submitter
-  validates_inclusion_of :reason_not_completed, :in => ["Could not reach", "Duplicate request"], :allow_blank => true
+  validates_inclusion_of :reason_not_completed, :in => ["Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn"], :allow_blank => true
 
   attr_accessible :attachment, :customer_first_name, :customer_last_name,
                   :customer_birth_date, :customer_phone, :notes,

@@ -265,7 +265,7 @@ class ReportsController < ApplicationController
                 kase.disposition.name,
                 event.event_type.name,
                 event.date,
-                event.user.email,
+                event.user.try(:display_name),
                 event.funding_source.name,
                 event.duration_in_hours]
       end
@@ -337,7 +337,7 @@ class ReportsController < ApplicationController
     customer.ethnicity.name,
     customer.gender,
     kase.open_date,
-    kase.assigned_to.try(:email),
+    kase.assigned_to.try(:display_name),
     kase.referral_source,
     kase.referral_type.name,
     kase.close_date,
@@ -376,7 +376,7 @@ class ReportsController < ApplicationController
                 customer.state,
                 customer.zip,
                 customer.notes,
-                kase.assigned_to.try(:email),
+                kase.assigned_to.try(:display_name),
                 kase.close_date,
                 kase.disposition.name]
       end

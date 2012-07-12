@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
                           :with => /^(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)$/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
                           :message => "must have at least one number and at least one non-alphanumeric character"
   
-  default_scope order(:email)
+  default_scope order(:first_name, :last_name)
   scope :active, where("users.level >= 0")
   scope :inside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject(&:is_outside_org?).collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
   scope :outside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject{|o| !o.is_outside_org?}.collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}

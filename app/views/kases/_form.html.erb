@@ -93,7 +93,7 @@
     <li>
       <%= f.label :user_id, "Assigned to" %>
       <% if can? :edit, @kase %>
-        <%= f.collection_select :user_id, @users, :id, :email, :prompt => (@kase.new_record? ? '<Select Assigned to>' : false) %>
+        <%= f.collection_select :user_id, @users, :id, :display_name, :prompt => (@kase.new_record? ? '<Select Assigned to>' : false) %>
       <% else %>
         <%= @kase.assigned_to.display_name unless @kase.assigned_to.blank? %>&nbsp;
       <% end %>

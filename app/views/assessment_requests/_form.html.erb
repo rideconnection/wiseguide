@@ -35,14 +35,14 @@
   <% unless current_user.is_outside_user? %>
     <div class="field">
       <%= f.label :assignee_id, "Assigned to" %><br />
-      <%= f.collection_select :assignee_id, @assignees, :id, :email, :prompt => (@assessment_request.new_record? ? '<Select Assigned to>' : false) %>
+      <%= f.collection_select :assignee_id, @assignees, :id, :display_name, :prompt => (@assessment_request.new_record? ? '<Select Assigned to>' : false) %>
     </div>  
   <% else %>
     <% # = f.hidden_field :assignee_id %>
   <% end %>
   <div class="field">
     <%= f.label :reason_not_completed %><br />
-    <%= f.select :reason_not_completed, ["Could not reach", "Duplicate request"], {:include_blank => ""} %>
+    <%= f.select :reason_not_completed, ["Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn"], {:include_blank => ""} %>
   </div>
   <div class="field">
     <%= f.label :notes %><br />

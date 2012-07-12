@@ -5,7 +5,7 @@
 
 <% for trainer in @trainers %>
   <% @events_by_trainer[trainer].sort_by!{|e| e.customer.name_reversed} %>
-  <%= content_tag :h2, trainer.email %>
+  <%= content_tag :h2, trainer.display_name %>
   Trained: <%= @customers_by_trainer[trainer].size %><br/>
   <b><%= @hours_by_trainer[trainer] %> hours</b><br/>
 

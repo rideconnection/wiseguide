@@ -111,7 +111,7 @@ When /^I click through to the case details$/ do
 end
 
 Then /^I should be able to assign the case to myself$/ do
-  select @current_user.email, :from => "Assigned to"
+  select @current_user.display_name, :from => "Assigned to"
   step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)
 end
@@ -133,7 +133,7 @@ Given /^another trainer exists$/ do
 end
 
 Then /^I should be able to assign the case to the other trainer$/ do
-  select @other_trainer.email, :from => "Assigned to"
+  select @other_trainer.display_name, :from => "Assigned to"
   step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)  
 end
@@ -143,7 +143,7 @@ Then /^the other trainer should( not)? be listed as the case assignee on the (Co
   assertion = negation ? :should_not : :should
   visit "/cases/#{type.downcase}"
   selector = "a[href='/cases/#{@kase.id}']"
-  find(selector).find(:xpath,".//..").send(assertion, have_content("(#{@other_trainer.email})"))
+  find(selector).find(:xpath,".//..").send(assertion, have_content("(#{@other_trainer.display_name})"))
 end
 
 Given /^an open training case exists and is assigned to me$/ do
