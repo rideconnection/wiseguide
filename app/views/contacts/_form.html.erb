@@ -6,7 +6,7 @@
   <ol class="section fourth">
     <li>
       <label>By</label>
-      <%= @contact.user.try :email %>
+      <%= @contact.user.try :display_name %>
     </li>
     <li>
       <%= f.label :date_time, "Date" %>

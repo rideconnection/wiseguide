@@ -25,7 +25,7 @@
     <h2>Open</h2>
     <% for kase in @other_open_kases %>
       <li class="open">
-        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.assigned_to.email %>) 
+        <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.assigned_to.display_name %>) 
       </li>
     <% end %>
     <h2>3 Month Follow-ups</h2>

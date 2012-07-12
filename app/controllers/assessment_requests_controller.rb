@@ -197,6 +197,6 @@ class AssessmentRequestsController < ApplicationController
 private
 
   def prep_edit
-    @assignees = [User.new(:email=>'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
+    @assignees = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
   end
 end

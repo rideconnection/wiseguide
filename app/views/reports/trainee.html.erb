@@ -30,7 +30,7 @@
           <% end %>
           <td><%= link_to event.event_type.name, [:edit, event] %></td>
           <td><%= event.date.strftime("%v") %></td>
-          <td><%= event.user.email %></td>
+          <td><%= event.user.display_name %></td>
           <td class="number"><%= number_with_precision event.duration_in_hours, :precision => 2 %></td>
         </tr>
       <% end %>

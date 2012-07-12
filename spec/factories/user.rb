@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user, :aliases => [:viewer] do
-    first_name 'Test'
+    first_name {"Test-#{Time.current.to_f}"}
     last_name 'User'
     email {"user.#{Time.current.to_f}@rideconnection.org"}
     association :organization, :factory => :staff_organization
@@ -9,7 +9,7 @@ FactoryGirl.define do
     password_confirmation { |u| u.password }
 
     factory :trainer do
-      first_name 'Trainer'
+      first_name {"Trainer-#{Time.current.to_f}"}
       last_name 'User'
       email {"trainer.#{Time.current.to_f}@rideconnection.org" }
       association :organization, :factory => :staff_organization
@@ -17,7 +17,7 @@ FactoryGirl.define do
     end
 
     factory :admin do
-      first_name 'Admin'
+      first_name {"Admin-#{Time.current.to_f}"}
       last_name 'User'
       email {"admin.#{Time.current.to_f}@rideconnection.org"}
       association :organization, :factory => :staff_organization
@@ -25,7 +25,7 @@ FactoryGirl.define do
     end
 
     factory :case_manager do
-      first_name 'Case'
+      first_name {"Case-#{Time.current.to_f}"}
       last_name 'Manager'
       email {"case.manager.#{Time.current.to_f}@outside.org"}
       association :organization, :factory => :case_mgmt_organization

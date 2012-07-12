@@ -35,7 +35,7 @@
   <% unless current_user.is_outside_user? %>
     <div class="field">
       <%= f.label :assignee_id, "Assigned to" %><br />
-      <%= f.collection_select :assignee_id, @assignees, :id, :email, :prompt => (@assessment_request.new_record? ? '<Select Assigned to>' : false) %>
+      <%= f.collection_select :assignee_id, @assignees, :id, :display_name, :prompt => (@assessment_request.new_record? ? '<Select Assigned to>' : false) %>
     </div>  
   <% else %>
     <% # = f.hidden_field :assignee_id %>
