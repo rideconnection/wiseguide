@@ -358,13 +358,37 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << %w(Name Open\ Date Referral\ Source Referral\ Type DOB Ethnicity Gender Phone\ Number\ 1 Phone\ Number\ 2 Email Address City State Zip Notes Assigned\ To Close\ Date Disposition)
+      csv << ['Name',
+              'Case Type',
+              'Open Date',
+              'Referral Source',
+              'Referral Type',
+              'DOB',
+              'Ethnicity',
+              'Gender',
+              'Phone Number 1',
+              'Phone Number 2',
+              'Email',
+              'Address',
+              'City',
+              'State',
+              'Zip',
+              'Customer Notes',
+              'Household Size',
+              'Household Size Alternate Response',
+              'Household Income',
+              'Household Income Alternate Response',
+              'Medicaid Eligible',
+              'Assigned To',
+              'Close Date',
+              'Disposition']
       for kase in kases
         customer = kase.customer
         csv << [customer.name,
+                kase.class.humanized_name,
                 kase.open_date,
                 kase.referral_source,
-                kase.referral_type.name,
+                kase.referral_type.try(:name),
                 customer.birth_date.to_s,
                 customer.ethnicity.name,
                 customer.gender,
@@ -376,12 +400,15 @@ class ReportsController < ApplicationController
                 customer.state,
                 customer.zip,
                 customer.notes,
+                kase.household_size,
+                kase.household_size_alternate_response,
+                kase.household_income,
+                kase.household_income_alternate_response,
+                kase.medicaid_eligible,
                 kase.assigned_to.try(:display_name),
                 kase.close_date,
-                kase.disposition.name]
+                kase.disposition.try(:name)]
       end
     end 
-    
   end
-
 end
