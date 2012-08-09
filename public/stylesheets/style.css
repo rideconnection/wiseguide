@@ -1213,13 +1213,11 @@ body.data-entry-needed div.kase {
 }
 body.data-entry-needed div.sublist {
   border-top: 1px solid #999;
-  float: none;
   clear: both;
   padding-top: 5px;
 }
 body.data-entry-needed div.sublist dl {
   padding-left: 10px;
-  float: none;
 }
 
 /* Predefined Reports */

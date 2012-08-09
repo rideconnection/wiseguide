@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
   end
 
   def data_entry_needed
-    @kases = Kase.scheduling_system_entry_required
+    @kases = Kase.scheduling_system_entry_required.order(:close_date,:open_date)
   end
 
   def basic_report
