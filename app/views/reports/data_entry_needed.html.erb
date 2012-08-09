@@ -1,0 +1,74 @@
+<div id="page-header">
+  <h1>Customers to be Data Entered into Scheduling System</h1>
+</div>
+
+<% @kases.each do |kase| %>
+  <div class="kase">
+    <dl>
+      <dt>Case Closed On</dt>
+      <dd>
+        <%= kase.close_date.try(:to_s,:long) %>
+        <%= link_to "Case Details", kase, :class => :details %>
+      </dd>
+      <dt>Customer Name</dt>
+      <dd>
+        <%= kase.customer.name %>
+        <%= link_to "Customer Details", kase.customer, :class => :details %>
+      </dd>
+      <dt>Customer Address</dt>
+      <dd><%= "#{kase.customer.address} #{kase.customer.city} #{kase.customer.state} #{kase.customer.zip}" %></dd>
+      <dt>Primary Phone Number</dt>
+      <dd><%= kase.customer.phone_number_1 %></dd>
+      <dt>Secondary Phone Number</dt>
+      <dd><%= kase.customer.phone_number_2 %></dd>
+      <dt>Medicaid or OHP Plan Plus?</dt>
+      <dd><%= kase.medicaid_eligible_description %></dd>
+      <dt>Birth Date</dt>
+      <dd><%= kase.customer.birth_date.try(:to_s,:long) %></dd>
+      <dt>Language</dt>
+      <dd><%= kase.customer.primary_language %></dd>
+      <dt>Ethnicity</dt>
+      <dd><%= kase.customer.ethnicity.try(:name) %></dd>
+      <dt>Gender</dt>
+      <dd><%= kase.customer.gender %></dd>
+      <dt>Veteran, Spouse, Widow, or Widower of a Veteran</dt>
+      <dd><%= kase.customer.veteran_status_description %></dd>
+      <dt>Household Size</dt>
+      <dd><%= kase.household_size_description %></dd>
+      <dt>Household Income</dt>
+      <dd><%= kase.household_income_description %></dd>
+    </dl>
+    <% if kase.customer.customer_impairments.present? %>
+      <div class="sublist">
+        <h2>Special Considerations</h2>
+        <% kase.customer.customer_impairments.each do |customer_impairment| -%>
+          <dl>
+            <dt>Consideration</dt>
+            <dd><%= customer_impairment.impairment.name %></dd>
+            <dt>Notes</dt>
+            <dd><%= customer_impairment.notes %></dd>
+          </dl>
+        <% end -%>
+      </div>
+    <% end %>
+    <% if kase.customer.customer_support_network_members.present? -%>
+      <div class="sublist">
+        <h2>Support Network</h2>
+        <% kase.customer.customer_support_network_members.each do |member| -%>
+          <dl>
+            <dt>Name</dt>
+            <dd><%= member.name %></dd>
+            <dt>Title</dt>
+            <dd><%= member.title %></dd>
+            <dt>Organization</dt>
+            <dd><%= member.organization %></dd>
+            <dt>Phone Number</dt>
+            <dd><%= member.phone_number %></dd>
+            <dt>Email Address</dt>
+            <dd><%= member.email %></dd>
+          </dl>
+        <% end -%>
+      </div>
+    <% end -%>
+  </div>
+<% end %>

@@ -6,6 +6,10 @@ class ReportsController < ApplicationController
     @routes = Route.all
   end
 
+  def data_entry_needed
+    @kases = Kase.scheduling_system_entry_required
+  end
+
   def basic_report
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])

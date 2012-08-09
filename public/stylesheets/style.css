@@ -1168,7 +1168,7 @@ p input[type="checkbox"] {
 }
 
 .reports dl {
-    float: left;
+    clear: both;
     width: 520px;
     margin: 1em 0;
     padding: 0;
@@ -1204,7 +1204,23 @@ body.reports.trainee div.customer {
 body.reports.trainee div.disposition {
   float: right;
 }
-
+body.data-entry-needed div.kase {
+  float: left;
+  clear: both;
+  border: solid black 1px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+body.data-entry-needed div.sublist {
+  border-top: 1px solid #999;
+  float: none;
+  clear: both;
+  padding-top: 5px;
+}
+body.data-entry-needed div.sublist dl {
+  padding-left: 10px;
+  float: none;
+}
 
 /* Predefined Reports */
 .report-header {
