@@ -57,6 +57,7 @@ class Kase < ActiveRecord::Base
   scope :has_three_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id=kases.id AND (three_month_unreachable = ? OR three_month_trip_count IS NOT NULL))', 3.months.ago + 1.week, true)}
   scope :has_six_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
   scope :for_funding_source_id, lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
+  scope :scheduling_system_entry_required, where(:scheduling_system_entry_required => true, :type => 'CoachingKase')
 
   # Make sure our STI children are routed through the parent routes
   def self.inherited(child)
@@ -76,6 +77,22 @@ class Kase < ActiveRecord::Base
       end
     end
     super
+  end
+
+  def medicaid_eligible_description
+    if medicaid_eligible.nil?
+      "Not asked"
+    else 
+      medicaid_eligible ? "Yes" : "No"
+    end
+  end
+
+  def household_income_description
+    household_income.blank? ? household_income_alternate_response : household_income
+  end
+
+  def household_size_description
+    household_size.blank? ? household_size_alternate_response : household_size
   end
 
 private

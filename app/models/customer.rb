@@ -170,4 +170,12 @@ dmetaphone_alt(%s) LIKE dmetaphone_alt(?) || '%%')" % [field, field, field, fiel
     return years
   end
 
+  def veteran_status_description
+    if veteran_status.nil?
+      "Not asked"
+    else 
+      veteran_status ? "Yes" : "No"
+    end
+  end
+
 end
