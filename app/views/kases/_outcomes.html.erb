@@ -6,7 +6,7 @@
 
 <% for outcome in @kase.outcomes %>
 <h2>
-  <div class="clearfix"><%= outcome.trip_reason.name %></div>
+  <div class="clearfix"><%= outcome.trip_reason.try(:name) %></div>
   <%= link_to( "Edit", edit_outcome_path( outcome ), :class => :edit ) if can? :edit, outcome %>
 </h2>
 <table>
