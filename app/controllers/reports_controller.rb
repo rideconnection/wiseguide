@@ -18,6 +18,10 @@ class ReportsController < ApplicationController
     @work_related_tpw = 0
     @non_work_related_tpw = 0
     @total_exited = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).count
+    @exited_count = {}
+    TrainingKaseDisposition.order(:name).each do |disposition|
+      @exited_count[disposition.name] = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).where(:disposition_id => disposition.id).count
+    end
     if params[:funding_source_id].present?
       @funding_source = "Funding Source: #{FundingSource.find(params[:funding_source_id]).name}"
     else
@@ -27,8 +31,6 @@ class ReportsController < ApplicationController
     kases = TrainingKase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(:outcomes => :trip_reason)
 
     for kase in kases
-      @exited_count += 1
-
       for outcome in kase.outcomes
         vmr = outcome.exit_vehicle_miles_reduced
         tpw = outcome.exit_trip_count
