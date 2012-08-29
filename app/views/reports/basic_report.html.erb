@@ -12,13 +12,17 @@
     </tr>
   </thead>
 
+  <% @exited_count.each do |key,value| %>
+    <% if value > 0 %>
+      <tr>
+        <td class="report-item">Exited with disposition "<%= key %>"</td>
+        <td class="number"><%= value %></td>
+      </tr>
+    <% end %>
+  <% end %>
   <tr>
     <td class="report-item">Total exited this period (all dispositions)</td>
     <td class="number"><%= @total_exited %></td>
-  </tr>
-  <tr>
-    <td class="report-item">Successfully exited this period</td>
-    <td class="number"><%= @exited_count %></td>
   </tr>
 
   <tr class="begin-group">
