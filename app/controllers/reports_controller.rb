@@ -17,14 +17,14 @@ class ReportsController < ApplicationController
     @vmr = 0
     @work_related_tpw = 0
     @non_work_related_tpw = 0
-    @total_exited = Kase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).count
+    @total_exited = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).count
     if params[:funding_source_id].present?
       @funding_source = "Funding Source: #{FundingSource.find(params[:funding_source_id]).name}"
     else
       @funding_source = "All Funding Sources"
     end
 
-    kases = Kase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(:outcomes => :trip_reason)
+    kases = TrainingKase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(:outcomes => :trip_reason)
 
     for kase in kases
       @exited_count += 1
