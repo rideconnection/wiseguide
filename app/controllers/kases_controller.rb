@@ -133,7 +133,7 @@ class KasesController < ApplicationController
 private
   
   def prep_edit
-    @referral_types = ReferralType.accessible_by(current_ability)
+    @referral_types = ReferralType.accessible_by(current_ability).order(:name)
     @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
     @case_managers = User.cmo_or_selected(@kase.case_manager_id).accessible_by(current_ability)
     @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
