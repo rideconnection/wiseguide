@@ -67,6 +67,10 @@
 
 <h1>Assessment Requests</h1>
 
+<% if can? :create, AssessmentRequest %>
+  <%= link_to 'New Assessment Request', new_assessment_request_path, :id => 'new-assessment-request'  %>
+<% end %>
+
 <table id="assessment-requests">
   <caption class="box no-print">
     <h2>Filter Requests</h2>
@@ -125,5 +129,5 @@
 <br />
 
 <% if can? :create, AssessmentRequest %>
-  <%= link_to 'New Assessment request', new_assessment_request_path %>
+  <%= link_to 'New Assessment Request', new_assessment_request_path %>
 <% end %>
