@@ -1497,3 +1497,7 @@ table.search-form {
 #assessment-request-filter input[type=submit] {
   margin: 0;
 }
+
+#new-assessment-request {
+  float: right;
+}

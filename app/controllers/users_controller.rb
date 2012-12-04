@@ -46,7 +46,8 @@ class UsersController < Devise::SessionsController
     @user = User.find(params[:id])
     authorize! :edit, @user
     @user.update_attributes!(params[:user])
-    redirect_to "/users"
+    flash[:notice] = "#{@user.display_name}'s record has been updated"
+    redirect_to users_path
   end
 
   # POST /update_user
@@ -55,8 +56,8 @@ class UsersController < Devise::SessionsController
     authorize! :edit, @user
     @user.level = params[:user][:level]
     @user.save
-    flash[:notice] = "#{@user.email}'s role has been changed"
-    redirect_to "/users"
+    flash[:notice] = "#{@user.display_name}'s role has been changed"
+    redirect_to users_path
   end
 
   def show_change_password; end
