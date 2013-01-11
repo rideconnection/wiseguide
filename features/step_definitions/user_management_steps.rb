@@ -96,7 +96,7 @@ Then /^I should be able to change the admin user's role to "Viewer"$/ do
     click_button 'Change role'
   end
   
-  @confirmation_message = "#{@admin.email}'s role has been changed"
+  @confirmation_message = "#{@admin.display_name}'s role has been changed"
   step %Q(I should see a confirmation message)
 end
 
