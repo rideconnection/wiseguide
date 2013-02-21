@@ -25,8 +25,10 @@ class Kase < ActiveRecord::Base
   validates_presence_of  :referral_type_id
   validates_presence_of  :disposition
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
-  validates              :household_income, :numericality => { :only_integer => true }, :allow_blank => true
-  validates              :household_size,   :numericality => { :only_integer => true }, :allow_blank => true
+  validates              :household_income,     :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
+  validates              :household_size,       :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
+  validates              :adult_ticket_count,   :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
+  validates              :honored_ticket_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
   validates              :household_income_alternate_response, :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
   validates              :household_size_alternate_response,   :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
   validate do |kase|
@@ -38,7 +40,9 @@ class Kase < ActiveRecord::Base
   
   HUMAN_ATTRIBUTE_NAMES = {
     :medicaid_eligible => "Are you on Medicaid or the OHP Plan PLUS?",
-    :scheduling_system_entry_required => "Entry into scheduling system required"
+    :scheduling_system_entry_required => "Entry into scheduling system required",
+    :adult_ticket_count => "Adult tickets disbursed",
+    :honored_ticket_count => "Honored tickets disbursed"
   }
   
   def self.human_attribute_name(attr, options={})
@@ -93,6 +97,14 @@ class Kase < ActiveRecord::Base
 
   def household_size_description
     household_size.blank? ? household_size_alternate_response : household_size
+  end
+
+  def eligible_for_ticket_disbursement_description
+    if eligible_for_ticket_disbursement.nil?
+      "Undetermined"
+    else 
+      eligible_for_ticket_disbursement ? "Yes" : "No"
+    end
   end
 
 private

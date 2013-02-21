@@ -22,7 +22,11 @@ describe TrainingKase do
       :household_size_alternate_response   => nil,
       :household_income_alternate_response => nil,
       :medicaid_eligible                   => nil,
-      :scheduling_system_entry_required    => nil
+      :scheduling_system_entry_required    => nil,
+      :adult_ticket_count                  => nil,
+      :honored_ticket_count                => nil,
+      :eligible_for_ticket_disbursement    => nil,
+      :access_transit_partner_referred_to  => nil
     }
 
     @valid_kase = TrainingKase.new

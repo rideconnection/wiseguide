@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614222706) do
+ActiveRecord::Schema.define(:version => 20130221000937) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -228,6 +228,16 @@ ActiveRecord::Schema.define(:version => 20120614222706) do
     t.integer  "updated_by_id"
   end
 
+  create_table "geometry_columns", :id => false, :force => true do |t|
+    t.string  "f_table_catalog",   :limit => 256, :null => false
+    t.string  "f_table_schema",    :limit => 256, :null => false
+    t.string  "f_table_name",      :limit => 256, :null => false
+    t.string  "f_geometry_column", :limit => 256, :null => false
+    t.integer "coord_dimension",                  :null => false
+    t.integer "srid",                             :null => false
+    t.string  "type",              :limit => 30,  :null => false
+  end
+
   create_table "impairments", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -271,6 +281,10 @@ ActiveRecord::Schema.define(:version => 20120614222706) do
     t.string   "household_income_alternate_response"
     t.boolean  "medicaid_eligible"
     t.boolean  "scheduling_system_entry_required"
+    t.integer  "adult_ticket_count"
+    t.integer  "honored_ticket_count"
+    t.boolean  "eligible_for_ticket_disbursement"
+    t.string   "access_transit_partner_referred_to"
   end
 
   add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"
@@ -429,6 +443,14 @@ ActiveRecord::Schema.define(:version => 20120614222706) do
     t.integer  "lock_version",  :default => 0
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+  end
+
+  create_table "spatial_ref_sys", :id => false, :force => true do |t|
+    t.integer "srid",                      :null => false
+    t.string  "auth_name", :limit => 256
+    t.integer "auth_srid"
+    t.string  "srtext",    :limit => 2048
+    t.string  "proj4text", :limit => 2048
   end
 
   create_table "survey_sections", :force => true do |t|

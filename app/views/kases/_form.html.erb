@@ -160,7 +160,7 @@
             <%= f.label :medicaid_eligible, option[0], :value => option[1], :class => 'options' %>
           <% end %><br><br>
         <% else %>
-          <%= if @kase.medicaid_eligible.blank? then "N/A" else @kase.medicaid_eligible.to_s end %>&nbsp;
+          <%= @kase.medicaid_eligible_description %>&nbsp;
         <% end %>
       </li>
       
@@ -169,7 +169,7 @@
         <% if can? :edit, @kase %>
           <%= f.check_box :scheduling_system_entry_required %><br><br>
         <% else %>
-          <%= @kase.scheduling_system_entry_required %>&nbsp;
+          <%= @kase.scheduling_system_entry_required ? 'Yes' : 'No' %>&nbsp;
         <% end %>
       </li>
     <% end -%>
@@ -213,6 +213,47 @@
         <%= @kase.household_income_alternate_response unless @kase.household_income_alternate_response.blank? %>&nbsp;
       <% end %>
     </li>
+
+    <% if @kase.type == "CoachingKase" %>
+      <li>
+        <%= f.label :eligible_for_ticket_disbursement %>
+        <% if can? :edit, @kase %>
+          <% [ [ 'Undetermined', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+            <%= f.radio_button :eligible_for_ticket_disbursement, option[1] %>
+            <%= f.label :eligible_for_ticket_disbursement, option[0], :value => option[1], :class => 'options' %>
+          <% end %>
+        <% else %>
+          <%= @kase.eligible_for_ticket_disbursement_description %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :adult_ticket_count %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :adult_ticket_count, :size => 10 %>
+        <% else %>
+          <%= @kase.adult_ticket_count %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :honored_ticket_count %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :honored_ticket_count, :size => 10 %>
+        <% else %>
+          <%= @kase.honored_ticket_count %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :access_transit_partner_referred_to %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :access_transit_partner_referred_to %>
+        <% else %>
+          <%= @kase.access_transit_partner_referred_to %>&nbsp;
+        <% end %>
+      </li>
+    <% end %>
 
     <li>
       <div class="actions">

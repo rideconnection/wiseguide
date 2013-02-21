@@ -28,8 +28,7 @@ Feature: notify case manager button
       And "brappy@mcfun.org" should receive an email
     When they open the email
       And they should see "Customer Assessment Notification" in the email subject
-      And they should see "Your requested referral has been assessed" in the email body
-      And they should see "Customer: Joel, Billy" in the email body
+      And they should see "Below is a link to an assessment you requested" in the email body
       And they should see a link to the case URL in the email body
 
   Scenario: Trainers cannot click the "Email case manager" button when no case manager is assigned
