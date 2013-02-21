@@ -25,7 +25,11 @@ describe Kase do
       :household_size_alternate_response   => nil,
       :household_income_alternate_response => nil,
       :medicaid_eligible                   => nil,
-      :scheduling_system_entry_required    => nil
+      :scheduling_system_entry_required    => nil,
+      :adult_ticket_count                  => nil,
+      :honored_ticket_count                => nil,
+      :eligible_for_ticket_disbursement    => nil,
+      :access_transit_partner_referred_to  => nil
     }
   end
   
@@ -139,7 +143,7 @@ describe Kase do
   
   describe "household_size" do
     it { should accept_values_for(:household_size, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456") }
+    it { should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456", -5) }
   end
   
   describe "household_size_alternate_response" do
@@ -165,7 +169,7 @@ describe Kase do
   
   describe "household_income" do
     it { should accept_values_for(:household_income, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456") }
+    it { should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456", -5) }
   end
   
   describe "household_income_alternate_response" do
@@ -195,6 +199,16 @@ describe Kase do
   
   describe "scheduling_system_entry_required" do
     it { should accept_values_for(:scheduling_system_entry_required, true, false, nil) }
+  end
+  
+  describe "adult_ticket_count" do
+    it { should accept_values_for(:adult_ticket_count, nil, "", 0, 1, "0", "123") }
+    it { should_not accept_values_for(:adult_ticket_count, "a", 1.1, "1.1", "$1", "123,456", -5) }
+  end
+  
+  describe "honored_ticket_count" do
+    it { should accept_values_for(:honored_ticket_count, nil, "", 0, 1, "0", "123") }
+    it { should_not accept_values_for(:honored_ticket_count, "a", 1.1, "1.1", "$1", "123,456", -5) }
   end
   
   context "associations" do
