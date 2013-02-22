@@ -652,6 +652,7 @@ form div.actions {
     margin: 0 0 10px;
 }
 form div.actions input[type="submit"],
+form.edit_user input[type="submit"],
 form.button_to input[type="submit"] {
     padding: 0.5em 0.8em;
     background: #0081CC;
@@ -665,6 +666,9 @@ form.button_to input[type="submit"] {
 }
 form div.actions input[type="submit"]:hover {
     background: #009FFB;
+}
+select.user_level {
+    width: 80px;
 }
 
 /* tables */
