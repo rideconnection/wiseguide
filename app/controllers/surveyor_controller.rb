@@ -70,7 +70,7 @@ module SurveyorControllerCustomMethods
 
   def index
     authorize! :read, Survey
-    @surveys = Survey.all
+    @surveys = Survey.order('surveys.inactive_at DESC')
   end
 
   def destroy

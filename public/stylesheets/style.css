@@ -651,7 +651,8 @@ form div.actions {
     clear: both;
     margin: 0 0 10px;
 }
-form div.actions input[type="submit"] {
+form div.actions input[type="submit"],
+form.button_to input[type="submit"] {
     padding: 0.5em 0.8em;
     background: #0081CC;
     color: #fff;
@@ -1005,9 +1006,15 @@ a.action-bttn:visited {
     border-radius: 5px;
     display: inline-block;
 }
+
 a.action-bttn:hover,
 a.action-bttn:active {
     color: #009FFB;
+}
+
+.surveyor.index a.action-bttn:link,
+.surveyor.index a.action-bttn:visited {
+  background: #eee url(images/plus.png) 0.8em center no-repeat scroll;
 }
 /* trip */
 body.reports a.action-bttn {
