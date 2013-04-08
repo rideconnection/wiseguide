@@ -1,5 +1,7 @@
 Wiseguide::Application.routes.draw do
 
+  resources :trip_authorizations
+
   resources :ada_service_eligibility_statuses
   resources :contacts
   resources :counties
