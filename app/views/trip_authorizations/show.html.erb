@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Coaching Case:</b>
+  <%= link_to(@trip_authorization.kase.customer.name_reversed, @trip_authorization.kase) unless @trip_authorization.kase.blank? %>
+</p>
+
+<p>
   <b>Allowed trip per month:</b>
   <%= @trip_authorization.allowed_trips_per_month %>
 </p>

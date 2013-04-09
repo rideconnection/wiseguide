@@ -6,6 +6,25 @@ def load_sandbox_data
   create_users
   create_customers
   create_simple_survey
+  create_sample_date
+end
+
+def create_sample_date
+  [
+    :assessment_request,
+    :assessment_request_contact,
+    :coaching_kase,
+    :contact,
+    :disposition,
+    :kase_contact,
+    :open_coaching_kase,
+    :open_kase,
+    :outcome,
+    :referral_document,
+    :trip_authorization,
+  ].each do |f|
+    FactoryGirl.create(f)
+  end
 end
 
 def create_users

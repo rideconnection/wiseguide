@@ -2,9 +2,9 @@
 
 <table>
   <tr>
+    <th>Coaching Case</th>
     <th>Allowed trip per month</th>
     <th>End date</th>
-    <th>User</th>
     <th>Disposition date</th>
     <th>Disposition user</th>
     <th></th>
@@ -14,6 +14,7 @@
 
 <% @trip_authorizations.each do |trip_authorization| %>
   <tr>
+    <td><%= link_to(trip_authorization.kase.customer.name_reversed, trip_authorization.kase) unless trip_authorization.kase.blank? %></td>
     <td><%= trip_authorization.allowed_trips_per_month %></td>
     <td><%= trip_authorization.end_date %></td>
     <td><%= trip_authorization.disposition_date %></td>
