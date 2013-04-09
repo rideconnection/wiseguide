@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Allowed trip per month:</b>
+  <%= @trip_authorization.allowed_trips_per_month %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @trip_authorization.end_date %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @trip_authorization.user.display_name unless @trip_authorization.user.blank? %>
+</p>
+
+<p>
+  <b>Disposition date:</b>
+  <%= @trip_authorization.disposition_date %>
+</p>
+
+<p>
+  <b>Disposition user:</b>
+  <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
+</p>
+
+
+<%= link_to 'Edit', edit_trip_authorization_path(@trip_authorization) %> |
+<%= link_to 'Back', trip_authorizations_path %>

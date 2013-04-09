@@ -3,11 +3,11 @@ require 'spec_helper'
 describe TripAuthorization do
   before do
     @valid_attributes = {
-      allowed_trip_per_month: 1,
-      end_date:               "2013-04-08",
-      user_id:                1,
-      disposition_date:       "2013-04-08 14:52:24",
-      disposition_user_id:    1,
+      allowed_trips_per_month: 1,
+      end_date:                1.day.from_now,
+      user_id:                 1,
+      disposition_date:        1.day.ago,
+      disposition_user_id:     1,
     }
 
     @valid_ta = TripAuthorization.new
@@ -19,13 +19,14 @@ describe TripAuthorization do
     @valid_ta.valid?.should be_true
   end
 
-  describe "allowed_trip_per_month" do
-    it { should_not accept_values_for(:allowed_trip_per_month, nil, "", 0, -1) }
-    it { should accept_values_for(:allowed_trip_per_month, 1, 99) }
+  describe "allowed_trips_per_month" do
+    it { should_not accept_values_for(:allowed_trips_per_month, nil, "", 0, -1) }
+    it { should accept_values_for(:allowed_trips_per_month, 1, 99) }
   end
 
   describe "end_date" do
-    it { should accept_values_for(:end_date, nil, "", "2013-04-08") }
+    it { should_not accept_values_for(:end_date, 1.days.ago) }
+    it { should accept_values_for(:end_date, nil, "", Date.current, 1.day.from_now) }
   end
 
   describe "user_id" do
@@ -34,8 +35,8 @@ describe TripAuthorization do
   end
 
   describe "disposition_date" do
-    it { should_not accept_values_for(:disposition_date, nil, "") }
-    it { should accept_values_for(:disposition_date, "2013-04-08 15:07:00") }
+    it { should_not accept_values_for(:disposition_date, nil, "", 1.day.from_now) }
+    it { should accept_values_for(:disposition_date, DateTime.current, 1.day.ago) }
   end
 
   describe "disposition_user_id" do

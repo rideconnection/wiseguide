@@ -70,6 +70,7 @@ class Ability
     can ability, Resource
     can ability, ResponseSet
     can ability, Survey
+    can ability, TripAuthorization
 
     unless user.is_admin
       cannot :destroy, AssessmentRequest
@@ -82,6 +83,7 @@ class Ability
       cannot :destroy, Resource
       cannot :destroy, ResponseSet
       cannot :destroy, Survey
+      cannot :destroy, TripAuthorization
     end
 
     #users can only read the cases of others

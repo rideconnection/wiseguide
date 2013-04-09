@@ -1,0 +1,37 @@
+<%= form_for(@trip_authorization) do |f| %>
+  <% if @trip_authorization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trip_authorization.errors.count, "error") %> prohibited this trip_authorization from being saved:</h2>
+
+      <ul>
+      <% @trip_authorization.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :allowed_trips_per_month %><br />
+    <%= f.number_field :allowed_trips_per_month, :min => 1, :max => 999 %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= f.text_field :end_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :disposition_date %><br />
+    <%= f.text_field :disposition_date, :class => "datetimepicker", :placeholder => "yyyy-mm-dd hh:ii" %>
+  </div>
+  <div class="field">
+    <%= f.label :disposition_user_id %><br />
+    <%= f.text_field :disposition_user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

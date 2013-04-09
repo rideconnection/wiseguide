@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :trip_authorization do
-    allowed_trip_per_month 1
+    allowed_trips_per_month 1
     end_date "2013-04-08"
     user
     disposition_date "2013-04-08 14:52:24"

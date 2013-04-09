@@ -810,10 +810,13 @@ table tr.sum-totals td:last-child {
  * DatePicker & DateTimePicker 
  *
  */
- input.datepicker,
  input.birthdatepicker,
+ input.datepicker,
  input.timepicker {
     width: 6em;
+}
+ input.datetimepicker {
+    width: 12em;
 }
 #ui-datepicker-div table {
     border-bottom: 0;

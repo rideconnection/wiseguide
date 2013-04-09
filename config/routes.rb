@@ -1,7 +1,5 @@
 Wiseguide::Application.routes.draw do
 
-  resources :trip_authorizations
-
   resources :ada_service_eligibility_statuses
   resources :contacts
   resources :counties
@@ -19,6 +17,7 @@ Wiseguide::Application.routes.draw do
   resources :referral_types
   resources :resources
   resources :routes
+  resources :trip_authorizations
   resources :trip_reasons
 
   resources :assessment_requests do

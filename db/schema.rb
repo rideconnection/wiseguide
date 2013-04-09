@@ -488,13 +488,13 @@ ActiveRecord::Schema.define(:version => 20130408185224) do
   add_index "surveys", ["access_code"], :name => "surveys_ac_idx", :unique => true
 
   create_table "trip_authorizations", :force => true do |t|
-    t.integer  "allowed_trip_per_month"
+    t.integer  "allowed_trips_per_month"
     t.date     "end_date"
     t.integer  "user_id"
     t.datetime "disposition_date"
     t.integer  "disposition_user_id"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   add_index "trip_authorizations", ["disposition_user_id"], :name => "index_trip_authorizations_on_disposition_user_id"

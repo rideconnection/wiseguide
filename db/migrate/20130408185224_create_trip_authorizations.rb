@@ -1,7 +1,7 @@
 class CreateTripAuthorizations < ActiveRecord::Migration
   def change
     create_table :trip_authorizations do |t|
-      t.integer :allowed_trip_per_month
+      t.integer :allowed_trips_per_month
       t.date :end_date
       t.references :user
       t.datetime :disposition_date
