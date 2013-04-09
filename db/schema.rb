@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409161454) do
+ActiveRecord::Schema.define(:version => 20130409175102) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -496,8 +496,10 @@ ActiveRecord::Schema.define(:version => 20130409161454) do
     t.datetime "updated_at",              :null => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.integer  "coaching_kase_id"
   end
 
+  add_index "trip_authorizations", ["coaching_kase_id"], :name => "index_trip_authorizations_on_coaching_kase_id"
   add_index "trip_authorizations", ["disposition_user_id"], :name => "index_trip_authorizations_on_disposition_user_id"
 
   create_table "trip_reasons", :force => true do |t|

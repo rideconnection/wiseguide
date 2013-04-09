@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :coaching_kase_id %><br />
+    <%= f.text_field :coaching_kase_id %>
+  </div>
+  <div class="field">
     <%= f.label :allowed_trips_per_month %><br />
     <%= f.number_field :allowed_trips_per_month, :min => 1, :max => 999 %>
   </div>

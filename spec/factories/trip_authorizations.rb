@@ -6,5 +6,6 @@ FactoryGirl.define do
     end_date "2013-04-08"
     disposition_date "2013-04-08 14:52:24"
     association :disposition_user, :factory => :user
+    association :coaching_kase, :factory => :open_coaching_kase
   end
 end

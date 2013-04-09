@@ -7,6 +7,7 @@ describe TripAuthorization do
       end_date:                1.day.from_now,
       disposition_date:        1.day.ago,
       disposition_user_id:     1,
+      coaching_kase_id:        1,
     }
 
     @valid_ta = TripAuthorization.new
