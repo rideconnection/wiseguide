@@ -16,7 +16,6 @@
   <tr>
     <td><%= trip_authorization.allowed_trips_per_month %></td>
     <td><%= trip_authorization.end_date %></td>
-    <td><%= trip_authorization.user.display_name unless trip_authorization.user.blank? %></td>
     <td><%= trip_authorization.disposition_date %></td>
     <td><%= trip_authorization.disposition_user.display_name unless trip_authorization.disposition_user.blank? %></td>
     <td><%= link_to 'Show', trip_authorization %></td>

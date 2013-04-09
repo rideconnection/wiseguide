@@ -5,7 +5,6 @@ describe TripAuthorization do
     @valid_attributes = {
       allowed_trips_per_month: 1,
       end_date:                1.day.from_now,
-      user_id:                 1,
       disposition_date:        1.day.ago,
       disposition_user_id:     1,
     }
@@ -27,11 +26,6 @@ describe TripAuthorization do
   describe "end_date" do
     it { should_not accept_values_for(:end_date, 1.days.ago) }
     it { should accept_values_for(:end_date, nil, "", Date.current, 1.day.from_now) }
-  end
-
-  describe "user_id" do
-    it { should_not accept_values_for(:user_id, nil, "") }
-    it { should accept_values_for(:user_id, 1) }
   end
 
   describe "disposition_date" do
