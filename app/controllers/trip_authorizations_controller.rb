@@ -70,4 +70,18 @@ class TripAuthorizationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # PUT /trip_authorizations/1/complete_disposition
+  # PUT /trip_authorizations/1/complete_disposition.json
+  def complete_disposition
+    respond_to do |format|
+      if @trip_authorization.complete_disposition(current_user)
+        format.html { redirect_to @trip_authorization, notice: 'Trip authorization disposition was successfully completed.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @trip_authorization.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

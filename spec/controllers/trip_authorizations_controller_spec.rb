@@ -22,7 +22,8 @@ describe TripAuthorizationsController do
 
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
-    sign_in FactoryGirl.create(:admin)
+    @admin = FactoryGirl.create(:admin)
+    sign_in @admin
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -161,5 +162,28 @@ describe TripAuthorizationsController do
       response.should redirect_to(trip_authorizations_url)
     end
   end
+  
+  describe "PUT complete_disposition" do
+    it "updates the disposition fields of the requested trip_authorization" do
+      trip_authorization = TripAuthorization.create! valid_attributes
+      # Assuming there are no other trip_authorizations in the database, this
+      # specifies that the TripAuthorization created on the previous line
+      # receives the :update_attributes message with whatever params are
+      # submitted in the request.
+      TripAuthorization.any_instance.should_receive(:complete_disposition).with(@admin)
+      put :complete_disposition, {:id => trip_authorization.to_param}
+    end
 
+    it "assigns the requested trip_authorization as @trip_authorization" do
+      trip_authorization = TripAuthorization.create! valid_attributes
+      put :complete_disposition, {:id => trip_authorization.to_param}
+      assigns(:trip_authorization).should eq(trip_authorization)
+    end
+
+    it "redirects to the trip_authorization" do
+      trip_authorization = TripAuthorization.create! valid_attributes
+      put :complete_disposition, {:id => trip_authorization.to_param}
+      response.should redirect_to(trip_authorization)
+    end
+  end
 end

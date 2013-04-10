@@ -31,5 +31,9 @@ describe TripAuthorizationsController do
       delete("/trip_authorizations/1").should route_to("trip_authorizations#destroy", :id => "1")
     end
 
+    it "routes to #complete_disposition" do
+      put("/trip_authorizations/1/complete_disposition").should route_to("trip_authorizations#complete_disposition", :id => "1")
+    end
+
   end
 end

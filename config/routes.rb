@@ -17,8 +17,13 @@ Wiseguide::Application.routes.draw do
   resources :referral_types
   resources :resources
   resources :routes
-  resources :trip_authorizations
   resources :trip_reasons
+
+  resources :trip_authorizations do
+    member do
+      put "complete_disposition"
+    end
+  end
 
   resources :assessment_requests do
     member do

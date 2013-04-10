@@ -14,7 +14,12 @@
             <span title="End date"><%= trip_authorization.end_date.blank? ? "(No end date)" : trip_authorization.end_date.strftime("%Y-%m-%d") %></span>
           </td>
           <% if trip_authorization.disposition_date.blank? %>
-            <td colspan="2"><span title="Disposition date">Disposition pending</span></td>
+            <td>
+              <span title="Disposition date">Disposition pending</span>
+            </td>
+            <td>
+              <%= link_to "Complete Disposition", complete_disposition_trip_authorization(trip_authorization), :class=>"complete_disposition", :method=>:put %>
+            </td>
           <% else %>
             <td>
               <span title="Disposition date"><%= trip_authorization.disposition_date.strftime "%Y-%m-%d" %></span>
