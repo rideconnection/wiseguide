@@ -17,6 +17,7 @@ class Kase < ActiveRecord::Base
   has_many :routes, :through => :kase_routes
   has_many :outcomes, :dependent => :destroy
   has_many :referral_documents, :dependent => :destroy
+  has_many :trip_authorizations, :dependent => :destroy
 
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
 

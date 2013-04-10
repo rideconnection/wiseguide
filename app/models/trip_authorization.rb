@@ -9,12 +9,19 @@ class TripAuthorization < ActiveRecord::Base
     :disposition_user_id, :kase_id
   validates :allowed_trips_per_month, numericality: { greater_than_or_equal_to: 1 }
   validates :end_date, allow_blank: true, date: { after_or_equal_to: Proc.new { Date.current } }
-  validates :disposition_date, allow_blank: false, date: { before_or_equal_to: Proc.new { DateTime.current } }
-  validates_presence_of :disposition_user_id, :kase_id
+  validates :disposition_date, allow_blank: true, date: { before_or_equal_to: Proc.new { DateTime.current } }
+  validates_presence_of :kase_id
   
   after_initialize do
     if self.new_record?
       self.allowed_trips_per_month ||= 1
     end
+  end
+  
+  def complete_disposition(user)
+    self.update_attributes!({
+      disposition_date: DateTime.current,
+      disposition_user_id: user.id
+    })
   end
 end

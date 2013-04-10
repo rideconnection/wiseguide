@@ -12,12 +12,12 @@
 
 <p>
   <b>End date:</b>
-  <%= @trip_authorization.end_date %>
+  <%= @trip_authorization.end_date.strftime "%Y-%m-%d" unless @trip_authorization.end_date.blank? %>
 </p>
 
 <p>
   <b>Disposition date:</b>
-  <%= @trip_authorization.disposition_date %>
+  <%= @trip_authorization.disposition_date.strftime "%Y-%m-%d" unless @trip_authorization.disposition_date.blank? %>
 </p>
 
 <p>

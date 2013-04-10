@@ -22,6 +22,7 @@ class TripAuthorizationsController < ApplicationController
   # GET /trip_authorizations/new
   # GET /trip_authorizations/new.json
   def new
+    @trip_authorization = TripAuthorization.new(:kase_id => params[:kase_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @trip_authorization }
