@@ -15,16 +15,21 @@
   <%= @trip_authorization.end_date.strftime "%Y-%m-%d" unless @trip_authorization.end_date.blank? %>
 </p>
 
-<p>
-  <b>Disposition date:</b>
-  <%= @trip_authorization.disposition_date.strftime "%Y-%m-%d" unless @trip_authorization.disposition_date.blank? %>
-</p>
+<% if @trip_authorization.disposition_date.blank? %>
+  <p>
+    <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(@trip_authorization), :method=>:put %>
+  </p>
+<% else %>
+  <p>
+    <b>Disposition date:</b>
+    <%= @trip_authorization.disposition_date.strftime "%Y-%m-%d" unless @trip_authorization.disposition_date.blank? %>
+  </p>
 
-<p>
-  <b>Disposition user:</b>
-  <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
-</p>
-
+  <p>
+    <b>Disposition user:</b>
+    <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_trip_authorization_path(@trip_authorization) %> |
 <%= link_to 'Back', trip_authorizations_path %>

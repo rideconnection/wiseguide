@@ -11,6 +11,9 @@
             <span title="Allows trips per month"><%= trip_authorization.allowed_trips_per_month.to_i %>/month</span>
           </td>
           <td>
+            <span title="Start date"><%= trip_authorization.start_date.blank? ? "(No end date)" : trip_authorization.start_date.strftime("%Y-%m-%d") %></span>
+          </td>
+          <td>
             <span title="End date"><%= trip_authorization.end_date.blank? ? "(No end date)" : trip_authorization.end_date.strftime("%Y-%m-%d") %></span>
           </td>
           <% if trip_authorization.disposition_date.blank? %>
@@ -18,7 +21,7 @@
               <span title="Disposition date">Disposition pending</span>
             </td>
             <td>
-              <%= link_to "Complete Disposition", complete_disposition_trip_authorization(trip_authorization), :class=>"complete_disposition", :method=>:put %>
+              <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(trip_authorization), :class=>"complete_disposition", :method=>:put %>
             </td>
           <% else %>
             <td>

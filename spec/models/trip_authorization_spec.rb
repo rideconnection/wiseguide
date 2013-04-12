@@ -4,6 +4,7 @@ describe TripAuthorization do
   before do
     @valid_attributes = {
       allowed_trips_per_month: 1,
+      start_date:              1.day.from_now,
       end_date:                1.day.from_now,
       disposition_date:        1.day.ago,
       disposition_user_id:     1,
@@ -24,9 +25,27 @@ describe TripAuthorization do
     it { should accept_values_for(:allowed_trips_per_month, 1, 99) }
   end
 
+  describe "start_date" do
+    it { should_not accept_values_for(:start_date, nil, "") }
+    it { should accept_values_for(:start_date, Date.current, 1.day.from_now, 1.day.ago) }
+  end
+
   describe "end_date" do
-    it { should_not accept_values_for(:end_date, 1.days.ago) }
     it { should accept_values_for(:end_date, nil, "", Date.current, 1.day.from_now) }
+    it "must be after or equal to the start date" do
+      ta = TripAuthorization.new(
+        allowed_trips_per_month: 1,
+        start_date:              Date.current,
+        kase_id:                 1
+      )
+      ta.should be_valid
+      
+      ta.end_date = 1.day.ago.to_date
+      ta.should_not be_valid
+      
+      ta.end_date = 1.day.from_now.to_date
+      ta.should be_valid
+    end
   end
 
   describe "disposition_date" do
@@ -43,6 +62,7 @@ describe TripAuthorization do
       @u = FactoryGirl.create(:user)
       @ta = TripAuthorization.new(
         allowed_trips_per_month: 1,
+        start_date:              Date.current,
         kase_id:                 1
       )
     end

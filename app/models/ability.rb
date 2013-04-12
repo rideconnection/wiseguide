@@ -29,6 +29,7 @@ class Ability
       can :read,   AssessmentRequest, :organization => user.organization
       can :read,   AssessmentRequest, :organization => user.organization.children
       can :update, AssessmentRequest, :submitter_id => user.id
+      
       can :read, Customer do |customer|
         result = false
         AssessmentRequest.where(:submitter_id => user.id).each do |r|
@@ -38,6 +39,7 @@ class Ability
         end
         result
       end
+      
       can :read, Kase do |kase|
         request = kase.assessment_request
         unless request.nil? then
@@ -45,9 +47,16 @@ class Ability
           org == user.organization || org.parent == user.organization
         end
       end
+      
       can :read, Contact do |contact|
         can?(:read, contact.kase) || can?(:read, contact.customer)
       end
+      
+      can :create, TripAuthorization  do |trip_authorization|
+        ([user.organization] + user.organization.children).include? trip_authorization.kase.organization && user.organization.is_cmo?
+      end
+      can :read,   TripAuthorization, :kase => {:organization => [user.organization] + user.organization.children}
+      can :update, TripAuthorization, :kase => {:organization => [user.organization] + user.organization.children}
       return
     end
 

@@ -25,6 +25,14 @@ module ApplicationHelper
     raw "[" + content_tag(:span, kase.class.humanized_name[0], :title => kase.class.humanized_name) + "]"
   end
 
+  def data_entry_needed_icon(record)
+    if record.class.name == "TripAuthorization"
+      raw "[" + content_tag(:span, "A", :title => "Trip Authorization") + "]"
+    else
+      kase_type_icon record
+    end
+  end
+
   def link_to_add_fields(name, f, association)
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|

@@ -20,7 +20,7 @@ class KasesController < ApplicationController
     @wait_list = @kases.unassigned.order(:open_date)
     
     if @kase_type == "CoachingKase"
-      @data_entry_needed = @kases.where(:scheduling_system_entry_required => true)
+      @data_entry_needed = (@kases.scheduling_system_entry_required.all + TripAuthorization.where(:kase_id => @kases.collect(&:id), :disposition_date => nil).all).sort{|a,b| a.created_at <=> b.created_at }
     end
   end
 

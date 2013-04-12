@@ -32,6 +32,7 @@ describe TripAuthorizationsController do
   def valid_attributes
     {
       allowed_trips_per_month: 1,
+      start_date:              Date.current,
       kase_id:                 1,
     }
   end
