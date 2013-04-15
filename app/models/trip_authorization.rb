@@ -6,7 +6,7 @@ class TripAuthorization < ActiveRecord::Base
   belongs_to :kase
   belongs_to :disposition_user, class_name: 'User'
   attr_accessible :allowed_trips_per_month, :disposition_date, :end_date,
-    :disposition_user_id, :kase_id
+    :disposition_user_id, :kase_id, :start_date
   validates :allowed_trips_per_month, numericality: { greater_than_or_equal_to: 1 }
   validates :start_date, date: true
   validates :end_date, allow_blank: true, date: { after_or_equal_to: :start_date }
