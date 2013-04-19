@@ -30,13 +30,14 @@ end
 
 task :link_database_yml do
   puts "    Link in database.yml file"
-  run  "ln -nfs #{deploy_to}/shared/config/database.yml #{deploy_to}/current/config/database.yml"
+  run  "ln -nfs #{deploy_to}/shared/config/database.yml #{latest_release}/config/database.yml"
   puts "    Link in app_config.yml file"
-  run  "ln -nfs #{deploy_to}/shared/config/app_config.yml #{deploy_to}/current/config/app_config.yml"
+  run  "ln -nfs #{deploy_to}/shared/config/app_config.yml #{latest_release}/config/app_config.yml"
   puts "    Link in legacy data folder"
-  run  "ln -nfs #{deploy_to}/shared/legacy #{deploy_to}/current/db/legacy"
+  run  "ln -nfs #{deploy_to}/shared/legacy #{latest_release}/db/legacy"
   puts "    Link in uploads folder"
-  run  "ln -nfs #{deploy_to}/shared/uploads #{deploy_to}/current/uploads"
+  run  "ln -nfs #{deploy_to}/shared/uploads #{latest_release}/uploads"
 end
 
-after "deploy:create_symlink", :link_database_yml
+after "deploy:update_code", :link_database_yml
+
