@@ -77,7 +77,7 @@ Testing
 We are using Rspec for unit testing and cucumber for integration and functional
 testing. You can run them using the following commands:
 
-    bundle exec rake test
+    bundle exec rake spec
     bundle exec rake cucumber
 
 (Just `bundle exec rake` will run all of the tests.)
