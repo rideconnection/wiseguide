@@ -1,6 +1,7 @@
 Wiseguide::Application.routes.draw do
 
   resources :ada_service_eligibility_statuses
+  resources :agencies
   resources :contacts
   resources :counties
   resources :customer_impairments, :except => [:index, :show]
@@ -45,6 +46,7 @@ Wiseguide::Application.routes.draw do
   resources :kases, :path => "cases" do 
     get "coaching", :on=>:collection, :action => :index, :kase => {:type => 'CoachingKase'}
     get "training", :on=>:collection, :action => :index, :kase => {:type => 'TrainingKase'}
+    get "customer_service", :on=>:collection, :action => :index, :kase => {:type => 'CustomerServiceKase'}
     post "add_route", :on=>:collection
     post "delete_route", :on=>:collection
     post "notify_manager", :on => :member

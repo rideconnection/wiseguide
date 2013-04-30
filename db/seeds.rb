@@ -7,13 +7,16 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 require 'csv'
 
-['In Progress', 'Successful','Unsuccessful','Incomplete','Exited'].each do |d|
+['In Progress', 'Successful', 'Unsuccessful', 'Incomplete', 'Exited'].each do |d|
   TrainingKaseDisposition.find_or_create_by_name(d)
 end
 
-# We will have to adjust these once we know what the different disositions will be
-['In Progress', 'Successful','Unsuccessful','Incomplete','Exited'].each do |d|
+['In Progress', 'Successful', 'Unsuccessful', 'Incomplete', 'Exited'].each do |d|
   CoachingKaseDisposition.find_or_create_by_name(d)
+end
+
+['In Progress', 'Substantiated', 'Unsubstantiated', 'Indeterminable', 'Completed'].each do |d|
+  CustomerServiceKaseDisposition.find_or_create_by_name(d)
 end
 
 ['STF','JARC Clackamas','JARC Multnomah','JARC Washington'].each do |fs|

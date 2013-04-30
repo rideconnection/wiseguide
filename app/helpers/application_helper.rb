@@ -22,7 +22,8 @@ module ApplicationHelper
   end
 
   def kase_type_icon(kase)
-    raw "[" + content_tag(:span, kase.class.humanized_name[0], :title => kase.class.humanized_name) + "]"
+    name = kase.class.humanized_name
+    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, :title => name) + "]"
   end
 
   def data_entry_needed_icon(record)

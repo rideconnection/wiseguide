@@ -1,231 +1,110 @@
 require 'spec_helper'
 
+class TestKase < Kase; end
+
 describe Kase do
   before do
     @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
     
     @valid_attributes = {
+      # Required by base Kase class
       :customer_id                         => 1,
+      :disposition_id                      => @in_progress.id,
       :open_date                           => Date.current,
-      :close_date                          => Date.current,
-      :referral_source                     => "Source",
-      :referral_type_id                    => 1,
-      :user_id                             => nil,
-      :funding_source_id                   => 1,
-      :disposition_id                      => FactoryGirl.create(:disposition).id,
-      :county                              => Kase::VALID_COUNTIES.values.first,
-      :type                                => "TrainingKase",
+      
+      # Not required by base class
+      :access_transit_partner_referred_to  => nil,
+      :adult_ticket_count                  => nil,
+      :agency_id                           => nil,
       :assessment_date                     => nil,
       :assessment_language                 => nil,
-      :case_manager_notification_date      => nil,
-      :case_manager_id                     => nil,
       :assessment_request_id               => nil,
-      :household_size                      => nil,
-      :household_income                    => nil,
-      :household_size_alternate_response   => nil,
-      :household_income_alternate_response => nil,
-      :medicaid_eligible                   => nil,
-      :scheduling_system_entry_required    => nil,
-      :adult_ticket_count                  => nil,
-      :honored_ticket_count                => nil,
+      :case_manager_id                     => nil,
+      :case_manager_notification_date      => nil,
+      :category                            => nil,
+      :close_date                          => nil,
+      :county                              => nil,
       :eligible_for_ticket_disbursement    => nil,
-      :access_transit_partner_referred_to  => nil
+      :funding_source_id                   => nil,
+      :honored_ticket_count                => nil,
+      :household_income                    => nil,
+      :household_income_alternate_response => nil,
+      :household_size                      => nil,
+      :household_size_alternate_response   => nil,
+      :medicaid_eligible                   => nil,
+      :referral_source                     => nil,
+      :referral_type_id                    => nil,
+      :scheduling_system_entry_required    => nil,
+      :user_id                             => nil,
     }
+    
+    @kase = TestKase.new(@valid_attributes)
   end
   
+  it "should be valid given valid attributes" do
+    @kase.should be_valid
+  end
+
   describe "customer_id" do
-    it { should accept_values_for(:customer_id, 0, 1) }
-    it { should_not accept_values_for(:customer_id, nil, "") }
-  end
-
-  describe "open_date" do
-    it { should accept_values_for(:open_date, Date.current, Date.yesterday) }
-    it { should_not accept_values_for(:open_date, nil, "", Date.current + 1.minute, Date.tomorrow) }
-  end
-
-  describe "close_date" do
-    before do
-      @not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
-    end
-    
-    it "should not be required if the disposition is 'In Progress'" do
-      kase = Kase.new
-      kase.disposition = @in_progress
-      kase.valid?
-      kase.errors.keys.should_not include(:close_date)
-    end
-    
-    it "should be required if the disposition is not 'In Progress'" do
-      kase = Kase.new
-      kase.disposition = @not_in_progress
-      kase.valid?
-      kase.errors.keys.should include(:close_date)
-      kase.errors[:close_date].should include("can't be blank")
-      
-      kase.close_date = Date.current
-      kase.valid?
-      kase.errors.keys.should_not include(:close_date)
-    end
-    
-    it { should accept_values_for(:close_date, nil, "", Date.current, Date.tomorrow, Date.yesterday) }
-  end
-
-  describe "referral_source" do
-    it { should accept_values_for(:referral_source, nil, "", "a") }
-  end
-
-  describe "referral_type_id" do
-    it { should accept_values_for(:referral_type_id, 0, 1) }
-    it { should_not accept_values_for(:referral_type_id, nil, "") }
-  end
-
-  describe "user_id" do
-    it { should accept_values_for(:user_id, nil, "", 0, 1) }
-  end
-
-  describe "funding_source_id" do
-    it { should accept_values_for(:funding_source_id, nil, "", 0, 1) }
+    it { @kase.should accept_values_for(:customer_id, 0, 1) }
+    it { @kase.should_not accept_values_for(:customer_id, nil, "") }
   end
 
   describe "disposition_id" do
-    before do
-      @not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
-    end
-    
+    it { @kase.should accept_values_for(:disposition_id, 0, 1) }
+    it { @kase.should_not accept_values_for(:disposition_id, nil, "") }
+
     it "cannot be 'In Progress' if case is closed" do
-      kase = Kase.new
-      kase.disposition = @in_progress
-      kase.close_date = nil
-      kase.valid?
-      kase.errors.keys.should_not include(:disposition_id)
+      not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
+
+      @kase.disposition = @in_progress
+      @kase.close_date = nil
+      @kase.should be_valid
       
-      kase.close_date = Date.current
-      kase.valid?
-      kase.errors.keys.should include(:disposition_id)
-      kase.errors[:disposition_id].should include("cannot be 'In Progress' if case is closed")
+      @kase.close_date = Date.current
+      @kase.should_not be_valid
+      @kase.errors.keys.should include(:disposition_id)
+      @kase.errors[:disposition_id].should include("cannot be 'In Progress' if case is closed")
       
-      kase.disposition = @not_in_progress
-      kase.valid?
-      kase.errors.keys.should_not include(:disposition_id)
+      @kase.disposition = not_in_progress
+      @kase.should be_valid
     end
-    
-    it { should accept_values_for(:disposition_id, nil, "", 0, 1) }
   end
 
-  describe "county" do
-    it { should accept_values_for(:county, nil, "", "a") }
+  describe "open_date" do
+    it { @kase.should accept_values_for(:open_date, Date.current, Date.yesterday) }
+    it { @kase.should_not accept_values_for(:open_date, nil, "", Date.current + 1.minute, Date.tomorrow) }
   end
 
   describe "type" do
-    it { should accept_values_for(:type, "CoachingKase", "TrainingKase") }
-    it { should_not accept_values_for(:type, nil, "", "FooKase") }
-  end
-
-  describe "assessment_date" do
-    it { should accept_values_for(:assessment_date, nil, "", Date.current, Date.tomorrow, Date.yesterday) }
-  end
-
-  describe "assessment_language" do
-    it { should accept_values_for(:assessment_language, nil, "", "a") }
-  end
-
-  describe "case_manager_notification_date" do
-    it { should accept_values_for(:case_manager_notification_date, nil, "", Date.current, Date.tomorrow, Date.yesterday) }
-  end
-
-  describe "case_manager_id" do
-    it { should accept_values_for(:case_manager_id, nil, "", 0, 1) }
-  end
-
-  describe "assessment_request_id" do
-    it { should accept_values_for(:assessment_request_id, nil, "", 0, 1) }
+    it { @kase.should accept_values_for(:type, "CoachingKase", "TrainingKase", "TestKase") }
+    it { @kase.should_not accept_values_for(:type, nil, "", "FooKase") }
   end
   
-  describe "household_size" do
-    it { should accept_values_for(:household_size, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456", -5) }
-  end
-  
-  describe "household_size_alternate_response" do
-    it { should accept_values_for(:household_size_alternate_response, nil, "", "Unknown", "Refused") }
-    it { should_not accept_values_for(:household_size_alternate_response, "Foo") }
+  describe "close_date" do
+    it { @kase.should accept_values_for(:close_date, nil, "", Date.current, Date.tomorrow, Date.yesterday) }
 
-    before do
-      @kase = FactoryGirl.create(:kase)
+    it "should not be required if the disposition is 'In Progress'" do
+      @kase.disposition = @in_progress
+      @kase.should be_valid
     end
     
-    it "should set household_size to nil when valued" do
-      @kase.household_size = 1234
-      @kase.save!
-      @kase.reload
-      @kase.household_size.should eq(1234)
+    it "should be required if the disposition is not 'In Progress'" do
+      not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
       
-      @kase.household_size_alternate_response = "Unknown"
-      @kase.save!
-      @kase.reload
-      @kase.household_size.should be_nil
-    end
-  end
-  
-  describe "household_income" do
-    it { should accept_values_for(:household_income, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456", -5) }
-  end
-  
-  describe "household_income_alternate_response" do
-    it { should accept_values_for(:household_income_alternate_response, nil, "", "Unknown", "Refused") }
-    it { should_not accept_values_for(:household_income_alternate_response, "Foo") }
-    
-    before do
-      @kase = FactoryGirl.create(:kase)
-    end
-    
-    it "should set household_income to nil when valued" do
-      @kase.household_income = 1234
-      @kase.save!
-      @kase.reload
-      @kase.household_income.should eq(1234)
+      @kase.disposition = not_in_progress
+      @kase.should_not be_valid
+      @kase.errors.keys.should include(:close_date)
+      @kase.errors[:close_date].should include("can't be blank")
       
-      @kase.household_income_alternate_response = "Unknown"
-      @kase.save!
-      @kase.reload
-      @kase.household_income.should be_nil
+      @kase.close_date = Date.current
+      @kase.should be_valid
     end
-  end
-  
-  describe "medicaid_eligible" do
-    it { should accept_values_for(:medicaid_eligible, true, false, nil) }
-  end
-  
-  describe "scheduling_system_entry_required" do
-    it { should accept_values_for(:scheduling_system_entry_required, true, false, nil) }
-  end
-  
-  describe "adult_ticket_count" do
-    it { should accept_values_for(:adult_ticket_count, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:adult_ticket_count, "a", 1.1, "1.1", "$1", "123,456", -5) }
-  end
-  
-  describe "honored_ticket_count" do
-    it { should accept_values_for(:honored_ticket_count, nil, "", 0, 1, "0", "123") }
-    it { should_not accept_values_for(:honored_ticket_count, "a", 1.1, "1.1", "$1", "123,456", -5) }
   end
   
   context "associations" do
-    before do
-      @kase = FactoryGirl.create(:kase)
-    end
-    
     it "should have a customer attribute" do
       @kase.should respond_to(:customer)
-    end
-    
-    it "should have a referral_type attribute" do
-      @kase.should respond_to(:referral_type)
-    end
-    
-    it "should have a funding_source attribute" do
-      @kase.should respond_to(:funding_source)
     end
     
     it "should have a disposition attribute" do
@@ -237,12 +116,12 @@ describe Kase do
       @kase.build_assigned_to().class.name.should eq("User")
     end
     
-    it "should have a assessment_request attribute" do
-      @kase.should respond_to(:assessment_request)
-    end
-    
     describe "contacts association" do
       before do
+        # We need a valid subclass here to get around a validation on the
+        # contact model
+        @kase = FactoryGirl.create(:training_kase)
+        
         @contacts = [
           FactoryGirl.create(:contact, :contactable => @kase),
           FactoryGirl.create(:contact, :contactable => @kase)
@@ -250,7 +129,7 @@ describe Kase do
       end
       
       it "should have a contacts attribute" do
-        Kase.new.should respond_to(:contacts)
+        @kase.should respond_to(:contacts)
       end
 
       it "should return an empty array if no contacts have been associated" do
@@ -262,30 +141,6 @@ describe Kase do
       it "should return the proper contacts" do
         @kase.contacts.should =~ @contacts
       end
-    end
-    
-    it "should have a events attribute" do
-      @kase.should respond_to(:events)
-    end
-    
-    it "should have a response_sets attribute" do
-      @kase.should respond_to(:response_sets)
-    end
-    
-    it "should have a kase_routes attribute" do
-      @kase.should respond_to(:kase_routes)
-    end
-    
-    it "should have a routes attribute" do
-      @kase.should respond_to(:routes)
-    end
-    
-    it "should have a outcomes attribute" do
-      @kase.should respond_to(:outcomes)
-    end
-    
-    it "should have a referral_documents attribute" do
-      @kase.should respond_to(:referral_documents)
     end
   end
   
@@ -458,31 +313,6 @@ describe Kase do
       #   # lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
       #   Kase.has_six_month_follow_ups_due.should =~ @six_month_follow_ups
       # end
-    end
-    
-    context "for_funding_source_id scope" do
-      before do
-        @funding_source_1 = FactoryGirl.create(:funding_source)
-        @funding_source_2 = FactoryGirl.create(:funding_source)
-        
-        @funded_kases = []
-        @funded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_1)
-        @funded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_1)
-
-        @unfunded_kases = []
-        @unfunded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_2)
-        @unfunded_kases << FactoryGirl.create(:kase, :funding_source => @funding_source_2)
-
-        # We need to reload these to get the correct sub classes
-        @funded_kases   = @funded_kases.map{|k| Kase.find(k.id)}
-        @unfunded_kases = @unfunded_kases.map{|k| Kase.find(k.id)}
-
-      end
-      
-      it "should define a for_funding_source_id scope" do
-        # lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
-        Kase.for_funding_source_id(@funding_source_1.id).should =~ @funded_kases
-      end
     end
   end
 end

@@ -1,4 +1,6 @@
 class CoachingKase < Kase
+  include DevelopmentKaseBehavior
+  
   belongs_to :case_manager, :foreign_key => :case_manager_id, :class_name=>'User'
   
   validates :case_manager, :associated => true, :allow_blank => true

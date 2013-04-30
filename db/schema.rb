@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412032103) do
+ActiveRecord::Schema.define(:version => 20130430221113) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20130412032103) do
     t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "agencies", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "answers", :force => true do |t|
@@ -285,6 +291,8 @@ ActiveRecord::Schema.define(:version => 20130412032103) do
     t.integer  "honored_ticket_count"
     t.boolean  "eligible_for_ticket_disbursement"
     t.string   "access_transit_partner_referred_to"
+    t.string   "category"
+    t.integer  "agency_id"
   end
 
   add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"

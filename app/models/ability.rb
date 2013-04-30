@@ -11,6 +11,7 @@ class Ability
 
     #system tables
     can :read, AdaServiceEligibilityStatus
+    can :read, Agency
     can :read, County
     can :read, Disposition
     can :read, Ethnicity
@@ -67,6 +68,7 @@ class Ability
     end
     
     can ability, AssessmentRequest
+    can ability, Agency
     can ability, Customer
     can ability, CustomerImpairment
     can ability, CustomerSupportNetworkMember
@@ -82,6 +84,7 @@ class Ability
     can ability, TripAuthorization
 
     unless user.is_admin
+      cannot :destroy, Agency
       cannot :destroy, AssessmentRequest
       cannot :destroy, Customer
       cannot :destroy, Event

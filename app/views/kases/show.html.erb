@@ -12,7 +12,7 @@
       </li>
     </ol>
     
-    <% unless @kase.type == "CoachingKase" %>
+    <% if @kase.type == "TrainingKase" %>
       <ol class="section" id="events">
         <li>
           <%= render "events" %>
@@ -20,21 +20,25 @@
       </ol>
     <% end -%>
     
-    <ol class="section" id="referral_documents">
-      <li>
-        <%= render "referral_documents" %>
-      </li>
-    </ol>    
+    <% unless @kase.type == "CustomerServiceKase" %>
+      <ol class="section" id="referral_documents">
+        <li>
+          <%= render "referral_documents" %>
+        </li>
+      </ol>
+    <% end %>
   </div>
 
   <div class="second">
-    <ol class="section" id="surveys">
-      <li>
-        <%= render "surveys" %>
-      </li>
-    </ol>
+    <% unless @kase.type == "CustomerServiceKase" %>
+      <ol class="section" id="surveys">
+        <li>
+          <%= render "surveys" %>
+        </li>
+      </ol>
+    <% end %>
     
-    <% unless @kase.type == "CoachingKase" %>
+    <% if @kase.type == "TrainingKase" %>
       <ol class="section" id="trained_routes">
         <li>
           <%= render "routes", :locals=>{:edit => false} %>

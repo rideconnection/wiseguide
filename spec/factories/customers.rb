@@ -12,7 +12,7 @@ FactoryGirl.define do
     state          'OR'
     zip            '12345'
     
-    association :ethnicity
+    ethnicity
     
     after_build do |o|
       o.county = FactoryGirl.create(:county).name
