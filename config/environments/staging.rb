@@ -24,7 +24,7 @@ Wiseguide::Application.configure do
   config.active_support.deprecation = :notify
 
   # Needed for sending new users' confirmation email
-  config.action_mailer.default_url_options = { :host => '184.154.158.74' }
+  config.action_mailer.default_url_options = { :host => 'ridestage.panopticdev.com/wiseguide' }
 
 end
 
