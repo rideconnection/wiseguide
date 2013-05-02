@@ -26,4 +26,8 @@ class TripAuthorization < ActiveRecord::Base
       disposition_user_id: user.id
     })
   end
+  
+  def customer
+    return kase.customer
+  end
 end

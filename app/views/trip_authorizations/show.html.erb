@@ -1,9 +1,5 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Coaching Case:</b>
-  <%= link_to(@trip_authorization.kase.customer.name_reversed, @trip_authorization.kase) unless @trip_authorization.kase.blank? %>
-</p>
+<%= render 'shared/breadcrumbs', :target => @trip_authorization, :name => 'Trip Authorization' %>
+<%= link_to "Delete", trip_authorization_path(@trip_authorization), :method => "delete", :confirm => "Are you sure you want to delete this trip authorization?", :class => "delete" if can?(:delete, @trip_authorization) %>
 
 <p>
   <b>Allowed trip per month:</b>
@@ -31,5 +27,7 @@
   </p>
 <% end %>
 
-<%= link_to 'Edit', edit_trip_authorization_path(@trip_authorization) %> |
-<%= link_to 'Back', trip_authorizations_path %>
+<p><%= link_to 'Edit', edit_trip_authorization_path(@trip_authorization) %> |
+  <%= link_to 'Back', kase_path(@trip_authorization.kase) %></p>
+
+<p><%= last_updated @trip_authorization %></p>
