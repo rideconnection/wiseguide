@@ -53,11 +53,14 @@ class Ability
         can?(:read, contact.kase) || can?(:read, contact.customer)
       end
       
-      can :create, TripAuthorization  do |trip_authorization|
-        ([user.organization] + user.organization.children).include? trip_authorization.kase.organization && user.organization.is_cmo?
+      can [:create, :read], TripAuthorization do |trip_authorization|
+        trip_authorization.kase.blank? || can?(:read, trip_authorization.kase)
       end
-      can :read,   TripAuthorization, :kase => {:organization => [user.organization] + user.organization.children}
-      can :update, TripAuthorization, :kase => {:organization => [user.organization] + user.organization.children}
+      
+      can :update, TripAuthorization do |trip_authorization|
+        can?(:read, trip_authorization.kase) && trip_authorization.disposition_date.blank?
+      end
+
       return
     end
 

@@ -1,6 +1,6 @@
-<h1>Editing trip_authorization</h1>
+<%= render 'shared/breadcrumbs', :target => @trip_authorization, :name => 'Trip Authorization' %>
+<%= link_to "Delete", trip_authorization_path(@trip_authorization), :method => "delete", :confirm => "Are you sure you want to delete this trip authorization?", :class => "delete" if can?(:delete, @trip_authorization) %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @trip_authorization %> |
-<%= link_to 'Back', trip_authorizations_path %>
+<%= last_updated @trip_authorization %><br>

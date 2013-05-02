@@ -1,6 +1,6 @@
 <% if can?(:read, TripAuthorization) %>
   <h1>Trip Authorizations</h1>
-  <% if can?(:edit, @kase) %>
+  <% if can?(:create, TripAuthorization) %>
     <%= link_to "Add", new_trip_authorization_path(:kase_id=>@kase.id), :class => "add" %>
   <% end %>
   <table>
@@ -21,7 +21,9 @@
               <span title="Disposition date">Disposition pending</span>
             </td>
             <td>
-              <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(trip_authorization), :class=>"complete_disposition", :method=>:put %>
+              <% if can?(:complete_disposition, trip_authorization) %>
+                <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(trip_authorization), :class=>"complete_disposition", :method=>:put %>
+              <% end %>
             </td>
           <% else %>
             <td>
@@ -32,13 +34,13 @@
             </td>
           <% end %>
           <td>
-            <%= link_to "Details", trip_authorization_path(trip_authorization), :class=>"details" %>
+            <%= link_to "Details", trip_authorization_path(trip_authorization), :class=>"details" if can? :read, trip_authorization %>
           </td>
           <td>
-            <%= link_to "Edit", edit_trip_authorization_path(trip_authorization), :class=>"edit" %>
+            <%= link_to "Edit", edit_trip_authorization_path(trip_authorization), :class=>"edit"  if can? :edit, trip_authorization %>
           </td>
           <td>
-            <%= link_to "", trip_authorization, :confirm => 'Are you sure you want to delete this trip authorization?', :method => :delete, :class => "delete trip_authorization" %>
+            <%= link_to "", trip_authorization, :confirm => 'Are you sure you want to delete this trip authorization?', :method => :delete, :class => "delete trip_authorization"  if can? :destroy, trip_authorization %>
           </td>
         </tr>
       <% end %>

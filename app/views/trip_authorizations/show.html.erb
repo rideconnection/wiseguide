@@ -11,23 +11,20 @@
   <%= @trip_authorization.end_date.strftime "%Y-%m-%d" unless @trip_authorization.end_date.blank? %>
 </p>
 
-<% if @trip_authorization.disposition_date.blank? %>
+<% if @trip_authorization.disposition_date.blank? && can?(:complete_disposition, @trip_authorization) %>
   <p>
     <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(@trip_authorization), :method=>:put %>
   </p>
-<% else %>
-  <p>
-    <b>Disposition date:</b>
-    <%= @trip_authorization.disposition_date.strftime "%Y-%m-%d" unless @trip_authorization.disposition_date.blank? %>
-  </p>
-
-  <p>
-    <b>Disposition user:</b>
-    <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
-  </p>
 <% end %>
 
-<p><%= link_to 'Edit', edit_trip_authorization_path(@trip_authorization) %> |
-  <%= link_to 'Back', kase_path(@trip_authorization.kase) %></p>
+<p>
+  <b>Disposition date:</b>
+  <%= @trip_authorization.disposition_date.strftime "%Y-%m-%d" unless @trip_authorization.disposition_date.blank? %>
+</p>
+
+<p>
+  <b>Disposition user:</b>
+  <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
+</p>
 
 <p><%= last_updated @trip_authorization %></p>
