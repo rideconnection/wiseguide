@@ -27,4 +27,5 @@
   <%= @trip_authorization.disposition_user.display_name unless @trip_authorization.disposition_user.blank? %>
 </p>
 
+<p><%= creation_stamp @trip_authorization %></p>
 <p><%= last_updated @trip_authorization %></p>
