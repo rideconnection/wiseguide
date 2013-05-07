@@ -5,15 +5,21 @@
   <% else %>
     No associated case.
   <% end %>
-<% elsif @assessment_request.kase.nil? %>
-  No associated case.
-  <% if can? :create, Kase %>
-    <%= link_to 'Create new coaching case...', :controller => :assessment_requests,
-                :action => :create_case, :id => @assessment_request %>
-  <% end %>
-<% elsif can? :read, @assessment_request.kase %>
-  <%= link_to "View Case ##{@assessment_request.kase_id}",
-              @assessment_request.kase %>
 <% else %>
-  Case no: <%= @assessment_request.kase_id %>
+  <% if @assessment_request.kase.nil? %>
+    No associated case.
+  <% else %>
+    <% if can? :read, @assessment_request.kase %>
+      <%= link_to "View Case ##{@assessment_request.kase_id}",
+                  @assessment_request.kase %>
+    <% else %>
+      Case no: <%= @assessment_request.kase_id %>
+    <% end %>
+  <% end %>
+
+  <% if can? :create, CoachingKase %>
+    <%= link_to "Change coaching case...", :controller => :assessment_requests,
+                             :action => :change_coaching_kase,
+                             :id => @assessment_request %>
+  <% end %>
 <% end %>

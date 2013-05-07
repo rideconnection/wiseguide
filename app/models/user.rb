@@ -96,6 +96,16 @@ class User < ActiveRecord::Base
     password << numbers.sample  unless password.join =~ Regexp.new(Regexp.escape(numbers.join))
     password.shuffle.join
   end
+  
+  def valid_password?(*args)
+    # Some user accounts were previously disabled by blanking or "x"ing out the
+    # encrypted password field. This causes an invalid hash error
+    if encrypted_password.blank? || !(encrypted_password =~ /^\$2a\$10\$.{53}/)
+      false
+    else
+      super
+    end
+  end
 
   private
 

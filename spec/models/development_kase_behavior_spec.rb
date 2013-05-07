@@ -16,6 +16,8 @@ describe DevelopmentKaseBehavior do
 
       # Required by DevelopmentKaseBehavior module
       :referral_type_id                    => 1,
+      :household_income                    => 1,
+      :household_size                      => 1,
       
       # Not required by base class or module
       :access_transit_partner_referred_to  => nil,
@@ -30,9 +32,7 @@ describe DevelopmentKaseBehavior do
       :eligible_for_ticket_disbursement    => nil,
       :funding_source_id                   => nil,
       :honored_ticket_count                => nil,
-      :household_income                    => nil,
       :household_income_alternate_response => nil,
-      :household_size                      => nil,
       :household_size_alternate_response   => nil,
       :medicaid_eligible                   => nil,
       :referral_source                     => nil,
@@ -63,7 +63,7 @@ describe DevelopmentKaseBehavior do
   end
   
   describe "household_income" do
-    it { @kase.should accept_values_for(:household_income, nil, "", 0, 1, "0", "123") }
+    it { @kase.should accept_values_for(:household_income, 0, 1, "0", "123") }
     it { @kase.should_not accept_values_for(:household_income, "a", 1.1, "1.1", "$1", "123,456", -5) }
   end
   
@@ -82,10 +82,23 @@ describe DevelopmentKaseBehavior do
       @kase.reload
       @kase.household_income.should be_nil
     end
+    
+    it "should be required if household_income is blank" do
+      @kase.household_income = nil
+      @kase.household_income_alternate_response = nil
+      @kase.should_not be_valid
+      
+      @kase.household_income = 1
+      @kase.should be_valid
+      
+      @kase.household_income = nil
+      @kase.household_income_alternate_response = "Unknown"
+      @kase.should be_valid
+    end
   end
   
   describe "household_size" do
-    it { @kase.should accept_values_for(:household_size, nil, "", 0, 1, "0", "123") }
+    it { @kase.should accept_values_for(:household_size, 0, 1, "0", "123") }
     it { @kase.should_not accept_values_for(:household_size, "a", 1.1, "1.1", "1 person", "123,456", -5) }
   end
   
@@ -103,6 +116,19 @@ describe DevelopmentKaseBehavior do
       @kase.save!
       @kase.reload
       @kase.household_size.should be_nil
+    end
+    
+    it "should be required if household_size is blank" do      
+      @kase.household_size = nil
+      @kase.household_size_alternate_response = nil
+      @kase.should_not be_valid
+      
+      @kase.household_size = 1
+      @kase.should be_valid
+      
+      @kase.household_size = nil
+      @kase.household_size_alternate_response = "Unknown"
+      @kase.should be_valid
     end
   end
   

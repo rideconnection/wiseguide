@@ -376,6 +376,8 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
   Scenario: Trainers can create a case from an assessment request
     When I click on the "Requests" link
       And I click the request from Krauss, Kyle
-      And I click on the "Create new coaching case..." link
+      And I click on the "Change coaching case..." link
+    Then I should see an empty list of potential coaching cases
+    When I click Continue to create a new coaching case
       And I populate the coaching case details
     Then I should see a link to the case

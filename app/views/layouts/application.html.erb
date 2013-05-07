@@ -29,9 +29,12 @@
         <% if current_user.is_outside_user? %>
           <li class="home"><%= link_to "Dashboard", root_path %></li>
           <% if can? :create, AssessmentRequest %>
-          <li class="assessment-requests">
-            <%= link_to "Submit Request", new_assessment_request_path %>
-          </li>
+            <li class="">
+              <%= link_to "Submit Request", new_assessment_request_path %>
+            </li>
+            <li class="assessment-requests">
+              <%= link_to "Requests", assessment_requests_path %>
+            </li>
           <% end %>
         <% else %>
           <li class="customers"><%= link_to "Customers", customers_path %></li>

@@ -1,129 +1,129 @@
-  <% if @customer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+<% if @customer.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
 
-      <ul>
-      <% @customer.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+    <ul>
+    <% @customer.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% unless @assessment_request.nil? %>
+  <%= hidden_field_tag :assessment_request, @assessment_request %>
+<% end %>
+
+<li>
+  <%= f.label :first_name, "* First name" %>
+  <%= f.text_field :first_name %>
+</li>
+
+<li>
+  <%= f.label :middle_initial, "Middle initial" %>
+  <%= f.text_field :middle_initial, :maxlength => 1 %>
+</li>
+
+<li>
+  <%= f.label :last_name, "* Last name" %>
+  <%= f.text_field :last_name %>
+</li>
+
+<li>
+  <%= f.label :birth_date, "* Birth date" %>
+  <%= f.text_field :birth_date, :class => "birthdatepicker", :placeholder => "yyyy-mm-dd"  %>
+</li>
+
+<li>
+  <%= f.label :gender, "* Gender" %>
+  <%= f.select :gender, @genders, :prompt => '<Select Gender>' %>
+</li>
+
+<li>
+  <%= f.label :ethnicity_id, "* Ethnicity" %>
+  <%= f.collection_select :ethnicity_id, @ethnicities, :id, :name, :prompt => '<Select Ethnicity>' %>
+</li>
+
+<li>
+  <%= f.label :phone_number_1, "* Preferred phone" %>
+  <%= f.text_field :phone_number_1 %>
+</li>
+
+<li>
+  <%= f.label :phone_number_2 %>
+  <%= f.text_field :phone_number_2 %>
+</li>
+
+<li>
+  <%= f.label :phone_number_3 %>
+  <%= f.text_field :phone_number_3 %>
+</li>
+
+<li>
+  <%= f.label :phone_number_4 %>
+  <%= f.text_field :phone_number_4 %>
+</li>
+
+<li>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+</li>
+
+<li>
+  <%= f.label :address, "* Address" %>
+  <%= f.text_field :address %>
+</li>
+
+<li>
+  <%= f.label :city, "* City" %>
+  <%= f.text_field :city %>
+</li>
+
+<li>
+  <%= f.label :state, "* State" %>
+  <%= f.text_field :state %>
+</li>
+
+<li>
+  <%= f.label :zip, "* ZIP code" %>
+  <%= f.text_field :zip %>
+</li>
+
+<li>
+  <%= f.label :county, "* County" %>
+  <%= f.select :county, @counties, :prompt => '<Select County>' %>
+</li>
+
+<li>
+  <%= f.label :veteran_status %>
+  <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+    <%= f.radio_button :veteran_status, option[1] %>
+    <%= f.label :veteran_status, option[0], :value => option[1], :class => 'options' %>
   <% end %>
-    <% unless @assessment_request.nil? %>
-    <%= hidden_field_tag :assessment_request, @assessment_request %>
-    <% end %>
+</li>
 
-    <li>
-    <%= f.label :first_name, "* First name" %>
-    <%= f.text_field :first_name %>
-    </li>
+<li>
+  <%= f.label :spouse_of_veteran_status %>
+  <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+    <%= f.radio_button :spouse_of_veteran_status, option[1] %>
+    <%= f.label :spouse_of_veteran_status, option[0], :value => option[1], :class => 'options' %>
+  <% end %><br><br>
+</li>
 
-    <li>
-    <%= f.label :middle_initial, "Middle initial" %>
-    <%= f.text_field :middle_initial, :maxlength => 1 %>
-    </li>
+<li>
+  <%= f.label :honored_citizen_cardholder %>
+  <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
+    <%= f.radio_button :honored_citizen_cardholder, option[1] %>
+    <%= f.label :honored_citizen_cardholder, option[0], :value => option[1], :class => 'options' %>
+  <% end %>
+</li>
 
-    <li>
-    <%= f.label :last_name, "* Last name" %>
-    <%= f.text_field :last_name %>
-    </li>
+<li>
+  <%= f.label :primary_language %>
+  <%= f.text_field :primary_language %>
+</li>
 
-    <li>
-    <%= f.label :birth_date, "* Birth date" %>
-    <%= f.text_field :birth_date, :class => "birthdatepicker", :placeholder => "yyyy-mm-dd"  %>
-    </li>
-
-    <li>
-    <%= f.label :gender, "* Gender" %>
-    <%= f.select :gender, @genders, :prompt => '<Select Gender>' %>
-    </li>
-
-    <li>
-    <%= f.label :ethnicity_id, "* Ethnicity" %>
-    <%= f.collection_select :ethnicity_id, @ethnicities, :id, :name, :prompt => '<Select Ethnicity>' %>
-    </li>
-
-    <li>
-    <%= f.label :phone_number_1, "* Preferred phone" %>
-    <%= f.text_field :phone_number_1 %>
-    </li>
-
-    <li>
-    <%= f.label :phone_number_2 %>
-    <%= f.text_field :phone_number_2 %>
-    </li>
-
-    <li>
-    <%= f.label :phone_number_3 %>
-    <%= f.text_field :phone_number_3 %>
-    </li>
-
-    <li>
-    <%= f.label :phone_number_4 %>
-    <%= f.text_field :phone_number_4 %>
-    </li>
-
-    <li>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-    </li>
-
-    <li>
-    <%= f.label :address, "* Address" %>
-    <%= f.text_field :address %>
-    </li>
-
-    <li>
-    <%= f.label :city, "* City" %>
-    <%= f.text_field :city %>
-    </li>
-
-    <li>
-    <%= f.label :state, "* State" %>
-    <%= f.text_field :state %>
-    </li>
-
-    <li>
-    <%= f.label :zip, "* ZIP code" %>
-    <%= f.text_field :zip %>
-    </li>
-
-    <li>
-    <%= f.label :county, "* County" %>
-    <%= f.select :county, @counties, :prompt => '<Select County>' %>
-    </li>
-
-    <li>
-    <%= f.label :veteran_status %>
-    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
-      <%= f.radio_button :veteran_status, option[1] %>
-      <%= f.label :veteran_status, option[0], :value => option[1], :class => 'options' %>
-    <% end %>
-    </li>
-
-    <li>
-    <%= f.label :spouse_of_veteran_status %>
-    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
-      <%= f.radio_button :spouse_of_veteran_status, option[1] %>
-      <%= f.label :spouse_of_veteran_status, option[0], :value => option[1], :class => 'options' %>
-    <% end %><br><br>
-    </li>
-
-    <li>
-    <%= f.label :honored_citizen_cardholder %>
-    <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
-      <%= f.radio_button :honored_citizen_cardholder, option[1] %>
-      <%= f.label :honored_citizen_cardholder, option[0], :value => option[1], :class => 'options' %>
-    <% end %>
-    </li>
-
-    <li>
-    <%= f.label :primary_language %>
-    <%= f.text_field :primary_language %>
-    </li>
-
-    <li>
-    <%= f.label :ada_service_eligibility_status_id %>
-    <%= f.collection_select :ada_service_eligibility_status_id, @ada_service_eligibility_statuses, :id, :name, :include_blank => '<Select TriMet Lift Eligibity>' %><br><br>
-    </li>
-    
+<li>
+  <%= f.label :ada_service_eligibility_status_id %>
+  <%= f.collection_select :ada_service_eligibility_status_id, @ada_service_eligibility_statuses, :id, :name, :include_blank => '<Select TriMet Lift Eligibity>' %><br><br>
+</li>

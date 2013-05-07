@@ -16,6 +16,8 @@ FactoryGirl.define do
   
   trait :development_kase do
     referral_type
+    household_income 1
+    household_size 1
   end
   
   trait :open_kase do

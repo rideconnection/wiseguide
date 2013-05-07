@@ -293,7 +293,7 @@
   </ol>
 <% end %>
 
-<% if @kase.type == "CoachingKase" && @kase.persisted? %>
+<% if @kase.type == "CoachingKase" && @kase.persisted? && can?(:edit, @kase) %>
   <%= form_tag(notify_manager_kase_path(@kase), :id => "notify_case_manager") do %>
     <div class="actions">
       <%= submit_tag "Email case manager" %>

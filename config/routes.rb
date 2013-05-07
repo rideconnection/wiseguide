@@ -78,8 +78,9 @@ Wiseguide::Application.routes.draw do
 
   match "admin", :controller=>:admin, :action=>:index
   match "assessment_requests/(:id)/change_customer", :controller=>:assessment_requests, :action=>:change_customer
-  match "assessment_requests/(:id)/create_case", :controller=>:assessment_requests, :action=>:create_case
+  match "assessment_requests/(:id)/change_coaching_kase", :controller=>:assessment_requests, :action=>:change_coaching_kase
   match "assessment_requests/(:id)/select_customer", :controller=>:assessment_requests, :action=>:select_customer
+  match "assessment_requests/(:id)/select_coaching_kase", :controller=>:assessment_requests, :action=>:select_coaching_kase
   match "reports", :controller=>:reports, :action=>:index
   match "reports(/:action)", :controller=>:reports
   match "resources/(:id)/toggle_active", :controller=>:resources, :action=>:toggle_active
