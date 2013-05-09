@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130430221113) do
+ActiveRecord::Schema.define(:version => 20130509040657) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130430221113) do
     t.datetime "attachment_updated_at"
     t.string   "reason_not_completed"
     t.integer  "assignee_id"
+    t.string   "customer_middle_initial"
   end
 
   create_table "contacts", :force => true do |t|

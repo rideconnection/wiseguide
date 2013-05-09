@@ -27,19 +27,8 @@ class Ability
     # Outside user permissions
     if user.level == 25 then
       can :create, AssessmentRequest if user.organization.is_cmo?
-      can :read,   AssessmentRequest, :organization => user.organization
-      can :read,   AssessmentRequest, :organization => user.organization.children
+      can :read,   AssessmentRequest, :submitter => { :organization_id => [user.organization.id] + user.organization.children.collect(&:id) }
       can :update, AssessmentRequest, :submitter_id => user.id
-      
-      can :read, Customer do |customer|
-        result = false
-        AssessmentRequest.where(:submitter_id => user.id).each do |r|
-          if r.customer_id == customer.id then
-            result = true
-          end
-        end
-        result
-      end
       
       can :read, Kase do |kase|
         request = kase.assessment_request

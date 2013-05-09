@@ -20,6 +20,10 @@ module DevelopmentKaseBehavior
       validates             :honored_ticket_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
       validates             :household_income_alternate_response, :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
       validates             :household_size_alternate_response,   :inclusion => { :in => %w( Unknown Refused ) }, :allow_blank => true
+      validate do |kase|
+        kase.errors[:household_income] << "is required" if kase.household_income.blank? && kase.household_income_alternate_response.blank?
+        kase.errors[:household_size] << "is required" if kase.household_size.blank? && kase.household_size_alternate_response.blank?
+      end
       
       before_save :cleanup_household_stats
       

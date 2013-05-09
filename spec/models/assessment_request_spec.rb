@@ -30,6 +30,11 @@ describe AssessmentRequest do
     it { should accept_values_for(:customer_last_name, "a") }
   end
 
+  describe "customer_middle_initial" do
+    it { should accept_values_for(:customer_middle_initial, nil, "", "a") }
+    it { should_not accept_values_for(:customer_middle_initial, "aa") }
+  end
+
   describe "customer_phone" do
     it { should_not accept_values_for(:customer_phone, nil, "") }
     it { should accept_values_for(:customer_phone, "a") }

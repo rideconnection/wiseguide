@@ -1,5 +1,5 @@
 <h1>Contacts</h1>
-<% if can?(:edit, @assessment_request) && @assessment_request.kase.blank? %>
+<% if can?(:edit, @assessment_request) && @assessment_request.kase.blank? && can?(:create, Contact) %>
   <%= link_to "Add", new_contact_path(:contact => {:contactable_type => @assessment_request.class.name, :contactable_id => @assessment_request.id}), :class => :add %>
 <% end %>
 
