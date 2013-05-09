@@ -11,7 +11,9 @@ end
 def fill_common_open_unassigned_kase_attributes  
   fill_common_kase_attributes
   select "Unassigned", :from => "Assigned to"
-  select "In Progress", :from => "Disposition"  
+  select "In Progress", :from => "Disposition"
+  fill_in "Household size", :with => "1"
+  fill_in "Household income", :with => "1"
 end
 
 When /^I complete the required fields for a coaching case$/ do
