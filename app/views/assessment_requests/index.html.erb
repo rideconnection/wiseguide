@@ -126,6 +126,10 @@
   </tbody>
 </table>
 
+<div id="assessment-request-paginate">
+  <%= will_paginate @assessment_requests %>
+</div>
+
 <br />
 
 <% if can? :create, AssessmentRequest %>
