@@ -398,7 +398,7 @@ body.admin #secondary-nav li.admin a:link, body.admin #secondary-nav li.admin a:
   background-color: #f7f7f7;
   border-radius: 5px;
   line-height: 1.2;
-  margin: 0 0 1em;
+  margin: 0;
   padding: 10px;
 }
 #flash {
@@ -1514,6 +1514,12 @@ table.search-form {
   margin: 0;
 }
 
-table#assessment-requests, #assessment-request-paginate {
+table#assessment-requests, div.assessment-request-caption {
   width: 1100px;
 }
+
+.assessment-request-paginate {
+  width: 1090px;
+  margin-bottom: 10px;
+}
+

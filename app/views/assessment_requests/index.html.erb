@@ -67,12 +67,13 @@
 
 <h1>Assessment Requests</h1>
 
-<% if can? :create, AssessmentRequest %>
-  <%= link_to 'New Assessment Request', new_assessment_request_path, :id => 'new-assessment-request'  %>
-<% end %>
+  <p>
+  <% if can? :create, AssessmentRequest %>
+    <%= link_to 'New Assessment Request', new_assessment_request_path, :id => 'new-assessment-request'  %>
+  <% end %>
+  </p>
 
-<table id="assessment-requests">
-  <caption class="box no-print">
+  <div class="box no-print assessment-request-caption">
     <h2>Filter Requests</h2>
     <%= form_tag assessment_requests_path, :method => :get, :id => "assessment-request-filter" do %>
       <h3>By Submitting User Type:</h3>
@@ -107,28 +108,11 @@
       </ul>
       <div class="clearfix"><%= submit_tag "Filter", :name => nil, :disabled => false, :disable_with => "Applying filter..." %></div>
     <% end -%>
-  </caption>
-  <thead>
-    <tr>
-      <th>Request Date</th>
-      <th>Customer name</th>
-      <th>Customer phone</th>
-      <th>Customer birth date</th>
-      <th>Notes</th>
-      <th>Submitter</th>
-      <th>Assigned To</th>
-      <th>Status</th>
-      <th class="no-print"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render 'assessment_requests' %>
-  </tbody>
-</table>
+  </div>
 
-<div id="assessment-request-paginate">
-  <%= will_paginate @assessment_requests %>
-</div>
+  <div id="assessment-requests-content">
+    <%= render 'assessment_requests' %>
+  </div>
 
 <br />
 
