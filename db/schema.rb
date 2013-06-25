@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130509040657) do
+ActiveRecord::Schema.define(:version => 20130625172146) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -294,6 +294,8 @@ ActiveRecord::Schema.define(:version => 20130509040657) do
     t.string   "access_transit_partner_referred_to"
     t.string   "category"
     t.integer  "agency_id"
+    t.string   "referral_mechanism"
+    t.string   "referral_mechanism_explanation"
   end
 
   add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"

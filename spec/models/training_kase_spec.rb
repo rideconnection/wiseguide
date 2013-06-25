@@ -27,6 +27,7 @@ describe TrainingKase do
       :open_date                           => Date.current,
       :referral_source                     => "Source",
       :referral_type_id                    => 1,
+      :referral_mechanism                  => "Email",
       :scheduling_system_entry_required    => nil,
       :type                                => "TrainingKase",
     }

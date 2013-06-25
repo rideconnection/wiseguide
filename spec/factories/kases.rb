@@ -37,6 +37,7 @@ FactoryGirl.define do
     county { Kase::VALID_COUNTIES.values.first }
     funding_source
     referral_source "Source"
+    referral_mechanism "Email"
     
     factory :open_training_kase, traits: [:open_kase]
   end

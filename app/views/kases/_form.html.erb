@@ -123,6 +123,22 @@
 
     <% if @kase.type == "TrainingKase" %>
       <li>
+        <%= f.label :referral_mechanism %>
+        <% if can? :edit, @kase %>
+          <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {:prompt => "<Select Type>"} %>
+        <% else %>
+          <%= @kase.referral_mechanism %>&nbsp;
+        <% end %>
+      </li>
+      <li>
+        <%= f.label :referral_mechanism_explanation, 'Explanation, if "Other"' %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :referral_mechanism_explanation %>
+        <% else %>
+          <%= @kase.referral_mechanism_explanation %>&nbsp;
+        <% end %>
+      </li>
+      <li>
         <%= f.label :county, "County of Service" %>
         <% if can? :edit, @kase %>
           <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>

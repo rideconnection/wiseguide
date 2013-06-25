@@ -46,6 +46,7 @@ Then /^I should be able to create a new open, unassigned training case for the c
   fill_in "Referral source", :with => "Source"
   select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
+  select "Email", :from => "Referral mechanism"
   step "I submit the form to create the training case"
   # Get the newly generated ID so we can find the record later
   @kase = TrainingKase.order("id DESC").limit(1).first
