@@ -181,12 +181,12 @@ describe DevelopmentKaseBehavior do
         @funding_source_2 = FactoryGirl.create(:funding_source)
         
         @funded_kases = []
-        @funded_kases << FactoryGirl.create(:development_kase, :funding_source_id => @funding_source_1.id)
-        @funded_kases << FactoryGirl.create(:development_kase, :funding_source_id => @funding_source_1.id)
+        @funded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_1.id)
+        @funded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_1.id)
         
         @unfunded_kases = []
-        @unfunded_kases << FactoryGirl.create(:development_kase, :funding_source_id => @funding_source_2.id)
-        @unfunded_kases << FactoryGirl.create(:development_kase, :funding_source_id => @funding_source_2.id)
+        @unfunded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_2.id)
+        @unfunded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_2.id)
         
         # We need to reload these to get the correct sub classes
         @funded_kases   = @funded_kases.map{|k| Kase.find(k.id)}
@@ -195,7 +195,7 @@ describe DevelopmentKaseBehavior do
       
       it "should define a for_funding_source_id scope" do
         # lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
-        FactoryGirlDevelopmentKase.for_funding_source_id(@funding_source_1.id).should =~ @funded_kases
+        CoachingKase.for_funding_source_id(@funding_source_1.id).should =~ @funded_kases
       end
     end
   end
