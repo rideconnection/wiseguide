@@ -15,7 +15,6 @@ FactoryGirl.define do
   end
   
   trait :development_kase do
-    referral_type
     household_income 1
     household_size 1
   end
@@ -38,12 +37,14 @@ FactoryGirl.define do
     funding_source
     referral_source "Source"
     referral_mechanism "Email"
+    referral_type { ReferralType.find_or_create_by_name("TC - Other") }
     
     factory :open_training_kase, traits: [:open_kase]
   end
 
   factory :coaching_kase, :aliases => [:closed_coaching_kase], :traits => [:base_kase, :development_kase] do
     case_manager
+    referral_type { ReferralType.find_or_create_by_name("CC - Other") }
     
     factory :open_coaching_kase, traits: [:open_kase]
   end
