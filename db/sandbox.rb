@@ -10,21 +10,17 @@ def load_sandbox_data
 end
 
 def create_sample_date
-  [
-    :assessment_request,
-    :assessment_request_contact,
-    :coaching_kase,
-    :contact,
-    :disposition,
-    :kase_contact,
-    :open_coaching_kase,
-    :open_kase,
-    :outcome,
-    :referral_document,
-    :trip_authorization,
-  ].each do |f|
-    FactoryGirl.create(f)
-  end
+  FactoryGirl.create :assessment_request
+  FactoryGirl.create :assessment_request_contact
+  FactoryGirl.create :coaching_kase
+  FactoryGirl.create :contact
+  FactoryGirl.create :disposition
+  FactoryGirl.create :kase_contact
+  FactoryGirl.create :open_coaching_kase
+  FactoryGirl.create :open_kase
+  FactoryGirl.create :outcome
+  FactoryGirl.create :referral_document
+  FactoryGirl.create :trip_authorization
 end
 
 def create_users
