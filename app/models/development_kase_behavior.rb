@@ -1,14 +1,16 @@
 module DevelopmentKaseBehavior
   def self.included(base_class)
     base_class.class_eval do
-      belongs_to :referral_type
+
+      # TODO: Consider moving the rest of these associations to the parent 
+      # model since (a) generalized features such as reports may look for the 
+      # association on all records, and (b) the database references exist on all
+      # records anyway.
       belongs_to :funding_source
       
       has_one  :assessment_request, :dependent => :nullify, :foreign_key => :kase_id
       has_many :events, :dependent => :destroy, :foreign_key => :kase_id
       has_many :response_sets, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :kase_routes, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :routes, :through => :kase_routes, :foreign_key => :kase_id
       has_many :outcomes, :dependent => :destroy, :foreign_key => :kase_id
       has_many :referral_documents, :dependent => :destroy, :foreign_key => :kase_id
       has_many :trip_authorizations, :dependent => :destroy, :foreign_key => :kase_id
