@@ -91,6 +91,16 @@
         <% end %>
       </li>
     <% end %>
+
+    <li>
+      <%= f.label :user_id, "Assigned to" %>
+      <% if can? :edit, @kase %>
+        <%= f.collection_select :user_id, @users, :id, :display_name, :prompt => (@kase.new_record? ? '<Select Assigned to>' : false) %>
+      <% else %>
+        <%= @kase.assigned_to.display_name unless @kase.assigned_to.blank? %>&nbsp;
+      <% end %>
+    </li>
+
     
     <% if @kase.type != "CustomerServiceKase" %>
       <li>
@@ -112,32 +122,25 @@
       </li>
     <% end %>
     
-    <li>
-      <%= f.label :user_id, "Assigned to" %>
-      <% if can? :edit, @kase %>
-        <%= f.collection_select :user_id, @users, :id, :display_name, :prompt => (@kase.new_record? ? '<Select Assigned to>' : false) %>
-      <% else %>
-        <%= @kase.assigned_to.display_name unless @kase.assigned_to.blank? %>&nbsp;
-      <% end %>
-    </li>
-
     <% if @kase.type == "TrainingKase" %>
-      <li>
-        <%= f.label :referral_mechanism %>
-        <% if can? :edit, @kase %>
-          <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {:prompt => "<Select Type>"} %>
-        <% else %>
-          <%= @kase.referral_mechanism %>&nbsp;
-        <% end %>
-      </li>
-      <li>
-        <%= f.label :referral_mechanism_explanation, 'Explanation, if "Other"' %>
-        <% if can? :edit, @kase %>
-          <%= f.text_field :referral_mechanism_explanation %>
-        <% else %>
-          <%= @kase.referral_mechanism_explanation %>&nbsp;
-        <% end %>
-      </li>
+      <div class="related-fields">
+        <li>
+          <%= f.label :referral_mechanism %>
+          <% if can? :edit, @kase %>
+            <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {:prompt => "<Select Type>"} %>
+          <% else %>
+            <%= @kase.referral_mechanism %>&nbsp;
+          <% end %>
+        </li>
+        <li>
+          <%= f.label :referral_mechanism_explanation, 'Explanation, if "Other"' %>
+          <% if can? :edit, @kase %>
+            <%= f.text_field :referral_mechanism_explanation %>
+          <% else %>
+            <%= @kase.referral_mechanism_explanation %>&nbsp;
+          <% end %>
+        </li>
+      </div>
       <li>
         <%= f.label :county, "County of Service" %>
         <% if can? :edit, @kase %>

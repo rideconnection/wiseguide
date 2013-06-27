@@ -1523,3 +1523,9 @@ table#assessment-requests, div.assessment-request-caption {
   margin-bottom: 10px;
 }
 
+div.related-fields {
+  padding-top: 10px;
+  border-top:  1px solid #bbb;
+  border-bottom:  1px solid #bbb;
+  margin-bottom: 10px;
+}
