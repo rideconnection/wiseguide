@@ -138,7 +138,7 @@ private
     @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
     @kase_route = KaseRoute.new(:kase_id => @kase.id)
-    @referral_types = ReferralType.accessible_by(current_ability).order(:name)
+    @referral_types = ReferralType.accessible_by(current_ability).order(:name).for_kase(@kase)
     @routes = Route.accessible_by(current_ability)
     @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
   end

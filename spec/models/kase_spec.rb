@@ -116,6 +116,20 @@ describe Kase do
       @kase.build_assigned_to().class.name.should eq("User")
     end
     
+    it "should know what referral types are available to each kase" do
+      coaching_type = ReferralType.find_or_create_by_name("CC - Test")
+      training_type = ReferralType.find_or_create_by_name("TC - Test")
+
+      coaching_kase = FactoryGirl.create(:coaching_kase)
+      training_kase = FactoryGirl.create(:training_kase)
+
+      ReferralType.for_kase(coaching_kase).should include(coaching_type)
+      ReferralType.for_kase(coaching_kase).should_not include(training_type)
+
+      ReferralType.for_kase(training_kase).should include(training_type)
+      ReferralType.for_kase(training_kase).should_not include(coaching_type)
+    end
+
     describe "contacts association" do
       before do
         # We need a valid subclass here to get around a validation on the

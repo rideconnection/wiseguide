@@ -125,7 +125,7 @@ end
 When /^I populate the coaching case details$/ do
   fill_in('Opened', :with => '2012-05-13')
   fill_in('Referral source', :with => 'daughter')
-  select('Friends & Family', :from => 'Referral Source Type')
+  select('CC - Other', :from => 'Referral Source Type')
   fill_in('Household size', :with => '1')
   fill_in('Household income', :with => '1')
   click_button('Save')
