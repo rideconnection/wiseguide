@@ -2,18 +2,10 @@ module DevelopmentKaseBehavior
   def self.included(base_class)
     base_class.class_eval do
 
-      # TODO: Consider moving the rest of these associations to the parent 
-      # model since (a) generalized features such as reports may look for the 
-      # association on all records, and (b) the database references exist on all
-      # records anyway.
-      belongs_to :funding_source
-      
-      has_one  :assessment_request, :dependent => :nullify, :foreign_key => :kase_id
-      has_many :events, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :response_sets, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :outcomes, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :referral_documents, :dependent => :destroy, :foreign_key => :kase_id
-      has_many :trip_authorizations, :dependent => :destroy, :foreign_key => :kase_id
+      # NOTE: We moved the model associations out of this mixin.  Although they 
+      # do work here, the database-level relations still exist no matter what 
+      # subclass, so it's more consistent and less error-prone to just add those
+      # associations for all models, but only do validations when needed.
       
       validates_presence_of :referral_type_id
       validates             :household_income,     :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }, :allow_blank => true
