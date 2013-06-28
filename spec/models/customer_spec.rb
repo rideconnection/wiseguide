@@ -234,7 +234,7 @@ describe Customer do
         ]
       end
     else
-      pending "Testing the search functionality requires that the test environment is using a Postgresql database connection and that the test database has the dmetaphone libraries installed."
+      fail "Testing the search functionality requires that the test environment is using a Postgresql database connection and that the test database has the dmetaphone libraries installed."
     end
   end
 end
