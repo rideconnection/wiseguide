@@ -13,7 +13,7 @@
     if (!raw_query.match(/\S/)) { return ;} // no query
 
     query = encodeURIComponent(raw_query);
-    url = '/customers/search.json?name=' + query; 
+    url = './search.json?name=' + query; 
 
     $.getJSON(url, function(data) {
       $(".customer-matches ol li").remove();
@@ -21,7 +21,7 @@
       $.each(first_rows, function() {
         customer = this["customer"];
         full_name = customer["first_name"] + " " + customer["last_name"];
-        link = '<a href="/customers/' + customer["id"] + '" target="_blank">' + full_name + '</a>';
+        link = '<a href="./' + customer["id"] + '" target="_blank">' + full_name + '</a>';
         $(".customer-matches ol").append("<li>" + link + "</li>");
       });
     });
