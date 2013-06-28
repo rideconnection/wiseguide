@@ -5,23 +5,30 @@
     });
   });
   
+  function clear_customer_matches() {
+    $(".customer-matches ol li").remove();
+  }
+
   function show_customer_matches() {
     first = $("#customer_first_name")[0].value;
     last = $("#customer_last_name")[0].value;
-    raw_query = [first, last].join(" ");
+    if (!(first.match(/\S/) && last.match(/\S/))) { // no query
+      clear_customer_matches();
+      return ;
+    } 
 
-    if (!raw_query.match(/\S/)) { return ;} // no query
+    query_name = [last, first].join(", ");
 
-    query = encodeURIComponent(raw_query);
+    query = encodeURIComponent(query_name);
     url = './search.json?name=' + query; 
 
     $.getJSON(url, function(data) {
-      $(".customer-matches ol li").remove();
+      clear_customer_matches();
       first_rows = data.slice(0, 3);
       $.each(first_rows, function() {
-        customer = this["customer"];
-        full_name = customer["first_name"] + " " + customer["last_name"];
-        link = '<a href="./' + customer["id"] + '" target="_blank">' + full_name + '</a>';
+        row = this["customer"];
+        full_name = row["last_name"] + ", " + row["first_name"];
+        link = '<a href="./' + row["id"] + '" target="_blank">' + full_name + '</a>';
         $(".customer-matches ol").append("<li>" + link + "</li>");
       });
     });

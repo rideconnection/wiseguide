@@ -44,6 +44,5 @@ Feature: Customer search
   @javascript
   Scenario: Customer matches when creating a new customer
     When I click on the "New Customer" link
-    And I fill in part of Bobby's name
-    Then I should see "Bobby O'Brady"
-    And I should see "Carl Bobson"
+    And I fill in something close to Carl's name
+    And I should see "Bobson, Carl"
