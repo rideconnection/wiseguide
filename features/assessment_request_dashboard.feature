@@ -361,7 +361,6 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
       | Customer name | Submitter      | Assigned To   | Status                            |
       | Elway, Emm    | Steve Harvey   | Tony Hawk     | Completed                         |
 
-  @dmetaphone
   Scenario: Trainers can associate a request with a new customer
     When I click on the "Requests" link
       And I click the request from Glass, Ira
