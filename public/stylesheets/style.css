@@ -1529,3 +1529,7 @@ div.related-fields {
   border-bottom:  1px solid #bbb;
   margin-bottom: 10px;
 }
+
+div.customer-matches {
+  height: 110px;
+}

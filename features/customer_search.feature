@@ -1,11 +1,3 @@
-# Running this test requires that the test database is using the postgresql 
-# adapter and that the dmetaphone "fuzzystrmatch" functions have been 
-# installed into the test database. Because of this restriction, the default
-# cucumber profile will ignore tests with the @dmetaphone tag. In order to 
-# run these scenarios use the dmetaphone profile in your cucumber command:
-# `cucumber features/customer_search.feature -p dmetaphone`
-
-@dmetaphone
 Feature: Customer search
   In order to make the workflow more efficient
   trainers and admins
@@ -30,8 +22,8 @@ Feature: Customer search
     Then I should see the following customers in the customers table:
       | Name                  |
       | Bobson, Carl          |
-      | Bradey Sr., Robert    |
       | Bradey, Jr., Bob      |
+      | Bradey Sr., Robert    |
       | Carlson, Christopher  |
       | Christchurch, Bradley |
       | Donnings, Jennifer    |
@@ -44,7 +36,14 @@ Feature: Customer search
       And I click the "Search" button in the customer search form
     Then I should see the following customers in the customers table:
       | Name                  |
-      | Bradey Sr., Robert    |
       | Bradey, Jr., Bob      |
+      | Bradey Sr., Robert    |
       | Christchurch, Bradley |
       | Roberts, Brady        |
+
+  @javascript
+  Scenario: Customer matches when creating a new customer
+    When I click on the "New Customer" link
+    And I fill in part of Bobby's name
+    Then I should see "Bobby O'Brady"
+    And I should see "Carl Bobson"

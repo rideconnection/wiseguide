@@ -10,6 +10,11 @@ When /^I click the "Search" button in the customer search form$/ do
   end
 end
 
+When /^I fill in part of Bobby's name$/ do
+  fill_in 'customer[first_name]', :with => 'Bob'
+  fill_in 'customer[last_name]', :with => 'Brady'
+end
+
 Then /^I should see the following customers in the customers table:$/ do |table|
   check_simple_table_data "#customers", table
 end

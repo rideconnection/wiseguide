@@ -64,7 +64,11 @@ class CustomersController < ApplicationController
     term = params[:name].downcase.strip
     
     @customers = Customer.search(term).paginate( :page => params[:page], :order => [:last_name, :first_name])
-    render :action => :index
+
+    respond_to do |format|
+      format.html { render :action => :index }
+      format.json { render :json => @customers }
+    end
   end
 
   private

@@ -1,3 +1,33 @@
+<script type="text/JavaScript">
+  $(document).ready(function() {
+    $(".duplicate-check").change(function() {
+      show_customer_matches();
+    });
+  });
+  
+  function show_customer_matches() {
+    first = $("#customer_first_name")[0].value;
+    last = $("#customer_last_name")[0].value;
+    raw_query = [first, last].join(" ");
+
+    if (!raw_query.match(/\S/)) { return ;} // no query
+
+    query = encodeURIComponent(raw_query);
+    url = '/customers/search.json?name=' + query; 
+
+    $.getJSON(url, function(data) {
+      $(".customer-matches ol li").remove();
+      first_rows = data.slice(0, 3);
+      $.each(first_rows, function() {
+        customer = this["customer"];
+        full_name = customer["first_name"] + " " + customer["last_name"];
+        link = '<a href="/customers/' + customer["id"] + '" target="_blank">' + full_name + '</a>';
+        $(".customer-matches ol").append("<li>" + link + "</li>");
+      });
+    });
+  }
+</script>
+
 <h1>New customer</h1>
 
 <%= form_for @customer, :html => { :multipart => true }  do |f| %>
@@ -7,6 +37,13 @@
   </ol>
   
   <ol class="section first">
+    <% if @customer.new_record? %>
+      <div id="error_explanation" class="customer-matches">
+        <h2>Possible Duplicates:</h2>
+        <ol></ol>
+      </div>
+    <% end %>
+
     <%= render 'notes_and_photo', :f => f %>
   </ol>
   
