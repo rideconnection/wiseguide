@@ -27,9 +27,10 @@ class AssessmentRequest < ActiveRecord::Base
                   :assignee, :assignee_id, :reason_not_completed,
                   :customer_middle_initial
 
-  scope :assigned_to,  lambda { |users| where(:assignee_id => Array(users).collect(&:id)) }
-  scope :belonging_to, lambda { |organizations| joins(:referring_organization).where("organizations.id IN (?)", Array(organizations).collect(&:id)) }
-  scope :submitted_by, lambda { |users| where(:submitter_id => Array(users).collect(&:id)) }
+  scope :assigned_to,      lambda { |users| where(:assignee_id => Array(users).collect(&:id)) }
+  scope :belonging_to,     lambda { |organizations| joins(:referring_organization).where("organizations.id IN (?)", Array(organizations).collect(&:id)) }
+  scope :submitted_by,     lambda { |users| where(:submitter_id => Array(users).collect(&:id)) }
+  scope :created_in_range, lambda { |date_range| where("created_at >= ? AND created_at < ?", date_range.begin, date_range.end) }
 
   # "Pending" (reason_not_completed is blank and no associated TC case)
   scope :pending, where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)")
