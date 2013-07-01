@@ -335,6 +335,36 @@ class ReportsController < ApplicationController
     @services_referred = Resource.joins(:referral_documents, "inner join kases on referral_documents.kase_id = kases.id", "inner join customers on kases.customer_id = customers.id").select("COUNT(DISTINCT(customers.id)) as customers_referred, resources.id as resource_id, resources.name as resource_name").group("resources.id, resources.name").order("resources.name").where("kases.assessment_date BETWEEN ? AND ?", @start_date, @end_date)
   end
 
+  def assessment_requests
+    start_date = Time.parse(params[:start_date])
+    end_date = Time.parse(params[:end_date]) + 1.day
+
+    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).includes(:submitter,:assignee)
+
+    csv = ""
+    CSV.generate(csv) do |csv|
+      csv << ['Created At',
+              'Customer Name',
+              'Customer Phone',
+              'Customer Birth Date',
+              'Request Notes',
+              'Submitter',
+              'Assigned To',
+              'Status']
+      assessment_requests.each do |assessment_request|
+        csv << [assessment_request.created_at,
+                assessment_request.display_name,
+                assessment_request.customer_phone,
+                assessment_request.customer_birth_date,
+                assessment_request.notes,
+                assessment_request.submitter.try(:display_name),
+                assessment_request.assignee.try(:display_name),
+                assessment_request.status]
+      end
+    end
+    send_data csv, :type => "text/csv", :filename => "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", :disposition => 'attachment'    
+  end
+
   private
 
   def outcomes_row(customer,kase,outcome)
