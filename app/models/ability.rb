@@ -11,6 +11,7 @@ class Ability
 
     #system tables
     can :read, AdaServiceEligibilityStatus
+    can :read, Agency
     can :read, County
     can :read, Disposition
     can :read, Ethnicity
@@ -26,18 +27,9 @@ class Ability
     # Outside user permissions
     if user.level == 25 then
       can :create, AssessmentRequest if user.organization.is_cmo?
-      can :read,   AssessmentRequest, :organization => user.organization
-      can :read,   AssessmentRequest, :organization => user.organization.children
+      can :read,   AssessmentRequest, :submitter => { :organization_id => [user.organization.id] + user.organization.children.collect(&:id) }
       can :update, AssessmentRequest, :submitter_id => user.id
-      can :read, Customer do |customer|
-        result = false
-        AssessmentRequest.where(:submitter_id => user.id).each do |r|
-          if r.customer_id == customer.id then
-            result = true
-          end
-        end
-        result
-      end
+      
       can :read, Kase do |kase|
         request = kase.assessment_request
         unless request.nil? then
@@ -45,9 +37,19 @@ class Ability
           org == user.organization || org.parent == user.organization
         end
       end
+      
       can :read, Contact do |contact|
         can?(:read, contact.kase) || can?(:read, contact.customer)
       end
+      
+      can [:create, :read], TripAuthorization do |trip_authorization|
+        trip_authorization.kase.blank? || can?(:read, trip_authorization.kase)
+      end
+      
+      can :update, TripAuthorization do |trip_authorization|
+        can?(:read, trip_authorization.kase) && trip_authorization.disposition_date.blank?
+      end
+
       return
     end
 
@@ -58,6 +60,7 @@ class Ability
     end
     
     can ability, AssessmentRequest
+    can ability, Agency
     can ability, Customer
     can ability, CustomerImpairment
     can ability, CustomerSupportNetworkMember
@@ -70,8 +73,10 @@ class Ability
     can ability, Resource
     can ability, ResponseSet
     can ability, Survey
+    can ability, TripAuthorization
 
     unless user.is_admin
+      cannot :destroy, Agency
       cannot :destroy, AssessmentRequest
       cannot :destroy, Customer
       cannot :destroy, Event
@@ -82,6 +87,7 @@ class Ability
       cannot :destroy, Resource
       cannot :destroy, ResponseSet
       cannot :destroy, Survey
+      cannot :destroy, TripAuthorization
     end
 
     #users can only read the cases of others

@@ -6,7 +6,7 @@ FactoryGirl.define do
     association :contactable, :factory => :customer
     
     factory :kase_contact, :aliases => [:kase_contact_event] do
-      association :contactable, :factory => :kase
+      association :contactable, :factory => :training_kase
     end
     
     factory :assessment_request_contact, :aliases => [:assessment_request_contact_event] do

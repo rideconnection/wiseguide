@@ -3,12 +3,12 @@ class AssessmentRequestsController < ApplicationController
 
   # GET /assessment_requests
   # GET /assessment_requests.xml
-  def index
+  def index    
     params[:user_type_filter]      = params[:user_type_filter]      || session[:assessment_requests_index_user_type_filter]      || "all"
     params[:current_status_filter] = params[:current_status_filter] || session[:assessment_requests_index_current_status_filter] || "all"
     params[:assignee_filter]       = params[:assignee_filter]       || session[:assessment_requests_index_assignee_filter]       || "all"
 
-    query = AssessmentRequest.scoped
+    query = @assessment_requests.scoped
         
     case params[:user_type_filter].to_sym
     when :mine
@@ -33,7 +33,8 @@ class AssessmentRequestsController < ApplicationController
       query = query.assigned_to(current_user)
     end
         
-    @assessment_requests = query.order("created_at ASC").all
+    @assessment_requests = query.order("created_at ASC").paginate(
+      :page => params[:page])
     
     session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
     session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
@@ -91,15 +92,11 @@ class AssessmentRequestsController < ApplicationController
     @similar_customers = Customer.search(@assessment_request.display_name).order('last_name, first_name')
   end
 
-  # GET /assessment_requests/1/create_case
-  def create_case
-    kase = {
-      :type => :CoachingKase,
-      :assessment_request_id => @assessment_request.id,
-      :case_manager_id => @assessment_request.submitter.id,
-    }
-    redirect_to :controller => :kases, :action => :new, :kase => kase,
-                :customer_id => @assessment_request.customer_id
+  # GET /assessment_requests/1/change_coaching_kase
+  def change_coaching_kase
+    @assessment_request = AssessmentRequest.find(params[:id])
+    authorize! :update, @assessment_request
+    @potential_kases = @assessment_request.customer.kases.where(:type => 'CoachingKase').order(:open_date)
   end
 
   # POST /assessment_requests/1/select_customer
@@ -110,6 +107,7 @@ class AssessmentRequestsController < ApplicationController
       customer = {
         :first_name => @assessment_request.customer_first_name,
         :last_name => @assessment_request.customer_last_name,
+        :middle_initial => @assessment_request.customer_middle_initial,
         :phone_number_1 => @assessment_request.customer_phone,
         :birth_date => @assessment_request.customer_birth_date,
         :notes => @assessment_request.notes,
@@ -119,6 +117,26 @@ class AssessmentRequestsController < ApplicationController
     else
       customer = Customer.find(params[:customer_id])
       @assessment_request.customer = customer
+      @assessment_request.save!
+      redirect_to @assessment_request
+    end
+  end
+
+  # POST /assessment_requests/1/select_coaching_kase
+  def select_coaching_kase
+    @assessment_request = AssessmentRequest.find(params[:assessment_request])
+    authorize! :update, @assessment_request
+    if params[:kase_id] == "0" then
+      kase = {
+        :type => :CoachingKase,
+        :assessment_request_id => @assessment_request.id,
+        :case_manager_id => @assessment_request.submitter.id,
+      }
+      redirect_to :controller => :kases, :action => :new, :kase => kase,
+                  :customer_id => @assessment_request.customer_id
+    else
+      kase = Kase.find(params[:kase_id])
+      @assessment_request.kase = kase
       @assessment_request.save!
       redirect_to @assessment_request
     end

@@ -14,16 +14,18 @@ class AssessmentRequest < ActiveRecord::Base
   validates_attachment_content_type :attachment,
     :content_type => ['application/pdf']
 
-  validates_presence_of :customer_first_name
-  validates_presence_of :customer_last_name
-  validates_presence_of :customer_phone
-  validates_presence_of :submitter
+  validates_presence_of  :customer_first_name
+  validates_presence_of  :customer_last_name
+  validates_presence_of  :customer_phone
+  validates_presence_of  :submitter
   validates_inclusion_of :reason_not_completed, :in => ["Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn"], :allow_blank => true
+  validates              :customer_middle_initial, :length => { :maximum => 1 }
 
   attr_accessible :attachment, :customer_first_name, :customer_last_name,
                   :customer_birth_date, :customer_phone, :notes,
                   :submitter, :submitter_id, :customer, :customer_id,
-                  :assignee, :assignee_id, :reason_not_completed
+                  :assignee, :assignee_id, :reason_not_completed,
+                  :customer_middle_initial
 
   scope :assigned_to,  lambda { |users| where(:assignee_id => Array(users).collect(&:id)) }
   scope :belonging_to, lambda { |organizations| joins(:referring_organization).where("organizations.id IN (?)", Array(organizations).collect(&:id)) }

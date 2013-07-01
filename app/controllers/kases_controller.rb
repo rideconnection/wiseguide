@@ -20,7 +20,7 @@ class KasesController < ApplicationController
     @wait_list = @kases.unassigned.order(:open_date)
     
     if @kase_type == "CoachingKase"
-      @data_entry_needed = @kases.where(:scheduling_system_entry_required => true)
+      @data_entry_needed = (@kases.scheduling_system_entry_required.all + TripAuthorization.where(:kase_id => @kases.collect(&:id), :disposition_date => nil).all).sort{|a,b| a.created_at <=> b.created_at }
     end
   end
 
@@ -133,14 +133,14 @@ class KasesController < ApplicationController
 private
   
   def prep_edit
-    @referral_types = ReferralType.accessible_by(current_ability).order(:name)
-    @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
+    @agencies = Agency.accessible_by(current_ability)
     @case_managers = User.cmo_or_selected(@kase.case_manager_id).accessible_by(current_ability)
     @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
-
     @kase_route = KaseRoute.new(:kase_id => @kase.id)
+    @referral_types = ReferralType.accessible_by(current_ability).order(:name).for_kase(@kase)
     @routes = Route.accessible_by(current_ability)
+    @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
   end
 
   def setup_sti_model

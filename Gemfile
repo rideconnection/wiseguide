@@ -39,9 +39,7 @@ gem "capistrano",     :require => false # We need it to be installed, but it's
 gem "capistrano-ext", :require => false # not a runtime dependency
 gem "rvm-capistrano", :require => false
 
-group :production, :staging do
-  gem "pg"
-end
+gem "pg"
 
 group :development do
   gem "launchy"

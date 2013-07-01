@@ -50,9 +50,13 @@
     <% end %>
     <% if @kase_type == "CoachingKase" %>
       <h1>Data Entry Needed</h1>
-      <% for kase in @data_entry_needed %>
+      <% for record in @data_entry_needed %>
         <li class="data_entry_needed">
-          <%= link_to kase.customer.name_reversed, kase %> <%= kase_type_icon kase %> (<%= kase.open_date.strftime('%v') %>)
+          <% if record.class.name == "TripAuthorization" %>
+            <%= link_to record.kase.customer.name_reversed, record %> <%= data_entry_needed_icon record %> (<%= record.kase.open_date.strftime('%v') %>)
+          <% else %>
+            <%= link_to record.customer.name_reversed, record %> <%= data_entry_needed_icon record %> (<%= kase.open_date.strftime('%v') %>)
+          <% end %>
         </li>
       <% end %>
     <% end %>

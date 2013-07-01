@@ -93,7 +93,11 @@ Then /^I should see an empty list of similar customers$/ do
   page.should have_content("No similar customers found")
 end
 
-When /^I click Continue to create a new customer$/ do
+Then /^I should see an empty list of potential coaching cases$/ do
+  page.should have_content("No existing coaching cases found")
+end
+
+When /^I click Continue to create a new (?:customer|coaching case)$/ do
   find(:xpath, "//input[@value=\"Continue\"]").click()
 end
 
@@ -121,7 +125,9 @@ end
 When /^I populate the coaching case details$/ do
   fill_in('Opened', :with => '2012-05-13')
   fill_in('Referral source', :with => 'daughter')
-  select('Friends & Family', :from => 'Referral Source Type')
+  select('CC - Other', :from => 'Referral Source Type')
+  fill_in('Household size', :with => '1')
+  fill_in('Household income', :with => '1')
   click_button('Save')
   # Get the newly generated ID so we can find the record later
   @kase = CoachingKase.order("id DESC").limit(1).first

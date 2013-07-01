@@ -1,6 +1,7 @@
 Wiseguide::Application.routes.draw do
 
   resources :ada_service_eligibility_statuses
+  resources :agencies
   resources :contacts
   resources :counties
   resources :customer_impairments, :except => [:index, :show]
@@ -18,6 +19,12 @@ Wiseguide::Application.routes.draw do
   resources :resources
   resources :routes
   resources :trip_reasons
+
+  resources :trip_authorizations do
+    member do
+      put "complete_disposition"
+    end
+  end
 
   resources :assessment_requests do
     member do
@@ -39,6 +46,7 @@ Wiseguide::Application.routes.draw do
   resources :kases, :path => "cases" do 
     get "coaching", :on=>:collection, :action => :index, :kase => {:type => 'CoachingKase'}
     get "training", :on=>:collection, :action => :index, :kase => {:type => 'TrainingKase'}
+    get "customer_service", :on=>:collection, :action => :index, :kase => {:type => 'CustomerServiceKase'}
     post "add_route", :on=>:collection
     post "delete_route", :on=>:collection
     post "notify_manager", :on => :member
@@ -70,8 +78,9 @@ Wiseguide::Application.routes.draw do
 
   match "admin", :controller=>:admin, :action=>:index
   match "assessment_requests/(:id)/change_customer", :controller=>:assessment_requests, :action=>:change_customer
-  match "assessment_requests/(:id)/create_case", :controller=>:assessment_requests, :action=>:create_case
+  match "assessment_requests/(:id)/change_coaching_kase", :controller=>:assessment_requests, :action=>:change_coaching_kase
   match "assessment_requests/(:id)/select_customer", :controller=>:assessment_requests, :action=>:select_customer
+  match "assessment_requests/(:id)/select_coaching_kase", :controller=>:assessment_requests, :action=>:select_coaching_kase
   match "reports", :controller=>:reports, :action=>:index
   match "reports(/:action)", :controller=>:reports
   match "resources/(:id)/toggle_active", :controller=>:resources, :action=>:toggle_active

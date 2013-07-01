@@ -1,0 +1,49 @@
+<% if can?(:read, TripAuthorization) %>
+  <h1>Trip Authorizations</h1>
+  <% if can?(:create, TripAuthorization) %>
+    <%= link_to "Add", new_trip_authorization_path(:kase_id=>@kase.id), :class => "add" %>
+  <% end %>
+  <table>
+    <tbody>
+      <% for trip_authorization in @kase.trip_authorizations %>
+        <tr class="auto-zebra">
+          <td>
+            <span title="Allows trips per month"><%= trip_authorization.allowed_trips_per_month.to_i %>/month</span>
+          </td>
+          <td>
+            <span title="Start date"><%= trip_authorization.start_date.blank? ? "(No end date)" : trip_authorization.start_date.strftime("%Y-%m-%d") %></span>
+          </td>
+          <td>
+            <span title="End date"><%= trip_authorization.end_date.blank? ? "(No end date)" : trip_authorization.end_date.strftime("%Y-%m-%d") %></span>
+          </td>
+          <% if trip_authorization.disposition_date.blank? %>
+            <td>
+              <span title="Disposition date">Disposition pending</span>
+            </td>
+            <td>
+              <% if can?(:complete_disposition, trip_authorization) %>
+                <%= link_to "Complete Disposition", complete_disposition_trip_authorization_path(trip_authorization), :class=>"complete_disposition", :method=>:put %>
+              <% end %>
+            </td>
+          <% else %>
+            <td>
+              <span title="Disposition date"><%= trip_authorization.disposition_date.strftime "%Y-%m-%d" %></span>
+            </td>
+            <td>
+              <span title="Disposition User"><%= trip_authorization.disposition_user.display_name unless trip_authorization.disposition_user.blank? %></span>
+            </td>
+          <% end %>
+          <td>
+            <%= link_to "Details", trip_authorization_path(trip_authorization), :class=>"details" if can? :read, trip_authorization %>
+          </td>
+          <td>
+            <%= link_to "Edit", edit_trip_authorization_path(trip_authorization), :class=>"edit"  if can? :edit, trip_authorization %>
+          </td>
+          <td>
+            <%= link_to "", trip_authorization, :confirm => 'Are you sure you want to delete this trip authorization?', :method => :delete, :class => "delete trip_authorization"  if can? :destroy, trip_authorization %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

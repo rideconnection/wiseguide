@@ -11,7 +11,9 @@ end
 def fill_common_open_unassigned_kase_attributes  
   fill_common_kase_attributes
   select "Unassigned", :from => "Assigned to"
-  select "In Progress", :from => "Disposition"  
+  select "In Progress", :from => "Disposition"
+  fill_in "Household size", :with => "1"
+  fill_in "Household income", :with => "1"
 end
 
 When /^I complete the required fields for a coaching case$/ do
@@ -44,6 +46,7 @@ Then /^I should be able to create a new open, unassigned training case for the c
   fill_in "Referral source", :with => "Source"
   select @funding_source.name, :from => "Default Funding Source"
   select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
+  select "Email", :from => "Referral mechanism"
   step "I submit the form to create the training case"
   # Get the newly generated ID so we can find the record later
   @kase = TrainingKase.order("id DESC").limit(1).first

@@ -57,6 +57,7 @@
       <ul id="new_kase_links">
         <li><%= link_to "Coaching Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "CoachingKase"}) %></li>
         <li><%= link_to "Training Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "TrainingKase"}) %></li>
+        <li><%= link_to "Customer Service Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "CustomerServiceKase"}) %></li>
       </ul>
     </li>
   </ul>

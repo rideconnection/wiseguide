@@ -318,6 +318,7 @@ body.reports #primary-nav li.reports a:link, body.reports #primary-nav li.report
 body.kases #primary-nav li.kases a:link, body.kases #primary-nav li.kases a:visited,
 body.coaching-kases #primary-nav li.coaching-kases a:link, body.coaching-kases #primary-nav li.coaching-kases a:visited,
 body.training-kases #primary-nav li.training-kases a:link, body.training-kases #primary-nav li.training-kases a:visited,
+body.customer-service-kases #primary-nav li.customer-service-kases a:link, body.customer-service-kases #primary-nav li.customer-service-kases a:visited,
 body.customers #primary-nav li.customers a:link, body.customers #primary-nav li.customers a:visited,
 body.home #primary-nav li.home a:link, body.home #primary-nav li.home a:visited,
 body.assessment-requests #primary-nav li.assessment-requests a:link, body.assessment-requests #primary-nav li.assessment-requests a:visited,
@@ -397,7 +398,7 @@ body.admin #secondary-nav li.admin a:link, body.admin #secondary-nav li.admin a:
   background-color: #f7f7f7;
   border-radius: 5px;
   line-height: 1.2;
-  margin: 0 0 1em;
+  margin: 0;
   padding: 10px;
 }
 #flash {
@@ -810,10 +811,13 @@ table tr.sum-totals td:last-child {
  * DatePicker & DateTimePicker 
  *
  */
- input.datepicker,
  input.birthdatepicker,
+ input.datepicker,
  input.timepicker {
     width: 6em;
+}
+ input.datetimepicker {
+    width: 12em;
 }
 #ui-datepicker-div table {
     border-bottom: 0;
@@ -1056,7 +1060,8 @@ body.contacts a.delete,
 body.events a.delete,
 body.kases a.delete.kase,
 body.outcomes a.delete,
-body.referral-documents a.delete {
+body.referral-documents a.delete,
+body.trip-authorizations a.delete {
   float  : right;
   margin : -43px 10px 0 0;
 }
@@ -1507,4 +1512,24 @@ table.search-form {
 
 #assessment-request-filter input[type=submit] {
   margin: 0;
+}
+
+table#assessment-requests, div.assessment-request-caption {
+  width: 1100px;
+}
+
+.assessment-request-paginate {
+  width: 1090px;
+  margin-bottom: 10px;
+}
+
+div.related-fields {
+  padding-top: 10px;
+  border-top:  1px solid #bbb;
+  border-bottom:  1px solid #bbb;
+  margin-bottom: 10px;
+}
+
+div.customer-matches {
+  height: 110px;
 }

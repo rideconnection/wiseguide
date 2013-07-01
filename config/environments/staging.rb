@@ -5,11 +5,14 @@ Wiseguide::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
-  # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+
+  # Full error reports are enabled and caching is turned on
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
+
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
+
   # In production, Apache or nginx will already do this
   config.serve_static_assets = false
 
@@ -21,7 +24,7 @@ Wiseguide::Application.configure do
   config.active_support.deprecation = :notify
 
   # Needed for sending new users' confirmation email
-  config.action_mailer.default_url_options = { :host => '184.154.158.74' }
+  config.action_mailer.default_url_options = { :host => 'ridestage.panopticdev.com/wiseguide' }
 
 end
 

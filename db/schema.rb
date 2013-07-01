@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221000937) do
+ActiveRecord::Schema.define(:version => 20130625172146) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20130221000937) do
     t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "agencies", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "answers", :force => true do |t|
@@ -62,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130221000937) do
     t.datetime "attachment_updated_at"
     t.string   "reason_not_completed"
     t.integer  "assignee_id"
+    t.string   "customer_middle_initial"
   end
 
   create_table "contacts", :force => true do |t|
@@ -285,6 +292,10 @@ ActiveRecord::Schema.define(:version => 20130221000937) do
     t.integer  "honored_ticket_count"
     t.boolean  "eligible_for_ticket_disbursement"
     t.string   "access_transit_partner_referred_to"
+    t.string   "category"
+    t.integer  "agency_id"
+    t.string   "referral_mechanism"
+    t.string   "referral_mechanism_explanation"
   end
 
   add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"
@@ -486,6 +497,22 @@ ActiveRecord::Schema.define(:version => 20130221000937) do
   end
 
   add_index "surveys", ["access_code"], :name => "surveys_ac_idx", :unique => true
+
+  create_table "trip_authorizations", :force => true do |t|
+    t.integer  "allowed_trips_per_month"
+    t.date     "end_date"
+    t.datetime "disposition_date"
+    t.integer  "disposition_user_id"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.integer  "kase_id"
+    t.date     "start_date"
+  end
+
+  add_index "trip_authorizations", ["disposition_user_id"], :name => "index_trip_authorizations_on_disposition_user_id"
+  add_index "trip_authorizations", ["kase_id"], :name => "index_trip_authorizations_on_kase_id"
 
   create_table "trip_reasons", :force => true do |t|
     t.string   "name"

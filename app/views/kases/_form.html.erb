@@ -71,24 +71,26 @@
         <%= @kase.open_date.strftime("%v") unless @kase.open_date.blank? %>&nbsp;
       <% end %>
     </li>
-  
-    <li>
-      <%= f.label :referral_source %>
-      <% if can? :edit, @kase %>
-        <%= f.text_field :referral_source %>
-      <% else %>
-        <%= @kase.referral_source %>&nbsp;
-      <% end %>
-    </li>
 
-    <li>
-      <%= f.label :referral_type_id, "Referral Source Type" %>
-      <% if can? :edit, @kase %>
-        <%= f.collection_select :referral_type_id, @referral_types, :id, :name, :prompt => '<Select Option>' %>
-      <% else %>
-        <%= @kase.referral_type.name unless @kase.referral_type.blank? %>&nbsp;
-      <% end %>
-    </li>
+    <% if @kase.type == "CustomerServiceKase" %>
+      <li>
+        <%= f.label :agency_id %>
+        <% if can? :edit, @kase %>
+          <%= f.collection_select :agency_id, @agencies, :id, :name %>
+        <% else %>
+          <%= @kase.agency.name unless @kase.agency.blank? %>&nbsp;
+        <% end %>
+      </li>
+      
+      <li>
+        <%= f.label :category %>
+        <% if can? :edit, @kase %>
+          <%= f.select :category, CustomerServiceKase::CATEGORY, :prompt => '<Select Option>' %>
+        <% else %>
+          <%= @kase.category %>&nbsp;
+        <% end %>
+      </li>
+    <% end %>
 
     <li>
       <%= f.label :user_id, "Assigned to" %>
@@ -99,7 +101,46 @@
       <% end %>
     </li>
 
+    
+    <% if @kase.type != "CustomerServiceKase" %>
+      <li>
+        <%= f.label :referral_source %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :referral_source %>
+        <% else %>
+          <%= @kase.referral_source %>&nbsp;
+        <% end %>
+      </li>
+
+      <li>
+        <%= f.label :referral_type_id, "Referral Source Type" %>
+        <% if can? :edit, @kase %>
+          <%= f.collection_select :referral_type_id, @referral_types, :id, :name, :prompt => '<Select Option>' %>
+        <% else %>
+          <%= @kase.referral_type.name unless @kase.referral_type.blank? %>&nbsp;
+        <% end %>
+      </li>
+    <% end %>
+    
     <% if @kase.type == "TrainingKase" %>
+      <div class="related-fields">
+        <li>
+          <%= f.label :referral_mechanism %>
+          <% if can? :edit, @kase %>
+            <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {:prompt => "<Select Type>"} %>
+          <% else %>
+            <%= @kase.referral_mechanism %>&nbsp;
+          <% end %>
+        </li>
+        <li>
+          <%= f.label :referral_mechanism_explanation, 'Explanation, if "Other"' %>
+          <% if can? :edit, @kase %>
+            <%= f.text_field :referral_mechanism_explanation %>
+          <% else %>
+            <%= @kase.referral_mechanism_explanation %>&nbsp;
+          <% end %>
+        </li>
+      </div>
       <li>
         <%= f.label :county, "County of Service" %>
         <% if can? :edit, @kase %>
@@ -184,35 +225,41 @@
     </li>
 
     <li>
-      <%= f.label :disposition_id, "Disposition" %>
+      <%= f.label :disposition_id %>
       <% if can? :edit, @kase %>
-        <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
+        <% if @kase.type != "CustomerServiceKase" %>
+          <%= f.collection_select :disposition_id, @dispositions, :id, :name %>
+        <% else %>
+          <%= f.select :disposition_id, CustomerServiceKase::dispositions_for_select(@dispositions) %>
+        <% end %>
       <% else %>
         <%= @kase.disposition.name unless @kase.disposition.blank? %>&nbsp;
       <% end %>
     </li>
   
-    <li>
-      <%= f.label :household_size %>
-      <% if can? :edit, @kase %>
-        <%= f.text_field :household_size, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or 
-        <%= f.select :household_size_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
-      <% else %>
-        <%= @kase.household_size unless @kase.household_size.blank? %>
-        <%= @kase.household_size_alternate_response unless @kase.household_size_alternate_response.blank? %>&nbsp;
-      <% end %>
-    </li>
+    <% if @kase.type != "CustomerServiceKase" %>
+      <li>
+        <%= f.label :household_size %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :household_size, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or 
+          <%= f.select :household_size_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
+        <% else %>
+          <%= @kase.household_size unless @kase.household_size.blank? %>
+          <%= @kase.household_size_alternate_response unless @kase.household_size_alternate_response.blank? %>&nbsp;
+        <% end %>
+      </li>
 
-    <li>
-      <%= f.label :household_income %>
-      <% if can? :edit, @kase %>
-        <%= f.text_field :household_income, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or
-        <%= f.select :household_income_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
-      <% else %>
-        <%= @kase.household_income unless @kase.household_income.blank? %>
-        <%= @kase.household_income_alternate_response unless @kase.household_income_alternate_response.blank? %>&nbsp;
-      <% end %>
-    </li>
+      <li>
+        <%= f.label :household_income %>
+        <% if can? :edit, @kase %>
+          <%= f.text_field :household_income, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or
+          <%= f.select :household_income_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
+        <% else %>
+          <%= @kase.household_income unless @kase.household_income.blank? %>
+          <%= @kase.household_income_alternate_response unless @kase.household_income_alternate_response.blank? %>&nbsp;
+        <% end %>
+      </li>
+    <% end %>
 
     <% if @kase.type == "CoachingKase" %>
       <li>
@@ -265,7 +312,7 @@
   </ol>
 <% end %>
 
-<% if @kase.type == "CoachingKase" && @kase.persisted? %>
+<% if @kase.type == "CoachingKase" && @kase.persisted? && can?(:edit, @kase) %>
   <%= form_tag(notify_manager_kase_path(@kase), :id => "notify_case_manager") do %>
     <div class="actions">
       <%= submit_tag "Email case manager" %>

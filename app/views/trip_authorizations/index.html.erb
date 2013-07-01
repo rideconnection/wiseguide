@@ -1,0 +1,31 @@
+<h1>Listing trip_authorizations</h1>
+
+<table>
+  <tr>
+    <th>Coaching Case</th>
+    <th>Allowed trip per month</th>
+    <th>End date</th>
+    <th>Disposition date</th>
+    <th>Disposition user</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @trip_authorizations.each do |trip_authorization| %>
+  <tr>
+    <td><%= link_to(trip_authorization.kase.customer.name_reversed, trip_authorization.kase) unless trip_authorization.kase.blank? %></td>
+    <td><%= trip_authorization.allowed_trips_per_month %></td>
+    <td><%= trip_authorization.end_date %></td>
+    <td><%= trip_authorization.disposition_date %></td>
+    <td><%= trip_authorization.disposition_user.display_name unless trip_authorization.disposition_user.blank? %></td>
+    <td><%= link_to 'Show', trip_authorization %></td>
+    <td><%= link_to 'Edit', edit_trip_authorization_path(trip_authorization) %></td>
+    <td><%= link_to 'Destroy', trip_authorization, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trip authorization', new_trip_authorization_path %>

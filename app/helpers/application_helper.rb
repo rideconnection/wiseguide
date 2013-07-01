@@ -3,6 +3,10 @@ module ApplicationHelper
     "Last updated %s by %s" % [object.updated_at.to_s(:long), object.updated_by.try(:display_name)] if object.updated_by.present?
   end
   
+  def creation_stamp(object)
+    "Created on %s by %s" % [object.created_at.to_s(:long), object.created_by.try(:display_name)] if object.created_by.present?
+  end
+  
   def flash_type(type)
    if flash[type]
       "<div id=\"flash\">
@@ -22,7 +26,16 @@ module ApplicationHelper
   end
 
   def kase_type_icon(kase)
-    raw "[" + content_tag(:span, kase.class.humanized_name[0], :title => kase.class.humanized_name) + "]"
+    name = kase.class.humanized_name
+    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, :title => name) + "]"
+  end
+
+  def data_entry_needed_icon(record)
+    if record.class.name == "TripAuthorization"
+      raw "[" + content_tag(:span, "A", :title => "Trip Authorization") + "]"
+    else
+      kase_type_icon record
+    end
   end
 
   def link_to_add_fields(name, f, association)

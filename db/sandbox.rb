@@ -6,6 +6,21 @@ def load_sandbox_data
   create_users
   create_customers
   create_simple_survey
+  create_sample_date
+end
+
+def create_sample_date
+  FactoryGirl.create :assessment_request
+  FactoryGirl.create :assessment_request_contact
+  FactoryGirl.create :coaching_kase
+  FactoryGirl.create :contact
+  FactoryGirl.create :disposition
+  FactoryGirl.create :kase_contact
+  FactoryGirl.create :open_coaching_kase
+  FactoryGirl.create :open_kase
+  FactoryGirl.create :outcome
+  FactoryGirl.create :referral_document
+  FactoryGirl.create :trip_authorization
 end
 
 def create_users

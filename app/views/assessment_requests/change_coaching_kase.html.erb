@@ -1,0 +1,39 @@
+<div id="page-header">
+  <h1>
+    <%= link_to @assessment_request.display_name, @assessment_request %>
+    > Select Customer
+  </h1>
+</div>
+<fieldset>
+
+<%= form_tag url_for(:action=>:select_coaching_kase) do |f| %>
+<%= hidden_field_tag :assessment_request, @assessment_request.id %>
+<% already_selected = false %>
+<% if @potential_kases.empty? %>
+  <h2>No existing coaching cases found</h2>
+<% else %>
+  <h2>Existing Coaching Cases</h2>
+  <ul class="customer-select-list">
+  <% for kase in @potential_kases %>
+    <li>
+      <% if kase.id == @assessment_request.kase_id %>
+        <%= radio_button_tag :kase_id, "#{kase.id}", true %>
+        <% already_selected = true %>
+      <% else %>
+        <%= radio_button_tag :kase_id, "#{kase.id}" %>
+      <% end %>
+      <%= label_tag "kase_id_#{kase.id}", "#{kase.open_date} (#{kase.disposition.name})" %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+<ul class="customer-select-list">
+<li>
+  <%= radio_button_tag :kase_id, "0", !already_selected %>
+  <%= label_tag 'kase_id_0', "Create a coaching case" %>
+</li>
+</ul>
+<%= submit_tag :Continue %>
+<% end %>
+<%= button_to :Cancel, @assessment_request, :method => :get %>
+</fieldset>

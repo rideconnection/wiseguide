@@ -7,5 +7,10 @@ FactoryGirl.define do
       name {"CoachingKaseDisposition #{Time.current.to_f}" }
       type "CoachingKaseDisposition"
     end
+
+    factory :customer_service_kase_disposition do
+      name {"CustomerServiceKaseDisposition #{Time.current.to_f}" }
+      type "CustomerServiceKaseDisposition"
+    end
   end
 end

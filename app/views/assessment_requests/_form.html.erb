@@ -17,6 +17,12 @@
                      :readonly => readonly %>
   </div>
   <div class="field">
+    <%= f.label :customer_middle_initial %><br />
+    <%= f.text_field :customer_middle_initial,
+                     :maxlength => 1,
+                     :readonly => readonly %>
+  </div>
+  <div class="field">
     <%= f.label :customer_last_name %><br />
     <%= f.text_field :customer_last_name,
                      :readonly => readonly %>

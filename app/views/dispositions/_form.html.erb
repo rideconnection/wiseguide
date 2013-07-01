@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :type %><br />
-    <%= select :disposition, :type, options_for_select({"Please choose" => '', "CoachingKaseDisposition" => "CoachingKaseDisposition", "TrainingKaseDisposition" => "TrainingKaseDisposition"}, @disposition.type) %>
+    <%= select :disposition, :type, options_for_select({"Please choose" => '', "CoachingKaseDisposition" => "CoachingKaseDisposition", "CustomerServiceKaseDisposition" => "CustomerServiceKaseDisposition", "TrainingKaseDisposition" => "TrainingKaseDisposition"}, @disposition.type) %>
   </div>
   <div class="actions">
     <%= f.submit %>
