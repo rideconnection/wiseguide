@@ -250,11 +250,12 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << %w(Name DOB Ethnicity Gender Phone\ Number\ 1 Phone\ Number\ 2 Email Address City State Zip Notes Open\ Date Close\ Date Disposition Event\ Type Event\ Date Author Funding\ Source Hours)
+      csv << %w(First\ Name Last\ Name DOB Ethnicity Gender Phone\ Number\ 1 Phone\ Number\ 2 Email Address City State Zip Notes Open\ Date Close\ Date Disposition Event\ Type Event\ Date Author Funding\ Source Hours)
       for event in events
         kase = event.kase
         customer = kase.customer
-        csv << [customer.name,
+        csv << [customer.first_name,
+                customer.last_name,
                 customer.birth_date.to_s,
                 customer.ethnicity.name,
                 customer.gender,
