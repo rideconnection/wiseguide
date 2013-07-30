@@ -395,7 +395,8 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << ['Name',
+      csv << ['First Name',
+              'Last Name',
               'Case Type',
               'Open Date',
               'Referral Source',
@@ -421,7 +422,8 @@ class ReportsController < ApplicationController
               'Disposition']
       for kase in kases
         customer = kase.customer
-        csv << [customer.name,
+        csv << [customer.first_name,
+                customer.last_name,
                 kase.class.humanized_name,
                 kase.open_date,
                 kase.referral_source,
