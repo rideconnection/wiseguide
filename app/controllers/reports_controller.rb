@@ -369,8 +369,8 @@ class ReportsController < ApplicationController
   private
 
   def outcomes_row(customer,kase,outcome)
-    [customer.try(:name),
-    customer.birth_date.to_s,
+    [customer.name,
+    customer.birth_date.try(:to_s),
     customer.ethnicity.try(:name),
     customer.gender,
     kase.open_date,
