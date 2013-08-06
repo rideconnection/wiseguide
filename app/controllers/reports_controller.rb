@@ -369,14 +369,14 @@ class ReportsController < ApplicationController
   private
 
   def outcomes_row(customer,kase,outcome)
-    [customer.name,
+    [customer.try(:name),
     customer.birth_date.to_s,
-    customer.ethnicity.name,
+    customer.ethnicity.try(:name),
     customer.gender,
     kase.open_date,
     kase.assigned_to.try(:display_name),
     kase.referral_source,
-    kase.referral_type.name,
+    kase.referral_type.try(:name),
     kase.close_date,
     outcome.try(:trip_reason).try(:name),
     outcome.try(:exit_trip_count),
