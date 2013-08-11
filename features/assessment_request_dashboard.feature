@@ -251,9 +251,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
       | Customer name | Submitter      | Assigned To   | Status                            |
       | Elway, Emm    | Steve Harvey   | Tony Hawk     | Completed                         |
 
-  # this is failing for some unknown reason
-  # @javascript
-  @wip
+  @javascript
   Scenario: Trainers with javascript enabled should be able to filter requests using an AJAXified form
     When I click on the "Requests" link
     Then I should see the following data in the "Assessment Requests" table:
@@ -291,7 +289,6 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
       | Furby, Fay    | Ned Flanders   |               | Completed                         |
     When I check the "Me" option in the assignee filter form
     Then the filter should apply and the table data should refresh without having to click the "Filter" button
-    Then show me the page
     And I should see the following data in the "Assessment Requests" table:
       | Customer name | Submitter      | Assigned To   | Status                            |
       | Elway, Emm    | Steve Harvey   | Tony Hawk     | Completed                         |
@@ -326,9 +323,7 @@ Feature: Manage assessment requests via the "Requests" page (dashboard)
       | Customer name | Submitter      | Assigned To   | Status                            |
       | Elway, Emm    | Steve Harvey   | Tony Hawk     | Completed                         |
     
-  # this is failing for some unknown reason
-  # @javascript
-  @wip
+  @javascript
   Scenario: AJAXified filter form state should be preserved in a session store and reapplied on next load
     When I click on the "Requests" link
     Then I should see the following data in the "Assessment Requests" table:

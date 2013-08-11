@@ -48,9 +48,7 @@ Feature: Manage routes trained on cases
       And I should see a confirmation message
       And I should see the route on the routes page
       
-  # this is failing for some unknown reason
-  # @javascript
-  @wip
+  @javascript
   Scenario: Admins can delete routes
     Given I am logged in as an admin
       And a route exists
