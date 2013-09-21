@@ -2,8 +2,11 @@ class CustomerServiceKase < Kase
   CATEGORY = [
     "commendations", 
     "comments",
+    "documentations",
     "incidents", 
+    "no ride investigations",
     "policy complaints", 
+    "referrals",
     "service complaints", 
   ]
   COMPLAINT_CATEGORIES = ["policy complaints", "service complaints"]
