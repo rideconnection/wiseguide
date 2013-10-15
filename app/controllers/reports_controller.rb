@@ -419,7 +419,12 @@ class ReportsController < ApplicationController
               'Medicaid Eligible',
               'Assigned To',
               'Close Date',
-              'Disposition']
+              'Disposition',
+              'Eligible for Ticket Disbursement',
+              'Adult Tickets Disbursed',
+              'Honored Tickets Disbursed',
+              'Access Transit Partner Referred To'
+              ]
       for kase in kases
         customer = kase.customer
         csv << [customer.first_name,
@@ -446,7 +451,12 @@ class ReportsController < ApplicationController
                 kase.medicaid_eligible,
                 kase.assigned_to.try(:display_name),
                 kase.close_date,
-                kase.disposition.try(:name)]
+                kase.disposition.try(:name),
+                (kase.eligible_for_ticket_disbursement ? 'Yes' : 'No'),
+                kase.adult_ticket_count,
+                kase.honored_ticket_count,
+                kase.access_transit_partner_referred_to
+                ]
       end
     end 
   end
