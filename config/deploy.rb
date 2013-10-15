@@ -11,7 +11,7 @@ set :stages, %w(staging production)
 require 'capistrano/ext/multistage'
 
 set :application, "WiseGuide"
-set :repository,  "http://github.com/rideconnection/wiseguide.git"
+set :repository,  "git://github.com/rideconnection/wiseguide.git"
 set :deploy_to, "/home/deployer/rails/wiseguide"
 
 set :scm, :git
