@@ -82,7 +82,7 @@ module SurveyorControllerCustomMethods
 
   def reactivate
     @survey = Survey.find(params[:survey_id])
-    @survey.inactive_at = DateTime.current
+    @survey.inactive_at = nil
     @survey.save!
     redirect_to surveys_path
   end
