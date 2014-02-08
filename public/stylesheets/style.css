@@ -1404,16 +1404,20 @@ body.surveyor div.survey_section label {
   vertical-align: middle;
   display: block;
   float: left;
-  min-width: 50px;
+  min-width: 175px;
   padding-right: 15px;
 }
 
 body.surveyor div.survey_section li.surveyor_check_boxes {
-  height : 23px;
+  height : 24px;
 }
 
 body.surveyor div.survey_section li.surveyor_check_boxes input[type=text] {
   margin-top: -4px;
+}
+
+body.surveyor div.survey_section li.string input[type=text] {
+  width: 330px;
 }
 
 body.surveyor div.survey_section li.string label {
@@ -1442,6 +1446,21 @@ body.surveyor div.survey_section ol {
 
 body.surveyor p.response {
   padding-left : 20px;
+}
+
+body.surveyor fieldset {
+  padding: 5px 5px 15px 0;
+}
+
+body.surveyor fieldset legend {
+  border: 1px solid #BBBBBB;
+  margin-left: 12px;
+  font-size: 16px;
+}
+
+body.surveyor fieldset fieldset legend {
+  font-size: 12px;
+  font-weight: bold;
 }
 
 #outside-dashboard .section {
