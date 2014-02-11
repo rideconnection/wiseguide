@@ -250,7 +250,28 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << %w(First\ Name Last\ Name DOB Ethnicity Gender Phone\ Number\ 1 Phone\ Number\ 2 Email Address City State Zip Notes Open\ Date Close\ Date Disposition Event\ Type Event\ Date Author Funding\ Source Hours)
+      csv << ['First Name',
+              'Last Name',
+              'DOB',
+              'Ethnicity',
+              'Gender',
+              'Phone Number 1',
+              'Phone Number 2',
+              'Email',
+              'Address',
+              'City',
+              'State',
+              'Zip',
+              'Notes',
+              'Open Date',
+              'Close Date',
+              'Disposition',
+              'Event Type',
+              'Event Date',
+              'Author',
+              'Funding Source',
+              'Hours']
+
       for event in events
         kase = event.kase
         customer = kase.customer
@@ -412,6 +433,7 @@ class ReportsController < ApplicationController
               'State',
               'Zip',
               'Customer Notes',
+              'TriMet Lift Eligibity Status',
               'Household Size',
               'Household Size Alternate Response',
               'Household Income',
@@ -444,6 +466,7 @@ class ReportsController < ApplicationController
                 customer.state,
                 customer.zip,
                 customer.notes,
+                customer.ada_service_eligibility_status.try(:name),
                 kase.household_size,
                 kase.household_size_alternate_response,
                 kase.household_income,
