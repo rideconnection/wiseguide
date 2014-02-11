@@ -82,7 +82,7 @@ class Customer < ActiveRecord::Base
       query += " and " + lnquery 
       args += lnargs
       Rails.logger.debug('Search term "%s" matched pattern "%s"' % [term, '^\w+\s+\w+\s*$'])
-    elsif term.match /^\w+,\s*\w+\s*$/i
+    elsif term.match /^\w+,\s*\w+\s*/i
       # Given a word followed by a comma followed by an optional space followed by at least one word character
       # Then search for a complete last name match and a first name that begins with the second set of characters
       last_name, first_name = term.split(",").map(&:strip)

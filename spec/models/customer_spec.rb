@@ -153,6 +153,7 @@ describe Customer do
         FactoryGirl.create(:customer, :first_name => "Christopher", :last_name => "Carlson")
         FactoryGirl.create(:customer, :first_name => "Brady",       :last_name => "Robert")
         FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bradley")
+        FactoryGirl.create(:customer, :first_name => "Mary Joe",    :last_name => "Wilson")
       end
     
       after(:all) do
@@ -190,6 +191,15 @@ describe Customer do
         Customer.search("Bradley, b").collect(&:name_reversed).should =~ [
           "Bradley, Bob"
         ]
+        Customer.search("Bradley, Bobby").collect(&:name_reversed).should =~ [
+          "Bradley, Bob"
+        ]
+      end
+      
+      it "should search for a complete last name match and a first name that begins with the second set of characters given a word followed by a comma followed by an optional space followed by multiple words" do
+        Customer.search("Wilson, Mary Jo").collect(&:name_reversed).should =~ [
+          "Wilson, Mary Joe"
+        ]
       end
       
       it "should search for a first name or a last name that begins with the term given at least one word character with no trailing whitespace" do
@@ -217,7 +227,8 @@ describe Customer do
           "Bradley, Bob",
           "Carlson, Christopher",
           "Robert, Brady",
-          "Bradley, Don"
+          "Bradley, Don",
+          "Wilson, Mary Joe"
         ]
       end
       
