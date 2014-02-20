@@ -21,8 +21,8 @@ describe TripAuthorization do
   end
 
   describe "allowed_trips_per_month" do
-    it { should_not accept_values_for(:allowed_trips_per_month, nil, "", 0, -1) }
-    it { should accept_values_for(:allowed_trips_per_month, 1, 99) }
+    it { should_not accept_values_for(:allowed_trips_per_month, nil, "", -1) }
+    it { should accept_values_for(:allowed_trips_per_month, 0, 1, 99) }
   end
 
   describe "start_date" do
