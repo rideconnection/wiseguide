@@ -472,6 +472,18 @@ form textarea.disabled {
     color: #bbb;
 }
 
+form input[type="checkbox"].auxiliary {
+  vertical-align: middle;
+}
+
+fieldset ol.section li label.auxiliary {
+  float: none;
+}
+
+fieldset ol.section li input[type="text"].phone {
+  max-width: 150px;
+}
+
 :-moz-placeholder {
   font-style:italic;
   color: #aaa

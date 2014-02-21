@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130625172146) do
+ActiveRecord::Schema.define(:version => 20140220234218) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -149,6 +149,10 @@ ActiveRecord::Schema.define(:version => 20130625172146) do
     t.string   "primary_language"
     t.integer  "ada_service_eligibility_status_id"
     t.string   "middle_initial",                    :limit => 1
+    t.boolean  "phone_number_1_allow_voicemail"
+    t.boolean  "phone_number_2_allow_voicemail"
+    t.boolean  "phone_number_3_allow_voicemail"
+    t.boolean  "phone_number_4_allow_voicemail"
   end
 
   create_table "dependencies", :force => true do |t|
