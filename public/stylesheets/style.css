@@ -478,6 +478,7 @@ form input[type="checkbox"].auxiliary {
 
 fieldset ol.section li label.auxiliary {
   float: none;
+  vertical-align: middle;
 }
 
 fieldset ol.section li input[type="text"].phone {
