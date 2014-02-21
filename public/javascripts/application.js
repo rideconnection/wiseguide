@@ -57,4 +57,19 @@ $(function(){
   
   $('.trip-authorizations #trip_authorization_disposition_date').datetimepicker('option', 'maxDate', new Date());
   $('.trip-authorizations #trip_authorization_end_date').datepicker('option', 'minDate', new Date());
+
+  // Highlight the relevant field if the customer does not authorize leaving a voicemail
+  function highlightNoVoiceMail(){
+    $(".vm").each(function(index, field) {
+      var fld = $(field)
+      if (fld.val() == "false" && fld.parent().siblings("input.phone").first().val().length > 0) {
+        fld.parent().addClass("stand-out")
+      } else {
+        fld.parent().removeClass("stand-out")
+      }
+    });
+  }
+  highlightNoVoiceMail();
+  $(".vm, .phone").change(highlightNoVoiceMail);
+
 });

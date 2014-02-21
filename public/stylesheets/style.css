@@ -479,10 +479,16 @@ form input[type="checkbox"].auxiliary {
 fieldset ol.section li label.auxiliary {
   float: none;
   vertical-align: middle;
+  margin-right: 0;
 }
 
 fieldset ol.section li input[type="text"].phone {
-  max-width: 150px;
+  max-width: 130px;
+}
+
+span.stand-out {
+  background-color: orange;
+  box-shadow: 0 0 5px 5px orange;
 }
 
 :-moz-placeholder {

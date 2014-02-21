@@ -47,37 +47,49 @@
 <li>
   <%= f.label :phone_number_1, "* Preferred phone" %>
   <%= f.text_field :phone_number_1, :class => :phone %>
-  <%= f.check_box :phone_number_1_allow_voicemail, :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
-  <%= f.label :phone_number_1_allow_voicemail, "VM", :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
+  <span>
+    <%= f.label :phone_number_1_allow_voicemail, "VM", :class => :auxiliary, 
+        :title => "Customer granted permission to leave voicemail" %>
+    <%= f.select :phone_number_1_allow_voicemail, [['Y',true],['N',false]], 
+        {:include_blank => true}, 
+        {:class => "auxiliary vm", :title => "Customer granted permission to leave voicemail"} %>
+  </span>
 </li>
 
 <li>
   <%= f.label :phone_number_2 %>
   <%= f.text_field :phone_number_2, :class => :phone %>
-  <%= f.check_box :phone_number_2_allow_voicemail, :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
-  <%= f.label :phone_number_2_allow_voicemail, "VM", :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
+  <span>
+    <%= f.label :phone_number_2_allow_voicemail, "VM", :class => :auxiliary, 
+        :title => "Customer granted permission to leave voicemail" %>
+    <%= f.select :phone_number_2_allow_voicemail, [['Y',true],['N',false]], 
+        {:include_blank => true}, 
+        {:class => "auxiliary vm", :title => "Customer granted permission to leave voicemail"} %>
+  </span>
 </li>
 
 <li>
   <%= f.label :phone_number_3 %>
   <%= f.text_field :phone_number_3, :class => :phone %>
-  <%= f.check_box :phone_number_3_allow_voicemail, :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
-  <%= f.label :phone_number_3_allow_voicemail, "VM", :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
+  <span>
+    <%= f.label :phone_number_3_allow_voicemail, "VM", :class => :auxiliary, 
+        :title => "Customer granted permission to leave voicemail" %>
+    <%= f.select :phone_number_3_allow_voicemail, [['Y',true],['N',false]], 
+        {:include_blank => true}, 
+        {:class => "auxiliary vm", :title => "Customer granted permission to leave voicemail"} %>
+  </span>
 </li>
 
 <li>
   <%= f.label :phone_number_4 %>
   <%= f.text_field :phone_number_4, :class => :phone %>
-  <%= f.check_box :phone_number_4_allow_voicemail, :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
-  <%= f.label :phone_number_4_allow_voicemail, "VM", :class => :auxiliary, 
-      :title => "Customer granted permission to leave voicemail" %>
+  <span>
+    <%= f.label :phone_number_4_allow_voicemail, "VM", :class => :auxiliary, 
+        :title => "Customer granted permission to leave voicemail" %>
+    <%= f.select :phone_number_4_allow_voicemail, [['Y',true],['N',false]], 
+        {:include_blank => true}, 
+        {:class => "auxiliary vm", :title => "Customer granted permission to leave voicemail"} %>
+  </span>
 </li>
 
 <li>
