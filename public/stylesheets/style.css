@@ -488,7 +488,7 @@ fieldset ol.section li input[type="text"].phone {
 
 span.stand-out {
   background-color: orange;
-  box-shadow: 0 0 5px 5px orange;
+  box-shadow: 0 1px 5px 5px orange;
 }
 
 :-moz-placeholder {
