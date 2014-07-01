@@ -1,5 +1,5 @@
 set :branch, "stable"
-set :rvm_ruby_string, '1.9.2-p290@wiseguide'
+set :rvm_ruby_string, '1.9.3-p547@wiseguide'
 set :rails_env, "production"
 role :web, "184.154.79.122"
 role :app, "184.154.79.122"
