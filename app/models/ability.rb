@@ -57,6 +57,7 @@ class Ability
       ability = :manage
     else
       ability = :read
+      can :search, Customer
     end
     
     can ability, AssessmentRequest
