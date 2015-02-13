@@ -1,4 +1,6 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
+
+ruby '1.9.3'
 
 # Framework
 gem "rails", "~> 3.2.0"
