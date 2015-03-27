@@ -7,7 +7,6 @@ Vagrant.configure(2) do |config|
     db.vm.provider :virtualbox do |vb|
       vb.name = "wiseguide-development-trusty"
       vb.customize ["modifyvm", :id, "--memory", "512"]
-      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "25"]
     end
 
     db.vm.provision :chef_solo do |chef|
