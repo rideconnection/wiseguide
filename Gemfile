@@ -1,13 +1,24 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # TODO bump to 2.2
 ruby '1.9.3'
 
 # TODO bump, synch base files, add asset group gems
-gem "rails", "~> 3.2.0"
+gem 'rails', '3.2.21'
 
-# TODO delete
-gem "rake"
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+gem 'jquery-rails'
 
 # TODO switch to cancancan
 # TODO bump, add pessimistic operator, watch for breaking changes
@@ -31,9 +42,6 @@ gem "formtastic", "~> 1.2.4"
 
 # TODO Do we use this anywhere? If so: bump
 gem "haml", "~> 3.1.3"
-
-# TODO switch to version required by Rails, add other dependencies
-gem "jquery-rails", ">= 0.2.6"
 
 # TODO bump, watch for breaking changes
 gem "paperclip", "~> 3.0.2"
@@ -60,7 +68,6 @@ gem 'prawn', :git => "git://github.com/prawnpdf/prawn.git",
   :ref => "d06f81b", :submodules => true
 gem "pdf-reader", :require => "pdf/reader"
 gem "Ascii85", :require => "ascii85"
-
 
 # TODO verify still active and usable
 gem "surveyor", "~> 0.22.0"
