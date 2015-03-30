@@ -5,9 +5,9 @@ class CoachingKase < Kase
   
   validates :case_manager, :associated => true, :allow_blank => true
   validates :case_manager_notification_date, :allow_blank => true, :date => { 
-    :before_or_equal_to => Proc.new { Date.current } 
+    :on_or_before => lambda { Date.current } 
   }
   validates :assessment_date, :allow_blank => true, :date => { 
-    :before_or_equal_to => Proc.new { Date.current } 
+    :on_or_before => lambda { Date.current } 
   }
 end

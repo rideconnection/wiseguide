@@ -12,16 +12,16 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :kase_id
   validates_presence_of :user_id
-  validates :date, :date => { :before_or_equal_to => Proc.new { Date.current } }
+  validates :date, :date => { :on_or_before => lambda { Date.current } }
   validates_presence_of :event_type_id
   validates_presence_of :funding_source_id
   validates_numericality_of :duration_in_hours
   validates_presence_of :start_time
   validates_presence_of :end_time
-  validates_presence_of :notes, :if => Proc.new {|e| e.event_type.try(:require_notes) }
+  validates_presence_of :notes, :if => lambda { |e| e.event_type.try(:require_notes) }
 
   default_scope order(:date)
-  scope :in_range, lambda {|date_range| where(:date => date_range)}
+  scope :in_range, lambda { |date_range| where(:date => date_range) }
 
   def customer
     return kase.customer
