@@ -32,7 +32,6 @@ gem 'devise', '~> 2.0.6' # TODO latest? 3.4.1
 gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
 
 # Notify on exception via email
-# TODO verify config syntax
 gem 'exception_notification', '~> 4.0.1 ', group: :production # TODO latest? yes
 
 # Form builder with semantic markup
