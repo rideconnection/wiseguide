@@ -90,7 +90,7 @@ group :test do
   gem 'capybara-firebug', '~> 1.1' # TODO latest? 2.1.0
   
   gem 'cucumber', '~> 1.1' # TODO latest? 2.0
-  gem 'cucumber-rails', '~> 1.3.0' # TODO latest? 1.4.2
+  gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2
     
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
