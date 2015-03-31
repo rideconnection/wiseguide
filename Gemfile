@@ -61,14 +61,6 @@ gem 'uuidtools', '~> 2.1.5' # TODO latest? yes
 # TODO bump, add pessimistic operator
 gem 'will_paginate', '~> 3.0.7' # TODO latest? yes
 
-
-# TODO remove PDF functionality from app
-# For PDF Generation
-gem 'prawn', :git => 'git://github.com/prawnpdf/prawn.git',
-  :ref => 'd06f81b', :submodules => true
-gem 'pdf-reader', '~> 1.1.1', :require => 'pdf/reader'
-gem 'Ascii85', '~> 1.0.2', :require => 'ascii85'
-
 # TODO key functionality, bump version, watch for breaking changes
 # TODO may need to fork upgrade for Rails 4
 gem 'surveyor', '~> 0.22.0'# TODO latest? 1.4.0, last updated 25 Apr 2013
@@ -103,11 +95,7 @@ group :test do
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
   gem 'email_spec', '~> 1.2.1' # TODO latest? 1.6.0
-  
-  # Provides a number tools for use in testing PDF output
-  # TODO remove with PDF functionality
-  gem 'pdf-inspector', '~> 1.0.1', :require => 'pdf/inspector' # TODO latest? 1.2.0
-  
+    
   # A simple DSL extending Capybara
   # TODO verify still active and usable
   gem 'prickle', '~> 0.0.6' # TODO latest? 0.1.0, last updated March 14, 2013

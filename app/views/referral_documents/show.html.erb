@@ -18,8 +18,7 @@
   <% end %>
 </ol>
 
-<p><%= link_to 'Print', referral_document_path(@referral_document, :format => "pdf") %> |
-  <%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
+<p><%= link_to 'Edit', edit_referral_document_path(@referral_document) %> |
   <%= link_to 'Back', kase_path(@referral_document.kase) %></p>
 
 <p><%= last_updated @referral_document %></p>

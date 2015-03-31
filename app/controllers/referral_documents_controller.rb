@@ -1,23 +1,9 @@
-require "prawn"
-require "prawn/layout"
-
 class ReferralDocumentsController < ApplicationController
   load_and_authorize_resource
 
   def index; end
 
-  def show
-    respond_to do |format|
-      format.html
-      format.pdf do
-        @referral_document.update_attributes(:last_printed_at => Time.current)
-        pdf = ReferralDocumentPdf.new(@referral_document)
-        send_data pdf.render, :filename => "kase_#{@referral_document.kase.open_date.strftime("%Y-%m-%d")}_referral_document_#{@referral_document.created_at.strftime("%Y-%m-%d")}",
-          :type => "application/pdf",
-          :disposition => "inline"
-      end
-    end  
-  end
+  def show; end
 
   def new
     @referral_document = ReferralDocument.new(:kase_id => params[:kase_id])

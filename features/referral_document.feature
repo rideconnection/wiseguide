@@ -44,17 +44,6 @@ Feature: Manage referral documents
       And I should see a confirmation message
       And I should not see the new resource listed when I click on the referral document details link
     
-  Scenario: Trainers can print a referral document
-    Given I am logged in as a trainer
-      And there is an open training case
-      And a referral document exists for the existing case
-      And I am on the homepage
-    When I click on the "Training Cases" link
-      And I click through to the case details
-      And I click on the link to print the referral document
-    Then I should be served the referral document as a PDF
-      And I should see the referral document details
-  
   # We don't actually know if this feature was requested, so commenting it out
   # for now. If it is requested in the future we'll need to add the appropriate
   # entries to the ability.rb model for CanCan first.

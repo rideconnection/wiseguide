@@ -1,5 +1,3 @@
-require "pdf/inspector"
-
 When /^I click on the link to create a new referral document$/ do
   find("#referral_documents a[href='/referral_documents/new?kase_id=#{@kase.id}']").click
 end
@@ -65,22 +63,6 @@ Then /^I should be able to delete the second resource$/ do
   click_button "Save"
   @confirmation_message = 'Referral document was successfully updated.'
   step %Q(I should see a confirmation message)
-end
-
-When /^I click on the link to print the referral document$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}.pdf']").click
-end
-
-Then /^I should be served the referral document as a PDF$/ do
-  page.response_headers['Content-Type'].should == "application/pdf"
-  content = PDF::Inspector::Text.analyze(page.source).strings.join(" ")
-  page.driver.browser.instance_variable_set('@dom', Nokogiri::HTML(content))
-end
-
-Then /^I should see the referral document details$/ do
-  page.should have_content("Referral Document for #{@referral_document.customer.name}")
-  page.should have_content("#{@referral_document.referral_document_resources.first.resource.name}")
-  page.should have_content("Referral document opened at #{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 
 Then /^I should( not)? see a button to delete the referral document$/ do |negation|
