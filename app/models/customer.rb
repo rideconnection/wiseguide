@@ -21,7 +21,7 @@ class Customer < ActiveRecord::Base
   validates_presence_of :ethnicity_id
   validates_presence_of :first_name
   validates_presence_of :last_name
-  validates             :birth_date, :date => { :before => Proc.new { Date.current } }
+  validates             :birth_date, :timeliness => { :before => Proc.new { Date.current }, :type => :date }
   validates_presence_of :gender
   validates_presence_of :phone_number_1
   validates_format_of   :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :allow_blank => true

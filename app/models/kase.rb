@@ -29,7 +29,7 @@ class Kase < ActiveRecord::Base
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
 
   validates_presence_of  :customer_id
-  validates              :open_date, :date => { :on_or_before => lambda { Date.current } }
+  validates              :open_date, :timeliness => { :on_or_before => lambda { Date.current }, :type => :date }
   validates_presence_of  :disposition_id
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
   validate do |kase|
