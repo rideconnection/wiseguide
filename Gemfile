@@ -80,7 +80,7 @@ end
 
 group :test do
   # TODO switch to shoulda matchers?
-  gem 'accept_values_for', '~> 0.7.2' # latest? yes
+  gem 'accept_values_for', '~> 0.7' # latest? yes
   
   # Make sure this gets upgraded to use latest version of Firefox
   gem 'capybara', '~> 1.1' # TODO latest? 2.4.4
@@ -90,7 +90,7 @@ group :test do
   gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2
 
   # TODO bump version, watch for breaking changes
-  gem 'database_cleaner', '~> 0.4' # TODO latest? 1.4.1
+  gem 'database_cleaner', '~> 1.4' # TODO latest? yes
     
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
