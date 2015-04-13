@@ -3,6 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
+require 'capybara/rails'
+require 'capybara/rspec'
+require 'database_cleaner'
 require 'accept_values_for'
 require 'discover'
 
@@ -31,4 +34,17 @@ RSpec.configure do |config|
   # config.before do
   #   load("#{Rails.root}/db/seeds.rb")
   # end
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
+  config.include Capybara::DSL
 end
