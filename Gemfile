@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.1.4' # TODO Rails 3.2 doesn't officially support Ruby 2.2 yet
 
 # TODO bump, synch base files, add asset group gems
 gem 'rails', '~> 3.2.21'
