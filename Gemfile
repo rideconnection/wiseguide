@@ -107,8 +107,7 @@ group :test, :development do
   # TODO Update application.rb and verify syntax of factory files
   gem 'factory_girl_rails', '~> 3.2' # TODO latest? 4.5.0
   
-  # TODO switch to ffaker?
-  gem 'faker', '~> 1.4'
+  gem 'ffaker', '~> 2.0' # TODO latest? yes
   
   # TODO fix deprecation errors, then move to 3.x
   gem 'rspec-rails', '~> 2.99' # TODO latest? 3.2.1
