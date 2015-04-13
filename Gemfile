@@ -73,11 +73,10 @@ gem 'rvm-capistrano', :require => false
 gem 'pg'
 
 group :development do
-  # TODO still necessary?
-  gem 'launchy', '~> 2.1'
-  
-  # TODO switch to Spring
-  gem 'spork-rails', '~> 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem "spring-commands-rspec"
+  gem "spring-commands-cucumber"
 end
 
 group :test do
@@ -88,8 +87,11 @@ group :test do
   gem 'capybara', '~> 1.1' # TODO latest? 2.4.4
   gem 'capybara-firebug', '~> 1.1' # TODO latest? 2.1.0
   
-  gem 'cucumber', '~> 1.1' # TODO latest? 2.0
+  # TODO bump version, watch for breaking changes
   gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2
+
+  # TODO bump version, watch for breaking changes
+  gem 'database_cleaner', '~> 0.4' # TODO latest? 1.4.1
     
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
@@ -110,9 +112,6 @@ group :test, :development do
   # TODO switch to ffaker?
   gem 'faker', '~> 1.4'
   
-  # TODO Upgrade Rspec to 2.99, fix deprecation errors, then move to 3.x
-  gem 'rspec-rails', '~> 2.10' # TODO latest? 3.2.1
-  
-  # TODO bump version, watch for breaking changes
-  gem 'database_cleaner', '~> 0.4' # TODO latest? 1.4.1
+  # TODO fix deprecation errors, then move to 3.x
+  gem 'rspec-rails', '~> 2.99' # TODO latest? 3.2.1
 end
