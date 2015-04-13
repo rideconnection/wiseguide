@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-# TODO bump to 2.2
-ruby '1.9.3'
+ruby '2.2.0'
 
 # TODO bump, synch base files, add asset group gems
 gem 'rails', '~> 3.2.21'
@@ -103,8 +102,7 @@ group :test do
 end
 
 group :test, :development do
-  # TODO Switch to byebug once we are on Ruby >= 2.0.0
-  gem 'debugger'
+  gem 'byebug'
   
   # TODO Update application.rb and verify syntax of factory files
   gem 'factory_girl_rails', '~> 3.2' # TODO latest? 4.5.0
