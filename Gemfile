@@ -80,7 +80,7 @@ end
 
 group :test do
   # TODO switch to shoulda matchers?
-  gem 'accept_values_for', '~> 0.4.3' # latest? 0.7.2
+  gem 'accept_values_for', '~> 0.7.2' # latest? yes
   
   # Make sure this gets upgraded to use latest version of Firefox
   gem 'capybara', '~> 1.1' # TODO latest? 2.4.4

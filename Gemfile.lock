@@ -8,9 +8,9 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    accept_values_for (0.4.3)
-      activemodel (>= 3.0.0)
-      rspec
+    accept_values_for (0.7.2)
+      activemodel (>= 3, < 5)
+      rspec (>= 2.0, < 4.0)
     actionmailer (3.2.21)
       actionpack (= 3.2.21)
       mail (~> 2.5.4)
@@ -268,7 +268,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  accept_values_for (~> 0.4.3)
+  accept_values_for (~> 0.7.2)
   byebug
   cancan (~> 1.6.10)
   capistrano
