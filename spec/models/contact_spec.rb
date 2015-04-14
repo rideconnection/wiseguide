@@ -6,29 +6,29 @@ describe Contact do
   end
   
   it "should create a new instance given valid attributes" do
-    @contact.valid?.should be_true
+    @contact.valid?.should be_truthy
   end
 
   it "should require a valid description" do
     @contact.description = nil
-    @contact.valid?.should be_false
+    @contact.valid?.should be_falsey
     @contact.description = "A"
-    @contact.valid?.should be_true
+    @contact.valid?.should be_truthy
     @contact.description = "A" * 201
-    @contact.valid?.should be_false
+    @contact.valid?.should be_falsey
     @contact.description = "A" * 200
-    @contact.valid?.should be_true
+    @contact.valid?.should be_truthy
   end
   
   it "should require a valid date_time before or equal to the current time" do
     @contact.date_time = nil
-    @contact.valid?.should be_false
+    @contact.valid?.should be_falsey
 
     @contact.date_time = Time.current + 1.minute
-    @contact.valid?.should be_false
+    @contact.valid?.should be_falsey
 
     @contact.date_time = Time.current
-    @contact.valid?.should be_true
+    @contact.valid?.should be_truthy
   end
   
   describe "contactable_type" do

@@ -18,12 +18,12 @@ describe Disposition do
     
     Disposition.descendants.each do |disposition|
       duplicate = FactoryGirl.build(disposition.original_model_name.underscore.to_sym, :name => 'Foo')
-      duplicate.valid?.should be_false
+      duplicate.valid?.should be_falsey
       duplicate.errors.keys.should include(:name)
       duplicate.errors[:name].should include("has already been taken")
       
       unique = FactoryGirl.build(disposition.original_model_name.underscore.to_sym, :name => 'Bar')
-      unique.valid?.should be_true
+      unique.valid?.should be_truthy
     end
   end
 end

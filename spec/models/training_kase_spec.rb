@@ -38,8 +38,8 @@ describe TrainingKase do
   end
   
   it "should create a new instance given valid attributes" do
-    TrainingKase.new.valid?.should be_false
-    @valid_kase.valid?.should be_true
+    TrainingKase.new.valid?.should be_falsey
+    @valid_kase.valid?.should be_truthy
   end
 
   describe "referral_source" do

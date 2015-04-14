@@ -37,8 +37,8 @@ describe CustomerServiceKase do
   end
   
   it "should create a new instance given valid attributes" do
-    CustomerServiceKase.new.valid?.should be_false
-    @valid_kase.valid?.should be_true
+    CustomerServiceKase.new.valid?.should be_falsey
+    @valid_kase.valid?.should be_truthy
   end
 
   describe "agency_id" do

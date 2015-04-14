@@ -6,13 +6,13 @@ describe AdaServiceEligibilityStatus do
   end
   
   it "should create a new instance given valid attributes" do
-    @status.valid?.should be_true
+    @status.valid?.should be_truthy
   end
 
   it "should require a valid description" do
     @status.name = nil
-    @status.valid?.should be_false
+    @status.valid?.should be_falsey
     @status.name = "A"
-    @status.valid?.should be_true
+    @status.valid?.should be_truthy
   end
 end

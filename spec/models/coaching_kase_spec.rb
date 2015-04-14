@@ -40,8 +40,8 @@ describe CoachingKase do
   end
   
   it "should create a new instance given valid attributes" do
-    CoachingKase.new.valid?.should be_false
-    @valid_kase.valid?.should be_true
+    CoachingKase.new.valid?.should be_falsey
+    @valid_kase.valid?.should be_truthy
   end
 
   describe "assessment_date" do

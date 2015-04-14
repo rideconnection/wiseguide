@@ -16,8 +16,8 @@ describe TripAuthorization do
   end
 
   it "should create a new instance given valid attributes" do
-    TripAuthorization.new.valid?.should be_false
-    @valid_ta.valid?.should be_true
+    TripAuthorization.new.valid?.should be_falsey
+    @valid_ta.valid?.should be_truthy
   end
 
   describe "allowed_trips_per_month" do

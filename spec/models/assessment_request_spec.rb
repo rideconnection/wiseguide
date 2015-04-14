@@ -16,8 +16,8 @@ describe AssessmentRequest do
   end
   
   it "should create a new instance given valid attributes" do
-    AssessmentRequest.new.valid?.should be_false
-    @valid_assessment_request.valid?.should be_true
+    AssessmentRequest.new.valid?.should be_falsey
+    @valid_assessment_request.valid?.should be_truthy
   end
 
   describe "customer_first_name" do
@@ -46,31 +46,31 @@ describe AssessmentRequest do
     
     it "should not allow nil values" do
       @valid_assessment_request.submitter_id = nil
-      @valid_assessment_request.valid?.should be_false
+      @valid_assessment_request.valid?.should be_falsey
       @valid_assessment_request.errors.keys.should include(:submitter)
     end
 
     it "should not allow blank values" do
       @valid_assessment_request.submitter_id = ""
-      @valid_assessment_request.valid?.should be_false
+      @valid_assessment_request.valid?.should be_falsey
       @valid_assessment_request.errors.keys.should include(:submitter)
     end
 
     it "should not allow an ID of 0" do
       @valid_assessment_request.submitter_id = 0
-      @valid_assessment_request.valid?.should be_false
+      @valid_assessment_request.valid?.should be_falsey
       @valid_assessment_request.errors.keys.should include(:submitter)
     end
 
     it "should not allow arbitrary IDs" do
       @valid_assessment_request.submitter_id = 9999
-      @valid_assessment_request.valid?.should be_false
+      @valid_assessment_request.valid?.should be_falsey
       @valid_assessment_request.errors.keys.should include(:submitter)
     end
     
     it "should allow valid user IDs" do
       @valid_assessment_request.submitter_id = @case_manager.id
-      @valid_assessment_request.valid?.should be_true
+      @valid_assessment_request.valid?.should be_truthy
     end
   end
 
