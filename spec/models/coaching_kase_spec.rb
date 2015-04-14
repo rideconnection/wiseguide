@@ -30,7 +30,6 @@ describe CoachingKase do
       :referral_source                     => nil,
       :referral_type_id                    => 1,
       :scheduling_system_entry_required    => nil,
-      :type                                => "CoachingKase",
       :user_id                             => nil,
     }
 

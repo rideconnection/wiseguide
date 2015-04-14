@@ -15,7 +15,7 @@ describe CustomerServiceKase do
       :close_date                          => Date.current,
       :county                              => nil,
       :customer_id                         => 1,
-      :disposition_id                      => FactoryGirl.create(:disposition, :name => CustomerServiceKase::COMPLAINT_ONLY_DISPOSITIONS.first),
+      :disposition_id                      => FactoryGirl.create(:disposition, :name => CustomerServiceKase::COMPLAINT_ONLY_DISPOSITIONS.first).id,
       :eligible_for_ticket_disbursement    => nil,
       :funding_source_id                   => nil,
       :honored_ticket_count                => nil,
@@ -28,7 +28,6 @@ describe CustomerServiceKase do
       :referral_source                     => nil,
       :referral_type_id                    => nil,
       :scheduling_system_entry_required    => nil,
-      :type                                => "CustomerServiceKase",
     }
 
     @valid_kase = CustomerServiceKase.new

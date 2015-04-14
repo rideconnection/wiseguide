@@ -73,7 +73,7 @@ describe Kase do
 
   describe "open_date" do
     it { @kase.should accept_values_for(:open_date, Date.current, Date.yesterday) }
-    it { @kase.should_not accept_values_for(:open_date, nil, "", Date.current + 1.minute, Date.tomorrow) }
+    it { @kase.should_not accept_values_for(:open_date, nil, "", Date.tomorrow) }
   end
 
   describe "type" do

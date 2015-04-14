@@ -29,7 +29,6 @@ describe TrainingKase do
       :referral_type_id                    => 1,
       :referral_mechanism                  => "Email",
       :scheduling_system_entry_required    => nil,
-      :type                                => "TrainingKase",
     }
 
     @valid_kase = TrainingKase.new
