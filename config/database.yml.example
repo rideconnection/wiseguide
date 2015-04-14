@@ -1,26 +1,20 @@
+common: &common
+  adapter: postgresql
+  host: localhost
+  username: wiseguide
+  password: wiseguide
+  min_messages: WARNING
+  pool: 5
+  timeout: 5000
+
 development:
-  adapter: postgresql
-  host: localhost
+  <<: *common
   database: wiseguide_development
-  username: wiseguide 
-  password: wiseguide
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test: &test
-  adapter: postgresql
-  host: localhost
+  <<: *common
   database: wiseguide_test
-  username: wiseguide 
-  password: wiseguide
-
-production:
-  adapter: postgresql
-  host: localhost
-  database: wiseguide_production
-  username: wiseguide 
-  password: wiseguide
+  min_messages: ERROR
 
 cucumber:
   <<: *test
