@@ -1,3 +1,11 @@
+# This gives us a valid subclass name so we can create a valid kase model
+class FactoryGirlKase < Kase; end
+
+# A subclass with only the develoment kase behavior module mixed in
+class FactoryGirlDevelopmentKase < Kase
+  include DevelopmentKaseBehavior
+end
+
 Wiseguide::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 

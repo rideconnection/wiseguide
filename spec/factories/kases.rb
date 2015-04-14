@@ -1,10 +1,6 @@
-# This gives us a valid subclass name so we can create a valid kase model
-class FactoryGirlKase < Kase; end
-
-# A subclass with only the develoment kase behavior module mixed in
-class FactoryGirlDevelopmentKase < Kase
-  include DevelopmentKaseBehavior
-end
+# NOTE: FactoryGirlKase and FactoryGirlDevelopmentKase classes are defined in
+# config/environments/test.rb so they are available at application load time and
+# can be registered as decendents of the Kase base class, for validation.
 
 FactoryGirl.define do
   trait :base_kase do
