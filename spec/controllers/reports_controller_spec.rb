@@ -16,12 +16,7 @@ describe ReportsController do
       @_routes << FactoryGirl.create(:route)
       @_routes << FactoryGirl.create(:route)
     end
-    
-    after(:each) do
-      Route.destroy_all
-      FundingSource.destroy_all
-    end
-    
+        
     it "should be successful" do
       get :index
       response.should be_success
@@ -101,14 +96,6 @@ describe ReportsController do
     #     FactoryGirl.create(:contact_event, :customer_id => 3, :kase_id => 2,   :date_time => "2010-12-30",  :description => "To say")
     #     FactoryGirl.create(:contact_event, :customer_id => 3, :kase_id => 2,   :date_time => "2011-01-01",  :description => "How much")
     #     FactoryGirl.create(:contact_event, :customer_id => 4, :kase_id => 7,   :date_time => "2011-01-30",  :description => "I care")
-    #   end
-    #   
-    #   after(:each) do
-    #     ContactEvent.destroy_all
-    #     AssessmentRequest.destroy_all
-    #     Kase.destroy_all
-    #     Customer.destroy_all
-    #     Disposition.destroy_all
     #   end
     #   
     #   it "should assign @records" do

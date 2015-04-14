@@ -9,8 +9,6 @@ describe KasesController do
 
   describe "GET index" do
     before(:each) do
-      Kase.destroy_all
-      
       # @my_open_kases
       @my_open_coaching_kase = FactoryGirl.create(:open_coaching_kase, assigned_to: @current_user)
       @my_open_training_kase = FactoryGirl.create(:open_training_kase, assigned_to: @current_user)
@@ -71,11 +69,6 @@ describe KasesController do
       @_coaching_kases = @_coaching_kases.map{|k| Kase.find(k.id)}
       @_training_kases = @_training_kases.map{|k| Kase.find(k.id)}
       @_cservice_kases = @_cservice_kases.map{|k| Kase.find(k.id)}
-    end
-    
-    after(:each) do
-      Route.destroy_all
-      FundingSource.destroy_all
     end
     
     it "should be successful" do

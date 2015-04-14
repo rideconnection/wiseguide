@@ -156,10 +156,6 @@ describe Customer do
         FactoryGirl.create(:customer, :first_name => "Mary Joe",    :last_name => "Wilson")
       end
     
-      after(:all) do
-        Customer.destroy_all
-      end
-    
       # FYI - The results for these searches may not seem predictable when run
       # against a Postgres data source because we will be relying on a 
       # dmetaphone phonetic algorithm to do "fuzzy matching", similar to a 
