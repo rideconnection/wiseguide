@@ -97,38 +97,38 @@ describe KasesController do
     it "should assign @my_three_month_follow_ups" do
       get :index
       # @my_three_month_follow_ups = @kases.assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @my_six_month_follow_ups" do
       get :index
       # @my_six_month_follow_ups = @kases.assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @other_open_kases" do
       get :index
       # @other_open_kases = @kases.open.not_assigned_to(current_user).joins(:customer).order(name_ordered)
-      pending "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
+      skip "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
       assigns(:other_open_kases).should =~ @_other_open_kases
     end
     
     it "should assign @other_three_month_follow_ups" do
       get :index
       # @other_three_month_follow_ups = @kases.not_assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @other_six_month_follow_ups" do
       get :index
       # @other_six_month_follow_ups = @kases.not_assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @wait_list" do
       get :index
       # @wait_list = @kases.unassigned.order(:open_date)
-      pending "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
+      skip "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
       assigns(:wait_list).should =~ @_wait_list
     end
         

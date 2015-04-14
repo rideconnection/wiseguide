@@ -271,7 +271,7 @@ describe Kase do
     
     context "resolution scopes" do
       # TODO
-      pending "I don't have enough information about what these are supposed to do to setup the test properly."
+      skip "I don't have enough information about what these are supposed to do to setup the test properly."
       
       # before do
       #   @successful = FactoryGirl.create(:disposition, :name => "Successful")
