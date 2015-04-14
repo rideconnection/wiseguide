@@ -134,7 +134,7 @@ describe KasesController do
         
     context "CoachingKases" do
       before(:each) do
-        get :index, :kase => {:type => 'CoachingKase'}
+        get :index, {:kase => {"type" => 'CoachingKase'}}
       end
       
       it "should assign only coaching kases to @kases" do
@@ -157,7 +157,7 @@ describe KasesController do
     
     context "TrainingKases" do
       before(:each) do
-        get :index, :kase => {:type => 'TrainingKase'}
+        get :index, {:kase => {"type" => 'TrainingKase'}}
       end
       
       it "should assign only training kases to @kases" do
@@ -175,7 +175,7 @@ describe KasesController do
     
     context "CustomerServiceKases" do
       before(:each) do
-        get :index, :kase => {:type => 'CustomerServiceKase'}
+        get :index, {:kase => {"type" => 'CustomerServiceKase'}}
       end
       
       it "should assign only customer service kases to @kases" do

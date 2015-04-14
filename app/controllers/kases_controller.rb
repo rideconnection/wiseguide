@@ -4,8 +4,8 @@ class KasesController < ApplicationController
 
   def index
     name_ordered = 'customers.last_name, customers.first_name'
-    
-    if !params[:kase].blank? and !params[:kase][:type].blank?
+        
+    if params[:kase].try(:[], :type).present?
       @kase_type = params[:kase][:type]
       @kases = @kases.where(:type => @kase_type)
       @bodytag_class = @kase_type.pluralize.underscore.gsub(/_/, '-')
@@ -143,48 +143,50 @@ private
     @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
   end
 
-  def setup_sti_model
-    # Attempt to instantiate the correct Kase subclass based on the type 
-    # parameter sent from forms and querystrings
-    # logger.debug "Attempting to detect implied Kase subclass"
-    if !params[:kase].blank? and !params[:kase][:type].blank?
+  # Attempt to instantiate the correct Kase subclass based on the type 
+  # parameter sent from forms and querystrings
+  def setup_sti_model(enable_logging = false)
+    logger.debug "Attempting to detect implied Kase subclass" if enable_logging
+    if params[:kase].try(:[], :type).present?
       # Type param found, let's see if it's a valid subclass
       type = params[:kase].delete(:type)
-      # logger.debug "Type param '#{type}' found. Looking for match in list of Kase.descendants:"
+      logger.debug "Type param '#{type}' found. Looking for match in list of Kase.descendants:" if enable_logging
       begin
-        # logger.debug "Attempting to constantize '#{type}' to a model class"
+        logger.debug "Attempting to constantize '#{type}' to a model class" if enable_logging
+
         model = type.constantize
-        # logger.debug "Attempting to instantiate '#{type}' model class"
+        logger.debug "Attempting to instantiate '#{type}' model class" if enable_logging
+
         @kase = model.new(params[:kase])
-        # logger.debug @kase.inspect
+        logger.debug @kase.inspect if enable_logging
       rescue => e
         # Type param found, but an error prevented us from creating the 
         # object. Fall through to create a generic Kase object
-        # logger.debug "Type param '#{type}' found, but an error prevented us from creating the object: #{e}"
+        logger.debug "Type param '#{type}' found, but an error prevented us from creating the object: #{e}" if enable_logging
       else
         # No errors encountered, return having instantiated the proper 
         # subclass
-        # logger.debug "No errors encountered, returning"
+        logger.debug "No errors encountered, returning" if enable_logging
         return
       end
     else
       # No type param was found, fall through to create a generic Kase object
-      # logger.debug "Type param not found"
+      logger.debug "Type param not found" if enable_logging
     end
     # If all else fails just instantiate a generic Kase object
-    # logger.debug "Could not instantiate a subclass. Creating generic Kase object instead"
+    logger.debug "Could not instantiate a subclass. Creating generic Kase object instead" if enable_logging
     @kase = Kase.new(params[:kase])
-    # logger.debug @kase.inspect
+    logger.debug @kase.inspect if enable_logging
   end
   
   def cleanup_household_stat_params
-    if !params[:kase].blank? and !params[:kase][:household_income_alternate_response].blank?
+    if params[:kase].try(:[], :household_income_alternate_response).present?
       params[:kase][:household_income] = nil
     else
       params[:kase][:household_income_alternate_response] == nil
     end
     
-    if !params[:kase].blank? and !params[:kase][:household_size_alternate_response].blank?
+    if params[:kase].try(:[], :household_size_alternate_response).present?
       params[:kase][:household_size] = nil
     else
       params[:kase][:household_size_alternate_response] == nil
