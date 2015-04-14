@@ -60,19 +60,11 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
   
-  
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-
     load Rails.root.join("db", "seeds.rb")
-  end
-  
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
   end
   
   config.include Capybara::DSL
 end
+
+DatabaseCleaner.start
