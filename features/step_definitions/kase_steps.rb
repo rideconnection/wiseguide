@@ -109,6 +109,10 @@ Given /^an open coaching case exists with no case manager$/ do
   @kase.save
 end
 
+Given /^a ([^ ]+) referral type exists$/ do |type|
+  @referral_type = FactoryGirl.create(:referral_type, :name => "#{type} Referral Type")
+end
+
 When /^I click through to the case details$/ do
   find("a[href='/cases/#{@kase.id}']").click
 end

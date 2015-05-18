@@ -1,5 +1,6 @@
 class KasesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:new, :create]
+  authorize_resource :only => [:new, :create]
   before_filter :cleanup_household_stat_params, :only => [:update, :create]
 
   def index
@@ -58,7 +59,7 @@ class KasesController < ApplicationController
   end
 
   def update
-    @kase.attributes = params[:kase]
+    @kase.attributes = params[:kase].except(:type)
     
     state_changed = false
     if @kase.scheduling_system_entry_required_changed?

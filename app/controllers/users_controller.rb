@@ -21,8 +21,8 @@ class UsersController < Devise::SessionsController
     
     user_params = params[:user]
     user_params[:password] = user_params[:password_confirmation] = User.random_password
-    @user = User.new(user_params)
-    @user.level = user_params[:level] #this should be unnecesary
+    @user = User.new(user_params.except(:level))
+    @user.level = user_params[:level] # Bypass mass assignment protection
 
     begin
       @user.save!

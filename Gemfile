@@ -99,6 +99,8 @@ group :test do
   # A simple DSL extending Capybara
   # TODO verify still active and usable
   gem 'prickle', '~> 0.0.6' # TODO latest? 0.1.0, last updated March 14, 2013
+
+  gem 'launchy', '~> 2.4.3' # TODO latest?
 end
 
 group :test, :development do

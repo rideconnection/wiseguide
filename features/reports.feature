@@ -124,7 +124,7 @@ Feature: System Reports
         | 7  | BAMF         |
         | 8  | DIHC         |
         | 9  | FORD         |
-        | 10 | PRON         |
+        | 10 | TRON         |
       And the following referral document associations exist:
         # Matched: 2, 3, 4, 5, 6, 7, 8, 11, 14, 15, 16, 17, 18, 19, 20
         | id | kase_id | resource_ids   |
@@ -176,7 +176,7 @@ Feature: System Reports
         | FEMA         | 3                  |
         | FORD         | 2                  |
         | PETA         | 2                  |
-        | PRON         | 2                  |
         | ROFL         | 2                  |
+        | TRON         | 2                  |
         | WWE          | 2                  |
         | WWF          | 3                  |
