@@ -4,8 +4,6 @@ class ReferralTypesController < ApplicationController
   # GET /referral_types
   # GET /referral_types.xml
   def index
-    @referral_types = ReferralType.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @referral_types }
@@ -15,8 +13,6 @@ class ReferralTypesController < ApplicationController
   # GET /referral_types/1
   # GET /referral_types/1.xml
   def show
-    @referral_type = ReferralType.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @referral_type }
@@ -26,8 +22,6 @@ class ReferralTypesController < ApplicationController
   # GET /referral_types/new
   # GET /referral_types/new.xml
   def new
-    @referral_type = ReferralType.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @referral_type }
@@ -36,14 +30,11 @@ class ReferralTypesController < ApplicationController
 
   # GET /referral_types/1/edit
   def edit
-    @referral_type = ReferralType.find(params[:id])
   end
 
   # POST /referral_types
   # POST /referral_types.xml
   def create
-    @referral_type = ReferralType.new(params[:referral_type])
-
     respond_to do |format|
       if @referral_type.save
         format.html { redirect_to(@referral_type, :notice => 'Referral type was successfully created.') }
@@ -58,10 +49,8 @@ class ReferralTypesController < ApplicationController
   # PUT /referral_types/1
   # PUT /referral_types/1.xml
   def update
-    @referral_type = ReferralType.find(params[:id])
-
     respond_to do |format|
-      if @referral_type.update_attributes(params[:referral_type])
+      if @referral_type.update_attributes(referral_type_params)
         format.html { redirect_to(@referral_type, :notice => 'Referral type was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -74,12 +63,17 @@ class ReferralTypesController < ApplicationController
   # DELETE /referral_types/1
   # DELETE /referral_types/1.xml
   def destroy
-    @referral_type = ReferralType.find(params[:id])
     @referral_type.destroy
 
     respond_to do |format|
       format.html { redirect_to(referral_types_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def referral_type_params
+    params.require(:referral_type).permit(:name)
   end
 end
