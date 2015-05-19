@@ -1,3 +1,5 @@
+# TODO Verify Strong Parameters after upgrading Surveyor to v1.5
+
 class ResponseSet < ActiveRecord::Base
   include Surveyor::Models::ResponseSetMethods
 
