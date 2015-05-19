@@ -19,18 +19,15 @@ class UsersController < Devise::SessionsController
   def create_user
     authorize! :edit, User
     
-    user_params = params[:user]
-    user_params[:password] = user_params[:password_confirmation] = User.random_password
-    @user = User.new(user_params.except(:level))
-    @user.level = user_params[:level] # Bypass mass assignment protection
+    params[:user][:password] = params[:user][:password_confirmation] = User.random_password
+    @user = User.new(user_params)
 
-    begin
-      @user.save!
+    if @user.save
       NewUserMailer.new_user_email(@user, @user.password).deliver
       flash[:notice] = "#{@user.email} has been added and a password has been emailed"
       redirect_to users_path
-    rescue Exception => e
-      flash[:notice] = "Could not create user: #{e.message}"
+    else
+      flash[:notice] = "Could not create user"
       render :action=>:new_user
     end
   end
@@ -45,7 +42,7 @@ class UsersController < Devise::SessionsController
   def update_details
     @user = User.find(params[:id])
     authorize! :edit, @user
-    @user.update_attributes!(params[:user])
+    @user.update_attributes!(user_params)
     flash[:notice] = "#{@user.display_name}'s record has been updated"
     redirect_to users_path
   end
@@ -63,7 +60,7 @@ class UsersController < Devise::SessionsController
   def show_change_password; end
 
   def change_password
-    if current_user.update_password(params[:user])
+    if current_user.update_password(change_password_params)
       sign_in(current_user, :bypass => true)
       flash[:notice] = "Password changed"
       redirect_to root_path
@@ -86,7 +83,7 @@ class UsersController < Devise::SessionsController
     if User.count > 0
       return redirect_to :action=>:new
     end
-    @user = User.new params[:user]
+    @user = User.new user_params
     @user.level = 100
     @user.save!
 
@@ -112,5 +109,23 @@ class UsersController < Devise::SessionsController
     @user.save!
     redirect_to :users, :notice => "User #{@user.email} successfully marked deleted."
   end
-
+  
+  private
+  
+  def user_params
+    params.require(:user).permit(
+      :email,
+      :first_name,
+      :last_name,
+      :level,
+      :organization_id,
+      :password,
+      :password_confirmation,
+      :phone_number,
+    )
+  end
+  
+  def change_password_params
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
+  end
 end

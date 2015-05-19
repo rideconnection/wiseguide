@@ -34,10 +34,10 @@
 </script>
 
 <%= form_for @user, :url=>url_for(:action=>:create_user) do |f| %>
-  <% if @errors %>
+  <% if @user.errors %>
     <div id="error_explanation">
       <ul>
-      <% @errors.each do |field, msg| %>
+      <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
