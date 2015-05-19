@@ -1,3 +1,5 @@
+# TODO Verify Strong Parameters after upgrading Surveyor to v1.5
+
 #confusingly, this handles both surveys and response sets
 #due to the weirdness inherent in surveyor
 require 'survey_creator'
@@ -9,25 +11,28 @@ module SurveyorControllerCustomMethods
     # base.send :layout, 'surveyor_custom'
   end
 
-
   # Actions (for responsesets)
   def new
     super
     @kase = Kase.find(params[:kase_id])
     @surveys = @surveys.select {|survey| survey.inactive_at.nil?} if @surveys.present?
   end
+  
   def create
     @kase = Kase.find(params[:kase_id])
     authorize! :manage, @kase
     super
     @response_set.update_attributes({:kase_id => @kase.id})
   end
+  
   def show
     super
   end
+  
   def edit
     super
   end
+  
   def update
     @response_set = ResponseSet.find_by_access_code(params[:response_set_code])
     @kase = @response_set.kase
