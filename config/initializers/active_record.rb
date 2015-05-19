@@ -1,3 +1,5 @@
+# Used by some STI magic methods
+
 module ActiveRecord
   class Base
     def self.human_name

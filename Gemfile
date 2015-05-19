@@ -5,6 +5,9 @@ ruby '2.1.5' # TODO Rails 3.2 doesn't officially support Ruby 2.2 yet
 # TODO bump, synch base files, add asset group gems
 gem 'rails', '~> 3.2.21'
 
+# Setup SP on Rails 3.2, can likely be removed after Rails 4.x
+gem 'strong_parameters'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
