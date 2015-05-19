@@ -8,16 +8,12 @@ class TripReasonsController < ApplicationController
   end
 
   def new
-    @trip_reason = TripReason.new
   end
 
   def edit
-    @trip_reason = TripReason.find(params[:id])
   end
 
   def create
-    @trip_reason = TripReason.new(trip_reason_params)
-
     if @trip_reason.save
       redirect_to(@trip_reason, :notice => 'Trip reason was successfully created.')
     else
@@ -26,17 +22,14 @@ class TripReasonsController < ApplicationController
   end
 
   def update
-    @trip_reason = TripReason.find(params[:id])
-    
     if @trip_reason.update_attributes(trip_reason_params)
-        redirect_to(@trip_reason, :notice => 'Trip reason was successfully updated.') 
+      redirect_to(@trip_reason, :notice => 'Trip reason was successfully updated.') 
     else
       render :action => "edit" 
     end
   end
 
   def destroy
-    @trip_reason = TripReason.find(params[:id])
     @trip_reason.destroy
 
     redirect_to(trip_reasons_url) 

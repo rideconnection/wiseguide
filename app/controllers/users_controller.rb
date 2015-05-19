@@ -1,6 +1,5 @@
+require 'new_user_mailer'
 class UsersController < Devise::SessionsController
-  require 'new_user_mailer'
-
   def new
     #hooked up to sign_in
     if User.count == 0

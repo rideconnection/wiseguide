@@ -22,9 +22,7 @@ end
 
 gem 'jquery-rails'
 
-# TODO switch to cancancan 1.10.1
-# TODO bump, watch for breaking changes
-gem 'cancan', '~> 1.6.10' # TODO latest? yes
+gem 'cancancan', '~> 1.10.0' # TODO latest? yes
 
 # TODO bump, watch for breaking changes
 gem 'devise', '~> 2.0.6' # TODO latest? 3.4.1
