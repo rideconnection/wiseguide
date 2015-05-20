@@ -24,6 +24,7 @@ describe TripAuthorizationsController do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     @admin = FactoryGirl.create(:admin)
     sign_in @admin
+    @kase = FactoryGirl.create(:kase)
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -31,9 +32,9 @@ describe TripAuthorizationsController do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-      allowed_trips_per_month: 1,
-      start_date:              Date.current,
-      kase_id:                 1,
+      allowed_trips_per_month: "1",
+      start_date:              Date.current.to_s,
+      kase_id:                 @kase.id.to_s,
     }
   end
   
@@ -92,14 +93,14 @@ describe TripAuthorizationsController do
       it "assigns a newly created but unsaved trip_authorization as @trip_authorization" do
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        post :create, {:trip_authorization => {}}
+        post :create, {:trip_authorization => {allowed_trips_per_month: -1}}
         assigns(:trip_authorization).should be_a_new(TripAuthorization)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        post :create, {:trip_authorization => {}}
+        post :create, {:trip_authorization => {allowed_trips_per_month: -1}}
         response.should render_template("new")
       end
     end
@@ -113,8 +114,8 @@ describe TripAuthorizationsController do
         # specifies that the TripAuthorization created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        TripAuthorization.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => {'these' => 'params'}}
+        TripAuthorization.any_instance.should_receive(:update_attributes).with(valid_attributes.with_indifferent_access)
+        put :update, {:id => trip_authorization.to_param, :trip_authorization => valid_attributes}
       end
 
       it "assigns the requested trip_authorization as @trip_authorization" do
@@ -135,7 +136,7 @@ describe TripAuthorizationsController do
         trip_authorization = TripAuthorization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => {}}
+        put :update, {:id => trip_authorization.to_param, :trip_authorization => {allowed_trips_per_month: -1}}
         assigns(:trip_authorization).should eq(trip_authorization)
       end
 
@@ -143,7 +144,7 @@ describe TripAuthorizationsController do
         trip_authorization = TripAuthorization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => {}}
+        put :update, {:id => trip_authorization.to_param, :trip_authorization => {allowed_trips_per_month: -1}}
         response.should render_template("edit")
       end
     end
