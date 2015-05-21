@@ -1,8 +1,7 @@
 class DispositionsController < ApplicationController
   load_and_authorize_resource
-  def index
-    @dispositions = Disposition.all
 
+  def index
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @dispositions }
@@ -12,8 +11,6 @@ class DispositionsController < ApplicationController
   # GET /dispositions/1
   # GET /dispositions/1.xml
   def show
-    @disposition = Disposition.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @disposition }
@@ -33,7 +30,6 @@ class DispositionsController < ApplicationController
 
   # GET /dispositions/1/edit
   def edit
-    @disposition = Disposition.find(params[:id])
   end
 
   # POST /dispositions
@@ -55,10 +51,8 @@ class DispositionsController < ApplicationController
   # PUT /dispositions/1
   # PUT /dispositions/1.xml
   def update
-    @disposition = Disposition.find(params[:id])
-
     respond_to do |format|
-      if @disposition.update_attributes(params[:disposition])
+      if @disposition.update_attributes(disposition_params)
         format.html { redirect_to(@disposition, :notice => 'Disposition was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -81,13 +75,16 @@ class DispositionsController < ApplicationController
   
 private
 
+  # Set the protected "type" attribute from forms and querystrings
   def setup_sti_model
-    # This lets us set the "type" attribute from forms and querystrings
     model = nil
-    if !params[:disposition].blank? and !params[:disposition][:type].blank?
+    if params[:disposition].try(:[], :type).present?
       model = params[:disposition].delete(:type).constantize.to_s
     end
-    @disposition = Disposition.new(params[:disposition])
     @disposition.type = model
+  end
+  
+  def disposition_params
+    params.require(:disposition).permit(:name)
   end
 end
