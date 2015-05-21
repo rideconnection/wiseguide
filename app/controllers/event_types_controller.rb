@@ -1,10 +1,9 @@
 class EventTypesController < ApplicationController
   load_and_authorize_resource
+
   # GET /event_types
   # GET /event_types.xml
   def index
-    @event_types = EventType.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @event_types }
@@ -14,8 +13,6 @@ class EventTypesController < ApplicationController
   # GET /event_types/1
   # GET /event_types/1.xml
   def show
-    @event_type = EventType.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event_type }
@@ -25,8 +22,6 @@ class EventTypesController < ApplicationController
   # GET /event_types/new
   # GET /event_types/new.xml
   def new
-    @event_type = EventType.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @event_type }
@@ -35,14 +30,11 @@ class EventTypesController < ApplicationController
 
   # GET /event_types/1/edit
   def edit
-    @event_type = EventType.find(params[:id])
   end
 
   # POST /event_types
   # POST /event_types.xml
   def create
-    @event_type = EventType.new(params[:event_type])
-
     respond_to do |format|
       if @event_type.save
         format.html { redirect_to(@event_type, :notice => 'Event type was successfully created.') }
@@ -57,10 +49,8 @@ class EventTypesController < ApplicationController
   # PUT /event_types/1
   # PUT /event_types/1.xml
   def update
-    @event_type = EventType.find(params[:id])
-
     respond_to do |format|
-      if @event_type.update_attributes(params[:event_type])
+      if @event_type.update_attributes(event_type_params)
         format.html { redirect_to(@event_type, :notice => 'Event type was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -73,12 +63,17 @@ class EventTypesController < ApplicationController
   # DELETE /event_types/1
   # DELETE /event_types/1.xml
   def destroy
-    @event_type = EventType.find(params[:id])
     @event_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to(event_types_url) }
+      format.html { redirect_to(event_types_url, :notice => 'Event type was successfully deleted.') }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def event_type_params
+    params.require(:event_type).permit(:name, :require_notes)
   end
 end
