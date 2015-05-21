@@ -87,14 +87,14 @@ describe AdaServiceEligibilityStatusesController do
       it "assigns a newly created but unsaved ada_service_eligibility_status as @ada_service_eligibility_status" do
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        post :create, {:ada_service_eligibility_status => {}}
+        post :create, {:ada_service_eligibility_status => {:name => ''}}
         assigns(:ada_service_eligibility_status).should be_a_new(AdaServiceEligibilityStatus)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        post :create, {:ada_service_eligibility_status => {}}
+        post :create, {:ada_service_eligibility_status => {:name => ''}}
         response.should render_template("new")
       end
     end
@@ -108,8 +108,8 @@ describe AdaServiceEligibilityStatusesController do
         # specifies that the AdaServiceEligibilityStatus created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        AdaServiceEligibilityStatus.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {'these' => 'params'}}
+        AdaServiceEligibilityStatus.any_instance.should_receive(:update_attributes).with({'name' => 'test'})
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {'name' => 'test'}}
       end
 
       it "assigns the requested ada_service_eligibility_status as @ada_service_eligibility_status" do
@@ -130,7 +130,7 @@ describe AdaServiceEligibilityStatusesController do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {:name => ''}}
         assigns(:ada_service_eligibility_status).should eq(ada_service_eligibility_status)
       end
 
@@ -138,7 +138,7 @@ describe AdaServiceEligibilityStatusesController do
         ada_service_eligibility_status = AdaServiceEligibilityStatus.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         AdaServiceEligibilityStatus.any_instance.stub(:save).and_return(false)
-        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {}}
+        put :update, {:id => ada_service_eligibility_status.to_param, :ada_service_eligibility_status => {:name => ''}}
         response.should render_template("edit")
       end
     end
