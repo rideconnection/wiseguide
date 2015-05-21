@@ -1,4 +1,6 @@
 class CustomerImpairment < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
+
   belongs_to :customer
   belongs_to :impairment
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
