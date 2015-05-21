@@ -1,4 +1,11 @@
 class AssessmentRequest < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
+  # attr_accessible :attachment, :customer_first_name, :customer_last_name,
+  #                 :customer_birth_date, :customer_phone, :notes,
+  #                 :submitter, :submitter_id, :customer, :customer_id,
+  #                 :assignee, :assignee_id, :reason_not_completed,
+  #                 :customer_middle_initial
+
   belongs_to :submitter, :class_name => "User", :foreign_key => :submitter_id
   belongs_to :assignee, :class_name => "User", :foreign_key => :assignee_id
   belongs_to :customer
@@ -20,12 +27,6 @@ class AssessmentRequest < ActiveRecord::Base
   validates_presence_of  :submitter
   validates_inclusion_of :reason_not_completed, :in => ["Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn"], :allow_blank => true
   validates              :customer_middle_initial, :length => { :maximum => 1 }
-
-  attr_accessible :attachment, :customer_first_name, :customer_last_name,
-                  :customer_birth_date, :customer_phone, :notes,
-                  :submitter, :submitter_id, :customer, :customer_id,
-                  :assignee, :assignee_id, :reason_not_completed,
-                  :customer_middle_initial
 
   scope :assigned_to,      lambda { |users| where(:assignee_id => Array(users).collect(&:id)) }
   scope :belonging_to,     lambda { |organizations| joins(:referring_organization).where("organizations.id IN (?)", Array(organizations).collect(&:id)) }

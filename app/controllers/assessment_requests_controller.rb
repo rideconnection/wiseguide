@@ -51,8 +51,6 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/1.xml
   def show
     prep_edit
-    
-    @assessment_request = AssessmentRequest.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -63,8 +61,6 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/1/edit
   def edit
     prep_edit
-    
-    @assessment_request = AssessmentRequest.find(params[:id])
 
     respond_to do |format|
       format.html # edit.html.erb
@@ -76,8 +72,6 @@ class AssessmentRequestsController < ApplicationController
   # GET /assessment_requests/new.xml
   def new
     prep_edit
-    
-    @assessment_request = AssessmentRequest.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -147,9 +141,7 @@ class AssessmentRequestsController < ApplicationController
   def create
     prep_edit
     
-    fields = params[:assessment_request]
-    fields[:submitter] = current_user
-    @assessment_request = AssessmentRequest.new(fields)
+    @assessment_request.submitter = current_user
 
     respond_to do |format|
       if @assessment_request.save
@@ -173,10 +165,8 @@ class AssessmentRequestsController < ApplicationController
   def update
     prep_edit
     
-    @assessment_request = AssessmentRequest.find(params[:id])
-
     respond_to do |format|
-      if @assessment_request.update_attributes(params[:assessment_request])
+      if @assessment_request.update_attributes(assessment_request_params)
         format.html do
           redirect_to current_user.is_outside_user? ? root_path : assessment_requests_path,
                       :notice => 'Assessment request was successfully updated.'
@@ -192,7 +182,6 @@ class AssessmentRequestsController < ApplicationController
   # DELETE /assessment_requests/1
   # DELETE /assessment_requests/1.xml
   def destroy
-    @assessment_request = AssessmentRequest.find(params[:id])
     @assessment_request.destroy
 
     respond_to do |format|
@@ -212,9 +201,24 @@ class AssessmentRequestsController < ApplicationController
     end
   end
 
-private
+  private
 
   def prep_edit
     @assignees = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
+  end
+  
+  def assessment_request_params
+    params.require(:assessment_request).permit(
+      :assignee_id,
+      :attachment,
+      :customer_birth_date,
+      :customer_first_name,
+      :customer_id,
+      :customer_last_name,
+      :customer_middle_initial,
+      :customer_phone,
+      :notes,
+      :reason_not_completed,
+    )
   end
 end
