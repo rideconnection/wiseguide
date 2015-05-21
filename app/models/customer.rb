@@ -1,4 +1,6 @@
 class Customer < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
+
   belongs_to :ethnicity
   belongs_to :ada_service_eligibility_status
   has_many :assessment_requests
@@ -7,6 +9,7 @@ class Customer < ActiveRecord::Base
   has_many :kases, :dependent => :restrict
   has_many :contacts, :as => :contactable, :dependent => :destroy
   has_many :customer_support_network_members, :dependent => :destroy
+
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
   belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
   belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
@@ -43,6 +46,7 @@ class Customer < ActiveRecord::Base
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
   end
 
+  # TODO wut?
   scope :empty, lambda { where ("1 = 2") }
 
   cattr_reader :per_page

@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @customers = Customer.paginate :page => params[:page], :order => [:last_name, :first_name]
+    @customers = @customers.paginate :page => params[:page], :order => [:last_name, :first_name]
   end
 
   def show
@@ -25,10 +25,10 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(params[:customer])
     if !params[:assessment_request].nil? then
       @assessment_request = params[:assessment_request]
     end
+
     if @customer.save
       notice = 'Customer was successfully created.'
       if !@assessment_request.nil? then
@@ -47,7 +47,7 @@ class CustomersController < ApplicationController
   end
 
   def update
-    if @customer.update_attributes(params[:customer])
+    if @customer.update_attributes(customer_params)
       redirect_to(@customer, :notice => 'Customer was successfully updated.') 
     else
       prep_edit
@@ -78,5 +78,37 @@ class CustomersController < ApplicationController
     @genders = ALL_GENDERS
     @counties = (County.all.collect {|c| c.name} << @customer.county).compact.uniq.sort
     @ada_service_eligibility_statuses = AdaServiceEligibilityStatus.order(:name).all
+  end
+  
+  def customer_params
+    params.require(:customer).permit(
+      :ada_service_eligibility_status_id,
+      :address,
+      :birth_date,
+      :city,
+      :county,
+      :email,
+      :ethnicity_id,
+      :first_name,
+      :gender,
+      :honored_citizen_cardholder,
+      :last_name,
+      :middle_initial,
+      :notes,
+      :phone_number_1,
+      :phone_number_1_allow_voicemail,
+      :phone_number_2,
+      :phone_number_2_allow_voicemail,
+      :phone_number_3,
+      :phone_number_3_allow_voicemail,
+      :phone_number_4,
+      :phone_number_4_allow_voicemail,
+      :portrait,
+      :primary_language,
+      :spouse_of_veteran_status,
+      :state,
+      :veteran_status,
+      :zip,
+    )
   end
 end
