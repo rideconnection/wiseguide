@@ -4,6 +4,8 @@
 # Functionality specific to a subset of subclasses should be defined in a 
 # module and then included in subclasses as necessary.
 class Kase < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
+
   belongs_to :customer
   belongs_to :disposition
   belongs_to :assigned_to, :foreign_key=>:user_id, :class_name=>"User"
@@ -63,7 +65,7 @@ class Kase < ActiveRecord::Base
 
   # Make sure our STI children are routed through the parent routes
   def self.inherited(child)
-    child.instance_eval do      
+    child.instance_eval do
       alias :original_model_name :model_name
             
       def model_name

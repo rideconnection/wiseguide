@@ -59,7 +59,7 @@ class KasesController < ApplicationController
   end
 
   def update
-    @kase.attributes = params[:kase].except(:type)
+    @kase.attributes = kase_params
     
     state_changed = false
     if @kase.scheduling_system_entry_required_changed?
@@ -158,7 +158,7 @@ private
         model = type.constantize
         logger.debug "Attempting to instantiate '#{type}' model class" if enable_logging
 
-        @kase = model.new(params[:kase])
+        @kase = model.new(kase_params)
         logger.debug @kase.inspect if enable_logging
       rescue => e
         # Type param found, but an error prevented us from creating the 
@@ -176,7 +176,7 @@ private
     end
     # If all else fails just instantiate a generic Kase object
     logger.debug "Could not instantiate a subclass. Creating generic Kase object instead" if enable_logging
-    @kase = Kase.new(params[:kase])
+    @kase = Kase.new(kase_params)
     logger.debug @kase.inspect if enable_logging
   end
   
@@ -206,6 +206,39 @@ private
       date_time: DateTime.current,
       description: description,
       notes: notes
+    )
+  end
+  
+  def kase_params
+    params.require(:kase).permit(
+      :access_transit_partner_referred_to,
+      :adult_ticket_count,
+      :agency_id,
+      :assessment_date,
+      :assessment_language,
+      :assessment_request_id,
+      :case_manager_id,
+      :case_manager_notification_date,
+      :category,
+      :close_date,
+      :county,
+      :customer_id,
+      :disposition_id,
+      :eligible_for_ticket_disbursement,
+      :funding_source_id,
+      :honored_ticket_count,
+      :household_income,
+      :household_income_alternate_response,
+      :household_size,
+      :household_size_alternate_response,
+      :medicaid_eligible,
+      :open_date,
+      :referral_mechanism,
+      :referral_mechanism_explanation,
+      :referral_source,
+      :referral_type_id,
+      :scheduling_system_entry_required,
+      :user_id,
     )
   end
 end
