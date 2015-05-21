@@ -1,10 +1,9 @@
 class CountiesController < ApplicationController
   load_and_authorize_resource
+  
   # GET /counties
   # GET /counties.xml
   def index
-    @counties = County.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @counties }
@@ -14,8 +13,6 @@ class CountiesController < ApplicationController
   # GET /counties/1
   # GET /counties/1.xml
   def show
-    @county = County.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @county }
@@ -25,8 +22,6 @@ class CountiesController < ApplicationController
   # GET /counties/new
   # GET /counties/new.xml
   def new
-    @county = County.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @county }
@@ -35,14 +30,11 @@ class CountiesController < ApplicationController
 
   # GET /counties/1/edit
   def edit
-    @county = County.find(params[:id])
   end
 
   # POST /counties
   # POST /counties.xml
   def create
-    @county = County.new(params[:county])
-
     respond_to do |format|
       if @county.save
         format.html { redirect_to(@county, :notice => 'County was successfully created.') }
@@ -57,10 +49,8 @@ class CountiesController < ApplicationController
   # PUT /counties/1
   # PUT /counties/1.xml
   def update
-    @county = County.find(params[:id])
-
     respond_to do |format|
-      if @county.update_attributes(params[:county])
+      if @county.update_attributes(county_params)
         format.html { redirect_to(@county, :notice => 'County was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -73,12 +63,17 @@ class CountiesController < ApplicationController
   # DELETE /counties/1
   # DELETE /counties/1.xml
   def destroy
-    @county = County.find(params[:id])
     @county.destroy
 
     respond_to do |format|
       format.html { redirect_to(counties_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  
+  def county_params
+    params.require(:county).permit(:name)
   end
 end
