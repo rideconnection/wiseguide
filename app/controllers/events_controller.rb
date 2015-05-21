@@ -68,8 +68,7 @@ class EventsController < ApplicationController
       :kase_id,
       :notes,
       :show_full_notes,
-      :start_time,
-      :user_id,
+      :start_time
     )
   end
 end
