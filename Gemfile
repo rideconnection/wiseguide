@@ -5,7 +5,7 @@ ruby '2.1.5' # TODO Rails 3.2 doesn't officially support Ruby 2.2 yet
 # TODO bump, synch base files, add asset group gems
 gem 'rails', '~> 3.2.21'
 
-# Setup SP on Rails 3.2, can likely be removed after Rails 4.x
+# TODO can likely be removed after Rails 4.x since it's bundled by default
 gem 'strong_parameters'
 
 # Gems used only for assets and not required
@@ -24,7 +24,6 @@ gem 'jquery-rails'
 
 gem 'cancancan', '~> 1.10.0' # TODO latest? yes
 
-# TODO bump, regenerate install, watch for breaking changes
 gem 'devise', '~> 3.5.1' # TODO latest? yes
 
 # Utilities
@@ -34,13 +33,6 @@ gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
 # Notify on exception via email
 # TODO rerun generator
 gem 'exception_notification', '~> 4.0.1 ', group: :production # TODO latest? yes
-
-# Form builder with semantic markup
-# TODO verify neccessity, bump, watching for breaking changes
-# gem 'formtastic', '~> 1.2.4' # TODO latest? 3.1.3
-
-# TODO Do we use this anywhere? There aren't any HAML files. If so: bump
-# gem 'haml', '~> 3.1.3'
 
 # TODO bump, watch for breaking changes
 gem 'paperclip', '~> 3.0.4' # TODO latest? 4.2.1
@@ -55,10 +47,9 @@ gem 'userstamp',
 # TODO bump version, watch for breaking changes
 gem 'store_base_sti_class', '~> 0.0.2' # TODO latest? 0.3.0
 
-# TODO bump version, add pessimistic operator
+# TODO Still necessary?
 gem 'uuidtools', '~> 2.1.5' # TODO latest? yes
 
-# TODO bump, add pessimistic operator
 gem 'will_paginate', '~> 3.0.7' # TODO latest? yes
 
 # TODO key functionality, bump version, watch for breaking changes
@@ -91,7 +82,6 @@ group :test do
   # TODO bump version, watch for breaking changes
   gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2
 
-  # TODO bump version, watch for breaking changes
   gem 'database_cleaner', '~> 1.4' # TODO latest? yes
     
   # Easily test email in RSpec, Cucumber, and MiniTest
