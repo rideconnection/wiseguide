@@ -76,7 +76,8 @@ Then /^"([^"]+)" should receive a welcome email with a link to the application$/
   open_email(email_address)
   current_email.should have_subject("Welcome to Wiseguide")
   current_email.should have_body_text("Hi, #{email_address}")
-  current_email.should have_body_text("You can visit the site at<br/> http://www.example.com/")
+  current_email.should have_body_text("You can visit the site at<br/> #{root_url}")
+  current_email.should have_body_text("You have been assigned the password")
 end
 
 Then /^I should see the new user on the Users index page$/ do
