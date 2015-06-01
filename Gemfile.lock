@@ -143,6 +143,7 @@ GEM
     multi_json (1.11.0)
     multi_test (0.1.2)
     mustache (0.99.4)
+    nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -296,6 +297,7 @@ DEPENDENCIES
   jc-validates_timeliness (~> 3.1.1)
   jquery-rails
   launchy (~> 2.4.3)
+  nested_form (~> 0.3.2)
   paperclip (~> 3.0.4)
   pg
   prickle (~> 0.0.6)

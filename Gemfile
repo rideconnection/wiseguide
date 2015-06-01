@@ -26,6 +26,8 @@ gem 'cancancan', '~> 1.10.0' # TODO latest? yes
 
 gem 'devise', '~> 3.5.1' # TODO latest? yes
 
+gem 'nested_form', '~> 0.3.2' # TODO latest? yes
+
 # Utilities
 # Validate time/date columns (jc = fork with Rails 4.x compatibility)
 gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
