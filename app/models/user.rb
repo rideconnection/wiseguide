@@ -1,13 +1,13 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :registerable, :rememberable, :confirmable, :lockable, :timeoutable and
+  # :omniauthable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable
+
   include ActiveModel::ForbiddenAttributesProtection
   # attr_accessible :first_name, :last_name, :phone_number,
   #   :email, :password, :password_confirmation, :remember_me,
   #   :organization_id
-
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, 
-         :recoverable, :trackable, :validatable
 
   model_stamper
   stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
@@ -97,13 +97,14 @@ class User < ActiveRecord::Base
     password.shuffle.join
   end
   
+  # Override Devise::Models::DatabaseAuthenticatabl::valid_password?
+  # Some user accounts were previously disabled by blanking or "x"ing out the
+  # encrypted password field, which causes an invalid hash error.
   def valid_password?(*args)
-    # Some user accounts were previously disabled by blanking or "x"ing out the
-    # encrypted password field. This causes an invalid hash error
-    if encrypted_password.blank? || !(encrypted_password =~ /^\$2a\$10\$.{53}/)
-      false
-    else
+    begin
       super
+    rescue BCrypt::Errors::InvalidHash
+      false
     end
   end
 
