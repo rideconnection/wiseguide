@@ -24,7 +24,7 @@ gem 'jquery-rails'
 
 gem 'cancancan', '~> 1.10.0' # TODO latest? yes
 
-# TODO bump, watch for breaking changes
+# TODO bump, regenerate install, watch for breaking changes
 gem 'devise', '~> 2.0.6' # TODO latest? 3.4.1
 
 # Utilities
