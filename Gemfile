@@ -32,11 +32,12 @@ gem 'devise', '~> 2.0.6' # TODO latest? 3.4.1
 gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
 
 # Notify on exception via email
+# TODO rerun generator
 gem 'exception_notification', '~> 4.0.1 ', group: :production # TODO latest? yes
 
 # Form builder with semantic markup
 # TODO verify neccessity, bump, watching for breaking changes
-gem 'formtastic', '~> 1.2.4' # TODO latest? 3.1.3
+# gem 'formtastic', '~> 1.2.4' # TODO latest? 3.1.3
 
 # TODO Do we use this anywhere? There aren't any HAML files. If so: bump
 # gem 'haml', '~> 3.1.3'

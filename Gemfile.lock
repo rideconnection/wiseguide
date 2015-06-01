@@ -290,7 +290,6 @@ DEPENDENCIES
   exception_notification (~> 4.0.1)
   factory_girl_rails (~> 3.2)
   ffaker (~> 2.0)
-  formtastic (~> 1.2.4)
   jc-validates_timeliness (~> 3.1.1)
   jquery-rails
   launchy (~> 2.4.3)
