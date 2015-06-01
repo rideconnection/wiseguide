@@ -1,19 +1,4 @@
-<% content_for :head do %>
-  <%= javascript_tag do %>
-    function remove_fields(link) {
-      $(link).prev("input[type=hidden]").val("1");
-      $(link).closest(".fields").hide();
-    }
-
-    function add_fields(link, association, content) {
-      var new_id = new Date().getTime();
-      var regexp = new RegExp("new_" + association, "g");
-      $(link).parent().before(content.replace(regexp, new_id));
-    }
-  <% end %>
-<% end %>
-
-<%= form_for(@referral_document) do |f| %>
+<%= nested_form_for(@referral_document) do |f| %>
   <%= f.hidden_field :kase_id %>
   <%= render "shared/error_messages", :target => @referral_document %>
 
@@ -21,7 +6,7 @@
     <%= f.fields_for :referral_document_resources do |builder| %>
       <%= render 'referral_document_resource_fields', :f => builder %>
     <% end %>
-    <p><%= link_to_add_fields "Add Resource", f, :referral_document_resources %>
+    <p><%= f.link_to_add "Add Resource", :referral_document_resources %>
   </fieldset>
   
   <div class="actions">

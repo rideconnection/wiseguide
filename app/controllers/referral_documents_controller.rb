@@ -59,8 +59,10 @@ class ReferralDocumentsController < ApplicationController
     params.require(:referral_document).permit(
       :kase_id,
       :referral_document_resources_attributes => [
+        :id,
         :note,
-        :resource_id
+        :resource_id,
+        :_destroy,
       ],
     )
   end
