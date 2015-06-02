@@ -33,8 +33,7 @@ gem 'nested_form', '~> 0.3.2' # TODO latest? yes
 gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
 
 # Notify on exception via email
-# TODO rerun generator
-gem 'exception_notification', '~> 4.0.1 ', group: :production # TODO latest? yes
+gem 'exception_notification', '~> 4.0.1 ' # TODO latest? yes
 
 # TODO bump, watch for breaking changes
 gem 'paperclip', '~> 3.0.4' # TODO latest? 4.2.1
