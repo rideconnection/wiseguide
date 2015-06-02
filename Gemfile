@@ -42,7 +42,9 @@ gem 'paperclip', '~> 3.0.4' # TODO latest? 4.2.1
 gem 'paper_trail', '~> 3.0.8' # TODO latest? yes, but 4.0 is at RC1
   
 # TODO bump version, watch for breaking changes
-gem 'store_base_sti_class', '~> 0.0.2' # TODO latest? 0.3.0
+# TODO currently works with ActiveRecord 3.0.5 through 4.0.1
+#   See https://github.com/appfolio/store_base_sti_class/pull/13
+gem 'store_base_sti_class', '~> 0.3.0' # TODO latest? yes
 
 # TODO Still necessary?
 gem 'uuidtools', '~> 2.1.5' # TODO latest? yes
