@@ -1,3 +1,4 @@
+require 'ffaker'
 require 'factory_girl'
 require "#{Rails.root}/config/environment.rb"
 
@@ -61,9 +62,9 @@ def create_customers
   
   20.times do
     FactoryGirl.create(:customer,
-      :first_name     => Faker::Name.first_name,
-      :last_name      => Faker::Name.last_name,
-      :email          => Faker::Internet.email,
+      :first_name     => FFaker::Name.first_name,
+      :last_name      => FFaker::Name.last_name,
+      :email          => FFaker::Internet.email,
       :ethnicity_id   => Ethnicity.all.sample.id,
       :birth_date     => "#{1930+rand(50)}-#{1+rand(12)}-#{1+rand(28)}",
       :gender         => ::ALL_GENDERS.sample[1],
