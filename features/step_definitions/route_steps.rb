@@ -8,14 +8,15 @@ Then /^I should be able to add a trained route using the AJAX form$/ do
     select @route.name, :from => "kase_route_route_id"
     click_button "Add route"
   end
-  wait_until{ find("#routes").has_content?(@route.name) }
+  find("#routes").has_content?(@route.name)
   # No confirmation message is displayed by this action
 end
 
 Then /^I should( not)? see the trained route under the Routes Trained section of the case profile$/ do |negation|
   selector_assertion = negation ? :have_no_selector : :have_selector
   content_assertion = negation ? :have_no_content : :have_content
-  # The table isn't garanteed to be there yet...
+  # The table isn't guaranteed to be there yet...
+  # TODO Some tests still failing with Unable to find css "#routes"
   find("#routes").should send(content_assertion, @route.name)
   find("#routes").should send(selector_assertion, "a[href='/cases/delete_route?kase_id=#{@kase.id}&route_id=#{@route.id}']")
 end
@@ -38,7 +39,7 @@ Then /^I should be prompted to confirm the deletion when I click the trained rou
   button['data-confirm'].should eql("Are you sure?")
   button.click
   popup.confirm
-  wait_until{ page.has_no_selector?(selector) }
+  page.has_no_selector?(selector)
   # No confirmation message is displayed by this action
 end
 
@@ -61,7 +62,7 @@ Then /^I should( not)? see the route on the routes page$/ do |negation|
   if negation
     page.should send(content_assertion, @route.name)
   else
-    find(selector).find(:xpath, ".//..//..//td[1]").should send(content_assertion, @route.name)
+    all(selector).first.find(:xpath, "../../td[1]").should send(content_assertion, @route.name)
   end
 end
 
@@ -89,6 +90,6 @@ Then /^I should be prompted to confirm the deletion when I click the routes's de
   button['data-confirm'].should eql("Are you sure?")
   button.click
   popup.confirm
-  wait_until{ page.has_no_selector?(selector) }
+  page.has_no_selector?(selector)
   # No confirmation message is displayed by this action
 end

@@ -23,6 +23,6 @@ Feature: Assessment requests in customer profiles
     When I reload the page
     Then I should see a assessment requests list with 2 rows
     And I should see "2000-01-02" in row 1 of the assessment requests list
-    And I should see a "Details" link in row 1 of the assessment requests list that goes to "assessment_requests/100"
+    And I should see a "Details" link in row 1 of the assessment requests list that goes to "/assessment_requests/100"
     And I should see "2001-02-03" in row 2 of the assessment requests list
-    And I should see a "Details" link in row 2 of the assessment requests list that goes to "assessment_requests/101"
+    And I should see a "Details" link in row 2 of the assessment requests list that goes to "/assessment_requests/101"

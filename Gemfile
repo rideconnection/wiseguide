@@ -74,8 +74,8 @@ group :test do
   gem 'accept_values_for', '~> 0.7' # latest? yes
   
   # Make sure this gets upgraded to use latest version of Firefox
-  gem 'capybara', '~> 1.1' # TODO latest? 2.4.4
-  gem 'capybara-firebug', '~> 1.1' # TODO latest? 2.1.0
+  gem 'capybara', '~> 2.4' # TODO latest? yes
+  gem 'capybara-firebug', '~> 2.1' # TODO latest? yes
   
   # TODO bump version, watch for breaking changes
   gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2

@@ -31,7 +31,8 @@ Given /^I (?:go to|visit|am on) the (.*) page$/ do |route|
 end
 
 When /^I click on the "([^"]+)" link$/ do |link|
-  click_link link
+  # Avoid Capybara::Ambiguous errors
+  all(:link, :text => link).first.click
 end
 
 Then /^I should( not)? see a confirmation message$/ do |negation|
@@ -91,6 +92,7 @@ def check_simple_table_data(table_selector, table_data, options = {})
     else
       header_map = []
       row_count = table_data.raw.length - 1
+      # TODO some tests are throwing the error "The given selector thead tr:first is either invalid or does not result in a WebElement" even though it exists. Try again after upgrade.
       within("thead tr:first") do
         columns = all("th").collect{ |column| column.text.downcase.strip }
         columns.size.should >= table_data.headers.size

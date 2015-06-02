@@ -25,4 +25,4 @@ Feature: Assessment requests in coaching kase details
     When I reload the page
     Then I should see a assessment requests list with 1 row
     And I should see "This case was generated from an assessment request dated 1/2/2000" in row 1 of the assessment requests list
-    And I should see a "Details" link in row 1 of the assessment requests list that goes to "assessment_requests/100"
+    And I should see a "Details" link in row 1 of the assessment requests list that goes to "/assessment_requests/100"

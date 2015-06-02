@@ -40,14 +40,14 @@ Then /^I should be able to add a new resource to the referral document form$/ do
 end
 
 Then /^I should see the new resource listed when I click on the referral document details link$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
+  all("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").first.click
   page.all('#main ol li').count.should eq(2)
   page.should have_content("Sweet Resource")
   page.should have_content("Tnetennba")
 end
 
 Then /^I should not see the new resource listed when I click on the referral document details link$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
+  all("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").first.click
   page.all('#main ol li').count.should eq(1)
   page.should_not have_content("Sweet Resource")
 end

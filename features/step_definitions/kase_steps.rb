@@ -114,7 +114,7 @@ Given /^a ([^ ]+) referral type exists$/ do |type|
 end
 
 When /^I click through to the case details$/ do
-  find("a[href='/cases/#{@kase.id}']").click
+  all("a[href='/cases/#{@kase.id}']").first.click
 end
 
 Then /^I should be able to assign the case to myself$/ do
@@ -150,7 +150,7 @@ Then /^the other trainer should( not)? be listed as the case assignee on the (Co
   assertion = negation ? :should_not : :should
   visit "/cases/#{type.downcase}"
   selector = "a[href='/cases/#{@kase.id}']"
-  find(selector).find(:xpath,".//..").send(assertion, have_content("(#{@other_trainer.display_name})"))
+  find(selector).find(:xpath,"..").send(assertion, have_content("(#{@other_trainer.display_name})"))
 end
 
 Given /^an open training case exists and is assigned to me$/ do
@@ -181,7 +181,7 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
   assertion = negation ? :should_not : :should
   visit "/customers/#{@kase.customer.id}"
   selector = "a[href='/cases/#{@kase.id}']"
-  find("#kases #{selector}").find(:xpath,".//..//..//td[3]").send(assertion, have_content(disposition))
+  find("#kases #{selector}").find(:xpath,"../../td[3]").send(assertion, have_content(disposition))
 end
 
 Given /^an open training case exists and is assigned to the other trainer$/ do
