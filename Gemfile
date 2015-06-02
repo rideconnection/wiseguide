@@ -78,7 +78,7 @@ group :test do
   gem 'capybara-firebug', '~> 2.1' # TODO latest? yes
   
   # TODO bump version, watch for breaking changes
-  gem 'cucumber-rails', '~> 1.3.0', :require => false # TODO latest? 1.4.2
+  gem 'cucumber-rails', '~> 1.4.2', :require => false # TODO latest? yes
 
   gem 'database_cleaner', '~> 1.4' # TODO latest? yes
     
@@ -90,7 +90,7 @@ group :test do
   # TODO verify still active and usable
   gem 'prickle', '~> 0.0.6' # TODO latest? 0.1.0, last updated March 14, 2013
 
-  gem 'launchy', '~> 2.4.3' # TODO latest?
+  gem 'launchy', '~> 2.4.3' # TODO latest? yes
 end
 
 group :test, :development do
