@@ -18,7 +18,7 @@ class Customer < ActiveRecord::Base
     :path   => ":rails_root/uploads/:attachment/:id/:style/:basename.:extension",
     :url    => "/customers/:id/download_:style_portrait"
 
-  validates_attachment_content_type :portrait, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg']
+  validates_attachment_content_type :portrait, :content_type => ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/pjpeg']
 
   validates_presence_of :ethnicity_id
   validates_presence_of :first_name

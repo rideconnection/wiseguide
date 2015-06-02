@@ -18,8 +18,7 @@ class AssessmentRequest < ActiveRecord::Base
     :path => ":rails_root/uploads/:attachment/:id/:basename.:extension",
     :url  => "/assessment_requests/:id/download_attachment"
 
-  validates_attachment_content_type :attachment,
-    :content_type => ['application/pdf']
+  validates_attachment_content_type :attachment, :content_type => ['application/pdf']
 
   validates_presence_of  :customer_first_name
   validates_presence_of  :customer_last_name
