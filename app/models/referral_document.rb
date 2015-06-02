@@ -1,6 +1,8 @@
 class ReferralDocument < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
 
+  has_paper_trail
+  
   belongs_to :kase
   has_many :referral_document_resources
   has_many :resources, :through => :referral_document_resources

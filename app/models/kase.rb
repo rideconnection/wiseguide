@@ -6,6 +6,8 @@
 class Kase < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
 
+  has_paper_trail
+  
   belongs_to :customer
   belongs_to :disposition
   belongs_to :assigned_to, :foreign_key => :user_id, :class_name => "User"

@@ -1,6 +1,8 @@
 class Outcome < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
 
+  has_paper_trail
+  
   belongs_to :kase
   belongs_to :trip_reason
 

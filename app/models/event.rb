@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   # attr_protected :user_id
 
+  has_paper_trail
+  
   belongs_to :kase
   has_one    :customer, :through => :kase
   belongs_to :user

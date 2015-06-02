@@ -1,6 +1,8 @@
 class Disposition < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
 
+  has_paper_trail
+  
   validates :name, :uniqueness => {:scope => :type}
   validate do |disposition|
     disposition.errors[:type] << "must be a valid subclass of Disposition" unless Disposition.descendants.map{|disposition| disposition.original_model_name}.include?(disposition.type)

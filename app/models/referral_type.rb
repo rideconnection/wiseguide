@@ -1,6 +1,8 @@
 class ReferralType < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
 
+  has_paper_trail
+  
   scope :for_kase, ( lambda do |kase| 
     if kase.is_a?(CoachingKase)
       where("name LIKE 'CC%'")

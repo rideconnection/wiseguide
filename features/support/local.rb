@@ -10,6 +10,7 @@ require 'selenium-webdriver'
 require 'selenium/webdriver/firefox/bridge'
 require 'rack/handler/webrick'
 require 'prickle/capybara'
+require 'paper_trail/frameworks/cucumber'
 
 # We're going to use our custom factory_girl step definition file instead
 # require 'factory_girl/step_definitions'

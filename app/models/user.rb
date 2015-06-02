@@ -1,14 +1,16 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :registerable, :rememberable, :confirmable, :lockable, :timeoutable and
-  # :omniauthable
-  devise :database_authenticatable, :recoverable, :trackable, :validatable
-
   include ActiveModel::ForbiddenAttributesProtection
   # attr_accessible :first_name, :last_name, :phone_number,
   #   :email, :password, :password_confirmation, :remember_me,
   #   :organization_id
 
+  # Include default devise modules. Others available are:
+  # :registerable, :rememberable, :confirmable, :lockable, :timeoutable and
+  # :omniauthable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable
+
+  has_paper_trail :ignore => [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip], :skip => [:reset_password_token]
+  
   belongs_to :organization
 
   has_many :kases, :dependent => :nullify

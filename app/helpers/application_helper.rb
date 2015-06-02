@@ -1,12 +1,10 @@
 module ApplicationHelper
   def last_updated(object)
-    # TODO fix to use paper_trail
-    "Last updated %s by %s" % [object.updated_at.to_s(:long), object.updated_by.try(:display_name)] if object.updated_by.present?
+    "Last updated #{object.updated_at.to_s(:long)}#{paper_trail_author(object, :last, :update)}"
   end
   
   def creation_stamp(object)
-    # TODO fix to use paper_trail
-    "Created on %s by %s" % [object.created_at.to_s(:long), object.created_by.try(:display_name)] if object.created_by.present?
+    "Created on #{object.created_at.to_s(:long)}#{paper_trail_author(object, :first, :create)}"
   end
   
   def flash_type(type)
@@ -37,6 +35,16 @@ module ApplicationHelper
       raw "[" + content_tag(:span, "A", :title => "Trip Authorization") + "]"
     else
       kase_type_icon record
+    end
+  end
+  
+  private
+  
+  def paper_trail_author(object, finder, event)
+    if (version = object.versions.where(event: event).send(finder)).present? && (user = User.find version.whodunnit.to_i).present?
+      " by #{user.display_name}"
+    else
+      ""
     end
   end
 end
