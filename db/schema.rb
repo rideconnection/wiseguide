@@ -11,12 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220234218) do
+ActiveRecord::Schema.define(:version => 20150601200218) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,12 +77,10 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",     :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.boolean  "show_full_notes"
     t.string   "contactable_type"
     t.integer  "contactable_id"
+    t.integer  "lock_version",     :default => 0
   end
 
   add_index "contacts", ["contactable_type", "contactable_id"], :name => "index_contacts_on_contactable_type_and_contactable_id"
@@ -99,7 +95,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "customer_id"
     t.integer  "impairment_id"
     t.datetime "created_at"
-    t.integer  "created_by_id"
     t.string   "notes"
   end
 
@@ -111,10 +106,8 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "phone_number"
     t.string   "email"
     t.datetime "created_at"
-    t.integer  "created_by_id"
     t.datetime "updated_at"
-    t.integer  "updated_by_id"
-    t.integer  "lock_version",  :default => 0
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "customers", :force => true do |t|
@@ -137,9 +130,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.datetime "portrait_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                    :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "phone_number_3"
     t.string   "phone_number_4"
     t.string   "county",                            :limit => 25
@@ -153,6 +143,7 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.boolean  "phone_number_2_allow_voicemail"
     t.boolean  "phone_number_3_allow_voicemail"
     t.boolean  "phone_number_4_allow_voicemail"
+    t.integer  "lock_version",                                    :default => 0
   end
 
   create_table "dependencies", :force => true do |t|
@@ -184,10 +175,8 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "type"
+    t.integer  "lock_version", :default => 0
   end
 
   add_index "dispositions", ["name", "type"], :name => "index_dispositions_on_name_and_type", :unique => true
@@ -197,19 +186,15 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "event_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.boolean  "require_notes", :default => false
+    t.integer  "lock_version",  :default => 0
   end
 
   create_table "events", :force => true do |t|
@@ -222,21 +207,17 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                    :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.time     "start_time"
     t.time     "end_time"
     t.boolean  "show_full_notes",                                 :default => false
+    t.integer  "lock_version",                                    :default => 0
   end
 
   create_table "funding_sources", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "geometry_columns", :id => false, :force => true do |t|
@@ -253,16 +234,13 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "kase_routes", :force => true do |t|
     t.integer  "kase_id"
     t.integer  "route_id"
     t.datetime "created_at"
-    t.integer  "created_by_id"
   end
 
   create_table "kases", :force => true do |t|
@@ -276,9 +254,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "disposition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                     :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "county",                              :limit => 1
     t.string   "type"
     t.date     "assessment_date"
@@ -300,6 +275,7 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "agency_id"
     t.string   "referral_mechanism"
     t.string   "referral_mechanism_explanation"
+    t.integer  "lock_version",                                     :default => 0
   end
 
   add_index "kases", ["scheduling_system_entry_required"], :name => "index_kases_on_scheduling_system_entry_required"
@@ -322,13 +298,11 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "three_month_vehicle_miles_reduced"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                      :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.integer  "six_month_trip_count"
     t.integer  "six_month_vehicle_miles_reduced"
     t.boolean  "six_month_unreachable"
     t.boolean  "three_month_unreachable"
+    t.integer  "lock_version",                      :default => 0
   end
 
   create_table "question_groups", :force => true do |t|
@@ -372,8 +346,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
   create_table "referral_document_resources", :force => true do |t|
     t.integer  "resource_id"
     t.text     "note"
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "referral_document_id"
@@ -383,8 +355,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
   add_index "referral_document_resources", ["referral_document_id"], :name => "index_referral_document_resources_on_referral_document_id"
 
   create_table "referral_documents", :force => true do |t|
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.datetime "last_printed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -397,9 +367,7 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "resources", :force => true do |t|
@@ -424,8 +392,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "kase_id"
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "api_id"
   end
 
@@ -455,9 +421,7 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "spatial_ref_sys", :id => false, :force => true do |t|
@@ -509,8 +473,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "disposition_user_id"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.integer  "kase_id"
     t.date     "start_date"
   end
@@ -523,9 +485,7 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.boolean  "work_related"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  :default => 0
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
+    t.integer  "lock_version", :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -541,8 +501,6 @@ ActiveRecord::Schema.define(:version => 20140220234218) do
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone_number"

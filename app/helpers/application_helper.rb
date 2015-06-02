@@ -1,9 +1,11 @@
 module ApplicationHelper
   def last_updated(object)
+    # TODO fix to use paper_trail
     "Last updated %s by %s" % [object.updated_at.to_s(:long), object.updated_by.try(:display_name)] if object.updated_by.present?
   end
   
   def creation_stamp(object)
+    # TODO fix to use paper_trail
     "Created on %s by %s" % [object.created_at.to_s(:long), object.created_by.try(:display_name)] if object.created_by.present?
   end
   

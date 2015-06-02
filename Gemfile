@@ -42,9 +42,7 @@ gem 'paperclip', '~> 3.0.4' # TODO latest? 4.2.1
 # Using userstamp from git for now, because 2.0.2 (Rails 3.2 compatible) has
 # not been uploaded to rubygems as of this writing.
 # TODO switch to paper_trail
-gem 'userstamp',
-  :git => 'git://github.com/delynn/userstamp.git',
-  :ref => '777633a'
+# gem 'userstamp', :git => 'git://github.com/delynn/userstamp.git', :ref => '777633a'
   
 # TODO bump version, watch for breaking changes
 gem 'store_base_sti_class', '~> 0.0.2' # TODO latest? 0.3.0
