@@ -155,8 +155,6 @@ GEM
       mime-types
     pg (0.18.2)
     polyglot (0.3.5)
-    prickle (0.1.0)
-      capybara
     rabl (0.6.14)
       activesupport (>= 2.3.14)
       multi_json (~> 1.0)
@@ -296,7 +294,6 @@ DEPENDENCIES
   paper_trail (~> 3.0.8)
   paperclip (~> 4.2.1)
   pg
-  prickle (~> 0.1.0)
   rails (~> 3.2.21)
   rspec-rails (~> 3.2)
   rvm-capistrano

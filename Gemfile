@@ -84,11 +84,7 @@ group :test do
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
   gem 'email_spec', '~> 1.6.0' # TODO latest? yes
-    
-  # A simple DSL extending Capybara
-  # TODO verify still active and usable
-  gem 'prickle', '~> 0.1.0' # TODO latest? yes, last updated March 14, 2013
-
+  
   gem 'launchy', '~> 2.4.3' # TODO latest? yes
 end
 

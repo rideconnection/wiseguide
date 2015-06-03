@@ -21,15 +21,15 @@ When /^I change the Case Manager to "([^"]*)"$/ do |email|
 end
 
 Then /^I should see a javascript confirmation dialog asking "([^"]*)"$/ do |message|
-  popup.contains_message? message
+  page.driver.browser.switch_to.alert.text.should include(message)
 end
 
 When /^I accept the confirmation dialog$/ do
-  popup.confirm
+  page.driver.browser.switch_to.alert.accept
 end
 
 When /^I cancel the confirmation dialog$/ do
-  popup.dismiss
+  page.driver.browser.switch_to.alert.dismiss
 end
 
 Then /^the Case Manager should be set to "([^"]*)"$/ do |option|

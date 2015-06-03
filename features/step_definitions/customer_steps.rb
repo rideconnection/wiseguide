@@ -36,7 +36,7 @@ Then /^I should be prompted to confirm the deletion when I click the customer(?:
   button = find("form[action='/customers/#{@customer.id}'] input[type=submit][value=Delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this user?")
   button.click
-  popup.confirm
+  page.driver.browser.switch_to.alert.accept
   @confirmation_message = 'Customer was successfully deleted.'
   step %Q(I should see a confirmation message)
 end

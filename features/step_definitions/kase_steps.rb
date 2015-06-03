@@ -212,7 +212,7 @@ Then /^I should be prompted to confirm the deletion when I click the case(?:'s)?
   button = find("a.delete.kase[href='/cases/#{@kase.id}'][data-method=delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this case?")
   button.click
-  popup.confirm
+  page.driver.browser.switch_to.alert.accept
   @confirmation_message = 'Case was successfully deleted.'
   # Don't confirm just yet because we may want to test if it failed (due to permissions)
 end
