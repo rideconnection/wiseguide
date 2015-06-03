@@ -14,7 +14,6 @@
   <% end %>
 </table>
 
-
 <script type='text/javascript'>
   function init_row(index, row) {
     $(row).bind('ajax:success', function(evt, data, status, xhr){
@@ -25,14 +24,14 @@
 
   $('.kase_route_row').each(init_row);
 
-  $('#new_route_form').bind('ajax:success', function(evt, data, status, xhr){
+  $('#new_route_form').bind('ajax:success', function(evt, data, status, xhr){    
     var $this = $(this);
 
-    $('#routes tbody').append(xhr.responseText);
+    $('#routes').append(xhr.responseText);
 
-    init_row(null, '#routes tbody tr:last');
+    init_row(null, '#routes tr:last');
     
-    $("tr:odd").addClass("odd");
+    $('#routes tr:odd').addClass('odd');
     
     $this.find('.errors').empty();
   }).bind('ajax:error', function(evt, xhr, status, error){

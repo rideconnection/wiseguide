@@ -15,10 +15,10 @@ end
 Then /^I should( not)? see the trained route under the Routes Trained section of the case profile$/ do |negation|
   selector_assertion = negation ? :have_no_selector : :have_selector
   content_assertion = negation ? :have_no_content : :have_content
-  # The table isn't guaranteed to be there yet...
-  # TODO Some tests still failing with Unable to find css "#routes"
-  find("#routes").should send(content_assertion, @route.name)
-  find("#routes").should send(selector_assertion, "a[href='/cases/delete_route?kase_id=#{@kase.id}&route_id=#{@route.id}']")
+  within "#routes", visible: !negation do
+    should send(content_assertion, @route.name)
+    should send(selector_assertion, "a[href='/cases/delete_route?kase_id=#{@kase.id}&route_id=#{@route.id}']")
+  end
 end
 
 Given /^a trained route exists for the existing case$/ do
@@ -62,7 +62,7 @@ Then /^I should( not)? see the route on the routes page$/ do |negation|
   if negation
     page.should send(content_assertion, @route.name)
   else
-    all(selector).first.find(:xpath, "../../td[1]").should send(content_assertion, @route.name)
+    first(selector).find(:xpath, "../../td[1]").should send(content_assertion, @route.name)
   end
 end
 

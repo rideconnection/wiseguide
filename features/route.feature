@@ -2,8 +2,8 @@ Feature: Manage routes trained on cases
   As a user of the system
   trainers and admins
   want to be able to manage routes trained on cases
-  
-  @javascript 
+
+  @javascript
   Scenario: Trainers can add trained routes to cases
     Given I am logged in as a trainer
       And there is an open training case
@@ -14,7 +14,7 @@ Feature: Manage routes trained on cases
       And I click the link to add a trained route
     Then I should be able to add a trained route using the AJAX form
       And I should see the trained route under the Routes Trained section of the case profile
-  
+
   @javascript
   Scenario: Trainers can delete trained routes from cases
     Given I am logged in as a trainer
@@ -36,7 +36,7 @@ Feature: Manage routes trained on cases
     Then I should be able to add a new route
       And I should see a confirmation message
       And I should see the route on the routes page
-    
+
   Scenario: Admins can edit routes
     Given I am logged in as an admin
       And a route exists
@@ -47,7 +47,7 @@ Feature: Manage routes trained on cases
     Then I should be able to edit the route
       And I should see a confirmation message
       And I should see the route on the routes page
-      
+
   @javascript
   Scenario: Admins can delete routes
     Given I am logged in as an admin

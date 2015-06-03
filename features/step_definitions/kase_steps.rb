@@ -114,7 +114,7 @@ Given /^a ([^ ]+) referral type exists$/ do |type|
 end
 
 When /^I click through to the case details$/ do
-  all("a[href='/cases/#{@kase.id}']").first.click
+  first("a[href='/cases/#{@kase.id}']").click
 end
 
 Then /^I should be able to assign the case to myself$/ do
