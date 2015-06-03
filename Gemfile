@@ -77,18 +77,17 @@ group :test do
   gem 'capybara', '~> 2.4' # TODO latest? yes
   gem 'capybara-firebug', '~> 2.1' # TODO latest? yes
   
-  # TODO bump version, watch for breaking changes
   gem 'cucumber-rails', '~> 1.4.2', :require => false # TODO latest? yes
 
   gem 'database_cleaner', '~> 1.4' # TODO latest? yes
     
   # Easily test email in RSpec, Cucumber, and MiniTest
   # TODO could this be replaced with native assertions and matchers?
-  gem 'email_spec', '~> 1.2.1' # TODO latest? 1.6.0
+  gem 'email_spec', '~> 1.6.0' # TODO latest? yes
     
   # A simple DSL extending Capybara
   # TODO verify still active and usable
-  gem 'prickle', '~> 0.0.6' # TODO latest? 0.1.0, last updated March 14, 2013
+  gem 'prickle', '~> 0.1.0' # TODO latest? yes, last updated March 14, 2013
 
   gem 'launchy', '~> 2.4.3' # TODO latest? yes
 end
