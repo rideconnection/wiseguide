@@ -100,6 +100,5 @@ group :test, :development do
   
   gem 'ffaker', '~> 2.0' # TODO latest? yes
   
-  # TODO fix deprecation errors, then move to 3.x
-  gem 'rspec-rails', '~> 2.99' # TODO latest? 3.2.1
+  gem 'rspec-rails', '~> 3.2' # TODO latest? yes
 end
