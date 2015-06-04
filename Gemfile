@@ -35,7 +35,6 @@ gem 'jc-validates_timeliness', '~> 3.1.1' # TODO latest? yes
 # Notify on exception via email
 gem 'exception_notification', '~> 4.0.1 ' # TODO latest? yes
 
-# TODO bump, watch for breaking changes
 gem 'paperclip', '~> 4.2.1' # TODO latest? yes
 
 # For record versioning and audits
@@ -92,7 +91,7 @@ group :test, :development do
   gem 'byebug'
   
   # TODO Update application.rb and verify syntax of factory files
-  gem 'factory_girl_rails', '~> 3.2' # TODO latest? 4.5.0
+  gem 'factory_girl_rails', '~> 4.5' # TODO latest? 4.5.0
   
   gem 'ffaker', '~> 2.0' # TODO latest? yes
   
