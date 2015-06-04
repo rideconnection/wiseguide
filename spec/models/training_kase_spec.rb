@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TrainingKase do
+RSpec.describe TrainingKase do
   before do    
     @valid_attributes = {
       :access_transit_partner_referred_to  => nil,

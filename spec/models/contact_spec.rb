@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Contact do
+RSpec.describe Contact do
   before do
     @contact = FactoryGirl.build(:contact)
   end

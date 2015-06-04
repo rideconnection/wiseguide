@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe AdaServiceEligibilityStatus do
+RSpec.describe AdaServiceEligibilityStatus do
   before do
     @status = FactoryGirl.build(:ada_service_eligibility_status)
   end

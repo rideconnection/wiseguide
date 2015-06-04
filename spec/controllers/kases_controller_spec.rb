@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe KasesController do
+RSpec.describe KasesController do
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     @current_user = FactoryGirl.create(:admin)

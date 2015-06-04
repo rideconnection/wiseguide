@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
+RSpec.describe User do
   before do
     @staff_organization = FactoryGirl.create(:staff_organization)
     @government_organization = FactoryGirl.create(:government_organization)

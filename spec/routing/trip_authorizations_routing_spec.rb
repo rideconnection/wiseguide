@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe TripAuthorizationsController do
+RSpec.describe TripAuthorizationsController do
   describe "routing" do
 
     it "routes to #index" do

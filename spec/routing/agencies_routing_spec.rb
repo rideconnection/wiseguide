@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe AgenciesController do
+RSpec.describe AgenciesController do
   describe "routing" do
 
     it "routes to #index" do

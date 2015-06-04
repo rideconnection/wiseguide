@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TripAuthorization do
+RSpec.describe TripAuthorization do
   before do
     @valid_attributes = {
       allowed_trips_per_month: 1,

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReferralDocument do
+RSpec.describe ReferralDocument do
   before do
     @resource = FactoryGirl.build(:referral_document_resource, :referral_document => nil)
   end

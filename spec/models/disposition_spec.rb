@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Disposition do
+RSpec.describe Disposition do
   it "should create a new instance given valid attributes" do
     # We could put this in a before block to take advantage of transactions,
     # but I prefer to explicitly state why we are building a new object, 

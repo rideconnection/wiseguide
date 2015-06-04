@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 class TestKase < Kase; end
 
-describe Kase do
+RSpec.describe Kase do
   before do
     @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
     

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe CoachingKase do
+RSpec.describe CoachingKase do
   before do    
     @case_manager = FactoryGirl.create(:case_manager)
 

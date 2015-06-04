@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe AssessmentRequest do
+RSpec.describe AssessmentRequest do
   before do
     @case_manager = FactoryGirl.create(:case_manager)
     

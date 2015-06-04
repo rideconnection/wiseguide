@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Customer do
+RSpec.describe Customer do
   before do
     @customer = FactoryGirl.build(:customer)
   end

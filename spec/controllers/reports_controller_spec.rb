@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReportsController do
+RSpec.describe ReportsController do
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     sign_in FactoryGirl.create(:admin)
