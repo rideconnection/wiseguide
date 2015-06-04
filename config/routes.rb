@@ -52,7 +52,7 @@ Wiseguide::Application.routes.draw do
     post "notify_manager", :on => :member
   end
 
-  #these are called "assessments" in user-visible text
+  # These are called "assessments" in user-visible text
   resources :surveys, :controller=>'Surveyor' do
     delete "/:survey_code/:response_set_code/delete", :to => "surveyor#delete_response_set", :as=>:delete, :on=>:collection
     get "new_survey", :on=>:collection

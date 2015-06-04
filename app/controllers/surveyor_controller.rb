@@ -1,7 +1,7 @@
 # TODO Verify Strong Parameters after upgrading Surveyor to v1.5
 
-#confusingly, this handles both surveys and response sets
-#due to the weirdness inherent in surveyor
+# Confusingly, this handles both surveys and response sets
+# Due to the weirdness inherent in surveyor
 require 'survey_creator'
 
 module SurveyorControllerCustomMethods
@@ -11,7 +11,7 @@ module SurveyorControllerCustomMethods
     # base.send :layout, 'surveyor_custom'
   end
 
-  # Actions (for responsesets)
+  # Actions
   def new
     super
     @kase = Kase.find(params[:kase_id])
@@ -40,11 +40,19 @@ module SurveyorControllerCustomMethods
     super
   end
 
+  # Paths
+  def surveyor_index
+    # most of the above actions redirect to this method
+    surveys_path
+  end
+
   def surveyor_finish
+    # the update action redirects to this method if given params[:finish]
     @kase.update_attribute(:assessment_date, Date.current)
     kase_path @kase
   end
 
+  # Custom route actions
   def delete_response_set
     @response_set = ResponseSet.find_by_access_code(params[:response_set_code])
     authorize! :manage, @response_set
@@ -53,7 +61,6 @@ module SurveyorControllerCustomMethods
     redirect_to @kase
   end
 
-  # Actions for surveys
   def new_survey
     
   end
