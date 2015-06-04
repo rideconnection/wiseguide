@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150602134155) do
+ActiveRecord::Schema.define(:version => 20150604151048) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
     t.string   "display_type"
     t.boolean  "hide_label"
   end
+
+  add_index "answers", ["api_id"], :name => "uq_answers_api_id", :unique => true
 
   create_table "assessment_requests", :force => true do |t|
     t.string   "customer_first_name"
@@ -320,6 +322,8 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
     t.string   "api_id"
   end
 
+  add_index "question_groups", ["api_id"], :name => "uq_question_groups_api_id", :unique => true
+
   create_table "questions", :force => true do |t|
     t.integer  "survey_section_id"
     t.integer  "question_group_id"
@@ -342,6 +346,8 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
     t.integer  "correct_answer_id"
     t.string   "api_id"
   end
+
+  add_index "questions", ["api_id"], :name => "uq_questions_api_id", :unique => true
 
   create_table "referral_document_resources", :force => true do |t|
     t.integer  "resource_id"
@@ -396,6 +402,7 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
   end
 
   add_index "response_sets", ["access_code"], :name => "response_sets_ac_idx", :unique => true
+  add_index "response_sets", ["api_id"], :name => "uq_response_sets_api_id", :unique => true
 
   create_table "responses", :force => true do |t|
     t.integer  "response_set_id"
@@ -415,6 +422,7 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
     t.string   "api_id"
   end
 
+  add_index "responses", ["api_id"], :name => "uq_responses_api_id", :unique => true
   add_index "responses", ["survey_section_id"], :name => "index_responses_on_survey_section_id"
 
   create_table "routes", :force => true do |t|
@@ -462,9 +470,11 @@ ActiveRecord::Schema.define(:version => 20150602134155) do
     t.datetime "updated_at"
     t.integer  "display_order"
     t.string   "api_id"
+    t.integer  "survey_version",         :default => 0
   end
 
-  add_index "surveys", ["access_code"], :name => "surveys_ac_idx", :unique => true
+  add_index "surveys", ["access_code", "survey_version"], :name => "surveys_access_code_version_idx", :unique => true
+  add_index "surveys", ["api_id"], :name => "uq_surveys_api_id", :unique => true
 
   create_table "trip_authorizations", :force => true do |t|
     t.integer  "allowed_trips_per_month"

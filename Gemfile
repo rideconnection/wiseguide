@@ -51,7 +51,7 @@ gem 'will_paginate', '~> 3.0.7' # TODO latest? yes
 
 # TODO key functionality, bump version, watch for breaking changes
 # TODO may need to fork upgrade for Rails 4
-gem 'surveyor', '~> 0.22.0'# TODO latest? 1.4.0, last updated 25 Apr 2013
+gem 'surveyor', '~> 1.0.0'# TODO latest? 1.4.0, last updated 25 Apr 2013
 
 # Deploy with Capistrano
 # TODO update for Capistrano v3 syntax, and move to development group
