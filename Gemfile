@@ -94,5 +94,5 @@ group :test, :development do
   
   gem 'ffaker', '~> 2.0' # TODO latest? yes
   
-  gem 'rspec-rails', '~> 3.2' # TODO latest? yes
+  gem 'rspec-rails', '~> 3.1.0' # TODO latest? 3.2, Waiting on issue #1833 to be pushed to new version
 end
