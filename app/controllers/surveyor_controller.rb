@@ -1,21 +1,22 @@
 # TODO Verify Strong Parameters after upgrading Surveyor to v1.5
 
-# Confusingly, this handles both surveys and response sets
-# Due to the weirdness inherent in surveyor
-require 'survey_creator'
+# Surveyor Controller allows a user to respond to surveys. It is semi-RESTful
+# since it does not have a concrete representation model. The "resource" is a 
+# survey attempt/session populating a response set.
 
 module SurveyorControllerCustomMethods
   def self.included(base)
     # base.send :before_filter, :require_user   # AuthLogic
     # base.send :before_filter, :login_required  # Restful Authentication
-    # base.send :layout, 'surveyor_custom'
+    base.send :layout, 'application'
   end
 
   # Actions
   def new
-    super
     @kase = Kase.find(params[:kase_id])
-    @surveys = @surveys.select {|survey| survey.inactive_at.nil?} if @surveys.present?
+    authorize! :manage, @kase
+    @surveys_by_access_code = Survey.active.order("created_at DESC, survey_version DESC").all.group_by(&:access_code)
+    # Skip `super` since we're overwriting @surveys_by_access_code
   end
   
   def create
@@ -26,10 +27,14 @@ module SurveyorControllerCustomMethods
   end
   
   def show
+    @kase = Kase.find(params[:kase_id])
+    authorize! :manage, @kase
     super
   end
   
   def edit
+    @kase = Kase.find(params[:kase_id])
+    authorize! :manage, @kase
     super
   end
   
@@ -43,7 +48,7 @@ module SurveyorControllerCustomMethods
   # Paths
   def surveyor_index
     # most of the above actions redirect to this method
-    surveys_path
+    kase_path @kase
   end
 
   def surveyor_finish
@@ -52,57 +57,16 @@ module SurveyorControllerCustomMethods
     kase_path @kase
   end
 
-  # Custom route actions
-  def delete_response_set
+  # Wiseguide custom route actions
+  def destroy
     @response_set = ResponseSet.find_by_access_code(params[:response_set_code])
     authorize! :manage, @response_set
-    @kase = @response_set.kase
     @response_set.destroy
-    redirect_to @kase
-  end
-
-  def new_survey
-    
-  end
-
-  def create_survey
-    authorize! :manage, Survey
-    survey_obj = JSON.parse(params[:survey])
-    ret = SurveyCreator.create_survey(survey_obj)
-    if ret =~ /^Malformed question/
-      flash[:alert] = ret
-      return render :action=>:new_survey
-    elsif ret =~ /^Malformed JSON/
-      flash[:alert] = ret
-      render :action => :new_survey
-    else
-      redirect_to(surveys_path, :notice => 'Survey was successfully created.')
-    end
-  end
-
-  def index
-    authorize! :read, Survey
-    @surveys = Survey.order('surveys.inactive_at DESC')
-  end
-
-  def destroy
-    @survey = Survey.find(params[:id])
-    @survey.inactive_at = DateTime.current
-    @survey.save!
-    redirect_to surveys_path
-  end
-
-  def reactivate
-    @survey = Survey.find(params[:survey_id])
-    @survey.inactive_at = nil
-    @survey.save!
-    redirect_to surveys_path
+    redirect_to kase_path @response_set.kase
   end
 end
 
 class SurveyorController < ApplicationController
   include Surveyor::SurveyorControllerMethods
   include SurveyorControllerCustomMethods
-  
-  layout "application"
 end

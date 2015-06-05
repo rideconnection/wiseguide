@@ -1,4 +1,5 @@
 require 'new_user_mailer'
+
 class UsersController < Devise::SessionsController
   def new
     #hooked up to sign_in

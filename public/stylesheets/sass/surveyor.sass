@@ -47,7 +47,9 @@ body
         :border-bottom-width 1px
       li.active, li.active input[type="submit"]
         :background-color $surveyor_menus_active_color
-  .previous_section
+  .surveyor_language_selection
+    :display none
+  //.previous_section
   .next_section
     :float right
   .survey_section
@@ -58,7 +60,7 @@ body
       :font-size 1.5em
 
   // question groups
-  fieldset.g_inline fieldset
+  fieldset.g_inline fieldset, fieldset.g_inline ol li
     :display inline
   fieldset.g_grid
     table

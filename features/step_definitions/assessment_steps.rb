@@ -4,6 +4,6 @@ end
 
 Then /^I should( not)? see a link to add a new assessment$/ do |negation|
   assertion = negation ? :should_not : :should
-  selector = "a[href='/surveys/new?kase_id=#{@kase.id}']"
+  selector = "a[href='/kases/#{@kase.id}/surveys/']"
   page.send(assertion, have_selector(selector))
 end

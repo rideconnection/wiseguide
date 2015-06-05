@@ -110,7 +110,8 @@ GEM
       actionpack (~> 3.0)
     gherkin (2.12.2)
       multi_json (~> 1.3)
-    haml (3.1.8)
+    haml (4.0.6)
+      tilt
     highline (1.7.2)
     hike (1.2.3)
     i18n (0.7.0)
@@ -234,10 +235,10 @@ GEM
       activemodel (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
-    surveyor (1.2.0)
+    surveyor (1.4.0)
       fastercsv (~> 1.5.4)
       formtastic (~> 2.1.0)
-      haml (~> 3.1.3)
+      haml (>= 3.1.3, < 5.0)
       mustache (= 0.99.4)
       rabl (~> 0.6.13)
       rails (~> 3.0)
@@ -300,7 +301,7 @@ DEPENDENCIES
   spring-commands-rspec
   store_base_sti_class (~> 0.3.0)
   strong_parameters
-  surveyor (~> 1.2.0)
+  surveyor (~> 1.4.0)
   therubyracer
   uglifier (>= 1.0.3)
   uuidtools (~> 2.1.5)

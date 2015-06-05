@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150604151048) do
+ActiveRecord::Schema.define(:version => 20150604161458) do
 
   create_table "ada_service_eligibility_statuses", :force => true do |t|
     t.string   "name"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(:version => 20150604151048) do
     t.string   "api_id"
     t.string   "display_type"
     t.boolean  "hide_label"
+    t.string   "input_mask"
+    t.string   "input_mask_placeholder"
   end
 
   add_index "answers", ["api_id"], :name => "uq_answers_api_id", :unique => true
@@ -452,6 +454,14 @@ ActiveRecord::Schema.define(:version => 20150604151048) do
     t.string   "custom_class"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "survey_translations", :force => true do |t|
+    t.integer  "survey_id"
+    t.string   "locale"
+    t.text     "translation"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "surveys", :force => true do |t|

@@ -1,6 +1,6 @@
 <h1><%= local_assigns[:title].nil? ? 'Assessments' : title%></h1>
 <% if can?(:edit, @kase) && !(@kase.type == "CoachingKase" && @kase.response_sets.count > 0)%>
-  <%= link_to "Add", new_survey_path(:kase_id=>@kase.id), :class => "add" %>
+  <%= link_to "Add", surveyor.available_surveys_path(:kase_id => @kase.id), :class => "add" %>
 <% end %>
 <table>
 <% for response_set in @kase.response_sets %>
@@ -13,14 +13,14 @@
     <%= response_set.survey.title %>
   </td>
   <td>
-    <%= link_to "View", view_my_survey_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class=>"details" %>
+    <%= link_to "View", surveyor.view_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class=>"details" %>
   </td>
   <% if can?(:edit, response_set) %>
     <td>
-      <%= link_to "Edit", edit_my_survey_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => :edit %>
+      <%= link_to "Edit", surveyor.edit_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => :edit %>
     </td>
     <td>
-      <%= link_to "", delete_surveys_path(:survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => "delete", :method=>:delete, :confirm=>"Are you sure?" %>
+      <%= link_to "", surveyor.view_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => "delete", :method => :delete, :confirm => "Are you sure?" %>
     </td>
   <% end %>
 </tr>

@@ -35,7 +35,7 @@ jQuery(document).ready(function(){
   jQuery("input[type='text'].datetime").datetimepicker({
     showSecond: true,
     showMillisec: false,
-    timeFormat: 'hh:mm:ss',
+    timeFormat: 'HH:mm:ss',
     dateFormat: 'yy-mm-dd',
     changeMonth: true,
     changeYear: true
@@ -139,4 +139,16 @@ jQuery(document).ready(function(){
       others.attr('disabled', false);
     }
   });
+
+  jQuery("input[data-input-mask]").each(function(i,e){
+    var inputMask = $(e).attr('data-input-mask');
+    var placeholder = $(e).attr('data-input-mask-placeholder');
+    var options = { placeholder: placeholder };
+    $(e).mask(inputMask, options);
+  });
+
+  // translations selection
+  $(".surveyor_language_selection").show();
+  $(".surveyor_language_selection select#locale").change(function(){ this.form.submit(); });
+
 });

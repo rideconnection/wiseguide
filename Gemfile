@@ -50,8 +50,8 @@ gem 'uuidtools', '~> 2.1.5' # TODO latest? yes
 gem 'will_paginate', '~> 3.0.7' # TODO latest? yes
 
 # TODO key functionality, bump version, watch for breaking changes
-# TODO may need to fork upgrade for Rails 4
-gem 'surveyor', '~> 1.2.0'# TODO latest? 1.4.0, last updated 25 Apr 2013
+# TODO Only compatible with Rails <= 4.0. Pending pull requests for 4.1
+gem 'surveyor', '~> 1.4.0' # TODO latest? yes, last updated 25 Apr 2013
 
 # Deploy with Capistrano
 # TODO update for Capistrano v3 syntax, and move to development group

@@ -1,5 +1,4 @@
 Wiseguide::Application.routes.draw do
-
   resources :ada_service_eligibility_statuses
   resources :agencies
   resources :contacts
@@ -43,6 +42,11 @@ Wiseguide::Application.routes.draw do
     end
   end
 
+  # These routes are for managing assessment surveys
+  resources :surveys, :only => [:index, :new, :create, :destroy] do
+    post :reactivate, :on => :member
+  end
+
   resources :kases, :path => "cases" do 
     get "coaching", :on=>:collection, :action => :index, :kase => {:type => 'CoachingKase'}
     get "training", :on=>:collection, :action => :index, :kase => {:type => 'TrainingKase'}
@@ -52,13 +56,13 @@ Wiseguide::Application.routes.draw do
     post "notify_manager", :on => :member
   end
 
-  # These are called "assessments" in user-visible text
-  resources :surveys, :controller=>'Surveyor' do
-    delete "/:survey_code/:response_set_code/delete", :to => "surveyor#delete_response_set", :as=>:delete, :on=>:collection
-    get "new_survey", :on=>:collection
-    post "reactivate_survey", :to=>"surveyor#reactivate", :as=>:reactivate
-    put "new_survey", :on=>:collection, :to=>"surveyor#create_survey", :as=>:new_survey
+  # These routes are for responding to assessment surveys
+  # TODO Technically they belong to a kase, but that routing isn't working in 
+  # Rails 3.2. See https://github.com/rails/rails/pull/12699
+  Surveyor::Engine.routes.prepend do
+    match "/:survey_code/:response_set_code", :to => "surveyor#destroy", :via => :delete
   end
+  mount Surveyor::Engine => "/kases/:kase_id/surveys", :as => "surveyor"
 
   devise_for :users, :controllers=>{:sessions=>"users"}
   devise_scope :user do

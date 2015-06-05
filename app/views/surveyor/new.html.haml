@@ -1,0 +1,25 @@
+= render 'shared/breadcrumbs', :target => @kase.response_sets.new, :name => 'Assessment'
+= render :partial=>"/kases/surveys", :locals => {:title => ""}
+
+#surveyor
+  #survey_list
+    - if @surveys_by_access_code.empty?
+      %p No assessments
+    - else
+      %ol.section
+        - @surveys_by_access_code.each do |access_code, surveys|
+          %li
+            = form_tag surveyor.take_survey_path(:survey_code => access_code) do
+              = hidden_field_tag :kase_id, @kase.id
+              = hidden_field_tag :surveyor_javascript_enabled, false
+              = surveys.first.translation(I18n.locale)[:title]
+              &nbsp;
+              = label_tag :survey_version, 'version:'
+              = select_tag(:survey_version, options_for_select([["-- Current version --", ""]] + (surveys.map(&:survey_version) || [])))
+              &nbsp;
+              = submit_tag( "Assess" )
+
+:javascript
+  $(document).ready(function() {
+    $("input#surveyor_javascript_enabled").val(true);
+  });

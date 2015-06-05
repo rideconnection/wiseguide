@@ -28,7 +28,7 @@ When /^I click the link to add an assessment$/ do
 end
 
 Then /^I click the button for the open survey$/ do
-  find("form[action='/surveys/#{@survey.access_code}']").click_button("Assess")
+  find("form[action='/kases/#{@kase.id}/surveys/#{@survey.access_code}']").click_button("Assess")
 end
 
 Then /^I should be able to complete the survey form$/ do
