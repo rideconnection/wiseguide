@@ -3,11 +3,19 @@ require 'factory_girl'
 require "#{Rails.root}/config/environment.rb"
 
 def load_sandbox_data
-  raise 'Sandboxing not permitted in production.' if Rails.env == 'production' 
-  create_users
-  create_customers
-  create_simple_survey
-  create_sample_date
+  raise 'Sandboxing not permitted in production.' if Rails.env == 'production'
+  ActiveRecord::Base.transaction do
+    puts "Starting to load sandbox data"
+    puts "Creating test users"
+    create_users
+    puts "Creating sample customers"
+    create_customers
+    puts "Creating sample surveys"
+    create_simple_survey
+    puts "Creating sample data"
+    create_sample_date
+    puts "Finished loading sandbox data"
+  end
 end
 
 def create_sample_date
@@ -25,16 +33,17 @@ def create_sample_date
 end
 
 def create_users
-  puts "Creating test users"
-  puts "-- ALL TEST USERS HAVE PASSWORD \"password 1\""
-  FactoryGirl.create(:admin,        :password => "password 1", :email => 'admin@rideconnection.org')
-  puts "-- Created test user admin@rideconnection.org"
-  FactoryGirl.create(:trainer,      :password => "password 1", :email => 'trainer@rideconnection.org')
-  puts "-- Created test user trainer@rideconnection.org"
-  FactoryGirl.create(:user,         :password => "password 1", :email => 'viewer@rideconnection.org')
-  puts "-- Created test user viewer@rideconnection.org"
-  FactoryGirl.create(:case_manager, :password => "password 1", :email => 'case_manager@rideconnection.org')
-  puts "-- Created test user case_manager@rideconnection.org"
+  password = 'password 1'
+  puts "-- ALL TEST USERS HAVE PASSWORD \"#{password}\""
+  {
+    admin:        'admin@rideconnection.org',
+    trainer:      'trainer@rideconnection.org',
+    user:         'viewer@rideconnection.org',
+    case_manager: 'case_manager@rideconnection.org',
+  }.each do |role, email|
+    FactoryGirl.create(role, password: password, email: email)
+    puts "-- Created test user #{email}"
+  end
   puts "Finished creating test users"
 end
 
