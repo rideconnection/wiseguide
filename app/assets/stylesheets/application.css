@@ -11,4 +11,5 @@
  *= require_self
  *= require boilerplate
  *= require jquery-ui
+ *= require jquery-ui-timepicker-addon
  */

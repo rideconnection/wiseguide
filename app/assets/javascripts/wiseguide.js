@@ -1,5 +1,4 @@
-$(function(){
-  
+$(document).ready(function(){
   $("tr.auto-zebra:odd").addClass("odd");
   
   $('#flash a.closer').click(function() {
@@ -8,7 +7,7 @@ $(function(){
   });
   
   // toggle-next links toggle the next sibling
-  $("[data-behavior=toggle-next]").live("click", function(e){
+  $("body").on("click", "[data-behavior=toggle-next]", function(e){
     var link = $(this).hide();
     link.next().show();
     
@@ -19,11 +18,13 @@ $(function(){
   $('.datepicker').datepicker({
     buttonText: "Select",
     dateFormat: 'yy-mm-dd',
-    showOn: "button",
   });
   
   // time picker
-  $('.timepicker').timePkr();
+  $('.timepicker').timepicker({
+    timeFormat: "hh:mm TT",
+    stepMinute: 5,
+  });
 
   // datetime picker
   $('.datetimepicker').datetimepicker({
@@ -33,7 +34,7 @@ $(function(){
     numberOfMonths: 1,
     showOn: "button",
     stepMinute: 15,
-    timeFormat: 'hh:mm tt',
+    timeFormat: 'hh:mm TT',
   });
   
   $('.birthdatepicker').datepicker({
@@ -45,17 +46,14 @@ $(function(){
   });
   
   // auto-resizing text areas
-  $("textarea[data-behavior=autoresize]").autoResize({
-      extraSpace      : 20
-  }).trigger('change');
-  $("body.surveyor textarea").autoResize({
-      extraSpace      : 20
-  }).trigger('change');
+  autosize($("textarea[data-behavior=autoresize]"));
+  autosize($("body.surveyor textarea"));
+  autosize($("body.surveys textarea"));
 
   // Disable table header styles that are not on first line of table in surveys
   $("body.surveyor tr").not(":first-child").find("th").css("background", "none").css("color", "#444")
   
-  $('.trip-authorizations #trip_authorization_disposition_date').datetimepicker('option', 'maxDate', new Date());
+  // Don't allow an end date before today
   $('.trip-authorizations #trip_authorization_end_date').datepicker('option', 'minDate', new Date());
 
   // Highlight the relevant field if the customer does not authorize leaving a voicemail
@@ -69,7 +67,8 @@ $(function(){
       }
     });
   }
-  highlightNoVoiceMail();
-  $(".vm, .phone").change(highlightNoVoiceMail);
 
+  highlightNoVoiceMail();
+
+  $(".vm, .phone").change(highlightNoVoiceMail);
 });

@@ -1,6 +1,6 @@
 <% content_for :head do -%>
-  <%= stylesheet_link_tag 'jquery.ajax-loader.css', :media => 'screen, projection' %>
-  <%= javascript_include_tag 'jquery.ajax-loader.min.js' %>
+  <%= stylesheet_link_tag 'jquery.ajax-loader', :media => 'screen, projection' %>
+  <%= javascript_include_tag 'jquery.ajax-loader.min' %>
   <%= javascript_tag do %>
     jQuery.ajaxSetup({
       beforeSend: function() {
@@ -11,7 +11,7 @@
       },
       success: function() {}
     });
-    $(document).ready(function($){
+    $(document).ready(function(){
       //
       // Pretty up the form
       //

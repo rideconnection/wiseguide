@@ -245,7 +245,7 @@ div#error_explanation {
   border: 1px solid #bbb;
   padding: 15px;
   margin-bottom: 15px;
-  -webkit-border-radius: 5px
+  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
@@ -651,25 +651,6 @@ input.datetimepicker {
   color: #444;
   font-size: 11px;
 }
-.ui-timepicker-div .ui-widget-header {
-  margin-bottom: 8px;
-}
-.ui-timepicker-div dl {
-  text-align: left;
-}
-.ui-timepicker-div dl dt {
-  height: 25px;
-}
-.ui-timepicker-div dl dd {
-  margin: -25px 0 10px 65px;
-}
-.ui-timepicker-div td {
-}
-.ui_tpicker_hour,
-.ui_tpicker_minute {
-  font-size: 9px;
-}
-  
 .ui-datepicker-trigger {
   margin: 0 5px;
   vertical-align: middle;

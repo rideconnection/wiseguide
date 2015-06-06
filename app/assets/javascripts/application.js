@@ -14,9 +14,8 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require jquery_nested_form
-//= require jquery-migrate.min
+//= require jquery-migrate
 //= require jquery-ui-timepicker-addon
-//= require jquery-Gtimepicker
-//= require jquery.fn.autoresize
+//= require autosize
 //= require dateFormat
 //= require_tree .
