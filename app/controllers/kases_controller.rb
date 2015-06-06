@@ -136,7 +136,7 @@ private
   def prep_edit
     @agencies = Agency.accessible_by(current_ability)
     @case_managers = User.cmo_or_selected(@kase.case_manager_id).accessible_by(current_ability)
-    @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name}Disposition")
+    @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name.to_s}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
     @kase_route = KaseRoute.new(:kase_id => @kase.id)
     @referral_types = ReferralType.accessible_by(current_ability).order(:name).for_kase(@kase)

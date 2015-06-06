@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of   :organization_id  
   validates_format_of     :password, :if => :password_required?,
-                          :with => /^(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)$/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
+                          :with => /\A(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)\z/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
                           :message => "must have at least one number and at least one non-alphanumeric character"
   
   default_scope order(:first_name, :last_name)

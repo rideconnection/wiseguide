@@ -64,14 +64,14 @@ Wiseguide::Application.routes.draw do
   end
   mount Surveyor::Engine => "/kases/:kase_id/surveys", :as => "surveyor"
 
-  devise_for :users, :controllers=>{:sessions=>"users"}
+  devise_for :users, :controllers => {:sessions => "users"}
   devise_scope :user do
     delete "user" => "users#delete"
     get "edit_user" => "users#edit"
     get "init" => "users#show_init"
     get "new_user" => "users#new_user"
     get "show_change_password" => "users#show_change_password"
-    match "change_password"  => "users#change_password"
+    post "change_password"  => "users#change_password"
     post "create_user" => "users#create_user"
     post "init" => "users#init"
     post "logout" => "users#sign_out"
@@ -80,18 +80,18 @@ Wiseguide::Application.routes.draw do
     put "update_user_details" => "users#update_details"
   end
 
-  match "admin", :controller=>:admin, :action=>:index
-  match "assessment_requests/(:id)/change_customer", :controller=>:assessment_requests, :action=>:change_customer
-  match "assessment_requests/(:id)/change_coaching_kase", :controller=>:assessment_requests, :action=>:change_coaching_kase
-  match "assessment_requests/(:id)/select_customer", :controller=>:assessment_requests, :action=>:select_customer
-  match "assessment_requests/(:id)/select_coaching_kase", :controller=>:assessment_requests, :action=>:select_coaching_kase
-  match "reports", :controller=>:reports, :action=>:index
-  match "reports(/:action)", :controller=>:reports
-  match "resources/(:id)/toggle_active", :controller=>:resources, :action=>:toggle_active
-  match "search_date", :controller=>:home, :action=>:search_date
-  match "search_name", :controller=>:home, :action=>:search_name
-  match "test_exception_notification" => "application#test_exception_notification"
-  match "users", :controller=>:admin, :action=>:users
+  get "admin", :controller=>:admin, :action=>:index
+  get "assessment_requests/(:id)/change_customer", :controller=>:assessment_requests, :action=>:change_customer
+  get "assessment_requests/(:id)/change_coaching_kase", :controller=>:assessment_requests, :action=>:change_coaching_kase
+  post "assessment_requests/(:id)/select_customer", :controller=>:assessment_requests, :action=>:select_customer
+  post "assessment_requests/(:id)/select_coaching_kase", :controller=>:assessment_requests, :action=>:select_coaching_kase
+  get "reports", :controller=>:reports, :action=>:index
+  get "reports(/:action)", :controller=>:reports
+  get "resources/(:id)/toggle_active", :controller=>:resources, :action=>:toggle_active
+  get "search_date", :controller=>:home, :action=>:search_date
+  get "search_name", :controller=>:home, :action=>:search_name
+  get "test_exception_notification" => "application#test_exception_notification"
+  get "users", :controller=>:admin, :action=>:users
 
   root :to => "home#index"
 end

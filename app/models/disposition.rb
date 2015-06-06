@@ -5,7 +5,7 @@ class Disposition < ActiveRecord::Base
   
   validates :name, :uniqueness => {:scope => :type}
   validate do |disposition|
-    disposition.errors[:type] << "must be a valid subclass of Disposition" unless Disposition.descendants.map{|disposition| disposition.original_model_name}.include?(disposition.type)
+    disposition.errors[:type] << "must be a valid subclass of Disposition" unless Disposition.descendants.map{|disposition| disposition.original_model_name.to_s}.include?(disposition.type)
   end
 
   def self.successful
@@ -22,7 +22,7 @@ class Disposition < ActiveRecord::Base
       end
       
       def human_name
-        self.original_model_name.underscore.humanize.titlecase
+        self.original_model_name.to_s.underscore.humanize.titlecase
       end
       
       def humanized_name

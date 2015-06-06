@@ -13,16 +13,16 @@ RSpec.describe Disposition do
   
   it "should allow a unique name within the scope of the subclass type" do
     Disposition.descendants.each do |disposition|
-      FactoryGirl.create(disposition.original_model_name.underscore.to_sym, :name => 'Foo')
+      FactoryGirl.create(disposition.original_model_name.to_s.underscore.to_sym, :name => 'Foo')
     end
     
     Disposition.descendants.each do |disposition|
-      duplicate = FactoryGirl.build(disposition.original_model_name.underscore.to_sym, :name => 'Foo')
+      duplicate = FactoryGirl.build(disposition.original_model_name.to_s.underscore.to_sym, :name => 'Foo')
       duplicate.valid?.should be_falsey
       duplicate.errors.keys.should include(:name)
       duplicate.errors[:name].should include("has already been taken")
       
-      unique = FactoryGirl.build(disposition.original_model_name.underscore.to_sym, :name => 'Bar')
+      unique = FactoryGirl.build(disposition.original_model_name.to_s.underscore.to_sym, :name => 'Bar')
       unique.valid?.should be_truthy
     end
   end

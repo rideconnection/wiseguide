@@ -33,7 +33,7 @@ class Kase < ActiveRecord::Base
   validates_presence_of  :close_date, :if => Proc.new {|kase| kase.disposition && kase.disposition.name != "In Progress" }
   validate do |kase|
     kase.errors[:disposition_id] << "cannot be 'In Progress' if case is closed" if kase.close_date.present? && kase.disposition && kase.disposition.name == 'In Progress'
-    kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.descendants.map{|klass| klass.original_model_name}.include?(kase.type)
+    kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.descendants.map{|klass| klass.original_model_name.to_s}.include?(kase.type)
   end
     
   HUMAN_ATTRIBUTE_NAMES = {
@@ -70,7 +70,7 @@ class Kase < ActiveRecord::Base
       end
       
       def human_name
-        self.original_model_name.underscore.humanize.titlecase
+        self.original_model_name.to_s.underscore.humanize.titlecase
       end
       
       def humanized_name

@@ -2,10 +2,10 @@
 <html>
 <head>
   <title><%= content_for?(:title) ? yield(:title) : "Wiseguide" %></title>
-  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag "style", media: "screen, projection" %>
   <%= stylesheet_link_tag "print", media: "print" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <%= content_for?(:head) ? yield(:head) : '' %>
 </head>
