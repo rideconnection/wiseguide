@@ -12,7 +12,7 @@ class Organization < ActiveRecord::Base
   validates_inclusion_of :organization_type, :in => ORGANIZATION_TYPES.values.collect{|t| t[:id]}
   validate :validate_parent
 
-  has_many :users, :dependent => :restrict
+  has_many :users, :dependent => :restrict_with_exception
   has_many :children, :class_name => "Organization",
            :foreign_key => "parent_id", :dependent => :nullify
   

@@ -7,7 +7,7 @@ class Customer < ActiveRecord::Base
   has_many :assessment_requests
   has_many :customer_impairments, :dependent => :destroy
   has_many :impairments, :through => :customer_impairments
-  has_many :kases, :dependent => :restrict
+  has_many :kases, :dependent => :restrict_with_exception
   has_many :contacts, :as => :contactable, :dependent => :destroy
   has_many :customer_support_network_members, :dependent => :destroy
 
