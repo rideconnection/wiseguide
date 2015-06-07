@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @customers = @customers.paginate page: params[:page], order: [:last_name, :first_name]
+    @customers = @customers.order(:last_name, :first_name).paginate(page: params[:page])
   end
 
   def show
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
   def search
     term = params[:name].downcase.strip
     
-    @customers = Customer.search(term).paginate( page: params[:page], order: [:last_name, :first_name])
+    @customers = Customer.search(term).order(:last_name, :first_name).paginate(page: params[:page])
 
     respond_to do |format|
       format.html { render action: :index }

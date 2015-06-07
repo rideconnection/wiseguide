@@ -33,8 +33,7 @@ class AssessmentRequestsController < ApplicationController
       query = query.assigned_to(current_user)
     end
         
-    @assessment_requests = query.order("created_at ASC").paginate(
-      page: params[:page])
+    @assessment_requests = query.order("created_at ASC").paginate(page: params[:page])
     
     session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
     session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
