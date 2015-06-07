@@ -26,9 +26,8 @@
       clear_customer_matches();
       first_rows = data.slice(0, 3);
       $.each(first_rows, function() {
-        row = this["customer"];
-        full_name = row["last_name"] + ", " + row["first_name"];
-        link = '<a href="./' + row["id"] + '" target="_blank">' + full_name + '</a>';
+        full_name = this["last_name"] + ", " + this["first_name"];
+        link = '<a href="./' + this["id"] + '" target="_blank">' + full_name + '</a>';
         $(".customer-matches ol").append("<li>" + link + "</li>");
       });
     });
