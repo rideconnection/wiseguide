@@ -8,7 +8,7 @@ class AssessmentRequestsController < ApplicationController
     params[:current_status_filter] = params[:current_status_filter] || session[:assessment_requests_index_current_status_filter] || "all"
     params[:assignee_filter]       = params[:assignee_filter]       || session[:assessment_requests_index_assignee_filter]       || "all"
 
-    query = @assessment_requests.scoped
+    query = @assessment_requests
         
     case params[:user_type_filter].to_sym
     when :mine

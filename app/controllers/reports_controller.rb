@@ -188,7 +188,7 @@ class ReportsController < ApplicationController
     @hours_by_customer = hours_by_customer
     @dispositions = dispositions
     @events_by_type = events_by_type
-    @events = events.all
+    @events = events
   end
 
   def route

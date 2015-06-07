@@ -15,7 +15,7 @@ module SurveyorControllerCustomMethods
   def new
     @kase = Kase.find(params[:kase_id])
     authorize! :manage, @kase
-    @surveys_by_access_code = Survey.active.order("created_at DESC, survey_version DESC").all.group_by(&:access_code)
+    @surveys_by_access_code = Survey.active.order("created_at DESC, survey_version DESC").group_by(&:access_code)
     # Skip `super` since we're overwriting @surveys_by_access_code
   end
   
