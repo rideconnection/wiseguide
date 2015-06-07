@@ -98,7 +98,7 @@ class KasesController < ApplicationController
   def add_route
     @kase = Kase.find(params[:kase_route][:kase_id])
     authorize! :edit, @kase
-    @kase_route = KaseRoute.create(params[:kase_route])
+    @kase_route = KaseRoute.create(kase_route_params)
     @route = @kase_route.route
     render layout: nil
   end
@@ -240,5 +240,9 @@ private
       :scheduling_system_entry_required,
       :user_id,
     )
+  end
+  
+  def kase_route_params
+    params.require(:kase_route).permit(:kase_id, :route_id)
   end
 end
