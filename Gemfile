@@ -14,7 +14,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -52,12 +52,6 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'surveyor', :git => "git://github.com/NUBIC/surveyor.git",
   :ref => "d4fe8df2586ba26126bac3c4b3498e67ba813baf"
 
-# Deploy with Capistrano
-# TODO update for Capistrano v3 syntax, and move to development group
-gem 'capistrano',     :require => false # We need it to be installed, but it's
-gem 'capistrano-ext', :require => false # not a runtime dependency
-gem 'rvm-capistrano', :require => false
-
 gem 'pg'
 
 group :development do
@@ -65,6 +59,12 @@ group :development do
   gem 'spring'
   gem "spring-commands-rspec"
   gem "spring-commands-cucumber"
+  
+  # Use Capistrano for deployment
+  gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rvm', '~> 0.1', require: false
+  gem 'capistrano-rails', '~> 1.1', require: false
+  # gem 'capistrano-secrets-yml', '~> 1.0', require: false
 end
 
 group :test do
