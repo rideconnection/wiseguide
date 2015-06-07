@@ -4,8 +4,6 @@
 # Functionality specific to a subset of subclasses should be defined in a 
 # module and then included in subclasses as necessary.
 class Kase < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   has_paper_trail
   
   belongs_to :customer

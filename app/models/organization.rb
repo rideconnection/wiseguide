@@ -1,6 +1,4 @@
 class Organization < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   belongs_to :parent, :class_name => "Organization"
 
   ORGANIZATION_TYPES = {

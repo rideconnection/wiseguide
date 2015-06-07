@@ -1,6 +1,4 @@
 class Disposition < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   has_paper_trail
   
   validates :name, :uniqueness => {:scope => :type}

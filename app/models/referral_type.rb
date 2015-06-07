@@ -1,6 +1,4 @@
 class ReferralType < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-
   has_paper_trail
   
   scope :for_kase, ( lambda do |kase| 

@@ -1,11 +1,4 @@
 class AssessmentRequest < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-  # attr_accessible :attachment, :customer_first_name, :customer_last_name,
-  #                 :customer_birth_date, :customer_phone, :notes,
-  #                 :submitter, :submitter_id, :customer, :customer_id,
-  #                 :assignee, :assignee_id, :reason_not_completed,
-  #                 :customer_middle_initial
-
   belongs_to :submitter, :class_name => "User", :foreign_key => :submitter_id
   belongs_to :assignee, :class_name => "User", :foreign_key => :assignee_id
   belongs_to :customer

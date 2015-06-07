@@ -1,9 +1,4 @@
 class User < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-  # attr_accessible :first_name, :last_name, :phone_number,
-  #   :email, :password, :password_confirmation, :remember_me,
-  #   :organization_id
-
   # Include default devise modules. Others available are:
   # :registerable, :rememberable, :confirmable, :lockable, :timeoutable and
   # :omniauthable

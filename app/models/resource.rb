@@ -1,7 +1,5 @@
 
 class Resource < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-  
   has_many :referral_document_resources
   has_many :referral_documents, :through => :referral_document_resources
   

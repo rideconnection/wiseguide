@@ -1,8 +1,4 @@
 class TripAuthorization < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
-  # attr_accessible :allowed_trips_per_month, :disposition_date, :end_date,
-  #   :disposition_user_id, :kase_id, :start_date
-
   has_paper_trail
   
   belongs_to :kase
