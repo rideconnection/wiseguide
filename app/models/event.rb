@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :end_time
   validates_presence_of :notes, :if => lambda { |e| e.event_type.try(:require_notes) }
 
-  default_scope order(:date)
+  default_scope { order(:date) }
   scope :in_range, lambda { |date_range| where(:date => date_range) }
 
   def customer

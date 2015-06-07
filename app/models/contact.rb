@@ -9,5 +9,5 @@ class Contact < ActiveRecord::Base
   validates :contactable_type, :inclusion => { :in => %w(AssessmentRequest Customer Kase CoachingKase CustomerServiceKase TrainingKase) }
   validates :contactable, :presence => true, :associated => { :message => "The associated object (Customer, Case, or Assessment Request) is invalid" }
 
-  default_scope order(:date_time)
+  default_scope { order(:date_time) }
 end
