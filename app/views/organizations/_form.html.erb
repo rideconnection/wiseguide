@@ -1,17 +1,18 @@
-<%= form_for(@organization) do |f| %>
-  <script type="text/JavaScript">
-    function updateParentVisible() {
-      var org = $("#organization_organization_type").val();
-      if (org == "<%=j Organization::ORGANIZATION_TYPES[:case_mgmt][:id] %>") {
-        $("#organization-parent").show();
-      } else {
-        $("#organization-parent").hide();
-      }
+<%= javascript_tag do %>
+  function updateParentVisible() {
+    var org = $("#organization_organization_type").val();
+    if (org == "<%=j Organization::ORGANIZATION_TYPES[:case_mgmt][:id] %>") {
+      $("#organization-parent").show();
+    } else {
+      $("#organization-parent").hide();
     }
-    $(document).ready(function() {
-      updateParentVisible();
-    });
-  </script>
+  }
+  $(document).ready(function() {
+    updateParentVisible();
+  });
+<% end %>
+
+<%= form_for(@organization) do |f| %>
   <% if @organization.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>

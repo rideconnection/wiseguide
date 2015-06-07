@@ -1,4 +1,4 @@
-<script type="text/JavaScript">
+<%= javascript_tag do %>
   $(document).ready(function() {
     $(".duplicate-check").change(function() {
       show_customer_matches();
@@ -33,7 +33,7 @@
       });
     });
   }
-</script>
+<% end %>
 
 <h1>New customer</h1>
 

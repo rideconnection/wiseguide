@@ -2,7 +2,7 @@
   <h1>Create New User</h1>
 </div>
 
-<script type="text/JavaScript">
+<%= javascript_tag do %>
   $(document).ready(function() {
     $("#user_organization_id").change(function() {
       check_permissions();
@@ -31,7 +31,7 @@
     $("#permissions select").hide();
     $("#permissions").append($('<p class="permissions_note">Only applies to Staff Organization users.</p>'));        
   }
-</script>
+<% end %>
 
 <%= form_for @user, url: url_for(action: :create_user) do |f| %>
   <% if @user.errors %>
