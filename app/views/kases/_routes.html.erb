@@ -1,8 +1,8 @@
 <h1>Routes Trained</h1>
 <% if can? :edit, @kase %>
-  <%= link_to "Add", add_route_kases_path(kase_id: @kase.id), "data-behavior" => "toggle-next", class: :add %>
+  <%= link_to "Add", add_route_kases_path(kase_id: @kase.id), data: {behavior: "toggle-next"}, class: :add %>
 
-  <%= form_for @kase_route, url: add_route_kases_path, html: {remote: :true, id: "new_route_form", method: :post, "data-type"=>:html, style: "display:none"} do |f| %>
+  <%= form_for @kase_route, url: add_route_kases_path, remote: :true, html: {id: "new_route_form", data: {type: :html}, style: "display: none"} do |f| %>
     <%= f.hidden_field :kase_id %>
     <%= f.collection_select :route_id, @routes, :id, :name %>
     <%= f.submit "Add route" %>
