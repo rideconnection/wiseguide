@@ -1,5 +1,5 @@
 <% content_for :head do -%>
-  <%= stylesheet_link_tag 'jquery.ajax-loader', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'jquery.ajax-loader', media: 'screen, projection' %>
   <%= javascript_include_tag 'jquery.ajax-loader.min' %>
   <%= javascript_tag do %>
     jQuery.ajaxSetup({
@@ -69,44 +69,44 @@
 
   <p>
   <% if can? :create, AssessmentRequest %>
-    <%= link_to 'New Assessment Request', new_assessment_request_path, :id => 'new-assessment-request'  %>
+    <%= link_to 'New Assessment Request', new_assessment_request_path, id: 'new-assessment-request'  %>
   <% end %>
   </p>
 
   <div class="box no-print assessment-request-caption">
     <h2>Filter Requests</h2>
-    <%= form_tag assessment_requests_path, :method => :get, :id => "assessment-request-filter" do %>
+    <%= form_tag assessment_requests_path, method: :get, id: "assessment-request-filter" do %>
       <h3>By Submitting User Type:</h3>
       <ul id="user-type-filters" class="filters">
-        <% {:all => "Anyone", :mine => "Me", :my_organization => "My organization", :outside_users => "Outside users"}.each do |filter, label| %>
+        <% {all: "Anyone", mine: "Me", my_organization: "My organization", outside_users: "Outside users"}.each do |filter, label| %>
           <li>
             <%= label_tag "user-type-filter-#{filter.to_s}" do %>
-              <%= radio_button_tag "user_type_filter", filter.to_s, ((!params.blank? && params[:user_type_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:user_type_filter].blank?))), :id => "user-type-filter-#{filter.to_s}", :class => 'filter' %>&nbsp;<%= label %>
+              <%= radio_button_tag "user_type_filter", filter.to_s, ((!params.blank? && params[:user_type_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:user_type_filter].blank?))), id: "user-type-filter-#{filter.to_s}", class: 'filter' %>&nbsp;<%= label %>
             <% end %>
           </li>
         <% end %>
       </ul>
       <h3>By Current Status:</h3>
       <ul id="current-status-filters" class="filters">
-        <% {:all => "All", :pending => "Pending", :not_completed => "Not completed", :completed => "Completed"}.each do |filter, label| %>
+        <% {all: "All", pending: "Pending", not_completed: "Not completed", completed: "Completed"}.each do |filter, label| %>
           <li>
             <%= label_tag "current-status-filter-#{filter.to_s}" do %>
-              <%= radio_button_tag "current_status_filter", filter.to_s, ((!params.blank? && params[:current_status_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:current_status_filter].blank?))), :id => "current-status-filter-#{filter.to_s}", :class => 'filter' %>&nbsp;<%= label %>
+              <%= radio_button_tag "current_status_filter", filter.to_s, ((!params.blank? && params[:current_status_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:current_status_filter].blank?))), id: "current-status-filter-#{filter.to_s}", class: 'filter' %>&nbsp;<%= label %>
             <% end %>
           </li>
         <% end %>
       </ul>
       <h3>By Assignee:</h3>
       <ul id="assignee-filters" class="filters">
-        <% {:all => "All", :me => "Me"}.each do |filter, label| %>
+        <% {all: "All", me: "Me"}.each do |filter, label| %>
           <li>
             <%= label_tag "assignee-filter-#{filter.to_s}" do %>
-              <%= radio_button_tag "assignee_filter", filter.to_s, ((!params.blank? && params[:assignee_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:assignee_filter].blank?))), :id => "assignee-filter-#{filter.to_s}", :class => 'filter' %>&nbsp;<%= label %>
+              <%= radio_button_tag "assignee_filter", filter.to_s, ((!params.blank? && params[:assignee_filter] == filter.to_s) || (filter == :all && (params.blank? || params[:assignee_filter].blank?))), id: "assignee-filter-#{filter.to_s}", class: 'filter' %>&nbsp;<%= label %>
             <% end %>
           </li>
         <% end %>
       </ul>
-      <div class="clearfix"><%= submit_tag "Filter", :name => nil, :disabled => false, :disable_with => "Applying filter..." %></div>
+      <div class="clearfix"><%= submit_tag "Filter", name: nil, disabled: false, disable_with: "Applying filter..." %></div>
     <% end -%>
   </div>
 

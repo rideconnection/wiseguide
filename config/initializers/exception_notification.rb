@@ -15,27 +15,27 @@ ExceptionNotification.configure do |config|
 
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
-    :email_prefix         => APP_CONFIG[:exception_email_prefix],
-    :sender_address       => APP_CONFIG[:exception_sender_address],
-    :exception_recipients => APP_CONFIG[:exception_recipients]
+    email_prefix: APP_CONFIG[:exception_email_prefix],
+    sender_address: APP_CONFIG[:exception_sender_address],
+    exception_recipients: APP_CONFIG[:exception_recipients]
   }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
   # config.add_notifier :campfire, {
-  #   :subdomain => 'my_subdomain',
-  #   :token => 'my_token',
-  #   :room_name => 'my_room'
+  #   subdomain: 'my_subdomain',
+  #   token: 'my_token',
+  #   room_name: 'my_room'
   # }
 
   # HipChat notifier sends notifications to your HipChat room. Requires 'hipchat' gem.
   # config.add_notifier :hipchat, {
-  #   :api_token => 'my_token',
-  #   :room_name => 'my_room'
+  #   api_token: 'my_token',
+  #   room_name: 'my_room'
   # }
 
   # Webhook notifier sends notifications over HTTP protocol. Requires 'httparty' gem.
   # config.add_notifier :webhook, {
-  #   :url => 'http://example.com:5555/hubot/path',
-  #   :http_method => :post
+  #   url: 'http://example.com:5555/hubot/path',
+  #   http_method: :post
   # }
 end

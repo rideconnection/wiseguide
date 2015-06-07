@@ -4,7 +4,7 @@ class DispositionsController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @dispositions }
+      format.xml  { render xml: @dispositions }
     end
   end
 
@@ -13,7 +13,7 @@ class DispositionsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @disposition }
+      format.xml  { render xml: @disposition }
     end
   end
 
@@ -24,7 +24,7 @@ class DispositionsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @disposition }
+      format.xml  { render xml: @disposition }
     end
   end
 
@@ -39,11 +39,11 @@ class DispositionsController < ApplicationController
 
     respond_to do |format|
       if @disposition.save
-        format.html { redirect_to(@disposition, :notice => 'Disposition was successfully created.') }
-        format.xml  { render :xml => @disposition, :status => :created, :location => @disposition }
+        format.html { redirect_to(@disposition, notice: 'Disposition was successfully created.') }
+        format.xml  { render xml: @disposition, status: :created, location: @disposition }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @disposition.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @disposition.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,11 +53,11 @@ class DispositionsController < ApplicationController
   def update
     respond_to do |format|
       if @disposition.update_attributes(disposition_params)
-        format.html { redirect_to(@disposition, :notice => 'Disposition was successfully updated.') }
+        format.html { redirect_to(@disposition, notice: 'Disposition was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @disposition.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @disposition.errors, status: :unprocessable_entity }
       end
     end
   end

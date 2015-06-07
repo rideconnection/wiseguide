@@ -18,8 +18,8 @@
   <% end %>
 
   <% if can? :create, CoachingKase %>
-    <%= link_to "Change coaching case...", :controller => :assessment_requests,
-                             :action => :change_coaching_kase,
-                             :id => @assessment_request %>
+    <%= link_to "Change coaching case...", controller: :assessment_requests,
+                             action: :change_coaching_kase,
+                             id: @assessment_request %>
   <% end %>
 <% end %>

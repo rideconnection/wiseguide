@@ -4,15 +4,15 @@ class User < ActiveRecord::Base
   # :omniauthable
   devise :database_authenticatable, :recoverable, :trackable, :validatable
 
-  has_paper_trail :ignore => [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip], :skip => [:reset_password_token]
+  has_paper_trail ignore: [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip], skip: [:reset_password_token]
   
   belongs_to :organization
 
-  has_many :kases, :dependent => :nullify
-  has_many :contacts, :dependent => :nullify
-  has_many :events, :dependent => :nullify
-  has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
-  has_many :referred_kases, :through => :assessment_requests, :source => :kase
+  has_many :kases, dependent: :nullify
+  has_many :contacts, dependent: :nullify
+  has_many :events, dependent: :nullify
+  has_many :assessment_requests, foreign_key: :submitter_id, dependent: :nullify
+  has_many :referred_kases, through: :assessment_requests, source: :kase
 
   before_save :clean_level
 
@@ -20,9 +20,9 @@ class User < ActiveRecord::Base
   validates_presence_of   :last_name
   validates_uniqueness_of :email
   validates_presence_of   :organization_id  
-  validates_format_of     :password, :if => :password_required?,
+  validates_format_of     :password, if: :password_required?,
                           :with => /\A(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)\z/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
-                          :message => "must have at least one number and at least one non-alphanumeric character"
+                          message: "must have at least one number and at least one non-alphanumeric character"
   
   default_scope { order(:first_name, :last_name) }
   scope :active, -> { where("users.level >= 0") }

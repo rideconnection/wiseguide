@@ -1,7 +1,7 @@
 def login_user(user)
   visit '/users/sign_in'
-  fill_in 'user_email', :with => user.email
-  fill_in 'user_password', :with => 'password 1'
+  fill_in 'user_email', with: user.email
+  fill_in 'user_password', with: 'password 1'
   click_button 'Sign in'
   page.should have_content('Signed in successfully.')
 end
@@ -32,7 +32,7 @@ end
 
 When /^I click on the "([^"]+)" link$/ do |link|
   # Avoid Capybara::Ambiguous errors
-  first(:link, :text => link).click
+  first(:link, text: link).click
 end
 
 Then /^I should( not)? see a confirmation message$/ do |negation|
@@ -41,7 +41,7 @@ end
 
 Then /^I should( not)? see the notice "([^"]*)"$/ do |negation, message|
   assertion = negation ? :should_not : :should
-  page.send(assertion, have_selector("#flash .info", :text => message))
+  page.send(assertion, have_selector("#flash .info", text: message))
 end
 
 Then /^I should( not)? see the confirmation message "([^"]*)"$/ do |negation, confirmation_message|
@@ -81,7 +81,7 @@ Then /^I should be denied access to the page with an error code of ([0-9]+) and 
 end
 
 def check_simple_table_data(table_selector, table_data, options = {})
-  options.reverse_merge!(:headers => true)
+  options.reverse_merge!(headers: true)
     
   page.should have_selector(table_selector)
   within(table_selector) do
@@ -119,7 +119,7 @@ def check_simple_table_data(table_selector, table_data, options = {})
 end
 
 Then /^I should see a(?:n)? "([^"]*)" checkbox$/ do |label|
-  page.should have_field(label, :type => "checkbox")
+  page.should have_field(label, type: "checkbox")
 end
 
 Then /^I should( not)? see a(?:n)? "([^"]*)" button$/ do |negation, label|
@@ -147,12 +147,12 @@ end
 
 Then /^I should( not)? see a main section titled "([^"]*)"$/ do |negation, title|
   assertion = negation ? :should_not : :should
-  page.send(assertion, have_selector("h1", :text => title))
+  page.send(assertion, have_selector("h1", text: title))
 end
 
 Then /^I should( not)? see a secondary section titled "([^"]*)"$/ do |negation, title|
   assertion = negation ? :should_not : :should
-  page.send(assertion, have_selector("h2", :text => title))
+  page.send(assertion, have_selector("h2", text: title))
 end
 
 Then /^I should( not)? see "([^"]*)"$/ do |negation, content|

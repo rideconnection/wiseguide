@@ -15,7 +15,7 @@
     <td><%= event_type.require_notes ? 'Yes' : 'No' %></td>
     <td><%= link_to 'Show', event_type %></td>
     <td><%= link_to 'Edit', edit_event_type_path(event_type) %></td>
-    <td><%= link_to 'Destroy', event_type, data: {confirm: 'Are you sure?'}, :method => :delete %></td>
+    <td><%= link_to 'Destroy', event_type, data: {confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>

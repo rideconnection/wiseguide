@@ -23,7 +23,7 @@
     </td>
     <td>
       <% if can? :destroy, @organization %>
-        <%= link_to 'Destroy', organization, data: {confirm: 'Are you sure?'}, :method => :delete %>
+        <%= link_to 'Destroy', organization, data: {confirm: 'Are you sure?'}, method: :delete %>
       <% end %>
     </td>
   </tr>

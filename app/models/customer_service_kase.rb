@@ -15,7 +15,7 @@ class CustomerServiceKase < Kase
   
   belongs_to :agency
   
-  validates_inclusion_of :category, :in => CATEGORY
+  validates_inclusion_of :category, in: CATEGORY
   validates_presence_of :agency_id
   validate do |kase|
     if kase.disposition.present? 

@@ -49,7 +49,7 @@ RSpec.describe TripAuthorizationsController do
   describe "GET show" do
     it "assigns the requested trip_authorization as @trip_authorization" do
       trip_authorization = TripAuthorization.create! valid_attributes
-      get :show, {:id => trip_authorization.to_param}
+      get :show, {id: trip_authorization.to_param}
       assigns(:trip_authorization).should eq(trip_authorization)
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe TripAuthorizationsController do
   describe "GET edit" do
     it "assigns the requested trip_authorization as @trip_authorization" do
       trip_authorization = TripAuthorization.create! valid_attributes
-      get :edit, {:id => trip_authorization.to_param}
+      get :edit, {id: trip_authorization.to_param}
       assigns(:trip_authorization).should eq(trip_authorization)
     end
   end
@@ -73,18 +73,18 @@ RSpec.describe TripAuthorizationsController do
     describe "with valid params" do
       it "creates a new TripAuthorization" do
         expect {
-          post :create, {:trip_authorization => valid_attributes}
+          post :create, {trip_authorization: valid_attributes}
         }.to change(TripAuthorization, :count).by(1)
       end
 
       it "assigns a newly created trip_authorization as @trip_authorization" do
-        post :create, {:trip_authorization => valid_attributes}
+        post :create, {trip_authorization: valid_attributes}
         assigns(:trip_authorization).should be_a(TripAuthorization)
         assigns(:trip_authorization).should be_persisted
       end
 
       it "redirects to the created trip_authorization" do
-        post :create, {:trip_authorization => valid_attributes}
+        post :create, {trip_authorization: valid_attributes}
         response.should redirect_to(TripAuthorization.last)
       end
     end
@@ -93,14 +93,14 @@ RSpec.describe TripAuthorizationsController do
       it "assigns a newly created but unsaved trip_authorization as @trip_authorization" do
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        post :create, {:trip_authorization => {allowed_trips_per_month: -1}}
+        post :create, {trip_authorization: {allowed_trips_per_month: -1}}
         assigns(:trip_authorization).should be_a_new(TripAuthorization)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        post :create, {:trip_authorization => {allowed_trips_per_month: -1}}
+        post :create, {trip_authorization: {allowed_trips_per_month: -1}}
         response.should render_template("new")
       end
     end
@@ -115,18 +115,18 @@ RSpec.describe TripAuthorizationsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         TripAuthorization.any_instance.should_receive(:update_attributes).with(valid_attributes.with_indifferent_access)
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => valid_attributes}
+        put :update, {id: trip_authorization.to_param, trip_authorization: valid_attributes}
       end
 
       it "assigns the requested trip_authorization as @trip_authorization" do
         trip_authorization = TripAuthorization.create! valid_attributes
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => valid_attributes}
+        put :update, {id: trip_authorization.to_param, trip_authorization: valid_attributes}
         assigns(:trip_authorization).should eq(trip_authorization)
       end
 
       it "redirects to the trip_authorization" do
         trip_authorization = TripAuthorization.create! valid_attributes
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => valid_attributes}
+        put :update, {id: trip_authorization.to_param, trip_authorization: valid_attributes}
         response.should redirect_to(trip_authorization)
       end
     end
@@ -136,7 +136,7 @@ RSpec.describe TripAuthorizationsController do
         trip_authorization = TripAuthorization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => {allowed_trips_per_month: -1}}
+        put :update, {id: trip_authorization.to_param, trip_authorization: {allowed_trips_per_month: -1}}
         assigns(:trip_authorization).should eq(trip_authorization)
       end
 
@@ -144,7 +144,7 @@ RSpec.describe TripAuthorizationsController do
         trip_authorization = TripAuthorization.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         TripAuthorization.any_instance.stub(:save).and_return(false)
-        put :update, {:id => trip_authorization.to_param, :trip_authorization => {allowed_trips_per_month: -1}}
+        put :update, {id: trip_authorization.to_param, trip_authorization: {allowed_trips_per_month: -1}}
         response.should render_template("edit")
       end
     end
@@ -154,13 +154,13 @@ RSpec.describe TripAuthorizationsController do
     it "destroys the requested trip_authorization" do
       trip_authorization = TripAuthorization.create! valid_attributes
       expect {
-        delete :destroy, {:id => trip_authorization.to_param}
+        delete :destroy, {id: trip_authorization.to_param}
       }.to change(TripAuthorization, :count).by(-1)
     end
 
     it "redirects to the trip_authorizations list" do
       trip_authorization = TripAuthorization.create! valid_attributes
-      delete :destroy, {:id => trip_authorization.to_param}
+      delete :destroy, {id: trip_authorization.to_param}
       response.should redirect_to(trip_authorizations_url)
     end
   end
@@ -173,18 +173,18 @@ RSpec.describe TripAuthorizationsController do
       # receives the :update_attributes message with whatever params are
       # submitted in the request.
       TripAuthorization.any_instance.should_receive(:complete_disposition).with(@admin)
-      put :complete_disposition, {:id => trip_authorization.to_param}
+      put :complete_disposition, {id: trip_authorization.to_param}
     end
 
     it "assigns the requested trip_authorization as @trip_authorization" do
       trip_authorization = TripAuthorization.create! valid_attributes
-      put :complete_disposition, {:id => trip_authorization.to_param}
+      put :complete_disposition, {id: trip_authorization.to_param}
       assigns(:trip_authorization).should eq(trip_authorization)
     end
 
     it "redirects to the trip_authorization" do
       trip_authorization = TripAuthorization.create! valid_attributes
-      put :complete_disposition, {:id => trip_authorization.to_param}
+      put :complete_disposition, {id: trip_authorization.to_param}
       response.should redirect_to(trip_authorization)
     end
   end

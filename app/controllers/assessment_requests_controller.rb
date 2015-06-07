@@ -1,5 +1,5 @@
 class AssessmentRequestsController < ApplicationController
-  load_and_authorize_resource :except => [:change_customer, :select_customer]
+  load_and_authorize_resource except: [:change_customer, :select_customer]
 
   # GET /assessment_requests
   # GET /assessment_requests.xml
@@ -34,7 +34,7 @@ class AssessmentRequestsController < ApplicationController
     end
         
     @assessment_requests = query.order("created_at ASC").paginate(
-      :page => params[:page])
+      page: params[:page])
     
     session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
     session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
@@ -43,7 +43,7 @@ class AssessmentRequestsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js   # index.js.erb
-      format.xml  { render :xml => @assessment_requests }
+      format.xml  { render xml: @assessment_requests }
     end
   end
 
@@ -54,7 +54,7 @@ class AssessmentRequestsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @assessment_request }
+      format.xml  { render xml: @assessment_request }
     end
   end
 
@@ -64,7 +64,7 @@ class AssessmentRequestsController < ApplicationController
 
     respond_to do |format|
       format.html # edit.html.erb
-      format.xml  { render :xml => @assessment_request }
+      format.xml  { render xml: @assessment_request }
     end
   end
 
@@ -75,7 +75,7 @@ class AssessmentRequestsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @assessment_request }
+      format.xml  { render xml: @assessment_request }
     end
   end
 
@@ -90,7 +90,7 @@ class AssessmentRequestsController < ApplicationController
   def change_coaching_kase
     @assessment_request = AssessmentRequest.find(params[:id])
     authorize! :update, @assessment_request
-    @potential_kases = @assessment_request.customer.kases.where(:type => 'CoachingKase').order(:open_date)
+    @potential_kases = @assessment_request.customer.kases.where(type: 'CoachingKase').order(:open_date)
   end
 
   # POST /assessment_requests/1/select_customer
@@ -99,15 +99,15 @@ class AssessmentRequestsController < ApplicationController
     authorize! :update, @assessment_request
     if params[:customer_id] == "0" then
       customer = {
-        :first_name => @assessment_request.customer_first_name,
-        :last_name => @assessment_request.customer_last_name,
-        :middle_initial => @assessment_request.customer_middle_initial,
-        :phone_number_1 => @assessment_request.customer_phone,
-        :birth_date => @assessment_request.customer_birth_date,
-        :notes => @assessment_request.notes,
+        first_name: @assessment_request.customer_first_name,
+        last_name: @assessment_request.customer_last_name,
+        middle_initial: @assessment_request.customer_middle_initial,
+        phone_number_1: @assessment_request.customer_phone,
+        birth_date: @assessment_request.customer_birth_date,
+        notes: @assessment_request.notes,
       }
-      redirect_to :controller=>:customers, :action=>:new, :customer=>customer,
-                  :assessment_request=>@assessment_request
+      redirect_to controller: :customers, action: :new, customer: customer,
+                  assessment_request: @assessment_request
     else
       customer = Customer.find(params[:customer_id])
       @assessment_request.customer = customer
@@ -122,12 +122,12 @@ class AssessmentRequestsController < ApplicationController
     authorize! :update, @assessment_request
     if params[:kase_id] == "0" then
       kase = {
-        :type => :CoachingKase,
-        :assessment_request_id => @assessment_request.id,
-        :case_manager_id => @assessment_request.submitter.id,
+        type: :CoachingKase,
+        assessment_request_id: @assessment_request.id,
+        case_manager_id: @assessment_request.submitter.id,
       }
-      redirect_to :controller => :kases, :action => :new, :kase => kase,
-                  :customer_id => @assessment_request.customer_id
+      redirect_to controller: :kases, action: :new, kase: kase,
+                  customer_id: @assessment_request.customer_id
     else
       kase = Kase.find(params[:kase_id])
       @assessment_request.kase = kase
@@ -147,15 +147,15 @@ class AssessmentRequestsController < ApplicationController
       if @assessment_request.save
         format.html do
           redirect_to current_user.is_outside_user? ? root_path : assessment_requests_path,
-                      :notice => 'Assessment request was successfully created.'
+                      notice: 'Assessment request was successfully created.'
         end
         format.xml do
-           render :xml => @assessment_request, :status => :created,
-                  :location => @assessment_request
+           render xml: @assessment_request, status: :created,
+                  location: @assessment_request
         end
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @assessment_request.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @assessment_request.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -169,12 +169,12 @@ class AssessmentRequestsController < ApplicationController
       if @assessment_request.update_attributes(assessment_request_params)
         format.html do
           redirect_to current_user.is_outside_user? ? root_path : assessment_requests_path,
-                      :notice => 'Assessment request was successfully updated.'
+                      notice: 'Assessment request was successfully updated.'
         end
         format.xml  { head :ok }
       else
-        format.html { render :action => "show" }
-        format.xml  { render :xml => @assessment_request.errors, :status => :unprocessable_entity }
+        format.html { render action: "show" }
+        format.xml  { render xml: @assessment_request.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -194,8 +194,8 @@ class AssessmentRequestsController < ApplicationController
   def download_attachment
     if @assessment_request.attachment.exists?
       send_file @assessment_request.attachment.path,
-                :type => @assessment_request.attachment_content_type,
-                :disposition => 'inline'
+                type: @assessment_request.attachment_content_type,
+                disposition: 'inline'
     else
       raise ActionController::RoutingError.new('No attachment found')
     end
@@ -204,7 +204,7 @@ class AssessmentRequestsController < ApplicationController
   private
 
   def prep_edit
-    @assignees = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
+    @assignees = [User.new(first_name: 'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
   end
   
   def assessment_request_params

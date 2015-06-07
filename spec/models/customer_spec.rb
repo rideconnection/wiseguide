@@ -105,8 +105,8 @@ RSpec.describe Customer do
     describe "assessment_requests" do
       before do
         @requests = []
-        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
-        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
+        @requests << FactoryGirl.create(:assessment_request, customer: @customer)
+        @requests << FactoryGirl.create(:assessment_request, customer: @customer)
       end
       
       it "should return the correct associated assessment requests" do
@@ -119,8 +119,8 @@ RSpec.describe Customer do
     describe "contacts association" do
       before do
         @contacts = [
-          FactoryGirl.create(:contact, :contactable => @customer),
-          FactoryGirl.create(:contact, :contactable => @customer)
+          FactoryGirl.create(:contact, contactable: @customer),
+          FactoryGirl.create(:contact, contactable: @customer)
         ]
       end
       
@@ -143,17 +143,17 @@ RSpec.describe Customer do
   describe "search" do
     if connection_supports_dmetaphone?
       before(:all) do
-        FactoryGirl.create(:customer, :first_name => "Donna",       :last_name => "Roberts")
-        FactoryGirl.create(:customer, :first_name => "Jennifer",    :last_name => "Donnings")
-        FactoryGirl.create(:customer, :first_name => "Robert",      :last_name => "Bradley Sr.")
-        FactoryGirl.create(:customer, :first_name => "Bobby",       :last_name => "O'Brady")
-        FactoryGirl.create(:customer, :first_name => "Bradley",     :last_name => "Srocco")
-        FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bobson")
-        FactoryGirl.create(:customer, :first_name => "Bob",         :last_name => "Bradley")
-        FactoryGirl.create(:customer, :first_name => "Christopher", :last_name => "Carlson")
-        FactoryGirl.create(:customer, :first_name => "Brady",       :last_name => "Robert")
-        FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bradley")
-        FactoryGirl.create(:customer, :first_name => "Mary Joe",    :last_name => "Wilson")
+        FactoryGirl.create(:customer, first_name: "Donna",       last_name: "Roberts")
+        FactoryGirl.create(:customer, first_name: "Jennifer",    last_name: "Donnings")
+        FactoryGirl.create(:customer, first_name: "Robert",      last_name: "Bradley Sr.")
+        FactoryGirl.create(:customer, first_name: "Bobby",       last_name: "O'Brady")
+        FactoryGirl.create(:customer, first_name: "Bradley",     last_name: "Srocco")
+        FactoryGirl.create(:customer, first_name: "Don",         last_name: "Bobson")
+        FactoryGirl.create(:customer, first_name: "Bob",         last_name: "Bradley")
+        FactoryGirl.create(:customer, first_name: "Christopher", last_name: "Carlson")
+        FactoryGirl.create(:customer, first_name: "Brady",       last_name: "Robert")
+        FactoryGirl.create(:customer, first_name: "Don",         last_name: "Bradley")
+        FactoryGirl.create(:customer, first_name: "Mary Joe",    last_name: "Wilson")
       end
     
       # FYI - The results for these searches may not seem predictable when run

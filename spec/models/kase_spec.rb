@@ -4,38 +4,38 @@ class TestKase < Kase; end
 
 RSpec.describe Kase do
   before do
-    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
+    @in_progress = FactoryGirl.create(:disposition, name: "In Progress")
     
     @valid_attributes = {
       # Required by base Kase class
-      :customer_id                         => 1,
-      :disposition_id                      => @in_progress.id,
-      :open_date                           => Date.current,
+      customer_id: 1,
+      disposition_id: @in_progress.id,
+      open_date: Date.current,
       
       # Not required by base class
-      :access_transit_partner_referred_to  => nil,
-      :adult_ticket_count                  => nil,
-      :agency_id                           => nil,
-      :assessment_date                     => nil,
-      :assessment_language                 => nil,
-      :assessment_request_id               => nil,
-      :case_manager_id                     => nil,
-      :case_manager_notification_date      => nil,
-      :category                            => nil,
-      :close_date                          => nil,
-      :county                              => nil,
-      :eligible_for_ticket_disbursement    => nil,
-      :funding_source_id                   => nil,
-      :honored_ticket_count                => nil,
-      :household_income                    => nil,
-      :household_income_alternate_response => nil,
-      :household_size                      => nil,
-      :household_size_alternate_response   => nil,
-      :medicaid_eligible                   => nil,
-      :referral_source                     => nil,
-      :referral_type_id                    => nil,
-      :scheduling_system_entry_required    => nil,
-      :user_id                             => nil,
+      access_transit_partner_referred_to: nil,
+      adult_ticket_count: nil,
+      agency_id: nil,
+      assessment_date: nil,
+      assessment_language: nil,
+      assessment_request_id: nil,
+      case_manager_id: nil,
+      case_manager_notification_date: nil,
+      category: nil,
+      close_date: nil,
+      county: nil,
+      eligible_for_ticket_disbursement: nil,
+      funding_source_id: nil,
+      honored_ticket_count: nil,
+      household_income: nil,
+      household_income_alternate_response: nil,
+      household_size: nil,
+      household_size_alternate_response: nil,
+      medicaid_eligible: nil,
+      referral_source: nil,
+      referral_type_id: nil,
+      scheduling_system_entry_required: nil,
+      user_id: nil,
     }
     
     @kase = TestKase.new(@valid_attributes)
@@ -55,7 +55,7 @@ RSpec.describe Kase do
     it { @kase.should_not accept_values_for(:disposition_id, nil, "") }
 
     it "cannot be 'In Progress' if case is closed" do
-      not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
+      not_in_progress = FactoryGirl.create(:disposition, name: "Not In Progress")
 
       @kase.disposition = @in_progress
       @kase.close_date = nil
@@ -90,7 +90,7 @@ RSpec.describe Kase do
     end
     
     it "should be required if the disposition is not 'In Progress'" do
-      not_in_progress = FactoryGirl.create(:disposition, :name => "Not In Progress")
+      not_in_progress = FactoryGirl.create(:disposition, name: "Not In Progress")
       
       @kase.disposition = not_in_progress
       @kase.should_not be_valid
@@ -137,8 +137,8 @@ RSpec.describe Kase do
         @kase = FactoryGirl.create(:training_kase)
         
         @contacts = [
-          FactoryGirl.create(:contact, :contactable => @kase),
-          FactoryGirl.create(:contact, :contactable => @kase)
+          FactoryGirl.create(:contact, contactable: @kase),
+          FactoryGirl.create(:contact, contactable: @kase)
         ]
       end
       
@@ -165,19 +165,19 @@ RSpec.describe Kase do
         @user_2 = FactoryGirl.create(:user)
 
         @assigned_kases = []
-        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
-        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
-        @assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_1)
+        @assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_1)
 
         @not_assigned_kases = []
-        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
-        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
-        @not_assigned_kases << FactoryGirl.create(:kase, :assigned_to => @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_2)
+        @not_assigned_kases << FactoryGirl.create(:kase, assigned_to: @user_2)
 
         @unassigned_kases = []
-        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
-        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
-        @unassigned_kases << FactoryGirl.create(:kase, :assigned_to => nil)
+        @unassigned_kases << FactoryGirl.create(:kase, assigned_to: nil)
+        @unassigned_kases << FactoryGirl.create(:kase, assigned_to: nil)
+        @unassigned_kases << FactoryGirl.create(:kase, assigned_to: nil)
         
         # We need to reload these to get the correct sub classes
         @assigned_kases     = @assigned_kases.map{|k| Kase.find(k.id)}
@@ -186,7 +186,7 @@ RSpec.describe Kase do
       end
     
       it "should define a assigned_to scope" do
-        # lambda {|user| where(:user_id => user.id) }
+        # lambda {|user| where(user_id: user.id) }
         Kase.assigned_to(@user_1).should =~ @assigned_kases
       end
 
@@ -196,22 +196,22 @@ RSpec.describe Kase do
       end
 
       it "should define a unassigned scope" do
-        # where(:user_id => nil)
+        # where(user_id: nil)
         Kase.unassigned.should =~ @unassigned_kases
       end
     end
     
     context "date range scopes" do
       before do
-        @open_kase_today        = FactoryGirl.create(:open_kase, :open_date => Date.current)
-        @open_kase_yesterday    = FactoryGirl.create(:open_kase, :open_date => Date.yesterday)
-        @open_kase_2_months_ago = FactoryGirl.create(:open_kase, :open_date => 2.months.ago)
-        @open_kase_3_months_ago = FactoryGirl.create(:open_kase, :open_date => 3.months.ago)
+        @open_kase_today        = FactoryGirl.create(:open_kase, open_date: Date.current)
+        @open_kase_yesterday    = FactoryGirl.create(:open_kase, open_date: Date.yesterday)
+        @open_kase_2_months_ago = FactoryGirl.create(:open_kase, open_date: 2.months.ago)
+        @open_kase_3_months_ago = FactoryGirl.create(:open_kase, open_date: 3.months.ago)
                 
-        @closed_kase_today        = FactoryGirl.create(:closed_kase, :open_date => Date.current, :close_date => Date.current)
-        @closed_kase_yesterday    = FactoryGirl.create(:closed_kase, :open_date => Date.yesterday, :close_date => Date.yesterday)
-        @closed_kase_2_months_ago = FactoryGirl.create(:closed_kase, :open_date => 2.months.ago, :close_date => 2.months.ago)
-        @closed_kase_3_months_ago = FactoryGirl.create(:closed_kase, :open_date => 3.months.ago, :close_date => 3.months.ago)
+        @closed_kase_today        = FactoryGirl.create(:closed_kase, open_date: Date.current, close_date: Date.current)
+        @closed_kase_yesterday    = FactoryGirl.create(:closed_kase, open_date: Date.yesterday, close_date: Date.yesterday)
+        @closed_kase_2_months_ago = FactoryGirl.create(:closed_kase, open_date: 2.months.ago, close_date: 2.months.ago)
+        @closed_kase_3_months_ago = FactoryGirl.create(:closed_kase, open_date: 3.months.ago, close_date: 3.months.ago)
 
         # We need to reload these to get the correct sub classes
         @open_kase_today          = Kase.find(@open_kase_today.id)
@@ -225,12 +225,12 @@ RSpec.describe Kase do
       end
       
       it "should define a open scope" do
-        # where(:close_date => nil)
+        # where(close_date: nil)
         Kase.open.should =~ [@open_kase_today, @open_kase_yesterday, @open_kase_2_months_ago, @open_kase_3_months_ago]
       end
 
       it "should define a opened_in_range scope" do
-        # lambda{|date_range| where(:open_date => date_range)}
+        # lambda{|date_range| where(open_date: date_range)}
         Kase.opened_in_range(2.months.ago.to_date..Date.yesterday).should =~ [@open_kase_yesterday, @closed_kase_yesterday, @open_kase_2_months_ago, @closed_kase_2_months_ago]
       end
 
@@ -245,18 +245,18 @@ RSpec.describe Kase do
       end
 
       it "should define a closed_in_range scope" do
-        # lambda{|date_range| where(:close_date => date_range)}
+        # lambda{|date_range| where(close_date: date_range)}
         Kase.closed_in_range(2.months.ago.to_date..Date.yesterday).should =~ [@closed_kase_yesterday, @closed_kase_2_months_ago]
       end
     end
 
     context "successful scope" do
       before do
-        @successful = FactoryGirl.create(:disposition, :name => "Successful")
-        @not_successful = FactoryGirl.create(:disposition, :name => "Not Successful")
+        @successful = FactoryGirl.create(:disposition, name: "Successful")
+        @not_successful = FactoryGirl.create(:disposition, name: "Not Successful")
         
-        @succesful_kase = FactoryGirl.create(:closed_kase, :disposition => @successful)
-        @unsuccesful_kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful)
+        @succesful_kase = FactoryGirl.create(:closed_kase, disposition: @successful)
+        @unsuccesful_kase = FactoryGirl.create(:closed_kase, disposition: @not_successful)
 
         # We need to reload these to get the correct sub classes
         @succesful_kase = Kase.find(@succesful_kase.id)
@@ -274,43 +274,43 @@ RSpec.describe Kase do
       skip "I don't have enough information about what these are supposed to do to setup the test properly."
       
       # before do
-      #   @successful = FactoryGirl.create(:disposition, :name => "Successful")
-      #   @not_successful = FactoryGirl.create(:disposition, :name => "Not Successful")
+      #   @successful = FactoryGirl.create(:disposition, name: "Successful")
+      #   @not_successful = FactoryGirl.create(:disposition, name: "Not Successful")
       #   
       #   debugger
       #   
       #   @three_month_follow_ups = []
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 3.months.ago)
       #   @three_month_follow_ups << kase
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful, :close_date => 3.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @not_successful, close_date: 3.months.ago)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 4.months.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => true, :three_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 4.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, three_month_unreachable: true, three_month_trip_count: nil)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 1.month.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => true, :three_month_trip_count => 3)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 1.month.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, three_month_unreachable: true, three_month_trip_count: 3)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 3.months.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :three_month_unreachable => false, :three_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 3.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, three_month_unreachable: false, three_month_trip_count: nil)
       #   @three_month_follow_ups << kase
       #   
       #   @six_month_follow_ups = []
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 6.months.ago)
       #   @six_month_follow_ups << kase
       # 
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @not_successful, :close_date => 6.months.ago)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @not_successful, close_date: 6.months.ago)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 7.months.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => true, :six_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 7.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, six_month_unreachable: true, six_month_trip_count: nil)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 5.month.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => true, :six_month_trip_count => 3)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 5.month.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, six_month_unreachable: true, six_month_trip_count: 3)
       #   
-      #   kase = FactoryGirl.create(:closed_kase, :disposition => @successful, :close_date => 6.months.ago)
-      #   kase.outcomes << FactoryGirl.create(:outcome, :six_month_unreachable => false, :six_month_trip_count => nil)
+      #   kase = FactoryGirl.create(:closed_kase, disposition: @successful, close_date: 6.months.ago)
+      #   kase.outcomes << FactoryGirl.create(:outcome, six_month_unreachable: false, six_month_trip_count: nil)
       #   @six_month_follow_ups << kase
       #   
       #   # We need to reload these to get the correct sub classes

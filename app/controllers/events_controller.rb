@@ -10,11 +10,11 @@ class EventsController < ApplicationController
 
   def new
     @event.attributes = {
-      :user => current_user, 
-      :kase_id => params[:kase_id], 
-      :date => Date.current, 
-      :start_time => "08:00 AM", 
-      :end_time => "09:00 AM"
+      user: current_user, 
+      kase_id: params[:kase_id], 
+      date: Date.current, 
+      start_time: "08:00 AM", 
+      end_time: "09:00 AM"
     }
     prep_edit
   end
@@ -26,10 +26,10 @@ class EventsController < ApplicationController
     @event.user = current_user
 
     if @event.save
-      redirect_to(@kase, :notice => 'Event was successfully created.') 
+      redirect_to(@kase, notice: 'Event was successfully created.') 
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -38,10 +38,10 @@ class EventsController < ApplicationController
     authorize! :edit, @kase
 
     if @event.update_attributes(event_params)
-      redirect_to(@kase, :notice => 'Event was successfully updated.') 
+      redirect_to(@kase, notice: 'Event was successfully updated.') 
     else
       prep_edit
-      render :action => "edit"
+      render action: "edit"
     end
   end
 

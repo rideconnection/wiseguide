@@ -1,7 +1,7 @@
-<%= form_tag surveys_path, :method=>:post do %>
+<%= form_tag surveys_path, method: :post do %>
 
 Survey (in JSON):<br/>
-  <%= text_area_tag "survey", params[:survey], {:cols=>80, :rows=>20} %>
+  <%= text_area_tag "survey", params[:survey], {cols: 80, rows: 20} %>
   <%= submit_tag "Create" %>
 <% end %>
 <br/>

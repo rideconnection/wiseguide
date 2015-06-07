@@ -6,7 +6,7 @@ class EthnicitiesController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @ethnicities }
+      format.xml  { render xml: @ethnicities }
     end
   end
 
@@ -15,7 +15,7 @@ class EthnicitiesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @ethnicity }
+      format.xml  { render xml: @ethnicity }
     end
   end
 
@@ -24,7 +24,7 @@ class EthnicitiesController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @ethnicity }
+      format.xml  { render xml: @ethnicity }
     end
   end
 
@@ -37,11 +37,11 @@ class EthnicitiesController < ApplicationController
   def create
     respond_to do |format|
       if @ethnicity.save
-        format.html { redirect_to(@ethnicity, :notice => 'Ethnicity was successfully created.') }
-        format.xml  { render :xml => @ethnicity, :status => :created, :location => @ethnicity }
+        format.html { redirect_to(@ethnicity, notice: 'Ethnicity was successfully created.') }
+        format.xml  { render xml: @ethnicity, status: :created, location: @ethnicity }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @ethnicity.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @ethnicity.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class EthnicitiesController < ApplicationController
   def update
     respond_to do |format|
       if @ethnicity.update_attributes(ethnicity_params)
-        format.html { redirect_to(@ethnicity, :notice => 'Ethnicity was successfully updated.') }
+        format.html { redirect_to(@ethnicity, notice: 'Ethnicity was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @ethnicity.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @ethnicity.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,7 +66,7 @@ class EthnicitiesController < ApplicationController
     @ethnicity.destroy
 
     respond_to do |format|
-      format.html { redirect_to(ethnicities_url, :notice => 'Ethnicity was successfully deleted.') }
+      format.html { redirect_to(ethnicities_url, notice: 'Ethnicity was successfully deleted.') }
       format.xml  { head :ok }
     end
   end

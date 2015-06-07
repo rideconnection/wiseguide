@@ -6,7 +6,7 @@ class ReferralTypesController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @referral_types }
+      format.xml  { render xml: @referral_types }
     end
   end
 
@@ -15,7 +15,7 @@ class ReferralTypesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @referral_type }
+      format.xml  { render xml: @referral_type }
     end
   end
 
@@ -24,7 +24,7 @@ class ReferralTypesController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @referral_type }
+      format.xml  { render xml: @referral_type }
     end
   end
 
@@ -37,11 +37,11 @@ class ReferralTypesController < ApplicationController
   def create
     respond_to do |format|
       if @referral_type.save
-        format.html { redirect_to(@referral_type, :notice => 'Referral type was successfully created.') }
-        format.xml  { render :xml => @referral_type, :status => :created, :location => @referral_type }
+        format.html { redirect_to(@referral_type, notice: 'Referral type was successfully created.') }
+        format.xml  { render xml: @referral_type, status: :created, location: @referral_type }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @referral_type.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @referral_type.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class ReferralTypesController < ApplicationController
   def update
     respond_to do |format|
       if @referral_type.update_attributes(referral_type_params)
-        format.html { redirect_to(@referral_type, :notice => 'Referral type was successfully updated.') }
+        format.html { redirect_to(@referral_type, notice: 'Referral type was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @referral_type.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @referral_type.errors, status: :unprocessable_entity }
       end
     end
   end

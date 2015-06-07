@@ -71,18 +71,18 @@ def create_customers
   
   20.times do
     FactoryGirl.create(:customer,
-      :first_name     => FFaker::Name.first_name,
-      :last_name      => FFaker::Name.last_name,
-      :email          => FFaker::Internet.email,
-      :ethnicity_id   => Ethnicity.all.sample.id,
-      :birth_date     => "#{1930+rand(50)}-#{1+rand(12)}-#{1+rand(28)}",
-      :gender         => ::ALL_GENDERS.sample[1],
-      :phone_number_1 => "503-555-#{1000+rand(9000)}",
-      :address        => "#{1+rand(500)} #{street_names.sample}",
-      :city           => 'Portland',
-      :state          => 'OR',
-      :zip            => "9720#{1+rand(9)}",
-      :county         => County.all.sample.name
+      first_name: FFaker::Name.first_name,
+      last_name: FFaker::Name.last_name,
+      email: FFaker::Internet.email,
+      ethnicity_id: Ethnicity.all.sample.id,
+      birth_date: "#{1930+rand(50)}-#{1+rand(12)}-#{1+rand(28)}",
+      gender: ::ALL_GENDERS.sample[1],
+      phone_number_1: "503-555-#{1000+rand(9000)}",
+      address: "#{1+rand(500)} #{street_names.sample}",
+      city: 'Portland',
+      state: 'OR',
+      zip: "9720#{1+rand(9)}",
+      county: County.all.sample.name
     )
   end
 end

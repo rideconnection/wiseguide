@@ -14,13 +14,13 @@ RSpec.describe ReferralDocumentResource do
   context "associations" do    
     it "should required a valid, persisted resource" do
       # With a nil resource
-      doc_resource = FactoryGirl.build(:referral_document_resource, :resource => nil)
+      doc_resource = FactoryGirl.build(:referral_document_resource, resource: nil)
       doc_resource.valid?.should be_falsey
       doc_resource.errors.keys.should include(:resource)
       doc_resource.errors[:resource].should include("can't be blank")
       
       # With an invalid resource
-      resource = FactoryGirl.build(:resource, :name => nil)
+      resource = FactoryGirl.build(:resource, name: nil)
       doc_resource.resource = resource
       doc_resource.valid?.should be_falsey
       doc_resource.errors.keys.should include(:resource)

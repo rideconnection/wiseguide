@@ -1,6 +1,6 @@
 <h1>Contacts</h1>
 <% if can? :edit, @kase %>
-  <%= link_to "Add", new_contact_path(:contact => {:contactable_type => @kase.class.name, :contactable_id => @kase.id}), :class => :add %>
+  <%= link_to "Add", new_contact_path(contact: {:contactable_type => @kase.class.name, contactable_id: @kase.id}), class: :add %>
 <% end %>
 
 <table>
@@ -13,7 +13,7 @@
         <td><%= contact.description %></td>
         <td><%= link_to "Details",
                   can?(:update, contact) ? edit_contact_path(contact) : contact,
-                  :class=>"details" %></td>
+                  class: "details" %></td>
       </tr>
       <% if contact.show_full_notes? %>
         <tr class=<%= cycle %>>

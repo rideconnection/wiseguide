@@ -4,25 +4,25 @@ Then /^I should see the following users listed:$/ do |table|
 
   within('table#user_management tbody') do 
     table.hashes.each do |row|    
-      find('tr', :text => row[:email]).should have_content(row[:name])  
-      find('tr', :text => row[:email]).should have_content(row[:role])
+      find('tr', text: row[:email]).should have_content(row[:name])  
+      find('tr', text: row[:email]).should have_content(row[:role])
     end
   end
 end
 
 Then /^I should see a change password link for myself$/ do
-  find('tr', :text => @current_user.email).should have_content("Change Password")  
+  find('tr', text: @current_user.email).should have_content("Change Password")  
 end
 
 Then /^I should not see a change password link for anyone else$/ do
-  find('tr', :text => @case_manager.email).should_not have_content("Change Password")
-  find('tr', :text => @viewer.email).should_not have_content("Change Password")
-  find('tr', :text => @trainer.email).should_not have_content("Change Password")
-  find('tr', :text => @admin.email).should_not have_content("Change Password")
+  find('tr', text: @case_manager.email).should_not have_content("Change Password")
+  find('tr', text: @viewer.email).should_not have_content("Change Password")
+  find('tr', text: @trainer.email).should_not have_content("Change Password")
+  find('tr', text: @admin.email).should_not have_content("Change Password")
 end
 
 Then /^my change password link should take me to the change password form$/ do
-  find('td', :text => "Change Password").should have_selector("a.change-password[href='#{show_change_password_path}']")
+  find('td', text: "Change Password").should have_selector("a.change-password[href='#{show_change_password_path}']")
 end
 
 Then /^I should( not)? see a "New User" link$/ do |negation|
@@ -36,14 +36,14 @@ Then /^manually going to the new user page should show me an error$/ do
 end
 
 Then /^I should not see a form to change my role$/ do
-  find('tr', :text => @current_user.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(:id => @current_user.id)}\"]")
+  find('tr', text: @current_user.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(id: @current_user.id)}\"]")
 end
 
 Then /^I should not see see a form to change the role of anyone else$/ do
-  find('tr', :text => @case_manager.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(:id => @case_manager.id)}\"]")
-  find('tr', :text => @viewer.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(:id => @viewer.id)}\"]")
-  find('tr', :text => @trainer.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(:id => @trainer.id)}\"]")
-  find('tr', :text => @admin.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(:id => @admin.id)}\"]")
+  find('tr', text: @case_manager.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(id: @case_manager.id)}\"]")
+  find('tr', text: @viewer.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(id: @viewer.id)}\"]")
+  find('tr', text: @trainer.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(id: @trainer.id)}\"]")
+  find('tr', text: @admin.email).should_not have_selector("form.edit_user[action=\"#{update_user_path(id: @admin.id)}\"]")
 end
 
 Then /^the "([^"]*)" link should take me to the new user form$/ do |arg1|
@@ -56,10 +56,10 @@ Then /^I should be able to complete the New User form using the following data:$
 
   row = table.hashes.first
   within('form#new_user') do
-    fill_in 'user[first_name]', :with => row[:first_name]
-    fill_in 'user[last_name]', :with => row[:last_name]
-    fill_in 'user[email]', :with => row[:email]
-    select row[:organization], :from => 'user[organization_id]'
+    fill_in 'user[first_name]', with: row[:first_name]
+    fill_in 'user[last_name]', with: row[:last_name]
+    fill_in 'user[email]', with: row[:email]
+    select row[:organization], from: 'user[organization_id]'
     click_button 'Create User'
   end
 
@@ -82,18 +82,18 @@ end
 
 Then /^I should see the new user on the Users index page$/ do
   visit(users_path)
-  find('tr', :text => @user.email).should have_content(@user.display_name)  
+  find('tr', text: @user.email).should have_content(@user.display_name)  
   # TODO
-  # find('tr', :text => @user.email).should have_content(@user.role)
+  # find('tr', text: @user.email).should have_content(@user.role)
 end
 
 Then /^I should see a form to change the admin user's role$/ do
-  find('tr', :text => @admin.email).should have_selector("form.edit_user[action=\"#{update_user_path(:id => @admin.id)}\"]")
+  find('tr', text: @admin.email).should have_selector("form.edit_user[action=\"#{update_user_path(id: @admin.id)}\"]")
 end
 
 Then /^I should be able to change the admin user's role to "Viewer"$/ do
-  within("form.edit_user[action=\"#{update_user_path(:id => @admin.id)}\"]") do
-    select "Viewer", :from => "user[level]"
+  within("form.edit_user[action=\"#{update_user_path(id: @admin.id)}\"]") do
+    select "Viewer", from: "user[level]"
     click_button 'Change role'
   end
   
@@ -102,16 +102,16 @@ Then /^I should be able to change the admin user's role to "Viewer"$/ do
 end
 
 Then /^I should see the admin user role listed as "([^"]+)" on the Users index page$/ do |role|
-  find('tr', :text => @admin.email).should have_content(@admin.display_name)  
-  find('tr', :text => @admin.email).should have_content(role)
+  find('tr', text: @admin.email).should have_content(@admin.display_name)  
+  find('tr', text: @admin.email).should have_content(role)
 end
 
 Then /^I should see a button to mark the admin user as deleted$/ do
-  page.should have_selector("form.button_to[action=\"#{user_path(:id => @admin.id)}\"][method=post] input.delete")
+  page.should have_selector("form.button_to[action=\"#{user_path(id: @admin.id)}\"][method=post] input.delete")
 end
 
 Then /^I should be able to click the button to delete the admin user$/ do
-  within("form.button_to[action=\"#{user_path(:id => @admin.id)}\"][method=post]") do
+  within("form.button_to[action=\"#{user_path(id: @admin.id)}\"][method=post]") do
     button = find("input.delete")
     button['data-confirm'].should eql("Are you sure you want to mark this user as deleted?")
     button['value'].should eql("Delete")

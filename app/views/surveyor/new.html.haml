@@ -1,5 +1,5 @@
-= render 'shared/breadcrumbs', :target => @kase.response_sets.new, :name => 'Assessment'
-= render :partial=>"/kases/surveys", :locals => {:title => ""}
+= render 'shared/breadcrumbs', target: @kase.response_sets.new, name: 'Assessment'
+= render partial: "/kases/surveys", locals: {title: ""}
 
 #surveyor
   #survey_list
@@ -9,7 +9,7 @@
       %ol.section
         - @surveys_by_access_code.each do |access_code, surveys|
           %li
-            = form_tag surveyor.take_survey_path(:survey_code => access_code) do
+            = form_tag surveyor.take_survey_path(survey_code: access_code) do
               = hidden_field_tag :kase_id, @kase.id
               = hidden_field_tag :surveyor_javascript_enabled, false
               = surveys.first.translation(I18n.locale)[:title]

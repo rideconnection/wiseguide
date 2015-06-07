@@ -6,7 +6,7 @@ class CountiesController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @counties }
+      format.xml  { render xml: @counties }
     end
   end
 
@@ -15,7 +15,7 @@ class CountiesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @county }
+      format.xml  { render xml: @county }
     end
   end
 
@@ -24,7 +24,7 @@ class CountiesController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @county }
+      format.xml  { render xml: @county }
     end
   end
 
@@ -37,11 +37,11 @@ class CountiesController < ApplicationController
   def create
     respond_to do |format|
       if @county.save
-        format.html { redirect_to(@county, :notice => 'County was successfully created.') }
-        format.xml  { render :xml => @county, :status => :created, :location => @county }
+        format.html { redirect_to(@county, notice: 'County was successfully created.') }
+        format.xml  { render xml: @county, status: :created, location: @county }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @county.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @county.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class CountiesController < ApplicationController
   def update
     respond_to do |format|
       if @county.update_attributes(county_params)
-        format.html { redirect_to(@county, :notice => 'County was successfully updated.') }
+        format.html { redirect_to(@county, notice: 'County was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @county.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @county.errors, status: :unprocessable_entity }
       end
     end
   end

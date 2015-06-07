@@ -32,14 +32,14 @@
     <%= f.label :organization_type %><br />
     <%= select(:organization, :organization_type, 
                options_for_select(Organization::ORGANIZATION_TYPES.values.collect{|t| [t[:name], t[:id]]}, @organization.organization_type),
-               {:prompt => true},
-               {:onchange => "updateParentVisible();"}) %>
+               {prompt: true},
+               {onchange: "updateParentVisible();"}) %>
   </div>
   <div class="field" id="organization-parent">
     <%= f.label :parent_id, "Parent Organization (Government Body)"  %><br />
     <%= collection_select(:organization, :parent_id,
                           Organization.find_all_by_organization_type(Organization::ORGANIZATION_TYPES[:government][:id]),
-                          :id, :name, {:include_blank => true}) %>
+                          :id, :name, {include_blank: true}) %>
   </div>
   <div class="actions">
     <%= f.submit %>

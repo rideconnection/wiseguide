@@ -1,10 +1,10 @@
 <%= nested_form_for(@referral_document) do |f| %>
   <%= f.hidden_field :kase_id %>
-  <%= render "shared/error_messages", :target => @referral_document %>
+  <%= render "shared/error_messages", target: @referral_document %>
 
   <fieldset>
     <%= f.fields_for :referral_document_resources do |builder| %>
-      <%= render 'referral_document_resource_fields', :f => builder %>
+      <%= render 'referral_document_resource_fields', f: builder %>
     <% end %>
     <p><%= f.link_to_add "Add Resource", :referral_document_resources %>
   </fieldset>

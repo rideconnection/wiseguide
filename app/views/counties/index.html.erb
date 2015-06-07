@@ -13,7 +13,7 @@
     <td><%= county.name %></td>
     <td><%= link_to 'Show', county %></td>
     <td><%= link_to 'Edit', edit_county_path(county) %></td>
-    <td><%= link_to 'Destroy', county, data: {confirm: 'Are you sure?'}, :method => :delete %></td>
+    <td><%= link_to 'Destroy', county, data: {confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>

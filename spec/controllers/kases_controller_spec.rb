@@ -127,7 +127,7 @@ RSpec.describe KasesController do
         
     context "CoachingKases" do
       before(:each) do
-        get :index, {:kase => {"type" => 'CoachingKase'}}
+        get :index, {kase: {"type" => 'CoachingKase'}}
       end
       
       it "should assign only coaching kases to @kases" do
@@ -143,14 +143,14 @@ RSpec.describe KasesController do
       end
     
       it "should assign @data_entry_needed" do
-        # @data_entry_needed = @kase.open.where(:scheduling_system_entry_required => true)
+        # @data_entry_needed = @kase.open.where(scheduling_system_entry_required: true)
         assigns(:data_entry_needed).should =~ @_data_entry_needed
       end
     end
     
     context "TrainingKases" do
       before(:each) do
-        get :index, {:kase => {"type" => 'TrainingKase'}}
+        get :index, {kase: {"type" => 'TrainingKase'}}
       end
       
       it "should assign only training kases to @kases" do
@@ -168,7 +168,7 @@ RSpec.describe KasesController do
     
     context "CustomerServiceKases" do
       before(:each) do
-        get :index, {:kase => {"type" => 'CustomerServiceKase'}}
+        get :index, {kase: {"type" => 'CustomerServiceKase'}}
       end
       
       it "should assign only customer service kases to @kases" do

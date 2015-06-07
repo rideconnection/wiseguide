@@ -4,23 +4,23 @@ end
 
 def fill_common_kase_attributes
   # Use 'Yesterday' for the open date so that we can close it 'Today' in other tests
-  fill_in "Opened", :with => Date.yesterday.strftime('%Y-%m-%d')
-  select @referral_type.name, :from => "Referral Source Type"
+  fill_in "Opened", with: Date.yesterday.strftime('%Y-%m-%d')
+  select @referral_type.name, from: "Referral Source Type"
 end
 
 def fill_common_open_unassigned_kase_attributes  
   fill_common_kase_attributes
-  select "Unassigned", :from => "Assigned to"
-  select "In Progress", :from => "Disposition"
-  fill_in "Household size", :with => "1"
-  fill_in "Household income", :with => "1"
+  select "Unassigned", from: "Assigned to"
+  select "In Progress", from: "Disposition"
+  fill_in "Household size", with: "1"
+  fill_in "Household income", with: "1"
 end
 
 When /^I complete the required fields for a coaching case$/ do
   fill_common_open_unassigned_kase_attributes
-  select @case_manager.email, :from => "Case Manager"
-  fill_in "Assessment Language", :with => "Pirate"
-  fill_in "Assessment Date", :with => Date.yesterday.strftime('%Y-%m-%d')
+  select @case_manager.email, from: "Case Manager"
+  fill_in "Assessment Language", with: "Pirate"
+  fill_in "Assessment Date", with: Date.yesterday.strftime('%Y-%m-%d')
 end
 
 When /^I submit the form to create the (coaching|training) case$/ do |kase_type|
@@ -43,10 +43,10 @@ end
 
 Then /^I should be able to create a new open, unassigned training case for the customer$/ do
   fill_common_open_unassigned_kase_attributes
-  fill_in "Referral source", :with => "Source"
-  select @funding_source.name, :from => "Default Funding Source"
-  select Kase::VALID_COUNTIES.keys.first, :from => "County of Service"
-  select "Email", :from => "Referral mechanism"
+  fill_in "Referral source", with: "Source"
+  select @funding_source.name, from: "Default Funding Source"
+  select Kase::VALID_COUNTIES.keys.first, from: "County of Service"
+  select "Email", from: "Referral mechanism"
   step "I submit the form to create the training case"
   # Get the newly generated ID so we can find the record later
   @kase = TrainingKase.order("id DESC").limit(1).first
@@ -76,7 +76,7 @@ Then /^I should( not)? see the case listed in the "([^"]*)" section of the (Coac
 end
 
 Given /^an unassigned open training case exists$/ do
-  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => nil)
+  @kase = FactoryGirl.create(:open_training_kase, assigned_to: nil)
   @customer = @kase.customer
 end
 
@@ -89,7 +89,7 @@ Given /^an open training case exists$/ do
 end
 
 Given /^an open coaching case exists belonging to the customer and assigned to the case manager$/ do
-  @kase = FactoryGirl.create(:open_coaching_kase, :customer => @customer.first)
+  @kase = FactoryGirl.create(:open_coaching_kase, customer: @customer.first)
   @kase = Kase.find(@kase.id) # Reload to get the right STI model
   @kase.case_manager = @case_manager
   @kase.save
@@ -110,7 +110,7 @@ Given /^an open coaching case exists with no case manager$/ do
 end
 
 Given /^a ([^ ]+) referral type exists$/ do |type|
-  @referral_type = FactoryGirl.create(:referral_type, :name => "#{type} Referral Type")
+  @referral_type = FactoryGirl.create(:referral_type, name: "#{type} Referral Type")
 end
 
 When /^I click through to the case details$/ do
@@ -118,7 +118,7 @@ When /^I click through to the case details$/ do
 end
 
 Then /^I should be able to assign the case to myself$/ do
-  select @current_user.display_name, :from => "Assigned to"
+  select @current_user.display_name, from: "Assigned to"
   step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)
 end
@@ -140,7 +140,7 @@ Given /^another trainer exists$/ do
 end
 
 Then /^I should be able to assign the case to the other trainer$/ do
-  select @other_trainer.display_name, :from => "Assigned to"
+  select @other_trainer.display_name, from: "Assigned to"
   step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)  
 end
@@ -154,14 +154,14 @@ Then /^the other trainer should( not)? be listed as the case assignee on the (Co
 end
 
 Given /^an open training case exists and is assigned to me$/ do
-  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @current_user)
+  @kase = FactoryGirl.create(:open_training_kase, assigned_to: @current_user)
   @customer = @kase.customer
 end
 
 Then /^I should be able to close the case$/ do
   # Close date can't be later than today but must be later than (and not equal to) the open date
-  fill_in "Closed", :with => Date.current.strftime('%Y-%m-%d')
-  select "Successful", :from => "Disposition"
+  fill_in "Closed", with: Date.current.strftime('%Y-%m-%d')
+  select "Successful", from: "Disposition"
   step %Q(I submit the form to update the case)
   step %Q(I should see a confirmation message)  
 end
@@ -185,7 +185,7 @@ Then /^I should( not)? see the case listed as "([^"]*)" on the customer(?:'s) pr
 end
 
 Given /^an open training case exists and is assigned to the other trainer$/ do
-  @kase = FactoryGirl.create(:open_training_kase, :assigned_to => @other_trainer)
+  @kase = FactoryGirl.create(:open_training_kase, assigned_to: @other_trainer)
   @customer = @kase.customer
 end
 

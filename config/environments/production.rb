@@ -79,7 +79,7 @@ Wiseguide::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Needed for sending new users' confirmation email
-  config.action_mailer.default_url_options = { :host => 'apps.rideconnection.org/wiseguide' } # different than production
+  config.action_mailer.default_url_options = { host: 'apps.rideconnection.org/wiseguide' } # different than production
 end
 
 # Turn off auto TLS for e-mail

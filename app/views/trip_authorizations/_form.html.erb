@@ -15,15 +15,15 @@
 
   <div class="field">
     <%= f.label :allowed_trips_per_month %><br />
-    <%= f.number_field :allowed_trips_per_month, :min => 1, :max => 999 %>
+    <%= f.number_field :allowed_trips_per_month, min: 1, max: 999 %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br />
-    <%= f.text_field :start_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+    <%= f.text_field :start_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br />
-    <%= f.text_field :end_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+    <%= f.text_field :end_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
   </div>
   <div class="actions">
     <%= f.submit %>

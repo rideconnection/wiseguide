@@ -1,7 +1,7 @@
 <% if can?(:read, ReferralDocument) && can?(:read, ReferralDocumentResource) %>
   <h1>Referral Documents</h1>
   <% if can?(:edit, @kase) %>
-    <%= link_to "Add", new_referral_document_path(:kase_id=>@kase.id), :class => "add" %>
+    <%= link_to "Add", new_referral_document_path(kase_id: @kase.id), class: "add" %>
   <% end %>
   <table>
     <!-- thead>
@@ -20,13 +20,13 @@
             <span title="Last Printed At"><%= referral_document.last_printed_at.strftime "%Y-%m-%d" unless referral_document.last_printed_at.blank? %></span>
           </td>
           <td>
-            <%= link_to "Details", referral_document_path(referral_document), :class=>"details" %>
+            <%= link_to "Details", referral_document_path(referral_document), class: "details" %>
           </td>
           <td>
-            <%= link_to "Edit", edit_referral_document_path(referral_document), :class=>"edit" %>
+            <%= link_to "Edit", edit_referral_document_path(referral_document), class: "edit" %>
           </td>
           <td>
-            <%= link_to "", referral_document, data: {confirm: 'Are you sure you want to delete this referral document?'}, :method => :delete, :class => "delete referral_document" %>
+            <%= link_to "", referral_document, data: {confirm: 'Are you sure you want to delete this referral document?'}, method: :delete, class: "delete referral_document" %>
           </td>
         </tr>
       <% end %>

@@ -4,7 +4,7 @@ class UsersController < Devise::SessionsController
   # GET sign_in
   def new
     if User.count == 0
-      return redirect_to :action=>:show_init
+      return redirect_to action: :show_init
     end
 
     @user = User.new
@@ -30,7 +30,7 @@ class UsersController < Devise::SessionsController
       redirect_to users_path
     else
       flash[:notice] = "Could not create user"
-      render :action=>:new_user
+      render action: :new_user
     end
   end
 
@@ -63,19 +63,19 @@ class UsersController < Devise::SessionsController
 
   def change_password
     if current_user.update_password(change_password_params)
-      sign_in(current_user, :bypass => true)
+      sign_in(current_user, bypass: true)
       flash[:notice] = "Password changed"
       redirect_to root_path
     else
       flash.now[:alert] = "Error updating password"
-      render :action=>:show_change_password
+      render action: :show_change_password
     end
   end
 
   def show_init
     #create initial user
     if User.count > 0
-      return redirect_to :action=>:new
+      return redirect_to action: :new
     end
     @user = User.new
   end
@@ -83,14 +83,14 @@ class UsersController < Devise::SessionsController
 
   def init
     if User.count > 0
-      return redirect_to :action=>:new
+      return redirect_to action: :new
     end
     @user = User.new user_params
     @user.level = 100
     @user.save!
 
     flash[:notice] = "OK, now sign in"
-    redirect_to :action=>:new
+    redirect_to action: :new
   end
   
   def sign_out
@@ -109,7 +109,7 @@ class UsersController < Devise::SessionsController
     @user.level = -1
     @user.encrypted_password = "x"
     @user.save!
-    redirect_to :users, :notice => "User #{@user.email} successfully marked deleted."
+    redirect_to :users, notice: "User #{@user.email} successfully marked deleted."
   end
   
   private

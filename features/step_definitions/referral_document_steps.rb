@@ -3,8 +3,8 @@ When /^I click on the link to create a new referral document$/ do
 end
 
 Then /^I should be able to complete the referral document form$/ do
-  select @resource.name, :from => "Add resource"
-  fill_in "Resource note", :with => "Overnumerousness"
+  select @resource.name, from: "Add resource"
+  fill_in "Resource note", with: "Overnumerousness"
   click_button "Save"
   
   # Get the newly generated ID so we can find the record later
@@ -21,7 +21,7 @@ Then /^I should( not)? see the referral document under the Referral Documents se
 end
 
 Given /^a referral document exists for the existing case$/ do
-  @referral_document = FactoryGirl.create(:referral_document, :kase => @kase)
+  @referral_document = FactoryGirl.create(:referral_document, kase: @kase)
 end
 
 When /^I click on the link to edit the referral document$/ do
@@ -31,8 +31,8 @@ end
 Then /^I should be able to add a new resource to the referral document form$/ do  
   click_link "Add Resource"
   within(all("fieldset p.fields").last) do
-    select @resource.name, :from => "Add resource"
-    fill_in "Resource note", :with => "Tnetennba"
+    select @resource.name, from: "Add resource"
+    fill_in "Resource note", with: "Tnetennba"
   end
   click_button "Save"
   @confirmation_message = 'Referral document was successfully updated.'
@@ -53,7 +53,7 @@ Then /^I should not see the new resource listed when I click on the referral doc
 end
 
 Given /^the resource is assigned to the referral document as a second resource$/ do
-  @referral_document.referral_document_resources.create(:resource => @resource)
+  @referral_document.referral_document_resources.create(resource: @resource)
 end
 
 Then /^I should be able to delete the second resource$/ do

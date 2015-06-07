@@ -23,9 +23,9 @@ When /^I click on the link to add a contact event$/ do
 end
 
 def fill_common_contact_event_attributes
-  fill_in "Date", :with => Time.current
-  select 'Phone', :from => "Method"
-  fill_in "Description", :with => "My Contact"
+  fill_in "Date", with: Time.current
+  select 'Phone', from: "Method"
+  fill_in "Description", with: "My Contact"
   click_button 'Save'
   # Get the newly generated contact ID so we can find the record later
   @contact_event = Contact.last

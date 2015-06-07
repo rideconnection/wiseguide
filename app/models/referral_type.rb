@@ -11,5 +11,5 @@ class ReferralType < ActiveRecord::Base
 
   validates_format_of :name, 
     :with => /\A(CC|TC).*\Z/, 
-    :message => 'must begin with either "CC" or "TC"'
+    message: 'must begin with either "CC" or "TC"'
 end

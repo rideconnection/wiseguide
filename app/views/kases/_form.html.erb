@@ -66,7 +66,7 @@
     <li>
       <%= f.label :open_date, "Opened" %>
       <% if can? :edit, @kase %>
-        <%= f.text_field :open_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+        <%= f.text_field :open_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
       <% else %>
         <%= @kase.open_date.strftime("%v") unless @kase.open_date.blank? %>&nbsp;
       <% end %>
@@ -85,7 +85,7 @@
       <li>
         <%= f.label :category %>
         <% if can? :edit, @kase %>
-          <%= f.select :category, CustomerServiceKase::CATEGORY, :prompt => '<Select Option>' %>
+          <%= f.select :category, CustomerServiceKase::CATEGORY, prompt: '<Select Option>' %>
         <% else %>
           <%= @kase.category %>&nbsp;
         <% end %>
@@ -115,7 +115,7 @@
       <li>
         <%= f.label :referral_type_id, "Referral Source Type" %>
         <% if can? :edit, @kase %>
-          <%= f.collection_select :referral_type_id, @referral_types, :id, :name, :prompt => '<Select Option>' %>
+          <%= f.collection_select :referral_type_id, @referral_types, :id, :name, prompt: '<Select Option>' %>
         <% else %>
           <%= @kase.referral_type.name unless @kase.referral_type.blank? %>&nbsp;
         <% end %>
@@ -127,7 +127,7 @@
         <li>
           <%= f.label :referral_mechanism %>
           <% if can? :edit, @kase %>
-            <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {:prompt => "<Select Type>"} %>
+            <%= f.select :referral_mechanism, TrainingKase::REFERRAL_MECHANISM_OPTIONS, {prompt: "<Select Type>"} %>
           <% else %>
             <%= @kase.referral_mechanism %>&nbsp;
           <% end %>
@@ -144,7 +144,7 @@
       <li>
         <%= f.label :county, "County of Service" %>
         <% if can? :edit, @kase %>
-          <%= f.select :county, Kase::VALID_COUNTIES, {:prompt => "<Select County>"} %>
+          <%= f.select :county, Kase::VALID_COUNTIES, {prompt: "<Select County>"} %>
         <% else %>
           <%= @kase.county %>&nbsp;
         <% end %>
@@ -153,7 +153,7 @@
       <li>
         <%= f.label :funding_source_id, "Default Funding Source" %>
         <% if can? :edit, @kase %>
-          <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, :prompt => '<Select Option>' %>
+          <%= f.collection_select :funding_source_id, @funding_sources, :id, :name, prompt: '<Select Option>' %>
         <% else %>
           <%= @kase.funding_source.name unless @kase.funding_source.blank? %>&nbsp;
         <% end %>
@@ -164,7 +164,7 @@
       <li>
         <%= f.label :case_manager_id, "Case Manager" %>
         <% if can? :edit, @kase %>
-          <%= f.collection_select :case_manager_id, @case_managers, :id, :email, :prompt => (@kase.new_record? ? "<Select Case Manager>" : false), :include_blank => "N/A" %>
+          <%= f.collection_select :case_manager_id, @case_managers, :id, :email, :prompt => (@kase.new_record? ? "<Select Case Manager>" : false), include_blank: "N/A" %>
         <% else %>
           <%= @kase.case_manager.display_name unless @kase.case_manager.blank? %>&nbsp;
         <% end %>
@@ -187,7 +187,7 @@
       <li>
         <%= f.label :assessment_date, "Assessment Date" %>
         <% if can? :edit, @kase %>
-          <%= f.text_field :assessment_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+          <%= f.text_field :assessment_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
         <% else %>
           <%= @kase.assessment_date.strftime("%v") unless @kase.assessment_date.blank? %>&nbsp;
         <% end %>
@@ -198,7 +198,7 @@
         <% if can? :edit, @kase %>
           <% [ [ 'Not asked', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
             <%= f.radio_button :medicaid_eligible, option[1] %>
-            <%= f.label :medicaid_eligible, option[0], :value => option[1], :class => 'options' %>
+            <%= f.label :medicaid_eligible, option[0], value: option[1], class: 'options' %>
           <% end %><br><br>
         <% else %>
           <%= @kase.medicaid_eligible_description %>&nbsp;
@@ -218,7 +218,7 @@
     <li>
       <%= f.label :close_date, "Closed" %>
       <% if can? :edit, @kase %>
-        <%= f.text_field :close_date, :class => "datepicker", :placeholder => "yyyy-mm-dd" %>
+        <%= f.text_field :close_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
       <% else %>
         <%= @kase.close_date.strftime("%v") unless @kase.close_date.blank? %>&nbsp;
       <% end %>
@@ -241,8 +241,8 @@
       <li>
         <%= f.label :household_size %>
         <% if can? :edit, @kase %>
-          <%= f.text_field :household_size, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or 
-          <%= f.select :household_size_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
+          <%= f.text_field :household_size, size: 10, maxlength: 11, placeholder: "ex: 12345" %> or 
+          <%= f.select :household_size_alternate_response, %w( Unknown Refused ), {include_blank: ""} %>
         <% else %>
           <%= @kase.household_size unless @kase.household_size.blank? %>
           <%= @kase.household_size_alternate_response unless @kase.household_size_alternate_response.blank? %>&nbsp;
@@ -252,8 +252,8 @@
       <li>
         <%= f.label :household_income %>
         <% if can? :edit, @kase %>
-          <%= f.text_field :household_income, :size => 10, :maxlength => 11, :placeholder => "ex: 12345" %> or
-          <%= f.select :household_income_alternate_response, %w( Unknown Refused ), {:include_blank => ""} %>
+          <%= f.text_field :household_income, size: 10, maxlength: 11, placeholder: "ex: 12345" %> or
+          <%= f.select :household_income_alternate_response, %w( Unknown Refused ), {include_blank: ""} %>
         <% else %>
           <%= @kase.household_income unless @kase.household_income.blank? %>
           <%= @kase.household_income_alternate_response unless @kase.household_income_alternate_response.blank? %>&nbsp;
@@ -267,7 +267,7 @@
         <% if can? :edit, @kase %>
           <% [ [ 'Undetermined', '' ], [ 'No', false ], [ 'Yes', true ] ].each do |option| %>
             <%= f.radio_button :eligible_for_ticket_disbursement, option[1] %>
-            <%= f.label :eligible_for_ticket_disbursement, option[0], :value => option[1], :class => 'options' %>
+            <%= f.label :eligible_for_ticket_disbursement, option[0], value: option[1], class: 'options' %>
           <% end %>
         <% else %>
           <%= @kase.eligible_for_ticket_disbursement_description %>&nbsp;
@@ -277,7 +277,7 @@
       <li>
         <%= f.label :adult_ticket_count %>
         <% if can? :edit, @kase %>
-          <%= f.text_field :adult_ticket_count, :size => 10 %>
+          <%= f.text_field :adult_ticket_count, size: 10 %>
         <% else %>
           <%= @kase.adult_ticket_count %>&nbsp;
         <% end %>
@@ -286,7 +286,7 @@
       <li>
         <%= f.label :honored_ticket_count %>
         <% if can? :edit, @kase %>
-          <%= f.text_field :honored_ticket_count, :size => 10 %>
+          <%= f.text_field :honored_ticket_count, size: 10 %>
         <% else %>
           <%= @kase.honored_ticket_count %>&nbsp;
         <% end %>
@@ -313,7 +313,7 @@
 <% end %>
 
 <% if @kase.type == "CoachingKase" && @kase.persisted? && can?(:edit, @kase) %>
-  <%= form_tag(notify_manager_kase_path(@kase), :id => "notify_case_manager") do %>
+  <%= form_tag(notify_manager_kase_path(@kase), id: "notify_case_manager") do %>
     <div class="actions">
       <%= submit_tag "Email case manager" %>
     </div>

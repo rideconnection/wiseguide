@@ -33,7 +33,7 @@
   }
 </script>
 
-<%= form_for @user, :url=>url_for(:action=>:create_user) do |f| %>
+<%= form_for @user, url: url_for(action: :create_user) do |f| %>
   <% if @user.errors %>
     <div id="error_explanation">
       <ul>
@@ -70,7 +70,7 @@
       <li class="field">
         <%= f.label :organization_id %>
         <%= collection_select(:user, :organization_id, Organization.all, :id,
-                              :name, :prompt => true) %>
+                              :name, prompt: true) %>
       </li>
       <li id="permissions">
         <%= f.label :permissions, "Permissions:" %>

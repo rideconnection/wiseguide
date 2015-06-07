@@ -5,6 +5,6 @@ FactoryGirl.define do
     customer_phone "MyString"
     customer_birth_date "2012-01-29"
     notes "MyText"
-    association :submitter, :factory => :user
+    association :submitter, factory: :user
   end
 end

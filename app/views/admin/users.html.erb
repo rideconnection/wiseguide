@@ -21,7 +21,7 @@
       <tr>
         <td>
           <% if can? :update, @user %>
-            <%= link_to user.display_name, edit_user_path(:id=>user.id)  %>
+            <%= link_to user.display_name, edit_user_path(id: user.id)  %>
           <% else %>
             <%= user.display_name %>
           <% end %>
@@ -29,7 +29,7 @@
         <td class="<%= user.role_name.downcase %>">
           <%= user.email %>
           <% if user == current_user %>
-            <span class="separator">|</span> <%= link_to "Change Password", show_change_password_path, :class=>'change-password' %>
+            <span class="separator">|</span> <%= link_to "Change Password", show_change_password_path, class: 'change-password' %>
           <% end %>
         </td>
         <td><%= user.phone_number %></td>
@@ -38,13 +38,13 @@
         <td><%= user.last_sign_in_at.try(:to_s, :human) %></td>
         <% if can? :edit, user %>
         <td>
-          <%= form_for(user, :url => update_user_path(:id => user.id), :html => { :method => :post }) do |f| %>
-            <%= f.select(:level, user_roles(user, user.level), {}, {:class => :user_level}) %>
+          <%= form_for(user, url: update_user_path(id: user.id), html: { method: :post }) do |f| %>
+            <%= f.select(:level, user_roles(user, user.level), {}, {class: :user_level}) %>
             <%= f.submit "Change role" %>
           <% end %>
         </td>
         <td>
-          <%= button_to("Delete", user_path(:id => user.id), data: {confirm: 'Are you sure you want to mark this user as deleted?'}, :class => 'delete', :method => :delete) unless user.level == -1 %>
+          <%= button_to("Delete", user_path(id: user.id), data: {confirm: 'Are you sure you want to mark this user as deleted?'}, class: 'delete', method: :delete) unless user.level == -1 %>
         </td>
         <% end %>
       </tr>
@@ -55,5 +55,5 @@
 
 <% if can? :edit, User %>
 <hr/>
-<%= link_to "New User", new_user_path, :class => "new-user action-bttn" %>
+<%= link_to "New User", new_user_path, class: "new-user action-bttn" %>
 <% end %>

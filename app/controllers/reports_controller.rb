@@ -2,7 +2,7 @@ require 'csv'
 class ReportsController < ApplicationController
 
   def index
-    @funding_sources = [FundingSource.new(:name=>"<All>")] + FundingSource.all 
+    @funding_sources = [FundingSource.new(name: "<All>")] + FundingSource.all 
     @routes = Route.all
   end
 
@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
     @total_exited = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).count
     @exited_count = {}
     TrainingKaseDisposition.order(:name).each do |disposition|
-      @exited_count[disposition.name] = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).where(:disposition_id => disposition.id).count
+      @exited_count[disposition.name] = TrainingKase.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).where(disposition_id: disposition.id).count
     end
     if params[:funding_source_id].present?
       @funding_source = "Funding Source: #{FundingSource.find(params[:funding_source_id]).name}"
@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
       @funding_source = "All Funding Sources"
     end
 
-    kases = TrainingKase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(:outcomes => :trip_reason)
+    kases = TrainingKase.successful.closed_in_range(@start_date..@end_date).for_funding_source_id(params[:funding_source_id]).includes(outcomes: :trip_reason)
 
     for kase in kases
       for outcome in kase.outcomes
@@ -122,7 +122,7 @@ class ReportsController < ApplicationController
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])
 
-    events = Event.accessible_by(current_ability).in_range(@start_date..@end_date).includes(:event_type,:user,{:kase => [:customer,:disposition]})
+    events = Event.accessible_by(current_ability).in_range(@start_date..@end_date).includes(:event_type,:user,{kase: [:customer,:disposition]})
     events_by_trainer = {}
     hours_by_trainer = {'{total}' => 0}
     customers_by_trainer = {'{total}' => Set.new}
@@ -156,7 +156,7 @@ class ReportsController < ApplicationController
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])
 
-    events = Event.accessible_by(current_ability).in_range(@start_date..@end_date).includes(:event_type,:user,{:kase => [:customer,:disposition]})
+    events = Event.accessible_by(current_ability).in_range(@start_date..@end_date).includes(:event_type,:user,{kase: [:customer,:disposition]})
     kases = Kase.closed_in_range(@start_date..@end_date).includes(:disposition)
     events_by_customer = {}
     hours_by_customer = {}
@@ -198,7 +198,7 @@ class ReportsController < ApplicationController
 
     @route = Route.find(params[:route_id])
     authorize! :read, @route
-    @customers = Customer.accessible_by(current_ability).find(:all, :conditions=>["kase_routes.route_id = ? and (kases.open_date between ? and ? or kases.close_date between ? and ? or (kases.close_date is null and kases.open_date < ?))", params[:route_id], start_date, end_date, start_date, end_date, end_date], :joins=>{:kases => :kase_routes}, :include=>{:kases=>:outcomes})
+    @customers = Customer.accessible_by(current_ability).find(:all, conditions: ["kase_routes.route_id = ? and (kases.open_date between ? and ? or kases.close_date between ? and ? or (kases.close_date is null and kases.open_date < ?))", params[:route_id], start_date, end_date, start_date, end_date, end_date], joins: {kases: :kase_routes}, include: {kases: :outcomes})
   end
 
   def outcomes
@@ -206,7 +206,7 @@ class ReportsController < ApplicationController
     start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
 
-    kases = Kase.successful.closed_in_range(start_date..end_date).includes({:outcomes=>:trip_reason},{:customer=>:ethnicity},:disposition,:assigned_to,:referral_type)
+    kases = Kase.successful.closed_in_range(start_date..end_date).includes({outcomes: :trip_reason},{customer: :ethnicity},:disposition,:assigned_to,:referral_type)
     
     csv = ""
     CSV.generate(csv) do |csv|
@@ -221,7 +221,7 @@ class ReportsController < ApplicationController
       end 
     end
     
-    send_data csv, :type => "text/csv", :filename => "outcomes #{start_date.to_s} to #{end_date.to_s}.csv", :disposition => 'attachment'    
+    send_data csv, type: "text/csv", filename: "outcomes #{start_date.to_s} to #{end_date.to_s}.csv", disposition: 'attachment'    
   end
 
   def opened_cases
@@ -230,7 +230,7 @@ class ReportsController < ApplicationController
 
     kases = Kase.opened_in_range(start_date..end_date)
     
-    send_data kases_csv(kases), :type => "text/csv", :filename => "Opened Cases #{start_date.to_s} to #{end_date.to_s}.csv", :disposition => 'attachment'    
+    send_data kases_csv(kases), type: "text/csv", filename: "Opened Cases #{start_date.to_s} to #{end_date.to_s}.csv", disposition: 'attachment'    
   end
 
   def closed_cases
@@ -239,14 +239,14 @@ class ReportsController < ApplicationController
 
     kases = Kase.closed_in_range(start_date..end_date)
     
-    send_data kases_csv(kases), :type => "text/csv", :filename => "Closed Cases #{start_date.to_s} to #{end_date.to_s}.csv", :disposition => 'attachment'    
+    send_data kases_csv(kases), type: "text/csv", filename: "Closed Cases #{start_date.to_s} to #{end_date.to_s}.csv", disposition: 'attachment'    
   end
 
   def events
     start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
 
-    events = Event.accessible_by(current_ability).includes({:kase=>[:disposition,{:customer=>:ethnicity}]},:user,:funding_source,:event_type).where(:date => start_date..end_date)
+    events = Event.accessible_by(current_ability).includes({kase: [:disposition,{customer: :ethnicity}]},:user,:funding_source,:event_type).where(date: start_date..end_date)
 
     csv = ""
     CSV.generate(csv) do |csv|
@@ -298,7 +298,7 @@ class ReportsController < ApplicationController
                 event.duration_in_hours]
       end
     end
-    send_data csv, :type => "text/csv", :filename => "events #{start_date.to_s} to #{end_date.to_s}.csv", :disposition => 'attachment'    
+    send_data csv, type: "text/csv", filename: "events #{start_date.to_s} to #{end_date.to_s}.csv", disposition: 'attachment'    
   end
   
   def monthly_transportation
@@ -314,7 +314,7 @@ class ReportsController < ApplicationController
     @start_date = Date.parse(params[:start_date])
     @end_date = Date.parse(params[:end_date])
     @records = []
-    kases = Kase.where(:assessment_date => @start_date..@end_date).joins(:customer).select("kases.*, customers.first_name, customers.last_name").order('assessment_date ASC, last_name ASC, first_name ASC')
+    kases = Kase.where(assessment_date: @start_date..@end_date).joins(:customer).select("kases.*, customers.first_name, customers.last_name").order('assessment_date ASC, last_name ASC, first_name ASC')
     kases.each do |kase|
       first_contact_date = ""
       if !kase.contacts.empty?
@@ -325,13 +325,13 @@ class ReportsController < ApplicationController
         referral_date = kase.assessment_request.created_at.strftime('%Y-%m-%d')
       end
       @records << {
-        :kase_id => kase.id,
-        :customer_id => kase.customer.id,
-        :customer_name => kase.customer.name_reversed,
-        :referral_date => referral_date,
-        :first_contact_date => first_contact_date,
-        :assessment_date => kase.assessment_date.to_s,
-        :cmo_notified_date => kase.case_manager_notification_date.to_s
+        kase_id: kase.id,
+        customer_id: kase.customer.id,
+        customer_name: kase.customer.name_reversed,
+        referral_date: referral_date,
+        first_contact_date: first_contact_date,
+        assessment_date: kase.assessment_date.to_s,
+        cmo_notified_date: kase.case_manager_notification_date.to_s
       }
     end
   end
@@ -384,7 +384,7 @@ class ReportsController < ApplicationController
                 assessment_request.status]
       end
     end
-    send_data csv, :type => "text/csv", :filename => "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", :disposition => 'attachment'    
+    send_data csv, type: "text/csv", filename: "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'    
   end
 
   private
@@ -412,7 +412,7 @@ class ReportsController < ApplicationController
 
   def kases_csv(kases)
     #csv, one record per case with events in the period
-    kases = kases.accessible_by(current_ability).includes({:customer => :ethnicity},:assigned_to,:disposition,:referral_type)
+    kases = kases.accessible_by(current_ability).includes({customer: :ethnicity},:assigned_to,:disposition,:referral_type)
 
     csv = ""
     CSV.generate(csv) do |csv|

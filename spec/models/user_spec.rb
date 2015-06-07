@@ -7,12 +7,12 @@ RSpec.describe User do
     @case_mgmt_organization = FactoryGirl.create(:case_mgmt_organization)
     
     @valid_attributes = {
-      :first_name            => "FirstName",
-      :last_name             => "LastName",
-      :organization_id       => @staff_organization.id,
-      :email                 => "firstname.lastname@example.com",
-      :password              => "password 1",
-      :password_confirmation => "password 1"
+      first_name: "FirstName",
+      last_name: "LastName",
+      organization_id: @staff_organization.id,
+      email: "firstname.lastname@example.com",
+      password: "password 1",
+      password_confirmation: "password 1"
     }
 
     @valid_user = User.new
@@ -44,8 +44,8 @@ RSpec.describe User do
     
     describe "uniqueness" do
       before do
-        FactoryGirl.create(:user, :email => 'z@y.xw')
-        @duplicate = FactoryGirl.build(:user, :email => 'z@y.xw')
+        FactoryGirl.create(:user, email: 'z@y.xw')
+        @duplicate = FactoryGirl.build(:user, email: 'z@y.xw')
       end
       
       it "should be unique" do
@@ -85,7 +85,7 @@ RSpec.describe User do
 
   context "instance methods" do
     before do
-      @valid_user = FactoryGirl.create(:user, :first_name => "FirstName", :last_name => "LastName")
+      @valid_user = FactoryGirl.create(:user, first_name: "FirstName", last_name: "LastName")
     end
     
     describe "display_name" do
@@ -188,42 +188,42 @@ RSpec.describe User do
   
     describe "update_password" do
       before do
-        @valid_user = FactoryGirl.create(:user, :password => "password 1")
+        @valid_user = FactoryGirl.create(:user, password: "password 1")
       end
       
       it "should return false when both params are blank" do
         @valid_user.update_password(
-          {:password => "", :password_confirmation => "", :current_password => "password 1"}
+          {password: "", password_confirmation: "", current_password: "password 1"}
         ).should be_falsey
       end
       
       it "should return false when the password_confirmation param is blank" do
         @valid_user.update_password(
-          {:password => "asdf", :password_confirmation => "", :current_password => "password 1"}
+          {password: "asdf", password_confirmation: "", current_password: "password 1"}
         ).should be_falsey
       end
       
       it "should return false when both params are populated and match but aren't valid" do
         @valid_user.update_password(
-          {:password => "asdf", :password_confirmation => "asdf", :current_password => "password 1"}
+          {password: "asdf", password_confirmation: "asdf", current_password: "password 1"}
         ).should be_falsey
       end
       
       it "should return false both params are populated and valid, but don't match" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 2", :current_password => "password 1"}
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 2", current_password: "password 1"}
         ).should be_falsey
       end
       
       it "should return true when both params are populated, match and are valid, and the current password is correct" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 1", :current_password => "password 1"}
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 1", current_password: "password 1"}
         ).should be_truthy
       end
       
       it "should return false when both params are populated, match and are valid, but the current password is wrong" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 1", :current_password => "password 2"}
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 1", current_password: "password 2"}
         ).should be_falsey
       end
     end
@@ -246,11 +246,11 @@ RSpec.describe User do
   
   context "associations" do
     # TODO
-    # has_many :kases, :dependent => :nullify
-    # has_many :contacts, :dependent => :nullify
-    # has_many :events, :dependent => :nullify
-    # has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
-    # has_many :referred_kases, :through => :assessment_requests, :source => :kase
+    # has_many :kases, dependent: :nullify
+    # has_many :contacts, dependent: :nullify
+    # has_many :events, dependent: :nullify
+    # has_many :assessment_requests, foreign_key: :submitter_id, dependent: :nullify
+    # has_many :referred_kases, through: :assessment_requests, source: :kase
     
     # describe "kases association" do
     # end

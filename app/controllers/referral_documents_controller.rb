@@ -19,10 +19,10 @@ class ReferralDocumentsController < ApplicationController
     authorize! :edit, @kase
     
     if @referral_document.save
-      redirect_to(@kase, :notice => 'Referral document was successfully created.')
+      redirect_to(@kase, notice: 'Referral document was successfully created.')
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -31,10 +31,10 @@ class ReferralDocumentsController < ApplicationController
     authorize! :edit, @kase
     
     if @referral_document.update_attributes(referral_document_params)
-      redirect_to(@kase, :notice => 'Referral document was successfully updated.')
+      redirect_to(@kase, notice: 'Referral document was successfully updated.')
     else
       prep_edit
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
@@ -43,7 +43,7 @@ class ReferralDocumentsController < ApplicationController
     authorize! :edit, @kase
 
     @referral_document.destroy
-    redirect_to(kase_path(@referral_document.kase), :notice => 'Referral document was successfully deleted.')
+    redirect_to(kase_path(@referral_document.kase), notice: 'Referral document was successfully deleted.')
   end
   
   private
@@ -58,7 +58,7 @@ class ReferralDocumentsController < ApplicationController
   def referral_document_params
     params.require(:referral_document).permit(
       :kase_id,
-      :referral_document_resources_attributes => [
+      referral_document_resources_attributes: [
         :id,
         :note,
         :resource_id,

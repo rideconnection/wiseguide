@@ -27,12 +27,12 @@ module ApplicationHelper
 
   def kase_type_icon(kase)
     name = kase.class.humanized_name
-    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, :title => name) + "]"
+    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, title: name) + "]"
   end
 
   def data_entry_needed_icon(record)
     if record.class.name == "TripAuthorization"
-      raw "[" + content_tag(:span, "A", :title => "Trip Authorization") + "]"
+      raw "[" + content_tag(:span, "A", title: "Trip Authorization") + "]"
     else
       kase_type_icon record
     end

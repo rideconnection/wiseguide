@@ -6,7 +6,7 @@
 <li>
 <%= f.label :portrait, "Photo" %>
 <% if @customer.portrait.exists? %>
-  <%= image_tag @customer.portrait.url(:small), :class => "portrait" %>
+  <%= image_tag @customer.portrait.url(:small), class: "portrait" %>
   <p>
     <%= link_to "Download full-size original", image_path(@customer.portrait.url(:original)) %>
   </p>

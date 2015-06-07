@@ -6,7 +6,7 @@ class OrganizationsController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @organizations }
+      format.xml  { render xml: @organizations }
     end
   end
 
@@ -15,8 +15,8 @@ class OrganizationsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @organization }
-      format.json { render :json => @organization }
+      format.xml  { render xml: @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -25,7 +25,7 @@ class OrganizationsController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @organization }
+      format.xml  { render xml: @organization }
     end
   end
 
@@ -38,11 +38,11 @@ class OrganizationsController < ApplicationController
   def create
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully created.') }
-        format.xml  { render :xml => @organization, :status => :created, :location => @organization }
+        format.html { redirect_to(@organization, notice: 'Organization was successfully created.') }
+        format.xml  { render xml: @organization, status: :created, location: @organization }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @organization.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @organization.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -52,11 +52,11 @@ class OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update_attributes(organization_params)
-        format.html { redirect_to(@organization, :notice => 'Organization was successfully updated.') }
+        format.html { redirect_to(@organization, notice: 'Organization was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @organization.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @organization.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,14 +66,14 @@ class OrganizationsController < ApplicationController
   def destroy
     if !@organization.users.empty?
       respond_to do |format|
-        format.html { redirect_to(@organization, :alert => 'You cannot delete an organization that still has users assigned to it.') }
-        format.xml  { render :xml => @organization.errors, :status => :unprocessable_entity }
+        format.html { redirect_to(@organization, alert: 'You cannot delete an organization that still has users assigned to it.') }
+        format.xml  { render xml: @organization.errors, status: :unprocessable_entity }
       end
     else
       @organization.destroy
 
       respond_to do |format|
-        format.html { redirect_to(organizations_url, :notice => 'Organization was successfully deleted.') }
+        format.html { redirect_to(organizations_url, notice: 'Organization was successfully deleted.') }
         format.xml  { head :ok }
       end
     end

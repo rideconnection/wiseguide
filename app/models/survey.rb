@@ -3,6 +3,6 @@
 class Survey < ActiveRecord::Base
   include Surveyor::Models::SurveyMethods
 
-  scope :active, -> { where(:inactive_at => nil) }
-  scope :inactive, -> { where.not(:inactive_at => nil) }
+  scope :active, -> { where(inactive_at: nil) }
+  scope :inactive, -> { where.not(inactive_at: nil) }
 end

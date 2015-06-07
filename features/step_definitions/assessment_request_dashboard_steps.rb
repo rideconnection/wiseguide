@@ -7,7 +7,7 @@ Then /^I should see the following data in the "Assessment Requests" table:$/ do 
 end
 
 Then /^I should see a form to filter by user type$/ do
-  page.should have_selector("h2", :text => "Filter Requests")
+  page.should have_selector("h2", text: "Filter Requests")
   page.should have_selector("#assessment-request-filter")
   form = find("#assessment-request-filter")
   page.should have_selector("ul#user-type-filters")
@@ -48,7 +48,7 @@ When /^the filter should apply and the table data should refresh without having 
 end
 
 Then /^I should see a form to filter by current status$/ do
-  page.should have_selector("h2", :text => "Filter Requests")
+  page.should have_selector("h2", text: "Filter Requests")
   page.should have_selector("#assessment-request-filter")
   form = find("#assessment-request-filter")
   page.should have_selector("ul#current-status-filters")
@@ -61,7 +61,7 @@ Then /^I should see a form to filter by current status$/ do
 end
 
 Then /^I should see a form to filter by assignee$/ do
-  page.should have_selector("h2", :text => "Filter Requests")
+  page.should have_selector("h2", text: "Filter Requests")
   page.should have_selector("#assessment-request-filter")
   form = find("#assessment-request-filter")
   page.should have_selector("ul#assignee-filters")
@@ -74,7 +74,7 @@ end
 Then /^I should see an AJAXified form to filter by (.*)$/ do |form|
   step "I should see a form to filter by #{form}"
   within("#assessment-request-filter") do
-    page.should have_no_selector("input[type=submit][value=Filter]", :visible => true)
+    page.should have_no_selector("input[type=submit][value=Filter]", visible: true)
   end
 end
 
@@ -107,13 +107,13 @@ Then /^I should see the (first|last) name set to (.*)$/ do |kind, name|
 end
 
 When /^I populate the customer details$/ do
-  fill_in('Birth date', :with => '1950-04-01')
-  select('Male', :from => 'Gender')
-  select('Caucasian', :from => 'Ethnicity')
-  fill_in('Address', :with => '72 NPR Way')
-  fill_in('City', :with => 'Chicago')
-  fill_in('ZIP code', :with => '91234')
-  select('Multnomah', :from => 'County')
+  fill_in('Birth date', with: '1950-04-01')
+  select('Male', from: 'Gender')
+  select('Caucasian', from: 'Ethnicity')
+  fill_in('Address', with: '72 NPR Way')
+  fill_in('City', with: 'Chicago')
+  fill_in('ZIP code', with: '91234')
+  select('Multnomah', from: 'County')
   click_button('Save')
 end
 
@@ -123,18 +123,18 @@ Then /^I should see the request associated with (.*), (.*)$/ do |last, first|
 end
 
 When /^I populate the coaching case details$/ do
-  fill_in('Opened', :with => '2012-05-13')
-  fill_in('Referral source', :with => 'daughter')
-  select('CC - Other', :from => 'Referral Source Type')
-  fill_in('Household size', :with => '1')
-  fill_in('Household income', :with => '1')
+  fill_in('Opened', with: '2012-05-13')
+  fill_in('Referral source', with: 'daughter')
+  select('CC - Other', from: 'Referral Source Type')
+  fill_in('Household size', with: '1')
+  fill_in('Household income', with: '1')
   click_button('Save')
   # Get the newly generated ID so we can find the record later
   @kase = CoachingKase.order("id DESC").limit(1).first
 end
 
 Then /^I should see a link to the case$/ do
-  page.should have_selector("a[href='/cases/#{@kase.id}']", :text => "View Case ##{@kase.id}")
+  page.should have_selector("a[href='/cases/#{@kase.id}']", text: "View Case ##{@kase.id}")
 end
 
 Then /^the "([^"]*)" option in the (?:.+) filter form should be selected$/ do |label|

@@ -5,7 +5,7 @@
       <% cycle = cycle("even","odd") %>
       <tr class="<%= cycle %>">
         <td><%= request.created_at.to_date %></td>
-        <td><%= link_to "Details", request, :class=>"details" %></td>
+        <td><%= link_to "Details", request, class: "details" %></td>
       </tr>
     <% end %> 
   </tbody>

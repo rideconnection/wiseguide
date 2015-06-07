@@ -8,12 +8,12 @@
       <dt>Case Closed On</dt>
       <dd>
         <%= kase.close_date.try(:to_s,:long) %>
-        <%= link_to "Case Details", kase, :class => :details %>
+        <%= link_to "Case Details", kase, class: :details %>
       </dd>
       <dt>Customer Name</dt>
       <dd>
         <%= kase.customer.name %>
-        <%= link_to "Customer Details", kase.customer, :class => :details %>
+        <%= link_to "Customer Details", kase.customer, class: :details %>
       </dd>
       <dt>Customer Address</dt>
       <dd><%= "#{kase.customer.address} #{kase.customer.city} #{kase.customer.state} #{kase.customer.zip}" %></dd>

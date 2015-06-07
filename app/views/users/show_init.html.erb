@@ -1,6 +1,6 @@
 Create the initial user for WiseGuide
 
-<%= form_for @user, :url=>url_for(:action=>:init) do |f| %>
+<%= form_for @user, url: url_for(action: :init) do |f| %>
 
 <%= f.label :first_name %><br/>
 <%= f.text_field :first_name %><br/>

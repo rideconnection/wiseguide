@@ -5,9 +5,9 @@ class TripAuthorization < ActiveRecord::Base
   belongs_to :disposition_user, class_name: 'User'
 
   validates :allowed_trips_per_month, numericality: { greater_than_or_equal_to: 0 }
-  validates :start_date, timeliness: { :type => :date }
-  validates :end_date, allow_blank: true, timeliness: { on_or_after: :start_date, :type => :date }
-  validates :disposition_date, allow_blank: true, timeliness: { on_or_before: lambda { DateTime.current }, :type => :date }
+  validates :start_date, timeliness: { type: :date }
+  validates :end_date, allow_blank: true, timeliness: { on_or_after: :start_date, type: :date }
+  validates :disposition_date, allow_blank: true, timeliness: { on_or_before: lambda { DateTime.current }, type: :date }
   validates_presence_of :kase_id
   
   after_initialize do

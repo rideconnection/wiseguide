@@ -6,7 +6,7 @@ class FundingSourcesController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @funding_sources }
+      format.xml  { render xml: @funding_sources }
     end
   end
 
@@ -15,7 +15,7 @@ class FundingSourcesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @funding_source }
+      format.xml  { render xml: @funding_source }
     end
   end
 
@@ -24,7 +24,7 @@ class FundingSourcesController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @funding_source }
+      format.xml  { render xml: @funding_source }
     end
   end
 
@@ -37,11 +37,11 @@ class FundingSourcesController < ApplicationController
   def create
     respond_to do |format|
       if @funding_source.save
-        format.html { redirect_to(@funding_source, :notice => 'Funding source was successfully created.') }
-        format.xml  { render :xml => @funding_source, :status => :created, :location => @funding_source }
+        format.html { redirect_to(@funding_source, notice: 'Funding source was successfully created.') }
+        format.xml  { render xml: @funding_source, status: :created, location: @funding_source }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @funding_source.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @funding_source.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class FundingSourcesController < ApplicationController
   def update
     respond_to do |format|
       if @funding_source.update_attributes(funding_source_params)
-        format.html { redirect_to(@funding_source, :notice => 'Funding source was successfully updated.') }
+        format.html { redirect_to(@funding_source, notice: 'Funding source was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @funding_source.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @funding_source.errors, status: :unprocessable_entity }
       end
     end
   end

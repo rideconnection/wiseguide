@@ -4,12 +4,12 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.xml
   def index
-    @active_resources = Resource.where(:active => true)
-    @inactive_resources = Resource.where(:active => false)
+    @active_resources = Resource.where(active: true)
+    @inactive_resources = Resource.where(active: false)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @resources }
+      format.xml  { render xml: @resources }
     end
   end
 
@@ -18,7 +18,7 @@ class ResourcesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @resource }
+      format.xml  { render xml: @resource }
     end
   end
 
@@ -29,7 +29,7 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @resource }
+      format.xml  { render xml: @resource }
     end
   end
 
@@ -42,11 +42,11 @@ class ResourcesController < ApplicationController
   def create
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to(resources_path, :notice => "#{@resource.name} successfully created.") }
-        format.xml  { render :xml => @resource, :status => :created, :location => @resource }
+        format.html { redirect_to(resources_path, notice: "#{@resource.name} successfully created.") }
+        format.xml  { render xml: @resource, status: :created, location: @resource }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,11 +57,11 @@ class ResourcesController < ApplicationController
     respond_to do |format|
       if @resource.update_attributes(params[:resource])
         format.html { redirect_to(resources_path,
-                      :notice => "#{@resource.name} successfully updated.") }
+                      notice: "#{@resource.name} successfully updated.") }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @resource.errors, status: :unprocessable_entity }
       end
     end
   end

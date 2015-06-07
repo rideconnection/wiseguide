@@ -1,6 +1,6 @@
 <h1>Special Considerations</h1>
 <% if can? :edit, @customer %>
-  <%= link_to "Add", new_customer_impairment_path( :customer_id => @customer.id ), :class => :add %>
+  <%= link_to "Add", new_customer_impairment_path( customer_id: @customer.id ), class: :add %>
 <% end %>
 
 <table id="impairments">
@@ -11,10 +11,10 @@
     </td>
     <td><%= customer_impairment.notes %></td>
     <td>
-      <%= link_to( "", edit_customer_impairment_path( customer_impairment ), :class => "edit") if can? :edit, @customer %>
+      <%= link_to( "", edit_customer_impairment_path( customer_impairment ), class: "edit") if can? :edit, @customer %>
     </td>
     <td>
-      <%= link_to "", customer_impairment_path( customer_impairment ), {:method=>:delete, data: {confirm: "Are you sure you want to delete this customer impairment?"}, :class=>"delete"} %>
+      <%= link_to "", customer_impairment_path( customer_impairment ), {method: :delete, data: {confirm: "Are you sure you want to delete this customer impairment?"}, class: "delete"} %>
     </td>
   </tr>
 <% end %>

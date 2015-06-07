@@ -1,13 +1,13 @@
 class Disposition < ActiveRecord::Base
   has_paper_trail
   
-  validates :name, :uniqueness => {:scope => :type}
+  validates :name, uniqueness: {scope: :type}
   validate do |disposition|
     disposition.errors[:type] << "must be a valid subclass of Disposition" unless Disposition.descendants.map{|disposition| disposition.original_model_name.to_s}.include?(disposition.type)
   end
 
   def self.successful
-    self.where(:name => 'Successful')
+    self.where(name: 'Successful')
   end
   
   # Make sure our STI children are routed through the parent routes

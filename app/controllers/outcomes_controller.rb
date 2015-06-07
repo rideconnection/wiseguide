@@ -18,10 +18,10 @@ class OutcomesController < ApplicationController
     authorize! :edit, @kase
 
     if @outcome.save
-      redirect_to(@kase, :notice => 'Outcome was successfully created.') 
+      redirect_to(@kase, notice: 'Outcome was successfully created.') 
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -30,10 +30,10 @@ class OutcomesController < ApplicationController
     authorize! :edit, @kase
 
     if @outcome.update_attributes(outcome_params)
-      redirect_to(@kase, :notice => 'Outcome was successfully updated.') 
+      redirect_to(@kase, notice: 'Outcome was successfully updated.') 
     else
       prep_edit
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
@@ -42,7 +42,7 @@ class OutcomesController < ApplicationController
     authorize! :edit, @kase
 
     @outcome.destroy
-    redirect_to(kase_path(@outcome.kase), :notice => 'Outcome was successfully deleted.')
+    redirect_to(kase_path(@outcome.kase), notice: 'Outcome was successfully deleted.')
   end
 
   private

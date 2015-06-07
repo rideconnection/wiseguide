@@ -20,8 +20,8 @@ class ContactsController < ApplicationController
     @readonly = false
     @contactable = params[:contact][:contactable_type].classify.constantize.find(params[:contact][:contactable_id])
     @contact.attributes = {
-      :date_time => DateTime.current,
-      :user      => current_user
+      date_time: DateTime.current,
+      user: current_user
     }
     prep_edit
   end
@@ -33,10 +33,10 @@ class ContactsController < ApplicationController
     @contact.user = current_user
     
     if @contact.save
-      redirect_to(@contactable, :notice => 'Contact was successfully created.') 
+      redirect_to(@contactable, notice: 'Contact was successfully created.') 
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -45,10 +45,10 @@ class ContactsController < ApplicationController
     authorize! :edit, @contactable
 
     if @contact.update_attributes(contact_params)
-      redirect_to(@contact.contactable, :notice => 'Contact was successfully updated.') 
+      redirect_to(@contact.contactable, notice: 'Contact was successfully updated.') 
     else
       prep_edit
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
@@ -56,7 +56,7 @@ class ContactsController < ApplicationController
     authorize! :edit, @contact.contactable
 
     @contact.destroy
-    redirect_to(@contact.contactable, :notice => 'Contact was successfully deleted.') 
+    redirect_to(@contact.contactable, notice: 'Contact was successfully deleted.') 
   end
 
   private

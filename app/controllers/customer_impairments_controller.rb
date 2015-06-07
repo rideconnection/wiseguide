@@ -9,10 +9,10 @@ class CustomerImpairmentsController < ApplicationController
   
   def create
     if @customer_impairment.save
-      redirect_to @customer, :notice => 'Special consideration was successfully created.'
+      redirect_to @customer, notice: 'Special consideration was successfully created.'
     else
       @impairments = Impairment.all
-      render :action => :new
+      render action: :new
     end
   end
   
@@ -22,10 +22,10 @@ class CustomerImpairmentsController < ApplicationController
   
   def update
     if @customer_impairment.update_attributes(customer_impairment_params)
-      redirect_to @customer, :notice => 'Special consideration was successfully created.'
+      redirect_to @customer, notice: 'Special consideration was successfully created.'
     else
       @impairments = Impairment.all
-      render :action => :edit
+      render action: :edit
     end
   end
   

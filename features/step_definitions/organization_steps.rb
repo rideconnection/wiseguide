@@ -25,5 +25,5 @@ Then /^I should( not)?(?: still)? see a link to the organization(?:'s)? profile 
 end
 
 Given /^a user exists who belongs to the organization$/ do
-  @user = FactoryGirl.create(:user, :organization => @organization)
+  @user = FactoryGirl.create(:user, organization: @organization)
 end

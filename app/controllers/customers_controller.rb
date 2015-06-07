@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @customers = @customers.paginate :page => params[:page], :order => [:last_name, :first_name]
+    @customers = @customers.paginate page: params[:page], order: [:last_name, :first_name]
   end
 
   def show
@@ -10,11 +10,11 @@ class CustomersController < ApplicationController
   end
   
   def download_small_portrait
-    send_file(@customer.portrait.path(:small), :type => @customer.portrait_content_type, :disposition => 'inline') if @customer.portrait.path(:small)
+    send_file(@customer.portrait.path(:small), type: @customer.portrait_content_type, disposition: 'inline') if @customer.portrait.path(:small)
   end
 
   def download_original_portrait
-    send_file(@customer.portrait.path(:original), :type => @customer.portrait_content_type) if @customer.portrait.path(:small)
+    send_file(@customer.portrait.path(:original), type: @customer.portrait_content_type) if @customer.portrait.path(:small)
   end
 
   def new
@@ -35,39 +35,39 @@ class CustomersController < ApplicationController
         request = AssessmentRequest.find(@assessment_request)
         request.customer = @customer
         request.save!
-        redirect_to :controller=>:assessment_requests, :action=>:show,
-                    :id=>params[:assessment_request], :notice=>notice
+        redirect_to controller: :assessment_requests, action: :show,
+                    id: params[:assessment_request], notice: notice
       else
-        redirect_to(@customer, :notice => notice) 
+        redirect_to(@customer, notice: notice) 
       end
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
   def update
     if @customer.update_attributes(customer_params)
-      redirect_to(@customer, :notice => 'Customer was successfully updated.') 
+      redirect_to(@customer, notice: 'Customer was successfully updated.') 
     else
       prep_edit
-      render :action => "show"
+      render action: "show"
     end
   end
 
   def destroy
     @customer.destroy
-    redirect_to(customers_url, :notice => 'Customer was successfully deleted.')
+    redirect_to(customers_url, notice: 'Customer was successfully deleted.')
   end
   
   def search
     term = params[:name].downcase.strip
     
-    @customers = Customer.search(term).paginate( :page => params[:page], :order => [:last_name, :first_name])
+    @customers = Customer.search(term).paginate( page: params[:page], order: [:last_name, :first_name])
 
     respond_to do |format|
-      format.html { render :action => :index }
-      format.json { render :json => @customers }
+      format.html { render action: :index }
+      format.json { render json: @customers }
     end
   end
 

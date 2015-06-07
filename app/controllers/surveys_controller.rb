@@ -3,7 +3,7 @@
 require 'survey_creator'
 
 class SurveysController < ApplicationController
-  load_and_authorize_resource :except => :create
+  load_and_authorize_resource except: :create
   
   def index
     @active_surveys = @surveys.active.order(:title).includes(:response_sets)
@@ -23,22 +23,22 @@ class SurveysController < ApplicationController
         
     if e.present? || ret =~ /^Malformed/
       flash[:alert] = e.try(:message) || ret
-      render :action => :new
+      render action: :new
     else
-      redirect_to surveys_path, :notice => 'Survey was successfully created.'
+      redirect_to surveys_path, notice: 'Survey was successfully created.'
     end
   end  
   
   def destroy
     @survey.inactive_at = DateTime.current
     @survey.save!
-    redirect_to surveys_path, :notice => 'Survey was inactivated.'
+    redirect_to surveys_path, notice: 'Survey was inactivated.'
   end
 
   def reactivate
     authorize! :manage, Survey
     @survey.inactive_at = nil
     @survey.save!
-    redirect_to surveys_path, :notice => 'Survey was reactivated.'
+    redirect_to surveys_path, notice: 'Survey was reactivated.'
   end
 end

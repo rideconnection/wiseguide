@@ -5,32 +5,32 @@ RSpec.describe CoachingKase do
     @case_manager = FactoryGirl.create(:case_manager)
 
     @valid_attributes = {
-      :access_transit_partner_referred_to  => nil,
-      :adult_ticket_count                  => nil,
-      :agency_id                           => nil,
-      :assessment_date                     => nil,
-      :assessment_language                 => nil,
-      :assessment_request_id               => nil,
-      :case_manager_id                     => nil,
-      :case_manager_notification_date      => nil,
-      :category                            => nil,
-      :close_date                          => Date.current,
-      :county                              => nil,
-      :customer_id                         => 1,
-      :disposition_id                      => FactoryGirl.create(:disposition).id,
-      :eligible_for_ticket_disbursement    => nil,
-      :funding_source_id                   => nil,
-      :honored_ticket_count                => nil,
-      :household_income                    => 1,
-      :household_income_alternate_response => nil,
-      :household_size                      => 1,
-      :household_size_alternate_response   => nil,
-      :medicaid_eligible                   => nil,
-      :open_date                           => Date.current,
-      :referral_source                     => nil,
-      :referral_type_id                    => 1,
-      :scheduling_system_entry_required    => nil,
-      :user_id                             => nil,
+      access_transit_partner_referred_to: nil,
+      adult_ticket_count: nil,
+      agency_id: nil,
+      assessment_date: nil,
+      assessment_language: nil,
+      assessment_request_id: nil,
+      case_manager_id: nil,
+      case_manager_notification_date: nil,
+      category: nil,
+      close_date: Date.current,
+      county: nil,
+      customer_id: 1,
+      disposition_id: FactoryGirl.create(:disposition).id,
+      eligible_for_ticket_disbursement: nil,
+      funding_source_id: nil,
+      honored_ticket_count: nil,
+      household_income: 1,
+      household_income_alternate_response: nil,
+      household_size: 1,
+      household_size_alternate_response: nil,
+      medicaid_eligible: nil,
+      open_date: Date.current,
+      referral_source: nil,
+      referral_type_id: 1,
+      scheduling_system_entry_required: nil,
+      user_id: nil,
     }
 
     @valid_kase = CoachingKase.new
@@ -59,7 +59,7 @@ RSpec.describe CoachingKase do
     
   describe "case_manager association" do
     before do
-      @invalid_unpersisted_case_manager = FactoryGirl.build(:case_manager, :email => nil)
+      @invalid_unpersisted_case_manager = FactoryGirl.build(:case_manager, email: nil)
       
       # We can't use FactoryGirl.build here because the returned object will be an
       # instance of Kase, not CoachingKase, and thus the case_manager 

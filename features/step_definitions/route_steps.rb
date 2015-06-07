@@ -3,9 +3,9 @@ When /^I click the link to add a trained route$/ do
 end
 
 Then /^I should be able to add a trained route using the AJAX form$/ do
-  page.should have_selector("#new_route_form", :visible => true)
+  page.should have_selector("#new_route_form", visible: true)
   within("#new_route_form") do
-    select @route.name, :from => "kase_route_route_id"
+    select @route.name, from: "kase_route_route_id"
     click_button "Add route"
   end
   find("#routes").has_content?(@route.name)
@@ -44,7 +44,7 @@ Then /^I should be prompted to confirm the deletion when I click the trained rou
 end
 
 Then /^I should be able to add a new route$/ do
-  fill_in "Name", :with => "My New Route"
+  fill_in "Name", with: "My New Route"
   click_button "Create Route"
   # Get the newly generated ID so we can find the record later
   @route = Route.find_by_name("My New Route")
@@ -57,8 +57,8 @@ Then /^I should( not)? see the route on the routes page$/ do |negation|
   content_assertion = negation ? :have_no_content : :have_content
   visit "/routes"
   selector = "a[href='/routes/#{@route.id}']"
-  page.should send(selector_assertion, selector, {:text => "Show"})
-  page.should send(selector_assertion, "a[href='/routes/#{@route.id}/edit']", {:text => "Edit"})
+  page.should send(selector_assertion, selector, {text: "Show"})
+  page.should send(selector_assertion, "a[href='/routes/#{@route.id}/edit']", {text: "Edit"})
   if negation
     page.should send(content_assertion, @route.name)
   else
@@ -67,11 +67,11 @@ Then /^I should( not)? see the route on the routes page$/ do |negation|
 end
 
 Then /^I click through to the route details$/ do
-  find("a[href='/routes/#{@route.id}/edit']", :text => "Edit").click
+  find("a[href='/routes/#{@route.id}/edit']", text: "Edit").click
 end
 
 Then /^I should be able to edit the route$/ do
-  fill_in "Name", :with => "#{@route.name} and More!"
+  fill_in "Name", with: "#{@route.name} and More!"
   click_button "Update Route"
   @route.reload
   @confirmation_message = 'Route was successfully updated.'
@@ -79,7 +79,7 @@ Then /^I should be able to edit the route$/ do
 end
 
 Then /^I should see a button to delete the route$/ do
-  button = find("a[href='/routes/#{@route.id}']", :text => "Destroy")
+  button = find("a[href='/routes/#{@route.id}']", text: "Destroy")
   button['data-method'].should eql("delete")
   button['data-confirm'].should eql("Are you sure?")
 end

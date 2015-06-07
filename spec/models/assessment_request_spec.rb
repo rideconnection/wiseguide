@@ -5,10 +5,10 @@ RSpec.describe AssessmentRequest do
     @case_manager = FactoryGirl.create(:case_manager)
     
     @valid_attributes = {
-      :customer_first_name => "FirstName",
-      :customer_last_name  => "LastName",
-      :customer_phone      => "555-555-5555",
-      :submitter_id        => @case_manager.id
+      customer_first_name: "FirstName",
+      customer_last_name: "LastName",
+      customer_phone: "555-555-5555",
+      submitter_id: @case_manager.id
     }
 
     @valid_assessment_request = AssessmentRequest.new
@@ -114,11 +114,11 @@ RSpec.describe AssessmentRequest do
     
     describe "status" do
       before do
-        @ar_no_reason_no_kase     = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase_id => nil)
-        @ar_no_reason_with_kase   = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase_id => 1)
-        @ar_with_reason_no_kase_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => nil)
-        @ar_with_reason_no_kase_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase_id => nil)
-        @ar_with_reason_with_kase = FactoryGirl.create(:assessment_request, :reason_not_completed => "Could not reach", :kase_id => 1)
+        @ar_no_reason_no_kase     = FactoryGirl.create(:assessment_request, reason_not_completed: nil,   kase_id: nil)
+        @ar_no_reason_with_kase   = FactoryGirl.create(:assessment_request, reason_not_completed: nil,   kase_id: 1)
+        @ar_with_reason_no_kase_1 = FactoryGirl.create(:assessment_request, reason_not_completed: "Could not reach", kase_id: nil)
+        @ar_with_reason_no_kase_2 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request", kase_id: nil)
+        @ar_with_reason_with_kase = FactoryGirl.create(:assessment_request, reason_not_completed: "Could not reach", kase_id: 1)
       end
       
       it "should return \"Pending\" when reason_not_completed is blank and no training kase has been recorded" do
@@ -173,8 +173,8 @@ RSpec.describe AssessmentRequest do
     describe "contacts association" do
       before do
         @contacts = [
-          FactoryGirl.create(:contact, :contactable => @valid_assessment_request),
-          FactoryGirl.create(:contact, :contactable => @valid_assessment_request)
+          FactoryGirl.create(:contact, contactable: @valid_assessment_request),
+          FactoryGirl.create(:contact, contactable: @valid_assessment_request)
         ]
       end
       
@@ -237,7 +237,7 @@ RSpec.describe AssessmentRequest do
         # We can't reference this until the AssessmentRequest has been saved ,
         # presumably because the `has_one through` can't be calculated until
         # after the submitter association has been saved first. (???)
-        @valid_assessment_request = FactoryGirl.create(:assessment_request, :submitter => @case_manager)
+        @valid_assessment_request = FactoryGirl.create(:assessment_request, submitter: @case_manager)
       end
       
       it "should have a referring_organization attribute" do
@@ -278,18 +278,18 @@ RSpec.describe AssessmentRequest do
   
   context "scopes" do
     describe "assigned_to" do
-      # scope :assigned_to, lambda { |user| where(:assignee_id => user.id) }
+      # scope :assigned_to, lambda { |user| where(assignee_id: user.id) }
       before do
         @user_1 = FactoryGirl.create(:user)
         @user_2 = FactoryGirl.create(:user)
         @user_3 = FactoryGirl.create(:user)
         
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :assignee => @user_2)
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :assignee => @user_2)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :assignee => @user_1)
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :assignee => @user_3)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, assignee: @user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, assignee: @user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, assignee: @user_1)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, assignee: @user_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, assignee: @user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, assignee: @user_3)
       end
     
       it "should have a assigned_to attribute" do
@@ -307,18 +307,18 @@ RSpec.describe AssessmentRequest do
     end
     
     describe "submitted_by" do
-      # scope :submitted_by, lambda { |user| where(:submitter_id => user.id) }
+      # scope :submitted_by, lambda { |user| where(submitter_id: user.id) }
       before do
         @user_1 = FactoryGirl.create(:user)
         @user_2 = FactoryGirl.create(:user)
         @user_3 = FactoryGirl.create(:user)
         
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :submitter => @user_2)
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :submitter => @user_2)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :submitter => @user_1)
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :submitter => @user_3)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, submitter: @user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, submitter: @user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, submitter: @user_1)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, submitter: @user_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, submitter: @user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, submitter: @user_3)
       end
 
       it "should have a submitted_by attribute" do
@@ -342,21 +342,21 @@ RSpec.describe AssessmentRequest do
         @organization_2 = FactoryGirl.create(:organization)
         @organization_3 = FactoryGirl.create(:organization)
         
-        user_1 = FactoryGirl.create(:user, :organization => @organization_1)
-        user_2 = FactoryGirl.create(:user, :organization => @organization_2)
-        user_3 = FactoryGirl.create(:user, :organization => @organization_1)
-        user_4 = FactoryGirl.create(:user, :organization => @organization_2)
-        user_5 = FactoryGirl.create(:user, :organization => @organization_3)
+        user_1 = FactoryGirl.create(:user, organization: @organization_1)
+        user_2 = FactoryGirl.create(:user, organization: @organization_2)
+        user_3 = FactoryGirl.create(:user, organization: @organization_1)
+        user_4 = FactoryGirl.create(:user, organization: @organization_2)
+        user_5 = FactoryGirl.create(:user, organization: @organization_3)
         
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :submitter => user_1)
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :submitter => user_2)
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :submitter => user_3)
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :submitter => user_4)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :submitter => user_1)
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :submitter => user_3)
-        @assessment_request_7 = FactoryGirl.create(:assessment_request, :submitter => user_4)
-        @assessment_request_8 = FactoryGirl.create(:assessment_request, :submitter => user_4)
-        @assessment_request_9 = FactoryGirl.create(:assessment_request, :submitter => user_5)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, submitter: user_1)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, submitter: user_2)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, submitter: user_3)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, submitter: user_4)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, submitter: user_1)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, submitter: user_3)
+        @assessment_request_7 = FactoryGirl.create(:assessment_request, submitter: user_4)
+        @assessment_request_8 = FactoryGirl.create(:assessment_request, submitter: user_4)
+        @assessment_request_9 = FactoryGirl.create(:assessment_request, submitter: user_5)
       end
 
       it "should have a belonging_to attribute" do
@@ -379,12 +379,12 @@ RSpec.describe AssessmentRequest do
       before do
         kase = FactoryGirl.create(:kase)
         
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => kase)
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request", :kase => nil)
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase => kase)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :reason_not_completed => "",    :kase => nil)
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil,   :kase => kase)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request", kase: nil)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request", kase: kase)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request", kase: nil)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, reason_not_completed: nil,   kase: kase)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, reason_not_completed: "",    kase: nil)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, reason_not_completed: nil,   kase: kase)
       end
 
       it "should have a pending attribute" do
@@ -400,12 +400,12 @@ RSpec.describe AssessmentRequest do
       # "Not completed" (reason_not_completed is not blank)
       # scope :not_completed, -> { where("reason_not_completed IS NOT NULL OR reason_not_completed > ''") }
       before do
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :reason_not_completed => "")
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :reason_not_completed => nil)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request")
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request")
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, reason_not_completed: "Duplicate request")
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, reason_not_completed: nil)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, reason_not_completed: "")
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, reason_not_completed: nil)
       end
 
       it "should have a not_completed attribute" do
@@ -424,12 +424,12 @@ RSpec.describe AssessmentRequest do
         kase_1 = FactoryGirl.create(:kase)
         kase_2 = FactoryGirl.create(:kase)
         
-        @assessment_request_1 = FactoryGirl.create(:assessment_request, :kase => nil)
-        @assessment_request_2 = FactoryGirl.create(:assessment_request, :kase => kase_1)
-        @assessment_request_3 = FactoryGirl.create(:assessment_request, :kase => nil)
-        @assessment_request_4 = FactoryGirl.create(:assessment_request, :kase => kase_2)
-        @assessment_request_5 = FactoryGirl.create(:assessment_request, :kase => nil)
-        @assessment_request_6 = FactoryGirl.create(:assessment_request, :kase => kase_1)
+        @assessment_request_1 = FactoryGirl.create(:assessment_request, kase: nil)
+        @assessment_request_2 = FactoryGirl.create(:assessment_request, kase: kase_1)
+        @assessment_request_3 = FactoryGirl.create(:assessment_request, kase: nil)
+        @assessment_request_4 = FactoryGirl.create(:assessment_request, kase: kase_2)
+        @assessment_request_5 = FactoryGirl.create(:assessment_request, kase: nil)
+        @assessment_request_6 = FactoryGirl.create(:assessment_request, kase: kase_1)
       end
 
       it "should have a completed attribute" do

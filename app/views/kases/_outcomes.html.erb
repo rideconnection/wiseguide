@@ -1,13 +1,13 @@
 <h1 class="clearfix">Outcomes</h1>
 
 <% if can? :edit, @kase %>
-  <%= link_to "Add", new_outcome_path(:kase_id=>@kase.id), :class => :add %>
+  <%= link_to "Add", new_outcome_path(kase_id: @kase.id), class: :add %>
 <% end %>
 
 <% for outcome in @kase.outcomes %>
 <h2>
   <div class="clearfix"><%= outcome.trip_reason.try(:name) %></div>
-  <%= link_to( "Edit", edit_outcome_path( outcome ), :class => :edit ) if can? :edit, outcome %>
+  <%= link_to( "Edit", edit_outcome_path( outcome ), class: :edit ) if can? :edit, outcome %>
 </h2>
 <table>
   <tr>

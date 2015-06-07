@@ -1,14 +1,14 @@
 class KasesController < ApplicationController
-  load_and_authorize_resource :except => [:new, :create]
-  authorize_resource :only => [:new, :create]
-  before_filter :cleanup_household_stat_params, :only => [:update, :create]
+  load_and_authorize_resource except: [:new, :create]
+  authorize_resource only: [:new, :create]
+  before_filter :cleanup_household_stat_params, only: [:update, :create]
 
   def index
     name_ordered = 'customers.last_name, customers.first_name'
         
     if params[:kase].try(:[], :type).present?
       @kase_type = params[:kase][:type]
-      @kases = @kases.where(:type => @kase_type)
+      @kases = @kases.where(type: @kase_type)
       @bodytag_class = @kase_type.pluralize.underscore.gsub(/_/, '-')
     end
     
@@ -21,7 +21,7 @@ class KasesController < ApplicationController
     @wait_list = @kases.unassigned.order(:open_date)
     
     if @kase_type == "CoachingKase"
-      @data_entry_needed = (@kases.scheduling_system_entry_required + TripAuthorization.where(:kase_id => @kases.collect(&:id), :disposition_date => nil)).sort{|a,b| a.created_at <=> b.created_at }
+      @data_entry_needed = (@kases.scheduling_system_entry_required + TripAuthorization.where(kase_id: @kases.collect(&:id), disposition_date: nil)).sort{|a,b| a.created_at <=> b.created_at }
     end
   end
 
@@ -32,7 +32,7 @@ class KasesController < ApplicationController
   def new
     params[:kase] ||= {}
     in_progress = Disposition.find_by_name_and_type('In Progress', "#{params[:kase][:type]}Disposition")
-    params[:kase].merge!({:customer_id => params[:customer_id], :disposition_id => in_progress.id})
+    params[:kase].merge!({customer_id: params[:customer_id], disposition_id: in_progress.id})
     setup_sti_model
     @kase.county = Kase::VALID_COUNTIES.fetch(Customer.find(params[:customer_id]).county,nil)
     prep_edit
@@ -48,13 +48,13 @@ class KasesController < ApplicationController
         request = AssessmentRequest.find(@kase.assessment_request_id)
         request.kase = @kase
         request.save!
-        redirect_to(request, :notice => notice)
+        redirect_to(request, notice: notice)
       else
-        redirect_to(@kase, :notice => notice)
+        redirect_to(@kase, notice: notice)
       end
     else
       prep_edit
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -83,16 +83,16 @@ class KasesController < ApplicationController
     end
     
     if saved
-      redirect_to(@kase, :notice => '%s was successfully updated.' % @kase.class.humanized_name)
+      redirect_to(@kase, notice: '%s was successfully updated.' % @kase.class.humanized_name)
     else
       prep_edit
-      render :action => "show"
+      render action: "show"
     end
   end
 
   def destroy
     @kase.destroy
-    redirect_to(kases_url, :notice => "%s was successfully deleted." % @kase.class.humanized_name)
+    redirect_to(kases_url, notice: "%s was successfully deleted." % @kase.class.humanized_name)
   end
 
   def add_route
@@ -100,13 +100,13 @@ class KasesController < ApplicationController
     authorize! :edit, @kase
     @kase_route = KaseRoute.create(params[:kase_route])
     @route = @kase_route.route
-    render :layout=>nil
+    render layout: nil
   end
 
   def delete_route
-    @kase_route = KaseRoute.where(:kase_id=>params[:kase_id], :route_id=>params[:route_id])[0]
+    @kase_route = KaseRoute.where(kase_id: params[:kase_id], route_id: params[:route_id])[0]
     @kase_route.destroy
-    render :json=>{:action=>:destroy, :kase_id=>@kase_route.kase_id, :route_id=>@kase_route.route_id}
+    render json: {action: :destroy, kase_id: @kase_route.kase_id, route_id: @kase_route.route_id}
   end
   
   def notify_manager
@@ -117,7 +117,7 @@ class KasesController < ApplicationController
           AssessmentMailer.customer_assessed_email(@kase.case_manager, @kase).deliver
           @kase.case_manager_notification_date = Date.current
           @kase.save!
-          redirect_to(@kase, :notice => 'The notification has been sent.') and return
+          redirect_to(@kase, notice: 'The notification has been sent.') and return
         rescue => err
           flash[:alert] = "An error prevented the object from being saved. Please try again. (#{err.to_s})"
           raise ActiveRecord::Rollback
@@ -128,7 +128,7 @@ class KasesController < ApplicationController
     end
 
     prep_edit
-    render :action => "show"
+    render action: "show"
   end
 
 private
@@ -136,12 +136,12 @@ private
   def prep_edit
     @agencies = Agency.accessible_by(current_ability)
     @case_managers = User.cmo_or_selected(@kase.case_manager_id).accessible_by(current_ability)
-    @dispositions = Disposition.accessible_by(current_ability).where(:type => "#{@kase.class.original_model_name.to_s}Disposition")
+    @dispositions = Disposition.accessible_by(current_ability).where(type: "#{@kase.class.original_model_name.to_s}Disposition")
     @funding_sources = FundingSource.accessible_by(current_ability)
-    @kase_route = KaseRoute.new(:kase_id => @kase.id)
+    @kase_route = KaseRoute.new(kase_id: @kase.id)
     @referral_types = ReferralType.accessible_by(current_ability).order(:name).for_kase(@kase)
     @routes = Route.accessible_by(current_ability)
-    @users = [User.new(:first_name=>'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
+    @users = [User.new(first_name: 'Unassigned')] + User.inside_or_selected(@kase.user_id).accessible_by(current_ability)
   end
 
   # Attempt to instantiate the correct Kase subclass based on the type 

@@ -1,4 +1,4 @@
-<%= form_for @user, :url => update_user_details_path do |f| %>
+<%= form_for @user, url: update_user_details_path do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -30,7 +30,7 @@
   <div class="field">
     <%= f.label :organization_id %><br/>
     <%= collection_select(:user, :organization_id, Organization.all, :id,
-                          :name, :prompt => true) %>
+                          :name, prompt: true) %>
   </div>
   <div class="actions">
     <%= f.submit %>

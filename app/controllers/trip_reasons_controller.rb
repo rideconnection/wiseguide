@@ -15,17 +15,17 @@ class TripReasonsController < ApplicationController
 
   def create
     if @trip_reason.save
-      redirect_to(@trip_reason, :notice => 'Trip reason was successfully created.')
+      redirect_to(@trip_reason, notice: 'Trip reason was successfully created.')
     else
-      render :action => "new"
+      render action: "new"
     end
   end
 
   def update
     if @trip_reason.update_attributes(trip_reason_params)
-      redirect_to(@trip_reason, :notice => 'Trip reason was successfully updated.') 
+      redirect_to(@trip_reason, notice: 'Trip reason was successfully updated.') 
     else
-      render :action => "edit" 
+      render action: "edit" 
     end
   end
 

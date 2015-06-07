@@ -6,7 +6,7 @@ class ImpairmentsController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @impairments }
+      format.xml  { render xml: @impairments }
     end
   end
 
@@ -15,7 +15,7 @@ class ImpairmentsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @impairment }
+      format.xml  { render xml: @impairment }
     end
   end
 
@@ -24,7 +24,7 @@ class ImpairmentsController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @impairment }
+      format.xml  { render xml: @impairment }
     end
   end
 
@@ -37,11 +37,11 @@ class ImpairmentsController < ApplicationController
   def create
     respond_to do |format|
       if @impairment.save
-        format.html { redirect_to(@impairment, :notice => 'Impairment was successfully created.') }
-        format.xml  { render :xml => @impairment, :status => :created, :location => @impairment }
+        format.html { redirect_to(@impairment, notice: 'Impairment was successfully created.') }
+        format.xml  { render xml: @impairment, status: :created, location: @impairment }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @impairment.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @impairment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class ImpairmentsController < ApplicationController
   def update
     respond_to do |format|
       if @impairment.update_attributes(impairment_params)
-        format.html { redirect_to(@impairment, :notice => 'Impairment was successfully updated.') }
+        format.html { redirect_to(@impairment, notice: 'Impairment was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @impairment.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @impairment.errors, status: :unprocessable_entity }
       end
     end
   end

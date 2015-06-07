@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!, :set_cache_buster
 
   rescue_from CanCan::AccessDenied do |exception|
-    render :file => "#{Rails.root}/public/403", :formats => [:html], :status => 403
+    render file: "#{Rails.root}/public/403", formats: [:html], status: 403
   end
 
   def test_exception_notification

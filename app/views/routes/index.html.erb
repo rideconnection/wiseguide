@@ -13,7 +13,7 @@
     <td><%= route.name %></td>
     <td><%= link_to 'Show', route %></td>
     <td><%= link_to 'Edit', edit_route_path(route) %></td>
-    <td><%= link_to 'Destroy', route, data: {confirm: 'Are you sure?'}, :method => :delete %></td>
+    <td><%= link_to 'Destroy', route, data: {confirm: 'Are you sure?'}, method: :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -1,5 +1,5 @@
-<%= render 'shared/breadcrumbs', :target => @trip_authorization, :name => 'Trip Authorization' %>
-<%= link_to "Delete", trip_authorization_path(@trip_authorization), :method => "delete", data: {confirm: "Are you sure you want to delete this trip authorization?"}, :class => "delete" if can?(:delete, @trip_authorization) %>
+<%= render 'shared/breadcrumbs', target: @trip_authorization, name: 'Trip Authorization' %>
+<%= link_to "Delete", trip_authorization_path(@trip_authorization), method: "delete", data: {confirm: "Are you sure you want to delete this trip authorization?"}, class: "delete" if can?(:delete, @trip_authorization) %>
 
 <%= render 'form' %>
 

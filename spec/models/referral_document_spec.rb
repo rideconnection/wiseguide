@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReferralDocument do
   before do
-    @resource = FactoryGirl.build(:referral_document_resource, :referral_document => nil)
+    @resource = FactoryGirl.build(:referral_document_resource, referral_document: nil)
   end
 
   it "should create a new instance given valid attributes" do

@@ -2,7 +2,7 @@
   <h1>Surveys</h1>
 </div>
 
-<%= link_to "Create New Survey", new_survey_path, :class => 'action-bttn' %>
+<%= link_to "Create New Survey", new_survey_path, class: 'action-bttn' %>
 
 <hr>
 
@@ -10,7 +10,7 @@
 <% @active_surveys.each do |survey| %>
   <b><%= survey.title %></b>: Assessed <%= survey.response_sets.size %> times.<br>
   Created <%= survey.active_at.to_s(:human) %><br/>
-  <%= button_to 'Deactivate', survey, :method => :delete %>
+  <%= button_to 'Deactivate', survey, method: :delete %>
   <br>
 <% end %>
 <hr>
@@ -20,7 +20,7 @@
   <b><%= survey.title %></b>: Assessed <%= survey.response_sets.size %> times.<br>
   Created <%= survey.active_at.to_s(:human) %><br/>
   Deactivated <%= survey.inactive_at.to_s(:human) %><br/>
-  <%= button_to 'Reactivate', reactivate_survey_path(survey), :method => :post %>
+  <%= button_to 'Reactivate', reactivate_survey_path(survey), method: :post %>
   <br>
 <% end %>
 <hr>

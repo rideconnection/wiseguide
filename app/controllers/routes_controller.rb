@@ -6,7 +6,7 @@ class RoutesController < ApplicationController
   def index
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @routes }
+      format.xml  { render xml: @routes }
     end
   end
 
@@ -15,7 +15,7 @@ class RoutesController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @route }
+      format.xml  { render xml: @route }
     end
   end
 
@@ -24,7 +24,7 @@ class RoutesController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @route }
+      format.xml  { render xml: @route }
     end
   end
 
@@ -37,11 +37,11 @@ class RoutesController < ApplicationController
   def create
     respond_to do |format|
       if @route.save
-        format.html { redirect_to(@route, :notice => 'Route was successfully created.') }
-        format.xml  { render :xml => @route, :status => :created, :location => @route }
+        format.html { redirect_to(@route, notice: 'Route was successfully created.') }
+        format.xml  { render xml: @route, status: :created, location: @route }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @route.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @route.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -51,11 +51,11 @@ class RoutesController < ApplicationController
   def update
     respond_to do |format|
       if @route.update_attributes(route_params)
-        format.html { redirect_to(@route, :notice => 'Route was successfully updated.') }
+        format.html { redirect_to(@route, notice: 'Route was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @route.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @route.errors, status: :unprocessable_entity }
       end
     end
   end
