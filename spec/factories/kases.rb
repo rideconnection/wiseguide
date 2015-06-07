@@ -38,7 +38,7 @@ FactoryGirl.define do
     funding_source
     referral_source "Source"
     referral_mechanism "Email"
-    referral_type { ReferralType.find_or_create_by_name("TC - Other") }
+    referral_type { ReferralType.find_or_create_by(name: "TC - Other") }
     
     factory :open_training_kase, traits: [:open_kase] do
       disposition { TrainingKaseDisposition.find_by_name("In Progress") || FactoryGirl.create(:training_kase_disposition, :name => "In Progress") }
@@ -47,7 +47,7 @@ FactoryGirl.define do
 
   factory :coaching_kase, :aliases => [:closed_coaching_kase], :traits => [:base_kase, :development_kase] do
     case_manager
-    referral_type { ReferralType.find_or_create_by_name("CC - Other") }
+    referral_type { ReferralType.find_or_create_by(name: "CC - Other") }
     
     factory :open_coaching_kase, traits: [:open_kase] do
       disposition { CoachingKaseDisposition.find_by_name("In Progress") || FactoryGirl.create(:coaching_kase_disposition, :name => "In Progress") }

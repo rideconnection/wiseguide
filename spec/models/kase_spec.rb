@@ -117,8 +117,8 @@ RSpec.describe Kase do
     end
     
     it "should know what referral types are available to each kase" do
-      coaching_type = ReferralType.find_or_create_by_name("CC - Test")
-      training_type = ReferralType.find_or_create_by_name("TC - Test")
+      coaching_type = ReferralType.find_or_create_by(name: "CC - Test")
+      training_type = ReferralType.find_or_create_by(name: "TC - Test")
 
       coaching_kase = FactoryGirl.create(:coaching_kase)
       training_kase = FactoryGirl.create(:training_kase)

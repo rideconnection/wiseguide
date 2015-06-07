@@ -27,7 +27,7 @@ class DropOrganizationTypesTable < ActiveRecord::Migration
      ['Government Body',              'government'],
      ['Case Management Organization', 'case_mgmt']
     ].each do |old_type_name, new_type_id|
-      old_type = OrganizationType.find_or_create_by_name(old_type_name)
+      old_type = OrganizationType.find_or_create_by(name: old_type_name)
       Organization.where(:organization_type => new_type_id).update_all(:organization_type_id => old_type.id)
     end
     remove_column :organizations, :organization_type    

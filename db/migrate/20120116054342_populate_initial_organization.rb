@@ -18,7 +18,7 @@ class PopulateInitialOrganization < ActiveRecord::Migration
      'Government Body',
      'Case Management Organization',
     ].each do |name|
-      OrganizationType.find_or_create_by_name(name)
+      OrganizationType.find_or_create_by(name: name)
     end
     type = OrganizationType.find_by_name('Ride Connection Staff')
     rc = Organization.find_or_initialize_by_name('Ride Connection', :organization_type_id => type.id)
