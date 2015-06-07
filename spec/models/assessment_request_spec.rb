@@ -375,7 +375,7 @@ RSpec.describe AssessmentRequest do
     
     describe "pending" do
       # "Pending" (reason_not_completed is blank and no associated TC case)
-      # scope :pending, where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)")
+      # scope :pending, -> { where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)") }
       before do
         kase = FactoryGirl.create(:kase)
         
@@ -398,7 +398,7 @@ RSpec.describe AssessmentRequest do
 
     describe "not_completed" do
       # "Not completed" (reason_not_completed is not blank)
-      # scope :not_completed, where("reason_not_completed IS NOT NULL OR reason_not_completed > ''")
+      # scope :not_completed, -> { where("reason_not_completed IS NOT NULL OR reason_not_completed > ''") }
       before do
         @assessment_request_1 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
         @assessment_request_2 = FactoryGirl.create(:assessment_request, :reason_not_completed => "Duplicate request")
@@ -419,7 +419,7 @@ RSpec.describe AssessmentRequest do
 
     describe "completed" do
       # "Completed" (kase_id foreign key is not blank)
-      # scope :completed, where("kase_id > 0")
+      # scope :completed, -> { where("kase_id > 0") }
       before do
         kase_1 = FactoryGirl.create(:kase)
         kase_2 = FactoryGirl.create(:kase)

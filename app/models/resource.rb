@@ -10,7 +10,7 @@ class Resource < ActiveRecord::Base
     :url => "URL",
   }
   
-  scope :active, where(:active => true)
+  scope :active, -> { where(:active => true) }
 
   def self.human_attribute_name(attr, options={})
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super

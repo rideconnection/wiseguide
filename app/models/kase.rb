@@ -47,16 +47,16 @@ class Kase < ActiveRecord::Base
   
   scope :assigned_to, lambda {|user| where(:user_id => user.id) }
   scope :not_assigned_to, lambda {|user| where('user_id <> ?',user.id)}
-  scope :unassigned, where(:user_id => nil)
-  scope :open, where(:close_date => nil)
+  scope :unassigned, -> { where(:user_id => nil) }
+  scope :open, -> { where(:close_date => nil) }
   scope :opened_in_range, lambda{|date_range| where(:open_date => date_range)}
   scope :open_in_range, lambda{|date_range| where("NOT (COALESCE(kases.close_date,?) < ? OR kases.open_date > ?)", date_range.begin, date_range.begin, date_range.end)}
-  scope :closed, where('close_date IS NOT NULL')
+  scope :closed, -> { where('close_date IS NOT NULL') }
   scope :closed_in_range, lambda{|date_range| where(:close_date => date_range)}
   scope :successful, lambda{where("disposition_id IN (?)", Disposition.successful.collect(&:id))}
   scope :has_three_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id=kases.id AND (three_month_unreachable = ? OR three_month_trip_count IS NOT NULL))', 3.months.ago + 1.week, true)}
   scope :has_six_month_follow_ups_due, lambda{successful.where('kases.close_date < ? AND NOT EXISTS (SELECT id FROM outcomes WHERE kase_id = kases.id AND (six_month_unreachable = ? OR six_month_trip_count IS NOT NULL))', 6.months.ago + 1.week, true)}
-  scope :scheduling_system_entry_required, where(:scheduling_system_entry_required => true, :type => 'CoachingKase')
+  scope :scheduling_system_entry_required, -> { where(:scheduling_system_entry_required => true, :type => 'CoachingKase') }
 
   # Make sure our STI children are routed through the parent routes
   def self.inherited(child)

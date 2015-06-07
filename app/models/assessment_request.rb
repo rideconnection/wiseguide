@@ -26,13 +26,13 @@ class AssessmentRequest < ActiveRecord::Base
   scope :created_in_range, lambda { |date_range| where("created_at >= ? AND created_at < ?", date_range.begin, date_range.end) }
 
   # "Pending" (reason_not_completed is blank and no associated TC case)
-  scope :pending, where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)")
+  scope :pending, -> { where("(reason_not_completed IS NULL OR reason_not_completed = '') AND (kase_id IS NULL OR kase_id <= 0)") }
   
   # "Not completed" (reason_not_completed is not blank)
-  scope :not_completed, where("reason_not_completed > ''")
+  scope :not_completed, -> { where("reason_not_completed > ''") }
   
   # "Completed" (kase_id foreign key is not blank)
-  scope :completed, where("kase_id > 0")
+  scope :completed, -> { where("kase_id > 0") }
 
   def display_name
     return customer_last_name + ", " + customer_first_name
