@@ -91,7 +91,7 @@
           </li>
         <% end %>
       </ul>
-      <div class="clearfix"><%= submit_tag "Filter", name: nil, disabled: false, disable_with: "Applying filter..." %></div>
+      <div class="clearfix"><%= submit_tag "Filter", name: nil, disabled: false, data: {disable_with: "Applying filter..."} %></div>
     <% end -%>
   </div>
 
