@@ -38,7 +38,7 @@
         <td><%= customer.email %></td>
         <td><%= customer.address %></td>
         <% if can? :destroy, customer %>    
-          <td><%= button_to "Delete", customer, :confirm=>"Are you sure you want to delete this user?", :method=>:delete %></td>
+          <td><%= button_to "Delete", customer, data: {confirm: "Are you sure you want to delete this user?"}, :method=>:delete %></td>
         <% end %>
       </tr>
     <% end %>

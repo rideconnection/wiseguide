@@ -13,7 +13,7 @@
     <td><%= referral_type.name %></td>
     <td><%= link_to 'Show', referral_type %></td>
     <td><%= link_to 'Edit', edit_referral_type_path(referral_type) %></td>
-    <td><%= link_to 'Destroy', referral_type, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', referral_type, data: {confirm: 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>

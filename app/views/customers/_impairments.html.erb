@@ -14,7 +14,7 @@
       <%= link_to( "", edit_customer_impairment_path( customer_impairment ), :class => "edit") if can? :edit, @customer %>
     </td>
     <td>
-      <%= link_to "", customer_impairment_path( customer_impairment ), {:method=>:delete, :confirm => "Are you sure you want to delete this customer impairment?", :class=>"delete"} %>
+      <%= link_to "", customer_impairment_path( customer_impairment ), {:method=>:delete, data: {confirm: "Are you sure you want to delete this customer impairment?"}, :class=>"delete"} %>
     </td>
   </tr>
 <% end %>

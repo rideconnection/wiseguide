@@ -20,7 +20,7 @@
       <%= link_to "Edit", surveyor.edit_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => :edit %>
     </td>
     <td>
-      <%= link_to "", surveyor.view_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => "delete", :method => :delete, :confirm => "Are you sure?" %>
+      <%= link_to "", surveyor.view_my_survey_path(:kase_id => @kase.id, :survey_code=>response_set.survey.access_code, :response_set_code=>response_set.access_code), :class => "delete", :method => :delete, data: {confirm: "Are you sure?"} %>
     </td>
   <% end %>
 </tr>

@@ -15,7 +15,7 @@
     <td><%= trip_reason.work_related %></td>
     <td><%= link_to 'Show', trip_reason %></td>
     <td><%= link_to 'Edit', edit_trip_reason_path(trip_reason) %></td>
-    <td><%= link_to 'Destroy', trip_reason, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', trip_reason, data: {confirm: 'Are you sure?'}, :method => :delete %></td>
   </tr>
 <% end %>
 </table>
