@@ -10,13 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// TODO migrate away from needing jquery-migrate
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
+//= require jquery-ui
 //= require jquery_nested_form
-//= require jquery-migrate
 //= require jquery-ui-timepicker-addon
+//= require jquery.ajax-loader.min
 //= require autosize
 //= require dateFormat
 //= require_tree .

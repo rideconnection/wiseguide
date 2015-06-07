@@ -1,4 +1,11 @@
 $(document).ready(function(){
+  // global AJAX setup
+  $(document).ajaxStart(function(e) {
+    $('body').ajaxLoader();
+  }).ajaxStop(function(e) {
+    $('body').ajaxLoaderRemove();
+  });
+    
   $("tr.auto-zebra:odd").addClass("odd");
   
   $('#flash a.closer').click(function() {

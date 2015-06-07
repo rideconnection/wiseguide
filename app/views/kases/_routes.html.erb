@@ -14,28 +14,30 @@
   <% end %>
 </table>
 
-<script type='text/javascript'>
+<%= javascript_tag do %>
   function init_row(index, row) {
-    $(row).bind('ajax:success', function(evt, data, status, xhr){
+    $(row).on('ajax:success', function(e, data, status, xhr){
       var $this = $(this);
       $('#kase_route_' + data.kase_id + "_" + data.route_id).remove();
     })
   }
 
-  $('.kase_route_row').each(init_row);
+  $(document).ready(function(){
+    $('.kase_route_row').each(init_row);
 
-  $('#new_route_form').bind('ajax:success', function(evt, data, status, xhr){    
-    var $this = $(this);
+    $('#new_route_form').on('ajax:success', function(e, data, status, xhr){    
+      var $this = $(this);
 
-    $('#routes').append(xhr.responseText);
+      $('#routes').append(xhr.responseText);
 
-    init_row(null, '#routes tr:last');
+      init_row(null, '#routes tr:last');
     
-    $('#routes tr:odd').addClass('odd');
+      $('#routes tr:odd').addClass('odd');
     
-    $this.find('.errors').empty();
-  }).bind('ajax:error', function(evt, xhr, status, error){
-    // Display the errors (i.e. an error partial or helper)
-    $(this).find('.errors').html(xhr.responseText);
+      $this.find('.errors').empty();
+    }).on('ajax:error', function(e, xhr, status, error){
+      // Display the errors (i.e. an error partial or helper)
+      $(this).find('.errors').html(xhr.responseText);
+    });
   });
-</script>
+<% end %>

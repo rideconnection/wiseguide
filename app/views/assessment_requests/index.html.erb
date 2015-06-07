@@ -1,20 +1,7 @@
 <% content_for :head do -%>
-  <%= stylesheet_link_tag 'jquery.ajax-loader', media: 'screen, projection' %>
-  <%= javascript_include_tag 'jquery.ajax-loader.min' %>
   <%= javascript_tag do %>
-    jQuery.ajaxSetup({
-      beforeSend: function() {
-        $('body').ajaxLoader();
-      },
-      complete: function(){
-         $('body').ajaxLoaderRemove();
-      },
-      success: function() {}
-    });
     $(document).ready(function(){
-      //
       // Pretty up the form
-      //
       var $form = $('#assessment-request-filter');
       var $headers = $('#assessment-request-filter h3');
       var $user_type_filters = $('#user-type-filters li');
@@ -52,9 +39,7 @@
         $collection.width(Math.max(li1_w, li2_w, li3_w) + 'px');
       }
       
-      //
       // Ajaxify the form
-      //
       $options = $form.find('input[type=radio]');
       $options.change(function() {
         $.get($form.attr("action"), $form.serialize(), null, 'script');
