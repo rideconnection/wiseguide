@@ -15,7 +15,7 @@
 //= require jquery-ui
 //= require jquery_nested_form
 //= require jquery-ui-timepicker-addon
-//= require jquery.ajax-loader.min
+//= require jquery.blockUI
 //= require autosize
 //= require dateFormat
 //= require_tree .

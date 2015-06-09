@@ -1,10 +1,21 @@
 $(document).ready(function(){
-  // global AJAX setup
-  $(document).ajaxStart(function(e) {
-    $('body').ajaxLoader();
-  }).ajaxStop(function(e) {
-    $('body').ajaxLoaderRemove();
-  });
+  // Don't use the AJAX loader on surveys
+  if ($("body.surveyor").length == 0) {
+    // global AJAX setup
+    $(document).ajaxStart(function(e) {
+      $.blockUI({ css: { 
+          border: 'none', 
+          padding: '15px', 
+          backgroundColor: '#000', 
+          '-webkit-border-radius': '10px', 
+          '-moz-border-radius': '10px', 
+          opacity: .5, 
+          color: '#fff' 
+      } });
+    }).ajaxStop(function(e) {
+      $.unblockUI();
+    });
+  }
     
   $("tr.auto-zebra:odd").addClass("odd");
   

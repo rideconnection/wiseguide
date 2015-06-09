@@ -12,5 +12,5 @@
  *= require boilerplate
  *= require jquery-ui
  *= require jquery-ui-timepicker-addon
- *= require jquery.ajax-loader
+ *= require jquery.blockUI
  */
