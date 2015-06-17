@@ -15,7 +15,7 @@
     var element = $("#user_organization_id")[0];
     if (element.selectedIndex > 0) {
       $.getJSON('/organizations/'+element.options[element.selectedIndex].value+'.json', function(data) {
-        if (!jQuery.isEmptyObject(data) && data.organization.organization_type == '<%= j Organization::ORGANIZATION_TYPES[:staff][:id] %>') {
+        if (!jQuery.isEmptyObject(data) && data.organization_type == '<%= j Organization::ORGANIZATION_TYPES[:staff][:id] %>') {
           $("#permissions select").show();
         }
         else hide_permissions();

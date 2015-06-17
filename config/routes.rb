@@ -71,13 +71,13 @@ Wiseguide::Application.routes.draw do
     get    :init,                 to: "users#show_init"
     get    :new_user,             to: "users#new_user"
     get    :show_change_password, to: "users#show_change_password"
-    post   :change_password,      to: "users#change_password"
+    patch  :change_password,      to: "users#change_password"
     post   :create_user,          to: "users#create_user"
     post   :init,                 to: "users#init"
     post   :logout,               to: "users#sign_out"
     post   :update_user,          to: "users#update"
     put    :create_user,          to: "users#create_user"
-    put    :update_user_details,  to: "users#update_details"
+    patch  :update_user_details,  to: "users#update_details"
   end
 
   get  :admin, to: "admin#index"
