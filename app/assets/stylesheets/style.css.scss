@@ -937,6 +937,10 @@ body.customers ol.notes input[type="file"] {
   display: block;
 }
 
+body.customers dl {
+  padding-top: 5px;
+}
+
 body.customers dt {
   font-weight: bold;
 }
