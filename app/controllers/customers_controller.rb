@@ -1,5 +1,6 @@
 class CustomersController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource only: [:download_small_portrait, :download_original_portrait]
 
   def index
     @customers = @customers.order(:last_name, :first_name).paginate(page: params[:page])
@@ -10,10 +11,12 @@ class CustomersController < ApplicationController
   end
   
   def download_small_portrait
+    authorize! :read, @customer
     send_file(@customer.portrait.path(:small), type: @customer.portrait_content_type, disposition: 'inline') if @customer.portrait.path(:small)
   end
 
   def download_original_portrait
+    authorize! :read, @customer
     send_file(@customer.portrait.path(:original), type: @customer.portrait_content_type) if @customer.portrait.path(:small)
   end
 
