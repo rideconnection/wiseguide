@@ -1,8 +1,14 @@
-set :deploy_to, "/home/deployer/rails/wiseguide"
-set :branch, "stable"
-set :rvm_ruby_string, '1.9.3-p547@wiseguide'
-set :rails_env, "production"
+set :branch, 'stable'
+set :rvm_ruby_version, '2.2.2@wiseguide'
+set :passenger_rvm_ruby_version, '2.2.1@passenger'
+set :deploy_to, '/home/deploy/rails/wiseguide'
+set :default_env, { "RAILS_RELATIVE_URL_ROOT" => "/wiseguide" }
 
-role :web, "184.154.79.122"
-role :app, "184.154.79.122"
-role :db,  "184.154.79.122", primary: true # This is where Rails migrations will run
+# capistrano-rails directives
+set :rails_env, 'production'
+set :assets_roles, [:web, :app]
+set :migration_role, [:db]
+set :conditionally_migrate, false
+set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
+
+server 'apps2.rideconnection.org', roles: [:app, :web, :db], user: 'deploy'
