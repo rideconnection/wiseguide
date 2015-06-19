@@ -140,6 +140,7 @@ a:hover {
 }
 ul, ol {
   margin-left: 1.8em;
+  padding-left: 0;
 }
 ol {
   list-style-type: decimal;
