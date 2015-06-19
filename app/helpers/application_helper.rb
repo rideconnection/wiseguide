@@ -1,10 +1,10 @@
 module ApplicationHelper
   def last_updated(object)
-    "Last updated #{object.updated_at.to_s(:long)}#{paper_trail_author(object, :last, :update)}"
+    "Last updated #{object.updated_at.to_s(:long)}#{paper_trail_author(object, :last, :update)}" unless object.updated_at.blank?
   end
   
   def creation_stamp(object)
-    "Created on #{object.created_at.to_s(:long)}#{paper_trail_author(object, :first, :create)}"
+    "Created on #{object.created_at.to_s(:long)}#{paper_trail_author(object, :first, :create)}" unless object.created_at.blank?
   end
   
   def flash_type(type)
