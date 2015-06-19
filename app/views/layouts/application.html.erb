@@ -10,11 +10,6 @@
   <%= content_for?(:head) ? yield(:head) : '' %>
 </head>
 <body class="<%= bodytag_class %>">
-  <div id="production-test-warning">
-    <div class="stripes"></div>
-    <span>This is only a <em>preview of production</em> on the new server. To view the live production data, please go to
-      <a href="http://apps.rideconnection.org/wiseguide">apps.rideconnection.org/wiseguide</a>.</span>
-  </div>
   <div id="header">
     <div class="wrap clearfix">
       <%= link_to "WiseGuide", root_path, id: 'logo' %>
