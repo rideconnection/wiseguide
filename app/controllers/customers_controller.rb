@@ -12,12 +12,12 @@ class CustomersController < ApplicationController
   
   def download_small_portrait
     authorize! :read, @customer
-    send_file(@customer.portrait.path(:small), type: @customer.portrait_content_type, disposition: 'inline') if @customer.portrait.path(:small)
+    send_file(@customer.portrait.path(:small), type: @customer.portrait_content_type, disposition: 'inline') if @customer.portrait.exists?(:small)
   end
 
   def download_original_portrait
     authorize! :read, @customer
-    send_file(@customer.portrait.path(:original), type: @customer.portrait_content_type) if @customer.portrait.path(:small)
+    send_file(@customer.portrait.path(:original), type: @customer.portrait_content_type) if @customer.portrait.exists?(:small)
   end
 
   def new
