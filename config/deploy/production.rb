@@ -11,4 +11,4 @@ set :migration_role, [:db]
 set :conditionally_migrate, false
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
-server 'apps2.rideconnection.org', roles: [:app, :web, :db], user: 'deploy'
+server 'apps.rideconnection.org', roles: [:app, :web, :db], user: 'deploy'
