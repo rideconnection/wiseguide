@@ -8,7 +8,7 @@ set :default_env, { "RAILS_RELATIVE_URL_ROOT" => "/wiseguide" }
 set :rails_env, 'production'
 set :assets_roles, [:web, :app]
 set :migration_role, [:db]
-set :conditionally_migrate, false
+set :conditionally_migrate, true
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
 
 server 'apps.rideconnection.org', roles: [:app, :web, :db], user: 'deploy'
