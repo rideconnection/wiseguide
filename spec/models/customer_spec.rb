@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Customer do
+RSpec.describe Customer do
   before do
     @customer = FactoryGirl.build(:customer)
   end
   
   it "should create a new instance given valid attributes" do
-    @customer.valid?.should be_true
+    @customer.valid?.should be_truthy
   end
   
   describe "middle_initial" do
@@ -17,63 +17,63 @@ describe Customer do
   describe "veteran_status" do
     it "should allow true" do
       @customer.veteran_status = true
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow false" do
       @customer.veteran_status = false
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow nil" do
       @customer.veteran_status = nil
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
   end
   
   describe "spouse_of_veteran_status" do
     it "should allow true" do
       @customer.spouse_of_veteran_status = true
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow false" do
       @customer.spouse_of_veteran_status = false
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow nil" do
       @customer.spouse_of_veteran_status = nil
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
   end
   
   describe "honored_citizen_cardholder" do
     it "should allow true" do
       @customer.honored_citizen_cardholder = true
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow false" do
       @customer.honored_citizen_cardholder = false
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow nil" do
       @customer.honored_citizen_cardholder = nil
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
   end
   
   describe "primary_language" do
     it "should allow a text value" do
       @customer.primary_language = "A"
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow nil" do
       @customer.primary_language = nil
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
   end
   
@@ -84,12 +84,12 @@ describe Customer do
     
     it "should allow an integer value" do
       @customer.ada_service_eligibility_status_id = @ada_service_eligibility_status.id
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end
 
     it "should allow nil" do
       @customer.ada_service_eligibility_status_id = nil
-      @customer.valid?.should be_true
+      @customer.valid?.should be_truthy
     end    
   end
   
@@ -105,8 +105,8 @@ describe Customer do
     describe "assessment_requests" do
       before do
         @requests = []
-        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
-        @requests << FactoryGirl.create(:assessment_request, :customer => @customer)
+        @requests << FactoryGirl.create(:assessment_request, customer: @customer)
+        @requests << FactoryGirl.create(:assessment_request, customer: @customer)
       end
       
       it "should return the correct associated assessment requests" do
@@ -119,8 +119,8 @@ describe Customer do
     describe "contacts association" do
       before do
         @contacts = [
-          FactoryGirl.create(:contact, :contactable => @customer),
-          FactoryGirl.create(:contact, :contactable => @customer)
+          FactoryGirl.create(:contact, contactable: @customer),
+          FactoryGirl.create(:contact, contactable: @customer)
         ]
       end
       
@@ -143,21 +143,17 @@ describe Customer do
   describe "search" do
     if connection_supports_dmetaphone?
       before(:all) do
-        FactoryGirl.create(:customer, :first_name => "Donna",       :last_name => "Roberts")
-        FactoryGirl.create(:customer, :first_name => "Jennifer",    :last_name => "Donnings")
-        FactoryGirl.create(:customer, :first_name => "Robert",      :last_name => "Bradley Sr.")
-        FactoryGirl.create(:customer, :first_name => "Bobby",       :last_name => "O'Brady")
-        FactoryGirl.create(:customer, :first_name => "Bradley",     :last_name => "Srocco")
-        FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bobson")
-        FactoryGirl.create(:customer, :first_name => "Bob",         :last_name => "Bradley")
-        FactoryGirl.create(:customer, :first_name => "Christopher", :last_name => "Carlson")
-        FactoryGirl.create(:customer, :first_name => "Brady",       :last_name => "Robert")
-        FactoryGirl.create(:customer, :first_name => "Don",         :last_name => "Bradley")
-        FactoryGirl.create(:customer, :first_name => "Mary Joe",    :last_name => "Wilson")
-      end
-    
-      after(:all) do
-        Customer.destroy_all
+        FactoryGirl.create(:customer, first_name: "Donna",       last_name: "Roberts")
+        FactoryGirl.create(:customer, first_name: "Jennifer",    last_name: "Donnings")
+        FactoryGirl.create(:customer, first_name: "Robert",      last_name: "Bradley Sr.")
+        FactoryGirl.create(:customer, first_name: "Bobby",       last_name: "O'Brady")
+        FactoryGirl.create(:customer, first_name: "Bradley",     last_name: "Srocco")
+        FactoryGirl.create(:customer, first_name: "Don",         last_name: "Bobson")
+        FactoryGirl.create(:customer, first_name: "Bob",         last_name: "Bradley")
+        FactoryGirl.create(:customer, first_name: "Christopher", last_name: "Carlson")
+        FactoryGirl.create(:customer, first_name: "Brady",       last_name: "Robert")
+        FactoryGirl.create(:customer, first_name: "Don",         last_name: "Bradley")
+        FactoryGirl.create(:customer, first_name: "Mary Joe",    last_name: "Wilson")
       end
     
       # FYI - The results for these searches may not seem predictable when run

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReferralDocumentResource do
+RSpec.describe ReferralDocumentResource do
   it "should create a new instance given valid attributes" do
     # We could put this in a before block to take advantage of transactions,
     # but I prefer to explicitly state why we are building a new object, 
@@ -14,15 +14,15 @@ describe ReferralDocumentResource do
   context "associations" do    
     it "should required a valid, persisted resource" do
       # With a nil resource
-      doc_resource = FactoryGirl.build(:referral_document_resource, :resource => nil)
-      doc_resource.valid?.should be_false
+      doc_resource = FactoryGirl.build(:referral_document_resource, resource: nil)
+      doc_resource.valid?.should be_falsey
       doc_resource.errors.keys.should include(:resource)
       doc_resource.errors[:resource].should include("can't be blank")
       
       # With an invalid resource
-      resource = FactoryGirl.build(:resource, :name => nil)
+      resource = FactoryGirl.build(:resource, name: nil)
       doc_resource.resource = resource
-      doc_resource.valid?.should be_false
+      doc_resource.valid?.should be_falsey
       doc_resource.errors.keys.should include(:resource)
       doc_resource.errors[:resource].should include("is invalid")
       

@@ -1,26 +1,18 @@
 class User < ActiveRecord::Base
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :phone_number
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :organization_id
-
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, 
-         :recoverable, :trackable, :validatable
+  # :registerable, :rememberable, :confirmable, :lockable, :timeoutable and
+  # :omniauthable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable
 
-  model_stamper
-  stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
-
-  belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
-  belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
+  has_paper_trail ignore: [:sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip], skip: [:reset_password_token]
+  
   belongs_to :organization
 
-  has_many :kases, :dependent => :nullify
-  has_many :contacts, :dependent => :nullify
-  has_many :events, :dependent => :nullify
-  has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
-  has_many :referred_kases, :through => :assessment_requests, :source => :kase
+  has_many :kases, dependent: :nullify
+  has_many :contacts, dependent: :nullify
+  has_many :events, dependent: :nullify
+  has_many :assessment_requests, foreign_key: :submitter_id, dependent: :nullify
+  has_many :referred_kases, through: :assessment_requests, source: :kase
 
   before_save :clean_level
 
@@ -28,12 +20,12 @@ class User < ActiveRecord::Base
   validates_presence_of   :last_name
   validates_uniqueness_of :email
   validates_presence_of   :organization_id  
-  validates_format_of     :password, :if => :password_required?,
-                          :with => /^(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)$/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
-                          :message => "must have at least one number and at least one non-alphanumeric character"
+  validates_format_of     :password, if: :password_required?,
+                          :with => /\A(?=.*[0-9])(?=.*[\W_&&[^\s] ])([\w\W&&[^\s] ]+)\z/i, # Let Devise handle the length requirement. Regexp tested at http://www.rubular.com/r/7peotZQNui
+                          message: "must have at least one number and at least one non-alphanumeric character"
   
-  default_scope order(:first_name, :last_name)
-  scope :active, where("users.level >= 0")
+  default_scope { order(:first_name, :last_name) }
+  scope :active, -> { where("users.level >= 0") }
   scope :inside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject(&:is_outside_org?).collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
   scope :outside_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject{|o| !o.is_outside_org?}.collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
   scope :cmo_or_selected, lambda{|user_id| where('id IN (?)', ([user_id] + Organization.all.reject{|o| !o.is_cmo?}.collect{|o| o.users.active.collect(&:id)}).flatten.compact.reject(&:blank?))}
@@ -97,13 +89,14 @@ class User < ActiveRecord::Base
     password.shuffle.join
   end
   
+  # Override Devise::Models::DatabaseAuthenticatabl::valid_password?
+  # Some user accounts were previously disabled by blanking or "x"ing out the
+  # encrypted password field, which causes an invalid hash error.
   def valid_password?(*args)
-    # Some user accounts were previously disabled by blanking or "x"ing out the
-    # encrypted password field. This causes an invalid hash error
-    if encrypted_password.blank? || !(encrypted_password =~ /^\$2a\$10\$.{53}/)
-      false
-    else
+    begin
       super
+    rescue BCrypt::Errors::InvalidHash
+      false
     end
   end
 

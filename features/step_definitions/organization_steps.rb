@@ -13,7 +13,7 @@ Then /^I should be prompted to confirm the deletion when I click the organizatio
   button = find("a[href=\"/organizations/#{@organization.id}\"][data-method=\"delete\"]")
   button['data-confirm'].should eql("Are you sure?")
   button.click
-  popup.confirm
+  page.driver.browser.switch_to.alert.accept
   @confirmation_message = 'Organization was successfully deleted.'
 end
 
@@ -25,5 +25,5 @@ Then /^I should( not)?(?: still)? see a link to the organization(?:'s)? profile 
 end
 
 Given /^a user exists who belongs to the organization$/ do
-  @user = FactoryGirl.create(:user, :organization => @organization)
+  @user = FactoryGirl.create(:user, organization: @organization)
 end

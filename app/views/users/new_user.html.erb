@@ -2,7 +2,7 @@
   <h1>Create New User</h1>
 </div>
 
-<script type="text/JavaScript">
+<%= javascript_tag do %>
   $(document).ready(function() {
     $("#user_organization_id").change(function() {
       check_permissions();
@@ -15,7 +15,7 @@
     var element = $("#user_organization_id")[0];
     if (element.selectedIndex > 0) {
       $.getJSON('/organizations/'+element.options[element.selectedIndex].value+'.json', function(data) {
-        if (!jQuery.isEmptyObject(data) && data.organization.organization_type == '<%= j Organization::ORGANIZATION_TYPES[:staff][:id] %>') {
+        if (!jQuery.isEmptyObject(data) && data.organization_type == '<%= j Organization::ORGANIZATION_TYPES[:staff][:id] %>') {
           $("#permissions select").show();
         }
         else hide_permissions();
@@ -31,13 +31,13 @@
     $("#permissions select").hide();
     $("#permissions").append($('<p class="permissions_note">Only applies to Staff Organization users.</p>'));        
   }
-</script>
+<% end %>
 
-<%= form_for @user, :url=>url_for(:action=>:create_user) do |f| %>
-  <% if @errors %>
+<%= form_for @user, url: url_for(action: :create_user) do |f| %>
+  <% if @user.errors %>
     <div id="error_explanation">
       <ul>
-      <% @errors.each do |field, msg| %>
+      <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -70,7 +70,7 @@
       <li class="field">
         <%= f.label :organization_id %>
         <%= collection_select(:user, :organization_id, Organization.all, :id,
-                              :name, :prompt => true) %>
+                              :name, prompt: true) %>
       </li>
       <li id="permissions">
         <%= f.label :permissions, "Permissions:" %>

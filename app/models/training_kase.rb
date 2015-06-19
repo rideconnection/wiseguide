@@ -11,21 +11,21 @@ class TrainingKase < Kase
   ]
 
   validates :funding_source_id, 
-    :presence => true
+    presence: true
 
   validates :county, 
-    :inclusion => {:in => VALID_COUNTIES.values}
+    inclusion: {in: VALID_COUNTIES.values}
 
   validates :referral_source, 
-    :presence => true
+    presence: true
 
   validates :referral_mechanism, 
-    :inclusion => {:in => REFERRAL_MECHANISM_OPTIONS, :allow_nil => false}
+    inclusion: {in: REFERRAL_MECHANISM_OPTIONS, allow_nil: false}
 
   validates :referral_mechanism_explanation, 
-    :presence => {
-      :if       => :other_mechanism?, 
-      :message  => 'must be present if the referral mechanism is "Other"'
+    presence: {
+      if: :other_mechanism?, 
+      message: 'must be present if the referral mechanism is "Other"'
     } 
 
   private

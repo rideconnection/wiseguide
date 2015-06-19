@@ -2,7 +2,7 @@
 <fieldset>
   <%= f.hidden_field :contactable_type %>
   <%= f.hidden_field :contactable_id %>
-  <%= render "shared/error_messages", :target => @contact %> 
+  <%= render "shared/error_messages", target: @contact %> 
   <ol class="section fourth">
     <li>
       <label>By</label>
@@ -10,26 +10,26 @@
     </li>
     <li>
       <%= f.label :date_time, "Date" %>
-      <%= f.text_field :date_time, :value=>@contact.date_time,
-                       :readonly => @readonly %>
+      <%= f.text_field :date_time, value: @contact.date_time,
+                       readonly: @readonly %>
     </li>
     <li>
       <%= f.label :method %>
       <%= f.collection_select :method, @contact_methods, :to_s, :to_s, {},
-                              { :disabled => @readonly } %>
+                              { disabled: @readonly } %>
     </li>
     <li>
       <%= f.label :description %>
-      <%= f.text_field :description, :readonly => @readonly %>
+      <%= f.text_field :description, readonly: @readonly %>
     </li>
     <li>
       <%= f.label :notes %>
-      <%= f.text_area :notes, "data-behavior" => "autoresize",
-                      :readonly => @readonly %>
+      <%= f.text_area :notes, data: {behavior: "autoresize"},
+                      readonly: @readonly %>
     </li>
     <li>
       <%= f.label :show_full_notes %>
-      <%= f.check_box :show_full_notes, :disabled => @readonly %>
+      <%= f.check_box :show_full_notes, disabled: @readonly %>
     </li>
   </ol>
 

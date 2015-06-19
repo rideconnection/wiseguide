@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
     # Read access implies download_attachment access
-    alias_action :download_attachment, :to => :read
+    alias_action :download_attachment, to: :read
 
     if user.level < 0
       return #turned-off users can do nothing
@@ -27,8 +27,8 @@ class Ability
     # Outside user permissions
     if user.level == 25 then
       can :create, AssessmentRequest if user.organization.is_cmo?
-      can :read,   AssessmentRequest, :submitter => { :organization_id => [user.organization.id] + user.organization.children.collect(&:id) }
-      can :update, AssessmentRequest, :submitter_id => user.id
+      can :read,   AssessmentRequest, submitter: { organization_id: [user.organization.id] + user.organization.children.collect(&:id) }
+      can :update, AssessmentRequest, submitter_id: user.id
       
       can :read, Kase do |kase|
         request = kase.assessment_request
@@ -93,7 +93,7 @@ class Ability
 
     #users can only read the cases of others
     can :read,   Contact
-    can :manage, Contact, :user_id => user.id
+    can :manage, Contact, user_id: user.id
 
     #and admins are admins
     if user.is_admin

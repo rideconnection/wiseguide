@@ -2,30 +2,30 @@
 <html>
 <head>
   <title><%= content_for?(:title) ? yield(:title) : "Wiseguide" %></title>
-  <%= stylesheet_link_tag "style.css", :media=>"screen" %>
-  <%= stylesheet_link_tag "print.css", :media=>"print" %>
-  <%= stylesheet_link_tag "jquery-ui-1.8.9.custom.css" %>
-  <%= javascript_include_tag %w{jquery.min jquery-ui jquery-ui-timepicker-addon jquery-Gtimepicker jquery.fn.autoresize dateFormat application rails} %>
-  <%= csrf_meta_tag %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= stylesheet_link_tag "style", media: "screen, projection" %>
+  <%= stylesheet_link_tag "print", media: "print" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
   <%= content_for?(:head) ? yield(:head) : '' %>
 </head>
 <body class="<%= bodytag_class %>">
   <div id="header">
-    <div class="wrap selfclear">
-      <%= link_to "WiseGuide", root_path, :id => 'logo' %>
+    <div class="wrap clearfix">
+      <%= link_to "WiseGuide", root_path, id: 'logo' %>
       <div id="login-area">
         <% if current_user %>
-        <%= link_to current_user.email, :controller => :users,
-                    :action => :show_change_password %> |
-        <%= link_to "Log out", logout_path, {:method=>"post"} %></a>
+        <%= link_to current_user.email, controller: :users,
+                    action: :show_change_password %> |
+        <%= link_to "Log out", logout_path, {method: "post"} %></a>
         <% end %>
       </div>
     </div><!-- /.wrap -->
   </div><!-- /#header -->
   <div id="crossbar">
-    <div class="wrap selfclear">             
+    <div class="wrap clearfix">             
       <% if !current_user.nil? %>
-      <ul id="primary-nav" class="selfclear">
+      <ul id="primary-nav" class="clearfix">
         <% if current_user.is_outside_user? %>
           <li class="home"><%= link_to "Dashboard", root_path %></li>
           <% if can? :create, AssessmentRequest %>
@@ -47,7 +47,7 @@
           <li class="reports"><%= link_to "Reports", reports_path %></li>
         <% end %>
       </ul>
-      <ul id="secondary-nav" class="selfclear">
+      <ul id="secondary-nav" class="clearfix">
         <% if !current_user.is_outside_user? %>
           <li class="admin"><%= link_to "Admin", admin_path %></li>
         <% end %>
@@ -56,7 +56,7 @@
     </div><!-- /.wrap -->
   </div><!-- /#crossbar -->
   <div id="main">
-    <div class="wrap selfclear">
+    <div class="wrap clearfix">
       <%= raw( flash_type(:notice) + flash_type(:alert) ) %>
       <%= content_for?(:menu_bar) ? yield(:menu_bar) : '' %>
       <%= yield %>

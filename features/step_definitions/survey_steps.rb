@@ -4,7 +4,7 @@ Then /^I should be able to paste JSON\-formatted data to create a new survey$/ d
   json_data = JSON.parse(File.read(Rails.root.join("features", "support", "survey_example.json")))
   title = "Survey #{Time.current.to_f.to_s}" # Make it unique so we can find it after
   json_data["title"] = title
-  fill_in 'survey', :with => json_data.to_json
+  fill_in 'survey', with: json_data.to_json
   click_button 'Create'
   # Get the newly generated ID so we can find the record later
   @survey = Survey.find_by_title(title)
@@ -28,7 +28,7 @@ When /^I click the link to add an assessment$/ do
 end
 
 Then /^I click the button for the open survey$/ do
-  find("form[action='/surveys/#{@survey.access_code}']").click_button("Assess")
+  find("form[action='/kases/#{@kase.id}/surveys/#{@survey.access_code}']").click_button("Assess")
 end
 
 Then /^I should be able to complete the survey form$/ do
@@ -38,9 +38,9 @@ Then /^I should be able to complete the survey form$/ do
     check "Individual"
   end
   within_fieldset("2) Emergency Contacts") do
-    fill_in 'Name', :with => 'Bob'
-    fill_in 'Relationship', :with => 'Uncle'
-    fill_in 'Phone', :with => '555-555-5555'
+    fill_in 'Name', with: 'Bob'
+    fill_in 'Relationship', with: 'Uncle'
+    fill_in 'Phone', with: '555-555-5555'
   end
   within_fieldset("3) Do you keep a piece of identification listing your address and phone number with you at all times?") do
     choose "Yes"

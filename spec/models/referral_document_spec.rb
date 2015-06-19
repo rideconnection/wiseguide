@@ -1,14 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReferralDocument do
+RSpec.describe ReferralDocument do
   before do
-    @resource = FactoryGirl.build(:referral_document_resource, :referral_document => nil)
+    @resource = FactoryGirl.build(:referral_document_resource, referral_document: nil)
   end
 
   it "should create a new instance given valid attributes" do
     valid = FactoryGirl.build(:referral_document_prototype)
     valid.referral_document_resources << @resource
-    valid.valid?.should be_true
+    valid.valid?.should be_truthy
   end
   
   context "associations" do
@@ -23,9 +23,9 @@ describe ReferralDocument do
     
     it "should require at least one referral document resources are associated" do
       refdoc = FactoryGirl.build(:referral_document_prototype)
-      refdoc.valid?.should be_false
+      refdoc.valid?.should be_falsey
       refdoc.referral_document_resources << @resource
-      refdoc.valid?.should be_true
+      refdoc.valid?.should be_truthy
     end
   end
 end

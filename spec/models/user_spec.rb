@@ -1,18 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
+RSpec.describe User do
   before do
     @staff_organization = FactoryGirl.create(:staff_organization)
     @government_organization = FactoryGirl.create(:government_organization)
     @case_mgmt_organization = FactoryGirl.create(:case_mgmt_organization)
     
     @valid_attributes = {
-      :first_name            => "FirstName",
-      :last_name             => "LastName",
-      :organization_id       => @staff_organization.id,
-      :email                 => "firstname.lastname@example.com",
-      :password              => "password 1",
-      :password_confirmation => "password 1"
+      first_name: "FirstName",
+      last_name: "LastName",
+      organization_id: @staff_organization.id,
+      email: "firstname.lastname@example.com",
+      password: "password 1",
+      password_confirmation: "password 1"
     }
 
     @valid_user = User.new
@@ -20,8 +20,8 @@ describe User do
   end
   
   it "should create a new instance given valid attributes" do
-    User.new.valid?.should be_false
-    @valid_user.valid?.should be_true
+    User.new.valid?.should be_falsey
+    @valid_user.valid?.should be_truthy
   end
 
   describe "first_name" do
@@ -44,8 +44,8 @@ describe User do
     
     describe "uniqueness" do
       before do
-        FactoryGirl.create(:user, :email => 'z@y.xw')
-        @duplicate = FactoryGirl.build(:user, :email => 'z@y.xw')
+        FactoryGirl.create(:user, email: 'z@y.xw')
+        @duplicate = FactoryGirl.build(:user, email: 'z@y.xw')
       end
       
       it "should be unique" do
@@ -85,7 +85,7 @@ describe User do
 
   context "instance methods" do
     before do
-      @valid_user = FactoryGirl.create(:user, :first_name => "FirstName", :last_name => "LastName")
+      @valid_user = FactoryGirl.create(:user, first_name: "FirstName", last_name: "LastName")
     end
     
     describe "display_name" do
@@ -145,86 +145,86 @@ describe User do
     describe "is_admin" do
       it "should return false when the user level is -1" do
         @valid_user.level = -1
-        @valid_user.is_admin.should be_false
+        @valid_user.is_admin.should be_falsey
       end
       
       it "should return false when the user level is 0" do
         @valid_user.level = 0
-        @valid_user.is_admin.should be_false
+        @valid_user.is_admin.should be_falsey
       end
       
       it "should return false when the user level is 25" do
         @valid_user.level = 25
-        @valid_user.is_admin.should be_false
+        @valid_user.is_admin.should be_falsey
       end
       
       it "should return false when the user level is 50" do
         @valid_user.level = 50
-        @valid_user.is_admin.should be_false
+        @valid_user.is_admin.should be_falsey
       end
       
       it "should return true when the user level is 100" do
         @valid_user.level = 100
-        @valid_user.is_admin.should be_true
+        @valid_user.is_admin.should be_truthy
       end      
     end
   
     describe "is_outside_user?" do
       it "should return false when the parent organization is a staff organization" do
         @valid_user.organization = @staff_organization
-        @valid_user.is_outside_user?.should be_false
+        @valid_user.is_outside_user?.should be_falsey
       end
       
       it "should return true when the parent organization is a government organization" do
         @valid_user.organization = @government_organization
-        @valid_user.is_outside_user?.should be_true
+        @valid_user.is_outside_user?.should be_truthy
       end
       
       it "should return true when the parent organization is a case management organization" do
         @valid_user.organization = @case_mgmt_organization
-        @valid_user.is_outside_user?.should be_true
+        @valid_user.is_outside_user?.should be_truthy
       end
     end
   
     describe "update_password" do
       before do
-        @valid_user = FactoryGirl.create(:user, :password => "password 1")
+        @valid_user = FactoryGirl.create(:user, password: "password 1")
       end
       
       it "should return false when both params are blank" do
         @valid_user.update_password(
-          {:password => "", :password_confirmation => "", :current_password => "password 1"}
-        ).should be_false
+          {password: "", password_confirmation: "", current_password: "password 1"}
+        ).should be_falsey
       end
       
       it "should return false when the password_confirmation param is blank" do
         @valid_user.update_password(
-          {:password => "asdf", :password_confirmation => "", :current_password => "password 1"}
-        ).should be_false
+          {password: "asdf", password_confirmation: "", current_password: "password 1"}
+        ).should be_falsey
       end
       
       it "should return false when both params are populated and match but aren't valid" do
         @valid_user.update_password(
-          {:password => "asdf", :password_confirmation => "asdf", :current_password => "password 1"}
-        ).should be_false
+          {password: "asdf", password_confirmation: "asdf", current_password: "password 1"}
+        ).should be_falsey
       end
       
       it "should return false both params are populated and valid, but don't match" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 2", :current_password => "password 1"}
-        ).should be_false
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 2", current_password: "password 1"}
+        ).should be_falsey
       end
       
       it "should return true when both params are populated, match and are valid, and the current password is correct" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 1", :current_password => "password 1"}
-        ).should be_true
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 1", current_password: "password 1"}
+        ).should be_truthy
       end
       
       it "should return false when both params are populated, match and are valid, but the current password is wrong" do
         @valid_user.update_password(
-          {:password => "aaaaaa 1", :password_confirmation => "aaaaaa 1", :current_password => "password 2"}
-        ).should be_false
+          {password: "aaaaaa 1", password_confirmation: "aaaaaa 1", current_password: "password 2"}
+        ).should be_falsey
       end
     end
   end
@@ -233,12 +233,12 @@ describe User do
     describe "random_password" do
       it "should consistently return a random valid password" do
         # Ensure we are starting with a valid user
-        @valid_user.valid?.should be_true
+        @valid_user.valid?.should be_truthy
         
         100.times do
           password = User.random_password
           @valid_user.password = @valid_user.password_confirmation = password
-          @valid_user.valid?.should be_true
+          @valid_user.valid?.should be_truthy
         end
       end
     end
@@ -246,11 +246,11 @@ describe User do
   
   context "associations" do
     # TODO
-    # has_many :kases, :dependent => :nullify
-    # has_many :contacts, :dependent => :nullify
-    # has_many :events, :dependent => :nullify
-    # has_many :assessment_requests, :foreign_key => :submitter_id, :dependent => :nullify
-    # has_many :referred_kases, :through => :assessment_requests, :source => :kase
+    # has_many :kases, dependent: :nullify
+    # has_many :contacts, dependent: :nullify
+    # has_many :events, dependent: :nullify
+    # has_many :assessment_requests, foreign_key: :submitter_id, dependent: :nullify
+    # has_many :referred_kases, through: :assessment_requests, source: :kase
     
     # describe "kases association" do
     # end

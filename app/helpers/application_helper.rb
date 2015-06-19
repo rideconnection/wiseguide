@@ -1,10 +1,10 @@
 module ApplicationHelper
   def last_updated(object)
-    "Last updated %s by %s" % [object.updated_at.to_s(:long), object.updated_by.try(:display_name)] if object.updated_by.present?
+    "Last updated #{object.updated_at.to_s(:long)}#{paper_trail_author(object, :last, :update)}"
   end
   
   def creation_stamp(object)
-    "Created on %s by %s" % [object.created_at.to_s(:long), object.created_by.try(:display_name)] if object.created_by.present?
+    "Created on #{object.created_at.to_s(:long)}#{paper_trail_author(object, :first, :create)}"
   end
   
   def flash_type(type)
@@ -27,22 +27,24 @@ module ApplicationHelper
 
   def kase_type_icon(kase)
     name = kase.class.humanized_name
-    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, :title => name) + "]"
+    raw "[" + content_tag(:span, name.split[0...-1].collect{|s| s[0]}.join, title: name) + "]"
   end
 
   def data_entry_needed_icon(record)
     if record.class.name == "TripAuthorization"
-      raw "[" + content_tag(:span, "A", :title => "Trip Authorization") + "]"
+      raw "[" + content_tag(:span, "A", title: "Trip Authorization") + "]"
     else
       kase_type_icon record
     end
   end
-
-  def link_to_add_fields(name, f, association)
-    new_object = f.object.class.reflect_on_association(association).klass.new
-    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+  
+  private
+  
+  def paper_trail_author(object, finder, event)
+    if (version = object.versions.where(event: event).send(finder)).present? && (user = User.find version.whodunnit.to_i).present?
+      " by #{user.display_name}"
+    else
+      ""
     end
-    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
 end

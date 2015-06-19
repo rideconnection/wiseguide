@@ -1,12 +1,10 @@
-require "pdf/inspector"
-
 When /^I click on the link to create a new referral document$/ do
   find("#referral_documents a[href='/referral_documents/new?kase_id=#{@kase.id}']").click
 end
 
 Then /^I should be able to complete the referral document form$/ do
-  select @resource.name, :from => "Add resource"
-  fill_in "Resource note", :with => "Overnumerousness"
+  select @resource.name, from: "Add resource"
+  fill_in "Resource note", with: "Overnumerousness"
   click_button "Save"
   
   # Get the newly generated ID so we can find the record later
@@ -23,7 +21,7 @@ Then /^I should( not)? see the referral document under the Referral Documents se
 end
 
 Given /^a referral document exists for the existing case$/ do
-  @referral_document = FactoryGirl.create(:referral_document, :kase => @kase)
+  @referral_document = FactoryGirl.create(:referral_document, kase: @kase)
 end
 
 When /^I click on the link to edit the referral document$/ do
@@ -32,9 +30,9 @@ end
 
 Then /^I should be able to add a new resource to the referral document form$/ do  
   click_link "Add Resource"
-  within(page.all("fieldset p.fields").last) do
-    select @resource.name, :from => "Add resource"
-    fill_in "Resource note", :with => "Tnetennba"
+  within(all("fieldset p.fields").last) do
+    select @resource.name, from: "Add resource"
+    fill_in "Resource note", with: "Tnetennba"
   end
   click_button "Save"
   @confirmation_message = 'Referral document was successfully updated.'
@@ -42,45 +40,29 @@ Then /^I should be able to add a new resource to the referral document form$/ do
 end
 
 Then /^I should see the new resource listed when I click on the referral document details link$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
+  first("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
   page.all('#main ol li').count.should eq(2)
   page.should have_content("Sweet Resource")
   page.should have_content("Tnetennba")
 end
 
 Then /^I should not see the new resource listed when I click on the referral document details link$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
+  first("#referral_documents a[href='/referral_documents/#{@referral_document.id}']").click
   page.all('#main ol li').count.should eq(1)
   page.should_not have_content("Sweet Resource")
 end
 
 Given /^the resource is assigned to the referral document as a second resource$/ do
-  @referral_document.referral_document_resources.create(:resource => @resource)
+  @referral_document.referral_document_resources.create(resource: @resource)
 end
 
 Then /^I should be able to delete the second resource$/ do
-  within(page.all("fieldset p.fields").last) do
+  within(all("fieldset p.fields").last) do
     click_link "Remove resource"
   end
   click_button "Save"
   @confirmation_message = 'Referral document was successfully updated.'
   step %Q(I should see a confirmation message)
-end
-
-When /^I click on the link to print the referral document$/ do
-  find("#referral_documents a[href='/referral_documents/#{@referral_document.id}.pdf']").click
-end
-
-Then /^I should be served the referral document as a PDF$/ do
-  page.response_headers['Content-Type'].should == "application/pdf"
-  content = PDF::Inspector::Text.analyze(page.source).strings.join(" ")
-  page.driver.browser.instance_variable_set('@dom', Nokogiri::HTML(content))
-end
-
-Then /^I should see the referral document details$/ do
-  page.should have_content("Referral Document for #{@referral_document.customer.name}")
-  page.should have_content("#{@referral_document.referral_document_resources.first.resource.name}")
-  page.should have_content("Referral document opened at #{@referral_document.created_at.strftime("%e-%b-%4Y %r")}")
 end
 
 Then /^I should( not)? see a button to delete the referral document$/ do |negation|
@@ -96,7 +78,7 @@ Then /^I should be prompted to confirm the deletion when I click the referral do
   button = find("#referral_documents a.delete[href='/referral_documents/#{@referral_document.id}'][data-method=delete]")
   button['data-confirm'].should eql("Are you sure you want to delete this referral document?")
   button.click
-  popup.confirm
+  page.driver.browser.switch_to.alert.accept
   @confirmation_message = 'Referral document was successfully deleted.'
   # Don't confirm just yet because we may want to test if it failed (due to permissions)
 end

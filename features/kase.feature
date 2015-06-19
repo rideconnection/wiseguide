@@ -6,7 +6,7 @@ Feature: Manage cases aka kases
   Scenario: Trainers can create new training cases
     Given I am logged in as a trainer
       And a customer exists
-      And a referral type exists
+      And a TC referral type exists
       And a funding source exists
       And I am on the homepage
     When I click on the "Customers" link
@@ -22,7 +22,7 @@ Feature: Manage cases aka kases
     Given I am logged in as a trainer
       And a customer exists
       And a case manager exists
-      And a referral type exists
+      And a CC referral type exists
       And I am on the homepage
     When I click on the "Customers" link
       And I click through to the customer's profile

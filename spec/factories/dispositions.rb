@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :disposition, :aliases => [:training_kase_disposition] do
+  factory :disposition, aliases: [:training_kase_disposition] do
     name {"TrainingKaseDisposition #{Time.current.to_f}" }
     type "TrainingKaseDisposition"
 

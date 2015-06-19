@@ -6,7 +6,7 @@
 </div>
 <fieldset>
 
-<%= form_tag url_for(:action=>:select_coaching_kase) do |f| %>
+<%= form_tag url_for(action: :select_coaching_kase) do |f| %>
 <%= hidden_field_tag :assessment_request, @assessment_request.id %>
 <% already_selected = false %>
 <% if @potential_kases.empty? %>
@@ -35,5 +35,5 @@
 </ul>
 <%= submit_tag :Continue %>
 <% end %>
-<%= button_to :Cancel, @assessment_request, :method => :get %>
+<%= button_to :Cancel, @assessment_request, method: :get %>
 </fieldset>

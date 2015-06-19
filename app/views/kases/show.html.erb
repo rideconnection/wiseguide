@@ -1,5 +1,5 @@
-<%= render 'shared/breadcrumbs', :target => @kase, :name => "#{@kase.class.humanized_name} #{(!@kase.open_date.blank?) ? "Opened #{@kase.open_date.strftime("%v")}" : "" }" %>
-<%= link_to "Delete", kase_path(@kase), :confirm => "Are you sure you want to delete this case?", :class => "delete kase", :method => "delete" if can?(:delete, @kase)%>
+<%= render 'shared/breadcrumbs', target: @kase, name: "#{@kase.class.humanized_name} #{(!@kase.open_date.blank?) ? "Opened #{@kase.open_date.strftime("%v")}" : "" }" %>
+<%= link_to "Delete", kase_path(@kase), data: {confirm: "Are you sure you want to delete this case?"}, class: "delete kase", method: "delete" if can?(:delete, @kase)%>
 
 <fieldset>
   <div class="first">
@@ -41,7 +41,7 @@
     <% if @kase.type == "TrainingKase" %>
       <ol class="section" id="trained_routes">
         <li>
-          <%= render "routes", :locals=>{:edit => false} %>
+          <%= render "routes", locals: {edit: false} %>
         </li>
       </ol>
 

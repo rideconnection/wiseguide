@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe TripAuthorizationsController do
+RSpec.describe TripAuthorizationsController do
   describe "routing" do
 
     it "routes to #index" do
@@ -12,11 +12,11 @@ describe TripAuthorizationsController do
     end
 
     it "routes to #show" do
-      get("/trip_authorizations/1").should route_to("trip_authorizations#show", :id => "1")
+      get("/trip_authorizations/1").should route_to("trip_authorizations#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/trip_authorizations/1/edit").should route_to("trip_authorizations#edit", :id => "1")
+      get("/trip_authorizations/1/edit").should route_to("trip_authorizations#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,15 +24,15 @@ describe TripAuthorizationsController do
     end
 
     it "routes to #update" do
-      put("/trip_authorizations/1").should route_to("trip_authorizations#update", :id => "1")
+      put("/trip_authorizations/1").should route_to("trip_authorizations#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/trip_authorizations/1").should route_to("trip_authorizations#destroy", :id => "1")
+      delete("/trip_authorizations/1").should route_to("trip_authorizations#destroy", id: "1")
     end
 
     it "routes to #complete_disposition" do
-      put("/trip_authorizations/1/complete_disposition").should route_to("trip_authorizations#complete_disposition", :id => "1")
+      put("/trip_authorizations/1/complete_disposition").should route_to("trip_authorizations#complete_disposition", id: "1")
     end
 
   end

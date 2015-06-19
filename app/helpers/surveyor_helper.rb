@@ -33,12 +33,15 @@ module SurveyorHelper
   end
 
   # Layout: stylsheets and javascripts
+  
   def surveyor_includes
     ''
   end
+  
   def surveyor_stylsheets
     ''
   end
+  
   def surveyor_javascripts
     ''
   end

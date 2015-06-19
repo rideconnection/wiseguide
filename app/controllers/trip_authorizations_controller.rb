@@ -22,7 +22,7 @@ class TripAuthorizationsController < ApplicationController
   # GET /trip_authorizations/new
   # GET /trip_authorizations/new.json
   def new
-    @trip_authorization = TripAuthorization.new(:kase_id => params[:kase_id])
+    @trip_authorization.kase_id = params[:kase_id]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @trip_authorization }
@@ -50,7 +50,7 @@ class TripAuthorizationsController < ApplicationController
   # PUT /trip_authorizations/1.json
   def update
     respond_to do |format|
-      if @trip_authorization.update_attributes(params[:trip_authorization])
+      if @trip_authorization.update_attributes(trip_authorization_params)
         format.html { redirect_to @trip_authorization, notice: 'Trip authorization was successfully updated.' }
         format.json { head :no_content }
       else
@@ -83,5 +83,18 @@ class TripAuthorizationsController < ApplicationController
         format.json { render json: @trip_authorization.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  private
+  
+  def trip_authorization_params
+    params.require(:trip_authorization).permit(
+      :allowed_trips_per_month, 
+      :disposition_date, 
+      :disposition_user_id, 
+      :end_date,
+      :kase_id, 
+      :start_date,
+    )
   end
 end

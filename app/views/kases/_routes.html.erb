@@ -1,45 +1,43 @@
 <h1>Routes Trained</h1>
 <% if can? :edit, @kase %>
-  <%= link_to "Add", add_route_kases_path(:kase_id => @kase.id), "data-behavior" => "toggle-next", :class => :add %>
+  <%= link_to "Add", add_route_kases_path(kase_id: @kase.id), data: {behavior: "toggle-next"}, class: :add %>
 
-  <%= form_for @kase_route, :url=>add_route_kases_path, :html=>{:remote=>:true, :id=>"new_route_form", :method=>:post, "data-type"=>:html, :style=>"display:none"} do |f| %>
+  <%= form_for @kase_route, url: add_route_kases_path, remote: :true, html: {id: "new_route_form", data: {type: :html}, style: "display: none"} do |f| %>
     <%= f.hidden_field :kase_id %>
     <%= f.collection_select :route_id, @routes, :id, :name %>
     <%= f.submit "Add route" %>
   <% end %>
 <% end %>
 <table id="routes">
-<% for route in @kase.routes %>
-<%= render :partial=>"route_row", :locals=>{:route=>route, :kase=>@kase, :edit=>true} %>
-<% end %>
+  <% for route in @kase.routes %>
+    <%= render partial: "route_row", locals: {route: route, kase: @kase, edit: true} %>
+  <% end %>
 </table>
 
-
-<script type='text/javascript'>
-function init_row(index, row) {
-    $(row).bind('ajax:success', function(evt, data, status, xhr){
-        var $this = $(this);
-        $('#kase_route_' + data.kase_id + "_" + data.route_id).remove();
+<%= javascript_tag do %>
+  function init_row(index, row) {
+    $(row).on('ajax:success', function(e, data, status, xhr){
+      var $this = $(this);
+      $('#kase_route_' + data.kase_id + "_" + data.route_id).remove();
     })
-}
-$('.kase_route_row').each (init_row);
+  }
 
-$('#new_route_form')
-  .bind('ajax:success', function(evt, data, status, xhr){
-    var $this = $(this);
+  $(document).ready(function(){
+    $('.kase_route_row').each(init_row);
 
-    $('#routes').append(xhr.responseText);
+    $('#new_route_form').on('ajax:success', function(e, data, status, xhr){    
+      var $this = $(this);
 
-    init_row(null, '#routes tbody tr:last');
-    $("tr:odd").addClass("odd");
+      $('#routes').append(xhr.responseText);
+
+      init_row(null, '#routes tr:last');
     
-    $this.find('.errors').empty();
-
-  })
-  .bind('ajax:error', function(evt, xhr, status, error){
-
-    // Display the errors (i.e. an error partial or helper)
-    $(this).find('.errors').html(xhr.responseText);
-
+      $('#routes tr:odd').addClass('odd');
+    
+      $this.find('.errors').empty();
+    }).on('ajax:error', function(e, xhr, status, error){
+      // Display the errors (i.e. an error partial or helper)
+      $(this).find('.errors').html(xhr.responseText);
+    });
   });
-</script>
+<% end %>

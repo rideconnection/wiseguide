@@ -1,43 +1,43 @@
-require 'spec_helper'
+require 'rails_helper'
 
 class TestDevelopmentKase < Kase
  include DevelopmentKaseBehavior
 end
 
-describe DevelopmentKaseBehavior do
+RSpec.describe DevelopmentKaseBehavior do
   before do
-    @in_progress = FactoryGirl.create(:disposition, :name => "In Progress")
+    @in_progress = FactoryGirl.create(:disposition, name: "In Progress")
     
     @valid_attributes = {
       # Required by base Kase class
-      :customer_id                         => 1,
-      :disposition_id                      => @in_progress.id,
-      :open_date                           => Date.current,
+      customer_id: 1,
+      disposition_id: @in_progress.id,
+      open_date: Date.current,
 
       # Required by DevelopmentKaseBehavior module
-      :referral_type_id                    => 1,
-      :household_income                    => 1,
-      :household_size                      => 1,
+      referral_type_id: 1,
+      household_income: 1,
+      household_size: 1,
       
       # Not required by base class or module
-      :access_transit_partner_referred_to  => nil,
-      :adult_ticket_count                  => nil,
-      :assessment_date                     => nil,
-      :assessment_language                 => nil,
-      :assessment_request_id               => nil,
-      :case_manager_id                     => nil,
-      :case_manager_notification_date      => nil,
-      :close_date                          => nil,
-      :county                              => nil,
-      :eligible_for_ticket_disbursement    => nil,
-      :funding_source_id                   => nil,
-      :honored_ticket_count                => nil,
-      :household_income_alternate_response => nil,
-      :household_size_alternate_response   => nil,
-      :medicaid_eligible                   => nil,
-      :referral_source                     => nil,
-      :scheduling_system_entry_required    => nil,
-      :user_id                             => nil,
+      access_transit_partner_referred_to: nil,
+      adult_ticket_count: nil,
+      assessment_date: nil,
+      assessment_language: nil,
+      assessment_request_id: nil,
+      case_manager_id: nil,
+      case_manager_notification_date: nil,
+      close_date: nil,
+      county: nil,
+      eligible_for_ticket_disbursement: nil,
+      funding_source_id: nil,
+      honored_ticket_count: nil,
+      household_income_alternate_response: nil,
+      household_size_alternate_response: nil,
+      medicaid_eligible: nil,
+      referral_source: nil,
+      scheduling_system_entry_required: nil,
+      user_id: nil,
     }
 
     @kase = TestDevelopmentKase.new(@valid_attributes)
@@ -181,12 +181,12 @@ describe DevelopmentKaseBehavior do
         @funding_source_2 = FactoryGirl.create(:funding_source)
         
         @funded_kases = []
-        @funded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_1.id)
-        @funded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_1.id)
+        @funded_kases << FactoryGirl.create(:coaching_kase, funding_source_id: @funding_source_1.id)
+        @funded_kases << FactoryGirl.create(:coaching_kase, funding_source_id: @funding_source_1.id)
         
         @unfunded_kases = []
-        @unfunded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_2.id)
-        @unfunded_kases << FactoryGirl.create(:coaching_kase, :funding_source_id => @funding_source_2.id)
+        @unfunded_kases << FactoryGirl.create(:coaching_kase, funding_source_id: @funding_source_2.id)
+        @unfunded_kases << FactoryGirl.create(:coaching_kase, funding_source_id: @funding_source_2.id)
         
         # We need to reload these to get the correct sub classes
         @funded_kases   = @funded_kases.map{|k| Kase.find(k.id)}
@@ -194,7 +194,7 @@ describe DevelopmentKaseBehavior do
       end
       
       it "should define a for_funding_source_id scope" do
-        # lambda {|funding_source_id| funding_source_id.present? ? where(:funding_source_id => funding_source_id) : where(true) }
+        # lambda {|funding_source_id| funding_source_id.present? ? where(funding_source_id: funding_source_id) : where(true) }
         CoachingKase.for_funding_source_id(@funding_source_1.id).should =~ @funded_kases
       end
     end

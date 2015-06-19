@@ -1,19 +1,28 @@
 <h1>Support Network</h1>
-<%= link_to "Add", new_customer_support_network_member_path(:customer_id=>@customer.id), :class => :add %>
-<dl class="clear">
-<% for member in @customer.customer_support_network_members %>
+<%= link_to "Add", new_customer_support_network_member_path(customer_id: @customer.id), class: :add %>
 
-<dt>
-  <%= link_to member.name, edit_customer_support_network_member_path(member) %>
-  <% if can? :edit, member %>
-    <%= link_to "", member, :class => "delete", :method=>:delete, :confirm=>"Are you sure?" %>
-  <% end %>
-</dt>
-
-<dd><%= member.title %></dd>
-<dd><%= member.organization %></dd>
-<dd><%= member.phone_number %></dd>
-<dd><%= link_to member.email, "mailto:%s" % member.email %></dd>
-
-<% end %>
-</dl>
+<table>
+  <tbody>
+    <% for member in @customer.customer_support_network_members %>
+      <tr class="auto-zebra">
+        <td>
+          <%= member.name %>
+        </td>
+        <td>
+          <%= member.title %><br>
+          <%= member.organization %><br>
+          <%= member.phone_number %><br>
+          <%= link_to member.email, "mailto:%s" % member.email %>
+        </td>
+        <td>
+          <%= link_to( "", edit_customer_support_network_member_path(member), class: "edit") if can? :edit, @customer %>
+        </td>
+        <% if can? :edit, member %>
+          <td>
+            <%= link_to "", member, class: "delete", method: :delete, data: {confirm: "Are you sure?"} %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

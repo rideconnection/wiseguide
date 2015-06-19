@@ -4,61 +4,49 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.xml
   def index
-    @resources = Resource.all
-    @active_resources = Resource.where(:active => true)
-    @inactive_resources = Resource.where(:active => false)
+    @active_resources = Resource.where(active: true)
+    @inactive_resources = Resource.where(active: false)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @resources }
+      format.xml  { render xml: @resources }
     end
   end
 
   # GET /resources/1
   # GET /resources/1.xml
   def show
-    @resource = Resource.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @resource }
+      format.xml  { render xml: @resource }
     end
   end
 
   # GET /resources/new
   # GET /resources/new.xml
   def new
-    authorize! :edit, Resource
-    @resource = Resource.new(:active => true)
+    @resource.active = true
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @resource }
+      format.xml  { render xml: @resource }
     end
   end
 
   # GET /resources/1/edit
   def edit
-    @resource = Resource.find(params[:id])
-    authorize! :edit, @resource
   end
 
   # POST /resources
   # POST /resources.xml
   def create
-    authorize! :edit, Resource
-    @resource = Resource.new(params[:resource])
-
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to(resources_path,
-                      :notice => "#{@resource.name} successfully created.") }
-        format.xml  { render :xml => @resource,
-                      :status => :created, :location => @resource }
+        format.html { redirect_to(resources_path, notice: "#{@resource.name} successfully created.") }
+        format.xml  { render xml: @resource, status: :created, location: @resource }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @resource.errors,
-                      :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.xml  { render xml: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,17 +54,14 @@ class ResourcesController < ApplicationController
   # PUT /resources/1
   # PUT /resources/1.xml
   def update
-    @resource = Resource.find(params[:id])
-    authorize! :edit, @resource
-
     respond_to do |format|
       if @resource.update_attributes(params[:resource])
         format.html { redirect_to(resources_path,
-                      :notice => "#{@resource.name} successfully updated.") }
+                      notice: "#{@resource.name} successfully updated.") }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.xml  { render xml: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -84,8 +69,6 @@ class ResourcesController < ApplicationController
   # DELETE /resources/1
   # DELETE /resources/1.xml
   def destroy
-    @resource = Resource.find(params[:id])
-    authorize! :destroy, @resource
     @resource.destroy
 
     respond_to do |format|
@@ -97,8 +80,25 @@ class ResourcesController < ApplicationController
   def toggle_active
     @resource = Resource.find(params[:id])
     authorize! :edit, @resource
+
     @resource.active = (not @resource.active)
     @resource.save!
+    
     redirect_to resources_path
+  end
+  
+  private
+  
+  def resource_params
+    params.require(:resource).permit(
+      :active,
+      :address,
+      :email,
+      :hours,
+      :name,
+      :notes,
+      :phone_number,
+      :url,
+    )
   end
 end

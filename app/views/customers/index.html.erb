@@ -1,4 +1,4 @@
-<%= form_tag search_customers_path, :method => :get, :id => "customer_search_form" do %>
+<%= form_tag search_customers_path, method: :get, id: "customer_search_form" do %>
   <fieldset>
     <ol class="section fourth">
       <li>
@@ -11,7 +11,7 @@
 <% end %>
 
 <% if can? :edit, Customer %>
-  <%= link_to "New Customer", new_customer_path, :class => "new-customer action-bttn" %>
+  <%= link_to "New Customer", new_customer_path, class: "new-customer action-bttn" %>
 <% end %>
 
 <table id="customers">
@@ -38,7 +38,7 @@
         <td><%= customer.email %></td>
         <td><%= customer.address %></td>
         <% if can? :destroy, customer %>    
-          <td><%= button_to "Delete", customer, :confirm=>"Are you sure you want to delete this user?", :method=>:delete %></td>
+          <td><%= button_to "Delete", customer, data: {confirm: "Are you sure you want to delete this user?"}, method: :delete %></td>
         <% end %>
       </tr>
     <% end %>

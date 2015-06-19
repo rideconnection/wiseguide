@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   def index
     if current_user.is_outside_user? then
       org_assessments = current_user.organization.assessment_requests
-      @pending_assessments = org_assessments.where(:kase_id => nil)
+      @pending_assessments = org_assessments.where(kase_id: nil)
       @recent_cases = []
       org_assessments.each do |request|
         @recent_cases << request.kase unless request.kase.nil?
@@ -15,7 +15,7 @@ class HomeController < ApplicationController
   def search_name
     @query = params[:customer_name]
     customers = Customer.search(params[:customer_name])
-    @search_results = Kase.where(:customer_id => customers)
+    @search_results = Kase.where(customer_id: customers)
   end
 
   def search_date

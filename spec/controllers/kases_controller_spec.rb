@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe KasesController do
+RSpec.describe KasesController do
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:admin]
     @current_user = FactoryGirl.create(:admin)
@@ -9,8 +9,6 @@ describe KasesController do
 
   describe "GET index" do
     before(:each) do
-      Kase.destroy_all
-      
       # @my_open_kases
       @my_open_coaching_kase = FactoryGirl.create(:open_coaching_kase, assigned_to: @current_user)
       @my_open_training_kase = FactoryGirl.create(:open_training_kase, assigned_to: @current_user)
@@ -73,11 +71,6 @@ describe KasesController do
       @_cservice_kases = @_cservice_kases.map{|k| Kase.find(k.id)}
     end
     
-    after(:each) do
-      Route.destroy_all
-      FundingSource.destroy_all
-    end
-    
     it "should be successful" do
       get :index
       response.should be_success
@@ -97,44 +90,44 @@ describe KasesController do
     it "should assign @my_three_month_follow_ups" do
       get :index
       # @my_three_month_follow_ups = @kases.assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @my_six_month_follow_ups" do
       get :index
       # @my_six_month_follow_ups = @kases.assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @other_open_kases" do
       get :index
       # @other_open_kases = @kases.open.not_assigned_to(current_user).joins(:customer).order(name_ordered)
-      pending "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
+      skip "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
       assigns(:other_open_kases).should =~ @_other_open_kases
     end
     
     it "should assign @other_three_month_follow_ups" do
       get :index
       # @other_three_month_follow_ups = @kases.not_assigned_to(current_user).has_three_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @other_six_month_follow_ups" do
       get :index
       # @other_six_month_follow_ups = @kases.not_assigned_to(current_user).has_six_month_follow_ups_due.order(:close_date)
-      pending "I don't have enough information about what this scope is supposed to do to setup the test properly."
+      skip "I don't have enough information about what this scope is supposed to do to setup the test properly."
     end
     
     it "should assign @wait_list" do
       get :index
       # @wait_list = @kases.unassigned.order(:open_date)
-      pending "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
+      skip "This is failing because the instance variable contians more kases than we expect it to. Need to figure out why."
       assigns(:wait_list).should =~ @_wait_list
     end
         
     context "CoachingKases" do
       before(:each) do
-        get :index, :kase => {:type => 'CoachingKase'}
+        get :index, {kase: {"type" => 'CoachingKase'}}
       end
       
       it "should assign only coaching kases to @kases" do
@@ -150,14 +143,14 @@ describe KasesController do
       end
     
       it "should assign @data_entry_needed" do
-        # @data_entry_needed = @kase.open.where(:scheduling_system_entry_required => true)
+        # @data_entry_needed = @kase.open.where(scheduling_system_entry_required: true)
         assigns(:data_entry_needed).should =~ @_data_entry_needed
       end
     end
     
     context "TrainingKases" do
       before(:each) do
-        get :index, :kase => {:type => 'TrainingKase'}
+        get :index, {kase: {"type" => 'TrainingKase'}}
       end
       
       it "should assign only training kases to @kases" do
@@ -175,7 +168,7 @@ describe KasesController do
     
     context "CustomerServiceKases" do
       before(:each) do
-        get :index, :kase => {:type => 'CustomerServiceKase'}
+        get :index, {kase: {"type" => 'CustomerServiceKase'}}
       end
       
       it "should assign only customer service kases to @kases" do

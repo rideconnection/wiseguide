@@ -1,43 +1,52 @@
-#-----Get Capistrano working with RVM-----
-require "rvm/capistrano"  # Load RVM's capistrano plugin.    
-#---------------------------------------------
+# config valid only for current version of Capistrano
+lock '3.4.0'
 
-#-----Get Capistrano working with Bundler-----
-require 'bundler/capistrano'
-#---------------------------------------------
-
-#-----Basic Recipe-----
-set :stages, %w(staging production)
-require 'capistrano/ext/multistage'
-
-set :application, "WiseGuide"
-set :repository,  "git://github.com/rideconnection/wiseguide.git"
-set :deploy_to, "/home/deployer/rails/wiseguide"
-
-set :scm, :git
+set :application, 'wiseguide'
+set :repo_url, 'git://github.com/rideconnection/wiseguide.git'
 set :deploy_via, :remote_cache
+set :deploy_to, '/home/deployer/rails/wiseguide'
 
-set :user, "deployer"  # The server's user for deployments
-set :use_sudo, false
+# RVM options
+set :rvm_type, :user
+set :rvm_ruby_version, '1.9.3-p547@wiseguide'
+set :rvm_roles, [:app, :web]
+
+# Rails options
+set :conditionally_migrate, false
+
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+
+# Default deploy_to directory is /var/www/my_app_name
+# set :deploy_to, '/var/www/my_app_name'
+
+# Default value for :scm is :git
+# set :scm, :git
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+set :log_level, :info
+
+# Default value for :pty is false
+set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/app_config.yml')
+
+# Default value for linked_dirs is []
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'uploads')
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+set :keep_releases, 20
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
+  after :migrate, :seed
+  after :publishing, :restart
 end
 
-task :link_database_yml do
-  puts "    Link in database.yml file"
-  run  "ln -nfs #{deploy_to}/shared/config/database.yml #{latest_release}/config/database.yml"
-  puts "    Link in app_config.yml file"
-  run  "ln -nfs #{deploy_to}/shared/config/app_config.yml #{latest_release}/config/app_config.yml"
-  puts "    Link in legacy data folder"
-  run  "ln -nfs #{deploy_to}/shared/legacy #{latest_release}/db/legacy"
-  puts "    Link in uploads folder"
-  run  "ln -nfs #{deploy_to}/shared/uploads #{latest_release}/uploads"
-end
-
-after "deploy:update_code", :link_database_yml
 

@@ -2,12 +2,12 @@
 
 <% unless @active_resources.empty? %>
   <h2>Active Referral Resources</h2>
-  <%= render :partial => 'list', :locals => { :resources => @active_resources } %>
+  <%= render partial: 'list', locals: { resources: @active_resources } %>
 <% end %>
 
 <% unless @inactive_resources.empty? %>
   <h2>Inactive Referral Resources</h2>
-  <%= render :partial => 'list', :locals => { :resources => @inactive_resources } %>
+  <%= render partial: 'list', locals: { resources: @inactive_resources } %>
 <% end %>
 
 <br />

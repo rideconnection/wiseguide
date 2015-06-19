@@ -1,48 +1,49 @@
 class Customer < ActiveRecord::Base
+  has_paper_trail
+  
   belongs_to :ethnicity
   belongs_to :ada_service_eligibility_status
+  
   has_many :assessment_requests
-  has_many :customer_impairments, :dependent => :destroy
-  has_many :impairments, :through => :customer_impairments
-  has_many :kases, :dependent => :restrict
-  has_many :contacts, :as => :contactable, :dependent => :destroy
-  has_many :customer_support_network_members, :dependent => :destroy
-  stampable :creator_attribute => :created_by_id, :updater_attribute => :updated_by_id
-  belongs_to :created_by, :foreign_key => :created_by_id, :class_name=>'User'
-  belongs_to :updated_by, :foreign_key => :updated_by_id, :class_name=>'User'
+  has_many :customer_impairments, dependent: :destroy
+  has_many :impairments, through: :customer_impairments
+  has_many :kases, dependent: :restrict_with_exception
+  has_many :contacts, as: :contactable, dependent: :destroy
+  has_many :customer_support_network_members, dependent: :destroy
 
   has_attached_file :portrait, 
-    :styles => { :small => "250", :original => "1200x1200" },
-    :path   => ":rails_root/uploads/:attachment/:id/:style/:basename.:extension",
-    :url    => "/customers/:id/download_:style_portrait"
+    styles: { small: "250", original: "1200x1200" },
+    path: ":rails_root/uploads/:attachment/:id/:style/:basename.:extension",
+    url: "/customers/:id/download_:style_portrait"
 
-  validates_attachment_content_type :portrait, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg']
+  validates_attachment_content_type :portrait, content_type: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'image/pjpeg']
 
   validates_presence_of :ethnicity_id
   validates_presence_of :first_name
   validates_presence_of :last_name
-  validates             :birth_date, :date => { :before => Proc.new { Date.current } }
+  validates             :birth_date, timeliness: { before: Proc.new { Date.current }, type: :date }
   validates_presence_of :gender
   validates_presence_of :phone_number_1
-  validates_format_of   :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :allow_blank => true
+  validates_format_of   :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, allow_blank: true
   validates_presence_of :address
   validates_presence_of :city
-  validates_length_of   :state, :is => 2
-  validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?}, :message => "should be 12345 or 12345-6789" 
+  validates_length_of   :state, is: 2
+  validates_format_of   :zip, :with => %r{\d{5}(-\d{4})?}, message: "should be 12345 or 12345-6789" 
   validates_presence_of :county
-  validates             :middle_initial, :length => { :maximum => 1 }
+  validates             :middle_initial, length: { maximum: 1 }
 
   HUMAN_ATTRIBUTE_NAMES = {
-    :veteran_status => "Veteran?",
-    :spouse_of_veteran_status => "Spouse, widow, or widower of a veteran?",
-    :honored_citizen_cardholder => "Honored citizen cardholder?",
-    :ada_service_eligibility_status_id => "TriMet Lift Eligibity status"
+    veteran_status: "Veteran?",
+    spouse_of_veteran_status: "Spouse, widow, or widower of a veteran?",
+    honored_citizen_cardholder: "Honored citizen cardholder?",
+    ada_service_eligibility_status_id: "TriMet Lift Eligibity status"
   }
   
   def self.human_attribute_name(attr, options={})
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
   end
 
+  # TODO wut?
   scope :empty, lambda { where ("1 = 2") }
 
   cattr_reader :per_page

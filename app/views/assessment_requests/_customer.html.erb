@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 <% if can? :create, Customer %>
-  <%= link_to "Change...", :controller => :assessment_requests,
-                           :action => :change_customer,
-                           :id => @assessment_request %>
+  <%= link_to "Change...", controller: :assessment_requests,
+                           action: :change_customer,
+                           id: @assessment_request %>
 <% end %>

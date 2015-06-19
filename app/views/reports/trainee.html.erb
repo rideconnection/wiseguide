@@ -24,25 +24,25 @@
       </td>
     </tr>
       <% for event in @events_by_customer[customer] %>
-        <tr class=<%= cycle("even","odd", :name => "events") %>>
+        <tr class=<%= cycle("even","odd", name: "events") %>>
           <% if event == @events_by_customer[customer].first %>
             <td rowspan="<%= @events_by_customer[customer].size + 1 %>"></td>
           <% end %>
           <td><%= link_to event.event_type.name, [:edit, event] %></td>
           <td><%= event.date.strftime("%v") %></td>
           <td><%= event.user.display_name %></td>
-          <td class="number"><%= number_with_precision event.duration_in_hours, :precision => 2 %></td>
+          <td class="number"><%= number_with_precision event.duration_in_hours, precision: 2 %></td>
         </tr>
       <% end %>
     <tr>
       <td colspan="3" class="total">&nbsp;</td>
-      <td class="total"><%= number_with_precision @hours_by_customer[customer], :precision => 2 %></td>
+      <td class="total"><%= number_with_precision @hours_by_customer[customer], precision: 2 %></td>
     </tr>
     <% reset_cycle "events" %>
   <% end %>
   <tr class="odd">
     <td colspan = "4" class="definition">Grand Total</td>
-    <td class = "total"><%= number_with_precision @events.sum(&:duration_in_hours), :precision => 2 %></td> 
+    <td class = "total"><%= number_with_precision @events.sum(&:duration_in_hours), precision: 2 %></td> 
   </tr>
 
 </table>

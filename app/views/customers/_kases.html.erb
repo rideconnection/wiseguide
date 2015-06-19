@@ -1,4 +1,4 @@
-<script type="text/JavaScript">
+<%= javascript_tag do %>
   $(document).ready(function() {
     var linkmenu = $('#new_kase_links');
     var links = linkmenu.find('li > a');
@@ -15,13 +15,8 @@
                                        // after the kase_dropdown class is
                                        // applied since that's what will be
                                        // active when the menu is visible.
-    var t =  parseInt(trigger.outerHeight()) 
-      + 3; /* half padding-top + border-top-width */
-    var l = parseInt(trigger.css('margin-left')) 
-      - (
-        linkmenu.outerWidth() 
-        - trigger.outerWidth()
-      );
+    var t = parseInt(trigger.outerHeight()) + 3; /* half padding-top + border-top-width */
+    var l = parseInt(trigger.css('margin-left')) - (linkmenu.outerWidth() - trigger.outerWidth());
     linkmenu.css({position: 'absolute', top: t + 'px', left: l + 'px'});
     trigger.removeClass('kase_dropdown'); // Back to normal
     trigger.click(function(e){
@@ -31,7 +26,7 @@
       return false;
     });
   });
-</script>
+<% end%>
 <style type="text/css" media="screen">
   #new_kase_links, .kase_dropdown {
     border: 1px solid black;
@@ -55,9 +50,9 @@
   <ul id="new_kase_links_container">
     <li>Add new...
       <ul id="new_kase_links">
-        <li><%= link_to "Coaching Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "CoachingKase"}) %></li>
-        <li><%= link_to "Training Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "TrainingKase"}) %></li>
-        <li><%= link_to "Customer Service Case", new_kase_path(:customer_id => @customer.id, :kase => {:type => "CustomerServiceKase"}) %></li>
+        <li><%= link_to "Coaching Case", new_kase_path(customer_id: @customer.id, kase: {type: "CoachingKase"}) %></li>
+        <li><%= link_to "Training Case", new_kase_path(customer_id: @customer.id, kase: {type: "TrainingKase"}) %></li>
+        <li><%= link_to "Customer Service Case", new_kase_path(customer_id: @customer.id, kase: {type: "CustomerServiceKase"}) %></li>
       </ul>
     </li>
   </ul>
@@ -68,7 +63,7 @@
       <td><%= kase.open_date %></td>
       <td><%= kase_type_icon kase %></td>
       <td><%= kase.disposition.name %></td>
-      <td><%= link_to "Details", kase, :class=>"details" %></td>
+      <td><%= link_to "Details", kase, class: "details" %></td>
     </tr>
   <% end %>
 </table>

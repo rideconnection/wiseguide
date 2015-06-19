@@ -1,10 +1,11 @@
+# encoding: UTF-8
 class CreateDependencyConditions < ActiveRecord::Migration
   def self.up
     create_table :dependency_conditions do |t|
       # Context
       t.integer :dependency_id
       t.string :rule_key
-      
+
       # Conditional
       t.integer :question_id # the conditional question
       t.string :operator

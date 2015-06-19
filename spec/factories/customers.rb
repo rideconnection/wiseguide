@@ -14,7 +14,7 @@ FactoryGirl.define do
     
     ethnicity
     
-    after_build do |o|
+    after(:build) do |o|
       o.county = FactoryGirl.create(:county).name
     end
   end

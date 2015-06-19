@@ -1,35 +1,34 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe TrainingKase do
+RSpec.describe TrainingKase do
   before do    
     @valid_attributes = {
-      :access_transit_partner_referred_to  => nil,
-      :adult_ticket_count                  => nil,
-      :agency_id                           => nil,
-      :assessment_date                     => nil,
-      :assessment_language                 => nil,
-      :assessment_request_id               => nil,
-      :case_manager_id                     => nil,
-      :case_manager_notification_date      => nil,
-      :category                            => nil,
-      :close_date                          => Date.current,
-      :county                              => Kase::VALID_COUNTIES.values.first,
-      :customer_id                         => 1,
-      :disposition_id                      => FactoryGirl.create(:disposition).id,
-      :eligible_for_ticket_disbursement    => nil,
-      :funding_source_id                   => 1,
-      :honored_ticket_count                => nil,
-      :household_income                    => 1,
-      :household_income_alternate_response => nil,
-      :household_size                      => 1,
-      :household_size_alternate_response   => nil,
-      :medicaid_eligible                   => nil,
-      :open_date                           => Date.current,
-      :referral_source                     => "Source",
-      :referral_type_id                    => 1,
-      :referral_mechanism                  => "Email",
-      :scheduling_system_entry_required    => nil,
-      :type                                => "TrainingKase",
+      access_transit_partner_referred_to: nil,
+      adult_ticket_count: nil,
+      agency_id: nil,
+      assessment_date: nil,
+      assessment_language: nil,
+      assessment_request_id: nil,
+      case_manager_id: nil,
+      case_manager_notification_date: nil,
+      category: nil,
+      close_date: Date.current,
+      county: Kase::VALID_COUNTIES.values.first,
+      customer_id: 1,
+      disposition_id: FactoryGirl.create(:disposition).id,
+      eligible_for_ticket_disbursement: nil,
+      funding_source_id: 1,
+      honored_ticket_count: nil,
+      household_income: 1,
+      household_income_alternate_response: nil,
+      household_size: 1,
+      household_size_alternate_response: nil,
+      medicaid_eligible: nil,
+      open_date: Date.current,
+      referral_source: "Source",
+      referral_type_id: 1,
+      referral_mechanism: "Email",
+      scheduling_system_entry_required: nil,
     }
 
     @valid_kase = TrainingKase.new
@@ -38,8 +37,8 @@ describe TrainingKase do
   end
   
   it "should create a new instance given valid attributes" do
-    TrainingKase.new.valid?.should be_false
-    @valid_kase.valid?.should be_true
+    TrainingKase.new.valid?.should be_falsey
+    @valid_kase.valid?.should be_truthy
   end
 
   describe "referral_source" do

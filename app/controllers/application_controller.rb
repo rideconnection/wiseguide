@@ -1,10 +1,12 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
   before_filter :authenticate_user!, :set_cache_buster
-  include Userstamp
 
   rescue_from CanCan::AccessDenied do |exception|
-    render :file => "#{Rails.root}/public/403.html", :status => 403
+    render file: "#{Rails.root}/public/403", formats: [:html], status: 403
   end
 
   def test_exception_notification
