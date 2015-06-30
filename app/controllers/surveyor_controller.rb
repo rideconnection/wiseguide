@@ -14,34 +14,34 @@ module SurveyorControllerCustomMethods
   # Actions
   def new
     @kase = Kase.find(params[:kase_id])
-    authorize! :manage, @kase
+    authorize! :create, @kase
     @surveys_by_access_code = Survey.active.order("created_at DESC, survey_version DESC").group_by(&:access_code)
     # Skip `super` since we're overwriting @surveys_by_access_code
   end
   
   def create
     @kase = Kase.find(params[:kase_id])
-    authorize! :manage, @kase
+    authorize! :create, @kase
     super
     @response_set.update_attribute(:kase_id, @kase.id)
   end
   
   def show
     @kase = Kase.find(params[:kase_id])
-    authorize! :manage, @kase
+    authorize! :read, @kase
     super
   end
   
   def edit
     @kase = Kase.find(params[:kase_id])
-    authorize! :manage, @kase
+    authorize! :update, @kase
     super
   end
   
   def update
     @response_set = ResponseSet.find_by_access_code(params[:response_set_code])
     @kase = @response_set.kase
-    authorize! :manage, @kase
+    authorize! :update, @kase
     super
   end
 
