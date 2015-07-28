@@ -1,9 +1,13 @@
-set :deploy_to, "/home/deployer/rails/wiseguide"
-set :branch, "master"
-set :rvm_ruby_string, '1.9.2-p290@wiseguide'
-set :rails_env, "staging"
+set :branch, 'new_staging'
+set :rvm_ruby_version, '2.2.2@wiseguide'
+set :passenger_rvm_ruby_version, '2.2.2@passenger'
+set :deploy_to, '/home/deploy/rails/wiseguide'
+set :default_env, { "RAILS_RELATIVE_URL_ROOT" => "/wiseguide" }
 
-role :web, "184.154.158.74"
-role :app, "184.154.158.74"
-role :db,  "184.154.158.74", primary: true # This is where Rails migrations will run
+# capistrano-rails directives
+set :rails_env, 'staging'
+set :assets_roles, [:web, :app]
+set :migration_role, [:db]
+set :conditionally_migrate, true
 
+server '74.207.248.177', roles: [:app, :web, :db], user: 'deploy'
