@@ -10,4 +10,4 @@ set :assets_roles, [:web, :app]
 set :migration_role, [:db]
 set :conditionally_migrate, true
 
-server '74.207.248.177', roles: [:app, :web, :db], user: 'deploy'
+server 'staging.rideconnection.org', roles: [:app, :web, :db], user: 'deploy'

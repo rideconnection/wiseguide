@@ -1,6 +1,6 @@
 set :branch, 'stable'
 set :rvm_ruby_version, '2.2.2@wiseguide'
-set :passenger_rvm_ruby_version, '2.2.1@passenger'
+set :passenger_rvm_ruby_version, '2.2.2@passenger'
 set :deploy_to, '/home/deploy/rails/wiseguide'
 set :default_env, { "RAILS_RELATIVE_URL_ROOT" => "/wiseguide" }
 
