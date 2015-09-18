@@ -142,7 +142,7 @@ RSpec.describe Customer do
   
   describe "search" do
     if connection_supports_dmetaphone?
-      before(:all) do
+      before(:each) do
         FactoryGirl.create(:customer, first_name: "Donna",       last_name: "Roberts")
         FactoryGirl.create(:customer, first_name: "Jennifer",    last_name: "Donnings")
         FactoryGirl.create(:customer, first_name: "Robert",      last_name: "Bradley Sr.")
