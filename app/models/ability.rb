@@ -39,7 +39,7 @@ class Ability
       end
       
       can :read, Contact do |contact|
-        can?(:read, contact.kase) || can?(:read, contact.customer)
+        can?(:read, contact.contactable)
       end
       
       can [:create, :read], TripAuthorization do |trip_authorization|
