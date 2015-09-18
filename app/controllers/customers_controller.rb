@@ -59,8 +59,13 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    @customer.destroy
-    redirect_to(customers_url, notice: 'Customer was successfully deleted.')
+    begin
+      @customer.destroy
+    rescue ActiveRecord::DeleteRestrictionError
+      redirect_to(customers_url, alert: 'Customer could not be deleted because its related records must be deleted first.')
+    else
+      redirect_to(customers_url, notice: 'Customer was successfully deleted.')
+    end
   end
   
   def search
