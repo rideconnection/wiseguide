@@ -88,8 +88,8 @@ Wiseguide::Application.routes.draw do
   get  :reports, to: "reports#index"
   get  "reports(/:action)", controller: :reports
   get  "resources/(:id)/toggle_active" => "resources#toggle_active"
-  get  :search_date, to: "home#search_date"
-  get  :search_name, to: "home#search_name"
+  post :search_date, to: "home#search_date"
+  post :search_name, to: "home#search_name"
   get  :test_exception_notification, to: "application#test_exception_notification"
   get  :users, to: "admin#users"
 
