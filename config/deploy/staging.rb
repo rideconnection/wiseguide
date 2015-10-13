@@ -1,4 +1,4 @@
-set :branch, 'new_staging'
+set :branch, 'master'
 set :rvm_ruby_version, '2.2.2@wiseguide'
 set :passenger_rvm_ruby_version, '2.2.2@passenger'
 set :deploy_to, '/home/deploy/rails/wiseguide'
