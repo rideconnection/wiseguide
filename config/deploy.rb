@@ -44,6 +44,10 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # Default value for keep_releases is 5
 set :keep_releases, 20
 
+set :ssh_options, {
+  config: false
+}
+
 namespace :deploy do
   after :migrate, :seed
   after :publishing, :restart
