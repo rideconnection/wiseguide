@@ -26,7 +26,7 @@ class UsersController < Devise::SessionsController
 
     if @user.save
       NewUserMailer.new_user_email(@user, @user.password).deliver
-      flash[:notice] = "#{@user.email} has been added and a password has been emailed"
+      flash[:notice] = "#{@user.email} has been added and a link has been sent to set an initial password"
       redirect_to users_path
     else
       flash[:notice] = "Could not create user"
