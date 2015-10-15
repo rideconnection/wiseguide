@@ -1,3 +1,6 @@
+<% if can? :edit, User %>
+  <%= link_to "New User", new_user_path, class: "new-user action-bttn" %>
+<% end %>
 <% if @users == 0 %>
   <p>No users yet.</p>
 <% else %>
@@ -54,6 +57,6 @@
 <% end %>
 
 <% if can? :edit, User %>
-<hr/>
-<%= link_to "New User", new_user_path, class: "new-user action-bttn" %>
+  <hr/>
+  <%= link_to "New User", new_user_path, class: "new-user action-bttn" %>
 <% end %>
