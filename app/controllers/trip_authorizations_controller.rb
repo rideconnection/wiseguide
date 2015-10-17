@@ -90,6 +90,7 @@ class TripAuthorizationsController < ApplicationController
   def trip_authorization_params
     params.require(:trip_authorization).permit(
       :allowed_trips_per_month, 
+      :special_instructions,
       :disposition_date, 
       :disposition_user_id, 
       :end_date,

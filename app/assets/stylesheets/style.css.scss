@@ -313,6 +313,10 @@ ol.section li {
 form label {
   font-weight: bold;
 }
+form label.note {
+  font-weight: normal;
+  font-style: italic;
+}
 div.field {
   margin: 10px 0;
 }

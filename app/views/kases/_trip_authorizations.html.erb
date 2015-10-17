@@ -11,6 +11,11 @@
             <span title="Allows trips per month"><%= trip_authorization.allowed_trips_per_month.to_i %>/month</span>
           </td>
           <td>
+            <% if trip_authorization.special_instructions.present? %>
+              HAS SPECIAL INSTRUCTIONS
+            <% end %>
+          </td>
+          <td>
             <span title="Start date"><%= trip_authorization.start_date.blank? ? "(No end date)" : trip_authorization.start_date.strftime("%Y-%m-%d") %></span>
           </td>
           <td>

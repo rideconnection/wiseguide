@@ -18,6 +18,11 @@
     <%= f.number_field :allowed_trips_per_month, min: 1, max: 999 %>
   </div>
   <div class="field">
+    <%= f.label :special_instructions %><br />
+    <%= f.text_area :special_instructions, data: {behavior: "autoresize"} %><br />
+    <%= f.label :special_instructions, 'Please note: any special instuctions from prior trip authorizations MUST be repeated here in order to be carried forward.', class: :note %>
+  </div>
+  <div class="field">
     <%= f.label :start_date %><br />
     <%= f.text_field :start_date, class: "datepicker", placeholder: "yyyy-mm-dd" %>
   </div>

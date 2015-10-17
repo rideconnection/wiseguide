@@ -7,6 +7,11 @@
 </p>
 
 <p>
+  <b>Special instructions:</b>
+  <%= @trip_authorization.special_instructions %>
+</p>
+
+<p>
   <b>End date:</b>
   <%= @trip_authorization.end_date.strftime "%Y-%m-%d" unless @trip_authorization.end_date.blank? %>
 </p>
