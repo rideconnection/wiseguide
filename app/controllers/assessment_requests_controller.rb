@@ -130,7 +130,9 @@ class AssessmentRequestsController < ApplicationController
     else
       kase = Kase.find(params[:kase_id])
       @assessment_request.kase = kase
+      kase.assessment_request  = @assessment_request
       @assessment_request.save!
+      kase.save!
       redirect_to @assessment_request
     end
   end

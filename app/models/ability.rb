@@ -30,22 +30,28 @@ class Ability
       can :read,   AssessmentRequest, submitter: { organization_id: [user.organization.id] + user.organization.children.collect(&:id) }
       can :update, AssessmentRequest, submitter_id: user.id
       
+      # Outside users can read cases that were created by someone in their same organization
       can :read, Kase do |kase|
         request = kase.assessment_request
         unless request.nil? then
-          org = kase.assessment_request.submitter.organization
+          org = request.submitter.organization
           org == user.organization || org.parent == user.organization
         end
       end
       
+      # Outside users can read contact events if they can read the case 
+      # they're associated with (contactable is a case here)
       can :read, Contact do |contact|
         can?(:read, contact.contactable)
       end
       
+      # Outside users can create and view trip authorizations if they can view the associated case
+      # or if it's a new authorization (with no association with a case yet) 
       can [:create, :read], TripAuthorization do |trip_authorization|
         trip_authorization.kase.blank? || can?(:read, trip_authorization.kase)
       end
       
+      # Outside users can update trip authorizations if they can view the associated case
       can :update, TripAuthorization do |trip_authorization|
         can?(:read, trip_authorization.kase) && trip_authorization.disposition_date.blank?
       end
