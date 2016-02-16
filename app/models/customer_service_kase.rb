@@ -52,6 +52,6 @@ class CustomerServiceKase < Kase
 private
 
   def send_notification_after_reassignment
-    CustomerServiceKaseAssignmentMailer.reassignment_email(assigned_to, self).deliver if assigned_to.present? && user_id_changed?
+    CustomerServiceKaseAssignmentMailer.reassignment_email(assigned_to, self).deliver_now if assigned_to.present? && user_id_changed?
   end
 end

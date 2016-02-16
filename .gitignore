@@ -18,7 +18,7 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /db/legacy
-/log/*.log
+/log/*
 /public/system
 /tmp
 /uploads/*

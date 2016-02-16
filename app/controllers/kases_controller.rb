@@ -114,7 +114,7 @@ class KasesController < ApplicationController
     if !@kase.case_manager.blank?
       ActiveRecord::Base.transaction do
         begin
-          AssessmentMailer.customer_assessed_email(@kase.case_manager, @kase).deliver
+          AssessmentMailer.customer_assessed_email(@kase.case_manager, @kase).deliver_now
           @kase.case_manager_notification_date = Date.current
           @kase.save!
           redirect_to(@kase, notice: 'The notification has been sent.') and return
