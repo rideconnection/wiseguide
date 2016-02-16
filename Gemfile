@@ -22,7 +22,7 @@ gem 'jquery-ui-rails'
 
 gem 'cancancan', '~> 1.10.0'
 
-gem 'devise', '~> 3.5.1'
+gem 'devise', '~> 3.5'
 
 gem 'nested_form', '~> 0.3.2'
 
@@ -35,11 +35,11 @@ gem 'exception_notification', '~> 4.0.1 '
 gem 'paperclip', '~> 4.2.1'
 
 # For record versioning and audits
-gem 'paper_trail', '~> 3.0.8' # TODO latest? yes, but 4.0 is at RC1
+gem 'paper_trail', '~> 3.0' # TODO latest? yes, but 4.0 is at RC1
   
 # TODO currently works with ActiveRecord 3.0.5 through 4.0.1
 #   See https://github.com/appfolio/store_base_sti_class/pull/13
-gem 'store_base_sti_class', '~> 0.3.0'
+gem 'store_base_sti_class', '~> 0.3'
 
 # TODO Still necessary?
 gem 'uuidtools', '~> 2.1.5'

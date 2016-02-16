@@ -85,10 +85,10 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",     default: 0
     t.boolean  "show_full_notes"
     t.string   "contactable_type"
     t.integer  "contactable_id"
+    t.integer  "lock_version",     default: 0
   end
 
   add_index "contacts", ["contactable_type", "contactable_id"], name: "index_contacts_on_contactable_type_and_contactable_id", using: :btree
@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.datetime "portrait_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                 default: 0
     t.string   "phone_number_3"
     t.string   "phone_number_4"
     t.string   "county",                            limit: 25
@@ -153,6 +152,7 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.boolean  "phone_number_2_allow_voicemail"
     t.boolean  "phone_number_3_allow_voicemail"
     t.boolean  "phone_number_4_allow_voicemail"
+    t.integer  "lock_version",                                 default: 0
   end
 
   create_table "dependencies", force: true do |t|
@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version", default: 0
     t.string   "type"
+    t.integer  "lock_version", default: 0
   end
 
   add_index "dispositions", ["name", "type"], name: "index_dispositions_on_name_and_type", unique: true, using: :btree
@@ -202,8 +202,8 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",  default: 0
     t.boolean  "require_notes", default: false
+    t.integer  "lock_version",  default: 0
   end
 
   create_table "events", force: true do |t|
@@ -216,10 +216,10 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                              default: 0
     t.time     "start_time"
     t.time     "end_time"
     t.boolean  "show_full_notes",                           default: false
+    t.integer  "lock_version",                              default: 0
   end
 
   create_table "funding_sources", force: true do |t|
@@ -227,6 +227,16 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "lock_version", default: 0
+  end
+
+  create_table "geometry_columns", id: false, force: true do |t|
+    t.string  "f_table_catalog",   limit: 256, null: false
+    t.string  "f_table_schema",    limit: 256, null: false
+    t.string  "f_table_name",      limit: 256, null: false
+    t.string  "f_geometry_column", limit: 256, null: false
+    t.integer "coord_dimension",               null: false
+    t.integer "srid",                          null: false
+    t.string  "type",              limit: 30,  null: false
   end
 
   create_table "impairments", force: true do |t|
@@ -254,7 +264,6 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.integer  "disposition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                                  default: 0
     t.string   "county",                              limit: 1
     t.string   "type"
     t.date     "assessment_date"
@@ -276,6 +285,7 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.integer  "agency_id"
     t.string   "referral_mechanism"
     t.string   "referral_mechanism_explanation"
+    t.integer  "lock_version",                                  default: 0
   end
 
   add_index "kases", ["scheduling_system_entry_required"], name: "index_kases_on_scheduling_system_entry_required", using: :btree
@@ -298,11 +308,11 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.integer  "three_month_vehicle_miles_reduced"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "lock_version",                      default: 0
     t.integer  "six_month_trip_count"
     t.integer  "six_month_vehicle_miles_reduced"
     t.boolean  "six_month_unreachable"
     t.boolean  "three_month_unreachable"
+    t.integer  "lock_version",                      default: 0
   end
 
   create_table "question_groups", force: true do |t|
@@ -430,6 +440,14 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.integer  "lock_version", default: 0
   end
 
+  create_table "spatial_ref_sys", id: false, force: true do |t|
+    t.integer "srid",                   null: false
+    t.string  "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string  "srtext",    limit: 2048
+    t.string  "proj4text", limit: 2048
+  end
+
   create_table "survey_sections", force: true do |t|
     t.integer  "survey_id"
     t.string   "title"
@@ -448,8 +466,8 @@ ActiveRecord::Schema.define(version: 20151016233155) do
     t.integer  "survey_id"
     t.string   "locale"
     t.text     "translation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "surveys", force: true do |t|
