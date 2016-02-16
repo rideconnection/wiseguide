@@ -8,4 +8,4 @@ ALL_GENDERS = [["Female", "F"], ["Male", "M"], ["Other", "O"]]
 REASONS_NOT_COMPLETED = ["Could not reach", "Duplicate request", "Out-of-service area", "Request withdrawn", "Ride Together inquiry", "Travel training inquiry", "Other"]
 
 # Initialize the Rails application.
-Wiseguide::Application.initialize!
+Rails.application.initialize!
