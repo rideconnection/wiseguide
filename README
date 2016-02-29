@@ -1,3 +1,5 @@
+TODO This needs to be updated to reflect upgraded environments. Most notably: No more spork, use built-in Spring; Add reference to VM setup docs in Recipes repo; Remove 'updating Ruby to a newer version' instructions and replace with reference to Server setup docs in Recipes repo
+
 WiseGuide
 =========
 
