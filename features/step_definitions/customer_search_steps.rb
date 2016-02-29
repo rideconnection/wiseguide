@@ -12,7 +12,7 @@ end
 
 When /^I fill in something close to Carl's name$/ do
   fill_in 'customer[first_name]', with: 'carl'
-  fill_in 'customer[last_name]', with: 'bOBSons'
+  fill_in 'customer[last_name]', with: 'bobsons'
   fill_in 'customer[middle_initial]', with: " "
 end
 

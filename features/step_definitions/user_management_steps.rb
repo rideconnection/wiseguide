@@ -47,7 +47,7 @@ Then /^I should not see see a form to change the role of anyone else$/ do
 end
 
 Then /^the "([^"]*)" link should take me to the new user form$/ do |arg1|
-  click_link("New User")
+  all("a", text: "New User").first.click
   step %Q(I should be redirected to the new user page)
 end
 
@@ -65,7 +65,7 @@ Then /^I should be able to complete the New User form using the following data:$
 
   # Get the newly generated user ID so we can find the record later
   @user = User.find_by_email(row[:email])
-  @confirmation_message = "#{@user.email} has been added and a password has been emailed"
+  @confirmation_message = "#{@user.email} has been added and a link has been sent to set an initial password"
   step %Q(I should see a confirmation message)
 end
 
@@ -76,8 +76,8 @@ Then /^"([^"]+)" should receive a welcome email with a link to the application$/
   open_email(email_address)
   current_email.should have_subject("Welcome to Wiseguide")
   current_email.should have_body_text("Hi, #{email_address}")
-  current_email.should have_body_text("You can visit the site at<br/> #{root_url}")
-  current_email.should have_body_text("You have been assigned the password")
+  current_email.should have_body_text("You can visit the site at <br/> #{root_url}")
+  current_email.should have_body_text("Please click here to request your initial password")
 end
 
 Then /^I should see the new user on the Users index page$/ do

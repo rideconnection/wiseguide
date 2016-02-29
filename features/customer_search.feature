@@ -22,8 +22,8 @@ Feature: Customer search
     Then I should see the following customers in the customers table:
       | Name                  |
       | Bobson, Carl          |
-      | Bradey Sr., Robert    |
       | Bradey, Jr., Bob      |
+      | Bradey Sr., Robert    |
       | Carlson, Christopher  |
       | Christchurch, Bradley |
       | Donnings, Jennifer    |
@@ -36,8 +36,8 @@ Feature: Customer search
       And I click the "Search" button in the customer search form
     Then I should see the following customers in the customers table:
       | Name                  |
-      | Bradey Sr., Robert    |
       | Bradey, Jr., Bob      |
+      | Bradey Sr., Robert    |
       | Christchurch, Bradley |
       | Roberts, Brady        |
 
