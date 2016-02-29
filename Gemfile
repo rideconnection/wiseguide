@@ -61,6 +61,10 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'surveyor', :git => "git://github.com/NUBIC/surveyor.git",
   :ref => "d4fe8df2586ba26126bac3c4b3498e67ba813baf"
 
+# Extends the runway for the current version of Surveyor to work
+# with Rails 4.2
+gem 'protected_attributes'
+
 gem 'pg'
 
 # Use ActiveModel has_secure_password
