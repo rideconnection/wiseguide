@@ -83,9 +83,7 @@ group :development do
   gem 'capistrano', '~> 3.4'
   gem 'capistrano-rvm', '~> 0.1', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
-  
-  # TODO enable once we're up on Rails >= 4.1
-  # gem 'capistrano-secrets-yml', '~> 1.0', require: false
+  gem 'capistrano-secrets-yml', '~> 1.0', require: false
 end
 
 group :test do
