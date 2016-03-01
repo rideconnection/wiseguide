@@ -197,6 +197,10 @@ RSpec.describe DevelopmentKaseBehavior do
         # lambda {|funding_source_id| funding_source_id.present? ? where(funding_source_id: funding_source_id) : where(true) }
         CoachingKase.for_funding_source_id(@funding_source_1.id).should =~ @funded_kases
       end
+      
+      it "should return based on all funding sources if a blank string is passed in" do
+        CoachingKase.for_funding_source_id("").should =~ @funded_kases + @unfunded_kases
+      end
     end
   end
 end

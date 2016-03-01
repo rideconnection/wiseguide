@@ -21,7 +21,7 @@ module DevelopmentKaseBehavior
       
       before_save :cleanup_household_stats
       
-      scope :for_funding_source_id, lambda {|funding_source_id| funding_source_id.present? ? where(funding_source_id: funding_source_id) : where(true) }
+      scope :for_funding_source_id, lambda {|funding_source_id| funding_source_id.present? ? where(funding_source_id: funding_source_id) : where(nil) }
     end
   end
   
