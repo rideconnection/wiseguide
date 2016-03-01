@@ -39,8 +39,9 @@ RSpec.describe ReportsController do
     end
   end
   
-  def get_with_date_range (action)
-    get action, start_date: "2000-01-01", end_date: "2000-01-30"
+  def get_with_date_range (action, *options)
+    opts = options.extract_options!
+    get action, {start_date: "2000-01-01", end_date: "2000-01-30"}.merge(opts)
   end
     
   describe "GET monthly_transportation" do
@@ -172,6 +173,52 @@ RSpec.describe ReportsController do
     it "should assign @services_referred" do
       get_with_date_range :customer_referral
       assigns(:services_referred).should_not be_nil
+    end
+  end
+
+  describe "GET age_and_ethnicity" do
+    it "should be successful" do
+      get :age_and_ethnicity, start_date: "2000-01-01"
+      response.should be_success
+    end  
+  end
+  
+  describe "GET data_entry_needed" do
+    it "should be successful" do
+      get :data_entry_needed
+      response.should be_success
+    end  
+  end
+    
+  describe "GET basic_report" do
+    it "should be successful" do
+      get_with_date_range :basic_report
+      response.should be_success
+    end
+  end
+  
+  describe "GET route" do
+    before do
+      @route = FactoryGirl.create :route
+    end
+    
+    it "should be successful" do
+      get_with_date_range :route, route_id: @route.id
+      response.should be_success
+    end
+  end
+  
+  describe "GET trainee" do
+    it "should be successful" do
+      get_with_date_range :trainee
+      response.should be_success
+    end
+  end
+  
+  describe "GET trainer" do
+    it "should be successful" do
+      get_with_date_range :trainer
+      response.should be_success
     end
   end
 end

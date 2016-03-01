@@ -198,7 +198,7 @@ class ReportsController < ApplicationController
 
     @route = Route.find(params[:route_id])
     authorize! :read, @route
-    @customers = Customer.accessible_by(current_ability).find(:all, conditions: ["kase_routes.route_id = ? and (kases.open_date between ? and ? or kases.close_date between ? and ? or (kases.close_date is null and kases.open_date < ?))", params[:route_id], start_date, end_date, start_date, end_date, end_date], joins: {kases: :kase_routes}, include: {kases: :outcomes})
+    @customers = Customer.accessible_by(current_ability).where("kase_routes.route_id = ? and (kases.open_date between ? and ? or kases.close_date between ? and ? or (kases.close_date is null and kases.open_date < ?))", params[:route_id], start_date, end_date, start_date, end_date, end_date).joins(kases: :kase_routes).includes(kases: :outcomes)
   end
 
   def outcomes
