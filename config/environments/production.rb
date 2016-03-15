@@ -78,7 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Needed for sending new users' confirmation email
-  config.action_mailer.default_url_options = { :host => 'apps.rideconnection.org/wiseguide' }
+  config.action_mailer.default_url_options = { :host => 'apps.rideconnection.org' }
 end
 
 # Turn off auto TLS for e-mail
