@@ -35,6 +35,11 @@
 </li>
 
 <li>
+  <%= f.label :identifier, "Identifier" %>
+  <%= f.text_field :identifier, class: "duplicate-check" %>
+</li>
+
+<li>
   <%= f.label :gender, "* Gender" %>
   <%= f.select :gender, @genders, prompt: '<Select Gender>' %>
 </li>

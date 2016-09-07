@@ -15,17 +15,18 @@ class Organization < ActiveRecord::Base
   has_many :users, dependent: :restrict_with_exception
   has_many :children, class_name: "Organization",
            foreign_key: "parent_id", dependent: :nullify
-  
-  scope :outside, -> { where("organization_type != ?", ORGANIZATION_TYPES[:staff][:id]) }
+
+  scope :outside,    -> { where("organization_type != ?", ORGANIZATION_TYPES[:staff][:id]) }
+  scope :government, -> { where(organization_type: 'government') }
 
   def organization_type_name
     ORGANIZATION_TYPES[organization_type.to_sym][:name]
   end
-  
+
   def is_cmo?
     organization_type == ORGANIZATION_TYPES[:case_mgmt][:id]
   end
-  
+
   def is_outside_org?
     organization_type != ORGANIZATION_TYPES[:staff][:id]
   end

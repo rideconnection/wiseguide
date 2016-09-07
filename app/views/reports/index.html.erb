@@ -13,7 +13,7 @@
         'width':      '215px'
       });
       $('#page-header').after($menu);
-      
+
       var $reports = $('.predefined-report h2').sort(function(a, b){return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;});
       $reports.each(function(){
         $li = $('<li>');
@@ -30,7 +30,7 @@
           $this.data('target').fadeIn('fast');
         });
       });
-      
+
       $menu.find('li a').css({
         'color':       '#000 !important',
         'cursor':      'pointer',
@@ -47,7 +47,7 @@
         'margin':                '4px 0',
         'padding':               '5px'
       });
-      
+
       $('.predefined-report').hide();
       $menu.before('<h2>Available Reports:</h2>');
       $menu.find('li:first').css('background-color', '#ccc').find('a').click();
@@ -66,7 +66,7 @@
       <p></p>
       <ol>
         <li>
-          <label>Funding source:</label> 
+          <label>Funding source:</label>
           <%= select_tag "funding_source_id", options_for_select(@funding_sources.map { |fs| [fs.name, fs.id] }) %>
         </li>
         <li>
@@ -90,11 +90,11 @@
       <p></p>
       <ol>
         <li>
-          <label>Funding source:</label> 
+          <label>Funding source:</label>
           <%= select_tag "funding_source_id", options_for_select(@funding_sources.map { |fs| [fs.name, fs.id] }) %>
         </li>
         <li>
-          <label>First day of month:</label> 
+          <label>First day of month:</label>
           <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
         </li>
       </ol>
@@ -150,7 +150,7 @@
       <p></p>
       <ol>
         <li>
-          <label>Route:</label> 
+          <label>Route:</label>
           <%= select_tag "route_id", options_for_select(@routes.map { |fs| [fs.name, fs.id] }) %>
         </li>
         <li>
@@ -302,6 +302,30 @@
       <h2 class="report-header">Assessment Requests</h2>
       <p></p>
       <ol>
+        <li>
+          <label>Start date:</label>
+          <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+        <li>
+          <label>End date:</label>
+          <input type="text" name="end_date" value="<%= end_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+      </ol>
+      <input type="submit" name="report" value="Export">
+    </fieldset>
+  </form>
+</div>
+
+<div class="predefined-report" data-name="trainer" id="trainer">
+  <form action="<%= url_for(action: 'funder_assessment_requests') %>" class="run-report">
+    <fieldset>
+      <h2 class="report-header">Funder Assessment Requests</h2>
+      <p></p>
+      <ol>
+        <li>
+          <label>Funder:</label>
+          <%= select_tag "governmental_body", options_for_select(@governmental_bodies.map { |fs| [fs.name, fs.id] }) %>
+        </li>
         <li>
           <label>Start date:</label>
           <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">

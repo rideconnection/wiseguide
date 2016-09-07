@@ -19,6 +19,7 @@
     <tr>
       <th>Name</th>
       <th>DOB</th>
+      <th>Identifier</th>
       <th>Primary Phone</th>
       <th>Secondary Phone</th>
       <th>Email Address</th>
@@ -33,11 +34,12 @@
       <tr class="auto-zebra">
         <td><%= link_to customer.name_reversed, customer %></td>
         <td><%= customer.birth_date %></td>
+        <td><%= customer.identifier %></td>
         <td><%= customer.phone_number_1 %></td>
         <td><%= customer.phone_number_2 %></td>
         <td><%= customer.email %></td>
         <td><%= customer.address %></td>
-        <% if can? :destroy, customer %>    
+        <% if can? :destroy, customer %>
           <td><%= button_to "Delete", customer, data: {confirm: "Are you sure you want to delete this user?"}, method: :delete %></td>
         <% end %>
       </tr>

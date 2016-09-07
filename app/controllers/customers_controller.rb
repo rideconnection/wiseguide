@@ -102,6 +102,7 @@ class CustomersController < ApplicationController
       :honored_citizen_cardholder,
       :last_name,
       :middle_initial,
+      :identifier,
       :notes,
       :phone_number_1,
       :phone_number_1_allow_voicemail,

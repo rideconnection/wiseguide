@@ -3,13 +3,13 @@ class AssessmentRequestsController < ApplicationController
 
   # GET /assessment_requests
   # GET /assessment_requests.xml
-  def index    
+  def index
     params[:user_type_filter]      = params[:user_type_filter]      || session[:assessment_requests_index_user_type_filter]      || "all"
     params[:current_status_filter] = params[:current_status_filter] || session[:assessment_requests_index_current_status_filter] || "all"
     params[:assignee_filter]       = params[:assignee_filter]       || session[:assessment_requests_index_assignee_filter]       || "all"
 
     query = @assessment_requests
-        
+
     case params[:user_type_filter].to_sym
     when :mine
       query = query.submitted_by(current_user)
@@ -18,7 +18,7 @@ class AssessmentRequestsController < ApplicationController
     when :outside_users
       query = query.belonging_to(Organization.outside)
     end
-        
+
     case params[:current_status_filter].to_sym
     when :pending
       query = query.pending
@@ -27,18 +27,18 @@ class AssessmentRequestsController < ApplicationController
     when :completed
       query = query.completed
     end
-        
+
     case params[:assignee_filter].to_sym
     when :me
       query = query.assigned_to(current_user)
     end
-        
+
     @assessment_requests = query.order("assessment_requests.created_at ASC").paginate(page: params[:page])
-    
+
     session[:assessment_requests_index_user_type_filter]      = params[:user_type_filter]
     session[:assessment_requests_index_current_status_filter] = params[:current_status_filter]
     session[:assessment_requests_index_assignee_filter]       = params[:assignee_filter]
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.js   # index.js.erb
@@ -98,12 +98,13 @@ class AssessmentRequestsController < ApplicationController
     authorize! :update, @assessment_request
     if params[:customer_id] == "0" then
       customer = {
-        first_name: @assessment_request.customer_first_name,
-        last_name: @assessment_request.customer_last_name,
+        first_name:     @assessment_request.customer_first_name,
+        last_name:      @assessment_request.customer_last_name,
         middle_initial: @assessment_request.customer_middle_initial,
+        identifier:     @assessment_request.customer_identifier,
         phone_number_1: @assessment_request.customer_phone,
-        birth_date: @assessment_request.customer_birth_date,
-        notes: @assessment_request.notes,
+        birth_date:     @assessment_request.customer_birth_date,
+        notes:          @assessment_request.notes,
       }
       redirect_to controller: :customers, action: :new, customer: customer,
                   assessment_request: @assessment_request
@@ -141,7 +142,7 @@ class AssessmentRequestsController < ApplicationController
   # POST /assessment_requests.xml
   def create
     prep_edit
-    
+
     @assessment_request.submitter = current_user
 
     respond_to do |format|
@@ -165,7 +166,7 @@ class AssessmentRequestsController < ApplicationController
   # PUT /assessment_requests/1.xml
   def update
     prep_edit
-    
+
     respond_to do |format|
       if @assessment_request.update_attributes(assessment_request_params)
         format.html do
@@ -207,7 +208,7 @@ class AssessmentRequestsController < ApplicationController
   def prep_edit
     @assignees = [User.new(first_name: 'Unassigned')] + User.inside_or_selected(@assessment_request.assignee_id).accessible_by(current_ability)
   end
-  
+
   def assessment_request_params
     params.require(:assessment_request).permit(
       :assignee_id,
@@ -218,6 +219,7 @@ class AssessmentRequestsController < ApplicationController
       :customer_last_name,
       :customer_middle_initial,
       :customer_phone,
+      :customer_identifier,
       :notes,
       :reason_not_completed,
     )
