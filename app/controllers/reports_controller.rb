@@ -389,13 +389,16 @@ class ReportsController < ApplicationController
   end
 
   def funder_assessment_requests
-    if params[:governmental_body].present?
-    else
-    end
     start_date = Time.parse(params[:start_date])
     end_date = Time.parse(params[:end_date]) + 1.day
 
     assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).includes(:submitter,:assignee)
+    if params[:governmental_body].present?
+      assessment_requests = assessment_requests.for_parent_org(params[:governmental_body].to_i)
+      filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
+    else
+      filename_prefix = ''
+    end
 
     csv = ""
     CSV.generate(csv) do |csv|
@@ -408,7 +411,7 @@ class ReportsController < ApplicationController
               'AssessmentHours',
               'AssessmentStatus']
       assessment_requests.each do |assessment_request|
-        csv << [assessment_request.created_at,
+        csv << [assessment_request.created_at.to_date,
                 assessment_request.customer_identifier,
                 assessment_request.customer_last_name,
                 assessment_request.customer_first_name,
@@ -418,7 +421,7 @@ class ReportsController < ApplicationController
                 assessment_request.status]
       end
     end
-    send_data csv, type: "text/csv", filename: "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
+    send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
   end
 
   private
