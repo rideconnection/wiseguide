@@ -317,13 +317,37 @@
 </div>
 
 <div class="predefined-report" data-name="trainer" id="trainer">
-  <form action="<%= url_for(action: 'funder_assessment_requests') %>" class="run-report">
+  <form action="<%= url_for(action: 'county_assessment_requests') %>" class="run-report">
     <fieldset>
-      <h2 class="report-header">Funder Assessment Requests</h2>
+      <h2 class="report-header">County Assessment Requests</h2>
       <p></p>
       <ol>
         <li>
-          <label>Funder:</label>
+          <label>County:</label>
+          <%= select_tag "governmental_body", options_for_select(@governmental_bodies.map { |fs| [fs.name, fs.id] }) %>
+        </li>
+        <li>
+          <label>Start date:</label>
+          <input type="text" name="start_date" value="<%= start_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+        <li>
+          <label>End date:</label>
+          <input type="text" name="end_date" value="<%= end_last_month %>" class="datepicker" placeholder="yyyy-mm-dd" required="required">
+        </li>
+      </ol>
+      <input type="submit" name="report" value="Export">
+    </fieldset>
+  </form>
+</div>
+
+<div class="predefined-report" data-name="trainer" id="trainer">
+  <form action="<%= url_for(action: 'county_authorizations') %>" class="run-report">
+    <fieldset>
+      <h2 class="report-header">County Authorizations</h2>
+      <p></p>
+      <ol>
+        <li>
+          <label>County:</label>
           <%= select_tag "governmental_body", options_for_select(@governmental_bodies.map { |fs| [fs.name, fs.id] }) %>
         </li>
         <li>

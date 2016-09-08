@@ -388,7 +388,7 @@ class ReportsController < ApplicationController
     send_data csv, type: "text/csv", filename: "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
   end
 
-  def funder_assessment_requests
+  def county_assessment_requests
     start_date = Time.parse(params[:start_date])
     end_date = Time.parse(params[:end_date]) + 1.day
 
@@ -403,7 +403,7 @@ class ReportsController < ApplicationController
     csv = ""
     CSV.generate(csv) do |csv|
       csv << ['AssessmentDate',
-              'Prime #',
+              'PrimeNumber',
               'LastName',
               'FirstName',
               'MiddleInitial',
@@ -422,6 +422,43 @@ class ReportsController < ApplicationController
       end
     end
     send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
+  end
+
+  def county_authorizations
+    start_date = Time.parse(params[:start_date])
+    end_date = Time.parse(params[:end_date]) + 1.day
+
+    authorizations = TripAuthorization.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).
+      includes(:customer, { assessment_request: :referring_organization })
+    if params[:governmental_body].present?
+      authorizations = authorizations.for_parent_org(params[:governmental_body].to_i)
+      filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
+    else
+      filename_prefix = ''
+    end
+
+    csv = ""
+    CSV.generate(csv) do |csv|
+      csv << ['PrimeNumber',
+              'LastName',
+              'FirstName',
+              'MiddleInitial',
+              'AuthorizedTrips',
+              'StartDate',
+              'EndDate',
+              'DistrictCenter']
+      authorizations.each do |authorization|
+        csv << [authorization.customer.try(:identifier),
+                authorization.customer.try(:last_name),
+                authorization.customer.try(:first_name),
+                authorization.customer.try(:middle_initial),
+                authorization.allowed_trips_per_month,
+                authorization.start_date,
+                authorization.end_date,
+                authorization.try(:assessment_request).try(:referring_organization).try(:name)]
+      end
+    end
+    send_data csv, type: "text/csv", filename: filename_prefix + " Authorizations #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
   end
 
   private
