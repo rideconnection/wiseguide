@@ -11,6 +11,7 @@
 </head>
 <body class="<%= bodytag_class %>">
   <div id="header">
+    <img id="logo-image" src="https://rideconnection.org/assets/images/_template/rc_logo.svg" alt="Ride Connection Logo" height="50"></img>
     <div class="wrap clearfix">
       <%= link_to "WiseGuide", root_path, id: 'logo' %>
       <div id="login-area">
@@ -23,7 +24,7 @@
     </div><!-- /.wrap -->
   </div><!-- /#header -->
   <div id="crossbar">
-    <div class="wrap clearfix">             
+    <div class="wrap clearfix">
       <% if !current_user.nil? %>
       <ul id="primary-nav" class="clearfix">
         <% if current_user.is_outside_user? %>

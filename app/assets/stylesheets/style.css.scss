@@ -5,7 +5,7 @@
 */
 #header {
   padding: 20px 20px 10px;
-  background: #0d4680;
+  background: #09335d;
   color: #ddd;
 }
 #header a#logo:link,
@@ -22,7 +22,11 @@
 #header a#logo strong {
   font-weight: normal;
 }
-
+#header img#logo-image {
+  float: left;
+  margin-top: -15px;
+  margin-right: 15px;
+}
 #login-area {
   float: right;
 }
@@ -45,7 +49,7 @@
 
 #crossbar {
   padding: 0 20px;
-  background: #0d4680;
+  background: #09335d;
   color: #fff;
   position: relative;
 }
