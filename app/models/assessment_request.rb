@@ -43,14 +43,14 @@ class AssessmentRequest < ActiveRecord::Base
     return submitter.organization
   end
 
-  def status
+  def status(show_reason_not_completed: true)
     # "Pending" (reason_not_completed is blank and no associated TC case)
     # "Not completed" (reason_not_completed is not blank)
     # "Completed" (kase_id foreign key is not blank)
-    if !kase_id.blank?
+    if !reason_not_completed.blank?
+      show_reason_not_completed ? "Not completed (#{reason_not_completed})" : "Not completed"
+    elsif !kase_id.blank?
       "Completed"
-    elsif !reason_not_completed.blank?
-      "Not completed (#{reason_not_completed})"
     else
       "Pending"
     end

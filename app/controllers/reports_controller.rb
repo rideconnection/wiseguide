@@ -392,7 +392,8 @@ class ReportsController < ApplicationController
     start_date = Time.parse(params[:start_date])
     end_date = Time.parse(params[:end_date]) + 1.day
 
-    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).includes(:submitter,:assignee)
+    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).
+      includes(:kase, :customer, :submitter, :assignee)
     if params[:governmental_body].present?
       assessment_requests = assessment_requests.for_parent_org(params[:governmental_body].to_i)
       filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
@@ -402,23 +403,29 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << ['AssessmentDate',
+      csv << ['AssessmentRequestID',
+              'AssessmentRequestDate',
+              'AssessmentDate',
               'PrimeNumber',
               'LastName',
               'FirstName',
               'MiddleInitial',
               'DistrictCenter',
               'AssessmentHours',
-              'AssessmentStatus']
-      assessment_requests.each do |assessment_request|
-        csv << [assessment_request.created_at.to_date,
-                assessment_request.customer_identifier,
-                assessment_request.customer_last_name,
-                assessment_request.customer_first_name,
-                assessment_request.customer_middle_initial,
-                assessment_request.submitter.try(:organization).try(:name),
+              'AssessmentStatus',
+              'NotCompletedReason']
+      assessment_requests.each do |ar|
+        csv << [ar.id,
+                ar.created_at.to_date,
+                ar.try(:kase).try(:response_sets).try(:first).try(:created_at).try(:to_date),
+                ar.try(:customer).try(:identifier).presence     || ar.customer_identifier,
+                ar.try(:customer).try(:last_name).presence      || ar.customer_last_name,
+                ar.try(:customer).try(:first_name).presence     || ar.customer_first_name,
+                ar.try(:customer).try(:middle_initial).presence || ar.customer_middle_initial,
+                ar.submitter.try(:organization).try(:name),
                 nil,
-                assessment_request.status]
+                ar.status(show_reason_not_completed: false),
+                ar.reason_not_completed]
       end
     end
     send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
@@ -439,22 +446,26 @@ class ReportsController < ApplicationController
 
     csv = ""
     CSV.generate(csv) do |csv|
-      csv << ['PrimeNumber',
+      csv << ['AuthorizationCreatedAt',
+              'PrimeNumber',
               'LastName',
               'FirstName',
               'MiddleInitial',
               'AuthorizedTrips',
               'StartDate',
               'EndDate',
+              'SpecialInstructions',
               'DistrictCenter']
       authorizations.each do |authorization|
-        csv << [authorization.customer.try(:identifier),
+        csv << [authorization.created_at,
+                authorization.customer.try(:identifier),
                 authorization.customer.try(:last_name),
                 authorization.customer.try(:first_name),
                 authorization.customer.try(:middle_initial),
                 authorization.allowed_trips_per_month,
                 authorization.start_date,
                 authorization.end_date,
+                authorization.special_instructions,
                 authorization.try(:assessment_request).try(:referring_organization).try(:name)]
       end
     end
