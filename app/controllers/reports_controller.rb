@@ -428,7 +428,7 @@ class ReportsController < ApplicationController
                 ar.reason_not_completed]
       end
     end
-    send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
+    send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
   end
 
   def county_authorizations
@@ -469,7 +469,7 @@ class ReportsController < ApplicationController
                 authorization.try(:assessment_request).try(:referring_organization).try(:name)]
       end
     end
-    send_data csv, type: "text/csv", filename: filename_prefix + " Authorizations #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
+    send_data csv, type: "text/csv", filename: filename_prefix + " Authorizations #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
   end
 
   private
