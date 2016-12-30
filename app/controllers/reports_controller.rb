@@ -392,7 +392,7 @@ class ReportsController < ApplicationController
     start_date = Time.parse(params[:start_date])
     end_date = Time.parse(params[:end_date]) + 1.day
 
-    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).
+    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).completed.
       includes(:kase, :customer, :submitter, :assignee)
     if params[:governmental_body].present?
       assessment_requests = assessment_requests.for_parent_org(params[:governmental_body].to_i)
@@ -411,9 +411,7 @@ class ReportsController < ApplicationController
               'FirstName',
               'MiddleInitial',
               'DistrictCenter',
-              'AssessmentHours',
-              'AssessmentStatus',
-              'NotCompletedReason']
+              'AssessmentStatus']
       assessment_requests.each do |ar|
         csv << [ar.id,
                 ar.created_at.to_date,
@@ -423,9 +421,7 @@ class ReportsController < ApplicationController
                 ar.try(:customer).try(:first_name).presence     || ar.customer_first_name,
                 ar.try(:customer).try(:middle_initial).presence || ar.customer_middle_initial,
                 ar.submitter.try(:organization).try(:name),
-                nil,
-                ar.status(show_reason_not_completed: false),
-                ar.reason_not_completed]
+                ar.status(show_reason_not_completed: false)]
       end
     end
     send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
