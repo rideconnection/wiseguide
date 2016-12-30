@@ -413,15 +413,19 @@ class ReportsController < ApplicationController
               'DistrictCenter',
               'AssessmentStatus']
       assessment_requests.each do |ar|
-        csv << [ar.id,
-                ar.created_at.to_date,
-                ar.try(:kase).try(:response_sets).try(:first).try(:created_at).try(:to_date),
-                ar.try(:customer).try(:identifier).presence     || ar.customer_identifier,
-                ar.try(:customer).try(:last_name).presence      || ar.customer_last_name,
-                ar.try(:customer).try(:first_name).presence     || ar.customer_first_name,
-                ar.try(:customer).try(:middle_initial).presence || ar.customer_middle_initial,
-                ar.submitter.try(:organization).try(:name),
-                ar.status(show_reason_not_completed: false)]
+        # The 'completed' scope for assessment requests considers ar's to be completed if there is an associated kase.
+        # However there are circumstances where kases are created without assessments, so this checks for actual assessments.
+        if (ar.try(:kase).try(:response_sets).try(:count) || 0) > 0
+          csv << [ar.id,
+                  ar.created_at.to_date,
+                  ar.kase.response_sets.first.created_at.to_date,
+                  ar.customer.identifier,
+                  ar.customer.last_name,
+                  ar.customer.first_name,
+                  ar.customer.middle_initial,
+                  ar.submitter.organization.name,
+                  ar.status(show_reason_not_completed: false)]
+        end
       end
     end
     send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
