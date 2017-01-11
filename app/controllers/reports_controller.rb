@@ -402,8 +402,10 @@ class ReportsController < ApplicationController
     end
 
     csv = ""
+    line_number = 1
     CSV.generate(csv) do |csv|
-      csv << ['AssessmentRequestID',
+      csv << ['LineNumber',
+              'AssessmentRequestID',
               'AssessmentRequestDate',
               'AssessmentDate',
               'PrimeNumber',
@@ -416,7 +418,9 @@ class ReportsController < ApplicationController
         # The 'completed' scope for assessment requests considers ar's to be completed if there is an associated kase.
         # However there are circumstances where kases are created without assessments, so this checks for actual assessments.
         if (ar.try(:kase).try(:response_sets).try(:count) || 0) > 0
-          csv << [ar.id,
+          line_number += 1
+          csv << [line_number,
+                  ar.id,
                   ar.created_at.to_date,
                   ar.kase.response_sets.first.created_at.to_date,
                   ar.customer.identifier,
@@ -445,8 +449,10 @@ class ReportsController < ApplicationController
     end
 
     csv = ""
+    line_number = 1
     CSV.generate(csv) do |csv|
-      csv << ['AuthorizationCreatedAt',
+      csv << ['LineNumber',
+              'AuthorizationCreatedAt',
               'PrimeNumber',
               'LastName',
               'FirstName',
@@ -457,7 +463,9 @@ class ReportsController < ApplicationController
               'SpecialInstructions',
               'DistrictCenter']
       authorizations.each do |authorization|
-        csv << [authorization.created_at,
+        line_number += 1
+        csv << [line_number,
+                authorization.created_at,
                 authorization.customer.try(:identifier),
                 authorization.customer.try(:last_name),
                 authorization.customer.try(:first_name),
