@@ -388,14 +388,18 @@ class ReportsController < ApplicationController
     send_data csv, type: "text/csv", filename: "Assessment Requests #{start_date.to_s(:file_name)} to #{(end_date - 1.day).to_s(:file_name)}.csv", disposition: 'attachment'
   end
 
-  def county_assessment_requests
+  def county_assessments
     start_date = Time.parse(params[:start_date])
     end_date = Time.parse(params[:end_date]) + 1.day
 
-    assessment_requests = AssessmentRequest.accessible_by(current_ability).created_in_range(start_date..end_date).order(:created_at).completed.
-      includes(:kase, :customer, :submitter, :assignee)
+    assessments = ResponseSet.accessible_by(current_ability).
+      joins(kase: :assessment_request).
+      includes(:customer, kase: {assessment_request: [:submitter, :assignee, :referring_organization]}).
+      where('response_sets.completed_at >= ? AND response_sets.completed_at < ?', start_date, end_date).
+      where('kases.type = ?','CoachingKase').
+      order(:started_at)
+
     if params[:governmental_body].present?
-      assessment_requests = assessment_requests.for_parent_org(params[:governmental_body].to_i)
       filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
     else
       filename_prefix = ''
@@ -404,35 +408,38 @@ class ReportsController < ApplicationController
     csv = ""
     line_number = 1
     CSV.generate(csv) do |csv|
-      csv << ['LineNumber',
-              'AssessmentRequestID',
-              'AssessmentRequestDate',
-              'AssessmentDate',
-              'PrimeNumber',
-              'LastName',
-              'FirstName',
-              'MiddleInitial',
-              'DistrictCenter',
-              'AssessmentStatus']
-      assessment_requests.each do |ar|
-        # The 'completed' scope for assessment requests considers ar's to be completed if there is an associated kase.
-        # However there are circumstances where kases are created without assessments, so this checks for actual assessments.
-        if (ar.try(:kase).try(:response_sets).try(:count) || 0) > 0
+      csv << [
+        'LineNumber',
+        'AssessmentRequestID',
+        'AssessmentRequestDate',
+        'AssessmentDate',
+        'PrimeNumber',
+        'LastName',
+        'FirstName',
+        'MiddleInitial',
+        'DistrictCenter',
+        'AssessmentStatus'
+      ]
+      assessments.each do |a|
+        if params[:governmental_body].blank? ||
+            a.kase.assessment_request.try(:referring_organization).try(:parent_id) == params[:governmental_body].to_i
           line_number += 1
-          csv << [line_number,
-                  ar.id,
-                  ar.created_at.to_date,
-                  ar.kase.response_sets.first.created_at.to_date,
-                  ar.customer.identifier,
-                  ar.customer.last_name,
-                  ar.customer.first_name,
-                  ar.customer.middle_initial,
-                  ar.submitter.organization.name,
-                  ar.status(show_reason_not_completed: false)]
+          csv << [
+            line_number,
+            a.kase.assessment_request.id,
+            a.kase.assessment_request.created_at.to_date,
+            a.completed_at.to_date,
+            a.kase.customer.identifier,
+            a.kase.customer.last_name,
+            a.kase.customer.first_name,
+            a.kase.customer.middle_initial,
+            a.kase.assessment_request.submitter.organization.name,
+            'Completed'
+          ]
         end
       end
     end
-    send_data csv, type: "text/csv", filename: filename_prefix + "Assessment Requests #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
+    send_data csv, type: "text/csv", filename: filename_prefix + "Assessments #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
   end
 
   def county_authorizations

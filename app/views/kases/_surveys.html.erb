@@ -7,7 +7,11 @@
 <% if !response_set.new_record? %>
 <tr class="auto-zebra">
   <td>
-    <%= response_set.created_at.strftime "%Y-%m-%d"  %>
+    <% if response_set.completed_at.present? %>
+      Completed <%= response_set.completed_at.strftime "%Y-%m-%d"  %>
+    <% else %>
+      Started <%= response_set.created_at.strftime "%Y-%m-%d"  %>
+    <% end %>
   </td>
   <td>
     <%= response_set.survey.title %>
