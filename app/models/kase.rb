@@ -1,11 +1,11 @@
 # This base Kase class should define behavior common to all Kase subclasses,
-# or methods that are used to report on attribute values. Functionality 
-# specific to a single subclass should be defined within that subclass. 
-# Functionality specific to a subset of subclasses should be defined in a 
+# or methods that are used to report on attribute values. Functionality
+# specific to a single subclass should be defined within that subclass.
+# Functionality specific to a subset of subclasses should be defined in a
 # module and then included in subclasses as necessary.
 class Kase < ActiveRecord::Base
   has_paper_trail
-  
+
   belongs_to :customer
   belongs_to :disposition
   belongs_to :assigned_to, foreign_key: :user_id, class_name: "User"
@@ -20,7 +20,7 @@ class Kase < ActiveRecord::Base
   has_many :referral_documents, dependent: :destroy
   has_many :trip_authorizations, dependent: :destroy
   has_many :contacts, as: :contactable, dependent: :destroy
-  has_many :kase_routes, dependent: :destroy 
+  has_many :kase_routes, dependent: :destroy
   has_many :routes, through: :kase_routes
 
   VALID_COUNTIES = {'Clackamas' => 'C', 'Multnomah' => 'M', 'Washington' => 'W'}
@@ -33,18 +33,18 @@ class Kase < ActiveRecord::Base
     kase.errors[:disposition_id] << "cannot be 'In Progress' if case is closed" if kase.close_date.present? && kase.disposition && kase.disposition.name == 'In Progress'
     kase.errors[:type] << "must be a valid subclass of Kase" unless Kase.descendants.map{|klass| klass.original_model_name.to_s}.include?(kase.type)
   end
-    
+
   HUMAN_ATTRIBUTE_NAMES = {
     medicaid_eligible: "Are you on Medicaid or the OHP Plan PLUS?",
     scheduling_system_entry_required: "Entry into scheduling system required",
     adult_ticket_count: "Adult tickets disbursed",
     honored_ticket_count: "Honored tickets disbursed"
   }
-  
+
   def self.human_attribute_name(attr, options={})
     HUMAN_ATTRIBUTE_NAMES[attr.to_sym] || super
   end
-  
+
   scope :assigned_to, lambda {|user| where(user_id: user.id) }
   scope :not_assigned_to, lambda {|user| where('user_id <> ?',user.id)}
   scope :unassigned, -> { where(user_id: nil) }
@@ -62,15 +62,15 @@ class Kase < ActiveRecord::Base
   def self.inherited(child)
     child.instance_eval do
       alias :original_model_name :model_name
-            
+
       def model_name
         Kase.model_name
       end
-      
+
       def human_name
         self.original_model_name.to_s.underscore.humanize.titlecase
       end
-      
+
       def humanized_name
         human_name.sub(/\bKase\b/, 'Case')
       end
@@ -81,7 +81,7 @@ class Kase < ActiveRecord::Base
   def medicaid_eligible_description
     if medicaid_eligible.nil?
       "Not asked"
-    else 
+    else
       medicaid_eligible ? "Yes" : "No"
     end
   end
@@ -97,7 +97,7 @@ class Kase < ActiveRecord::Base
   def eligible_for_ticket_disbursement_description
     if eligible_for_ticket_disbursement.nil?
       "Undetermined"
-    else 
+    else
       eligible_for_ticket_disbursement ? "Yes" : "No"
     end
   end
