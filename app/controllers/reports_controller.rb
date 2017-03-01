@@ -393,13 +393,14 @@ class ReportsController < ApplicationController
     end_date = Time.parse(params[:end_date]) + 1.day
 
     assessments = ResponseSet.accessible_by(current_ability).
-      joins(kase: :assessment_request).
+      joins(kase: {assessment_request: :referring_organization}).
       includes(:customer, kase: {assessment_request: [:submitter, :assignee, :referring_organization]}).
       where('response_sets.completed_at >= ? AND response_sets.completed_at < ?', start_date, end_date).
       where('kases.type = ?','CoachingKase').
-      order(:started_at)
+      order(:completed_at)
 
     if params[:governmental_body].present?
+      assessments = assessments.where('organizations.parent_id = ?', params[:governmental_body].to_i)
       filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
     else
       filename_prefix = ''
@@ -421,22 +422,19 @@ class ReportsController < ApplicationController
         'AssessmentStatus'
       ]
       assessments.each do |a|
-        if params[:governmental_body].blank? ||
-            a.kase.assessment_request.try(:referring_organization).try(:parent_id) == params[:governmental_body].to_i
-          line_number += 1
-          csv << [
-            line_number,
-            a.kase.assessment_request.id,
-            a.kase.assessment_request.created_at.to_date,
-            a.completed_at.to_date,
-            a.kase.customer.identifier,
-            a.kase.customer.last_name,
-            a.kase.customer.first_name,
-            a.kase.customer.middle_initial,
-            a.kase.assessment_request.submitter.organization.name,
-            'Completed'
-          ]
-        end
+        line_number += 1
+        csv << [
+          line_number,
+          a.kase.assessment_request.id,
+          a.kase.assessment_request.created_at.to_date,
+          a.completed_at.to_date,
+          a.kase.customer.identifier,
+          a.kase.customer.last_name,
+          a.kase.customer.first_name,
+          a.kase.customer.middle_initial,
+          a.kase.assessment_request.submitter.organization.name,
+          'Completed'
+        ]
       end
     end
     send_data csv, type: "text/csv", filename: filename_prefix + "Assessments #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
