@@ -482,7 +482,43 @@ class ReportsController < ApplicationController
                 authorization.try(:assessment_request).try(:referring_organization).try(:name)]
       end
     end
-    send_data csv, type: "text/csv", filename: filename_prefix + " Authorizations #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
+    send_data csv, type: "text/csv", filename: filename_prefix + "Authorizations #{start_date.to_s(:mdy)} to #{(end_date - 1.day).to_s(:mdy)}.csv", disposition: 'attachment'
+  end
+
+  def current_authorizations
+    authorizations = TripAuthorization.distinct.accessible_by(current_ability).active_now.most_recent_in_kase.belongs_to_most_recent_kase_for_customer.
+      includes(:customer, { assessment_request: :referring_organization })
+    if params[:governmental_body].present?
+      authorizations = authorizations.for_parent_org(params[:governmental_body].to_i)
+      filename_prefix = Organization.find(params[:governmental_body].to_i).name + ' '
+    else
+      filename_prefix = ''
+    end
+
+    csv = ""
+    CSV.generate(csv) do |csv|
+      csv << [
+        'LastName',
+        'FirstName',
+        'PrimeNumber',
+        'StartDate',
+        'EndDate',
+        'Agency',
+        'AuthorizedTrips'
+      ]
+      authorizations.sort_by{|x| [x.customer.try(:last_name), x.customer.try(:first_name)]}.each do |authorization|
+        csv << [
+          authorization.customer.try(:last_name),
+          authorization.customer.try(:first_name),
+          authorization.customer.try(:identifier),
+          authorization.start_date,
+          authorization.end_date,
+          authorization.try(:assessment_request).try(:referring_organization).try(:name),
+          authorization.allowed_trips_per_month
+        ]
+      end
+    end
+    send_data csv, type: "text/csv", filename: filename_prefix + "Current Authorizations.csv", disposition: 'attachment'
   end
 
   private
