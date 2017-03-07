@@ -1,7 +1,7 @@
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-EMAIL_FROM = "apps@rideconnection.org"
+EMAIL_FROM = "no-reply@rideconnection.org"
 
 ALL_GENDERS = [["Female", "F"], ["Male", "M"], ["Other", "O"]]
 
