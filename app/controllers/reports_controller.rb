@@ -393,6 +393,7 @@ class ReportsController < ApplicationController
     end_date = Time.parse(params[:end_date]) + 1.day
 
     assessments = ResponseSet.accessible_by(current_ability).
+      distinct.
       joins(kase: {assessment_request: :referring_organization}).
       includes(:customer, kase: {assessment_request: [:submitter, :assignee, :referring_organization]}).
       where('response_sets.completed_at >= ? AND response_sets.completed_at < ?', start_date, end_date).
